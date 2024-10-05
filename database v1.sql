@@ -1,4 +1,5 @@
 CREATE DATABASE AppBrocante;
+USE AppBrocante;
 
 CREATE TABLE slot (
 	id INTEGER,
