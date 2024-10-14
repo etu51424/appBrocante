@@ -1,14 +1,10 @@
 CREATE DATABASE AppBrocante;
-<<<<<<< HEAD
 GO
 
 USE AppBrocante;
 GO
 
 --DROP DATABASE AppBrocante;
-=======
-USE AppBrocante;
->>>>>>> 4bfd52b37405069dc756ca11aaf40488300edde0
 
 CREATE TABLE slot (
 	id INT IDENTITY PRIMARY KEY,
