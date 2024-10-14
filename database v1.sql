@@ -1,66 +1,68 @@
 CREATE DATABASE AppBrocante;
+GO
+
+USE AppBrocante;
+GO
+
+--DROP DATABASE AppBrocante;
 
 CREATE TABLE slot (
-	id INTEGER,
-	flea_market_id INTEGER NOT NULL,
-	is_available INTEGER NOT NULL,
-	area FLOAT,
-	PRIMARY KEY (id)
+	id INT IDENTITY PRIMARY KEY,
+	flea_market_id INT NOT NULL,
+	is_available INT NOT NULL,
+	area FLOAT   --techniquement pourrait dependrr de flea_market_id mais on s'y interesse pas
 );
+--1FN: ok
+--2FN: ok car pas de 2eme clé
+--3FN: ?
 
 CREATE TABLE flea_market (
-	id INTEGER,
+	id INT IDENTITY PRIMARY KEY,
 	address VARCHAR(200) NOT NULL,
 	date_start DATETIME2 NOT NULL,
 	date_end DATETIME2 NOT NULL,
 	title VARCHAR(50),
 	theme VARCHAR(50),
-	is_charity INTEGER,
+	is_charity INT,
 	average_rating FLOAT NOT NULL,
-	review_count INTEGER NOT NULL,
-	PRIMARY KEY(id)
+	review_count INT NOT NULL
 );
 
 CREATE TABLE person (
-	id INTEGER NOT NULL,
+	id INT IDENTITY PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
 	address VARCHAR(200),
 	phone_number VARCHAR(15),
 	email VARCHAR(40) NOT NULL,
-	last_edit_date DATETIME2,
-	PRIMARY KEY(id)
+	last_edit_date DATETIME2
 );
 
 CREATE TABLE interest (
-	flea_market_id INTEGER NOT NULL,
-	person_id INTEGER NOT NULL,
-	is_interested INTEGER,
-	is_dealer INTEGER NOT NULL,
-	participation INTEGER,
+	flea_market_id INT IDENTITY REFERENCES flea_market(id),
+	person_id INT NOT NULL REFERENCES person(id),
+	is_interested INT,
+	is_dealer INT NOT NULL,
+	participation INT,
 	PRIMARY KEY (flea_market_id, person_id),
-	FOREIGN KEY (flea_market_id) REFERENCES flea_market(id),
-	FOREIGN KEY (person_id) REFERENCES person(id)
 );
 
 CREATE TABLE dealer (
-	person_id INTEGER NOT NULL,
+	person_id INT IDENTITY PRIMARY KEY REFERENCES person(id),
 	type VARCHAR(50),
 	average_rating FLOAT NOT NULL,
-	review_count INTEGER NOT NULL,
-	PRIMARY KEY (person_id),
-	FOREIGN KEY (person_id) REFERENCES person(id)
+	review_count INT NOT NULL
+	--FOREIGN KEY (person_id) 
 );
 
 CREATE TABLE article (
-	id INTEGER NOT NULL,
-	dealer_id INTEGER,
+	id INT IDENTITY,
+	dealer_id INT REFERENCES dealer(person_id),
 	title VARCHAR(150),
 	description VARCHAR(1000),
 	entry_date DATETIME2,
 	cost FLOAT(2),
 	condition VARCHAR(50),
-	PRIMARY KEY (dealer_id, id),
-	FOREIGN KEY(dealer_id) REFERENCES dealer(person_id)
+	PRIMARY KEY (dealer_id, id)
 );
