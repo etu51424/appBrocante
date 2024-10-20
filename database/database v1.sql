@@ -1,14 +1,13 @@
 CREATE DATABASE AppBrocante;
-<<<<<<< HEAD
+
 GO
 
 USE AppBrocante;
 GO
 
 --DROP DATABASE AppBrocante;
-=======
+
 USE AppBrocante;
->>>>>>> 4bfd52b37405069dc756ca11aaf40488300edde0
 
 CREATE TABLE slot (
 	id INT IDENTITY PRIMARY KEY,
@@ -55,6 +54,8 @@ CREATE TABLE interest (
 CREATE TABLE dealer (
 	person_id INT IDENTITY PRIMARY KEY REFERENCES person(id),
 	type VARCHAR(50),
+	description VARCHAR(200), --car logique/utile/pratique pour l'interface (et présent sur maquette figma)
+	signup_date DATETIME2, --car logique/utile/pratique pour l'interface (et présent sur maquette figma)
 	average_rating FLOAT NOT NULL,
 	review_count INT NOT NULL
 	--FOREIGN KEY (person_id) 
