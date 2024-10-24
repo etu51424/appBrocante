@@ -31,6 +31,7 @@ CREATE TABLE flea_market (
 	review_count INT NOT NULL
 );
 
+-- user est un mot réservé donc la table est nommée person à la place
 CREATE TABLE person (
 	id INT IDENTITY PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
@@ -39,7 +40,10 @@ CREATE TABLE person (
 	address VARCHAR(200),
 	phone_number VARCHAR(15),
 	email VARCHAR(40) NOT NULL,
-	last_edit_date DATETIME2
+	last_edit_date DATETIME2,
+	-- stocke une photo au format varbinary (si <256k bytes) car + efficient que blob. 
+	-- idéalement devrait être dans sa propre table pour rendre "person" + efficace mais on est limité en tables
+	profile_picture VARBINARY(max)
 );
 
 CREATE TABLE interest (
