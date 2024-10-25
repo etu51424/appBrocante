@@ -1,3 +1,4 @@
+DROP DATABASE AppBrocante2;
 CREATE DATABASE AppBrocante2;
 
 GO
