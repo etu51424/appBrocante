@@ -1,18 +1,13 @@
-CREATE DATABASE AppBrocante;
+-- DROP DATABASE AppBrocante;
+-- CREATE DATABASE AppBrocante;
+
 USE AppBrocante;
-
---DROP DATABASE AppBrocante;
-
-CREATE TABLE slot (
-	id INT IDENTITY,
-	flea_market_id INT NOT NULL,
-	is_available INT NOT NULL,
-	area FLOAT,   --techniquement pourrait dependre de flea_market_id mais on s'y interesse pas
-	PRIMARY KEY (id, flea_market_id)
-);
---1FN: ok
---2FN: ok car pas de 2eme clé
---3FN: ?
+DROP TABLE IF EXISTS article;
+DROP TABLE IF EXISTS dealer;
+DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS interest;
+DROP TABLE IF EXISTS flea_market;
+DROP TABLE IF EXISTS slot;
 
 CREATE TABLE flea_market (
 	id INT IDENTITY PRIMARY KEY,
@@ -26,7 +21,19 @@ CREATE TABLE flea_market (
 	review_count INT NOT NULL
 );
 
--- user est un mot réservé donc la table est nommée person à la place
+CREATE TABLE slot (
+	id INT IDENTITY,
+	flea_market_id INT NOT NULL,
+	is_available INT NOT NULL,
+	area FLOAT,   --techniquement pourrait dependre de flea_market_id mais on s'y interesse pas
+	PRIMARY KEY (id, flea_market_id),
+	CONSTRAINT fk_flot_flea_market FOREIGN KEY (flea_market_id) REFERENCES flea_market(id)
+);
+--1FN: ok
+--2FN: ok car pas de 2eme clÃ©
+--3FN: ?
+
+-- user est un mot rÃ©servÃ© donc la table est nommÃ©e person Ã  la place
 CREATE TABLE person (
 	id INT IDENTITY PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
@@ -37,7 +44,7 @@ CREATE TABLE person (
 	email VARCHAR(40) NOT NULL,
 	last_edit_date DATETIME2,
 	-- stocke une photo au format varbinary (si <256k bytes) car + efficient que blob. 
-	-- idéalement devrait être dans sa propre table pour rendre "person" + efficace. Devrais-t-on le faire ?
+	-- idÃ©alement devrait Ãªtre dans sa propre table pour rendre "person" + efficace. Devrais-t-on le faire ?
 	profile_picture VARBINARY(max)
 );
 
