@@ -1,15 +1,5 @@
-DROP DATABASE AppBrocante2;
-CREATE DATABASE AppBrocante2;
-
-GO
-
-USE AppBrocante2;
-GO
-
-USE master
-GO
-xp_readerrorlog 0, 1, N'Server is listening on'
-GO
+CREATE DATABASE AppBrocante;
+USE AppBrocante;
 
 --DROP DATABASE AppBrocante;
 
