@@ -2,17 +2,12 @@
 -- CREATE DATABASE AppBrocante;
 
 USE AppBrocante;
-
-CREATE TABLE slot (
-	id INT IDENTITY,
-	flea_market_id INT NOT NULL,
-	is_available INT NOT NULL,
-	area FLOAT,   --techniquement pourrait dependre de flea_market_id mais on s'y interesse pas
-	PRIMARY KEY (id, flea_market_id)
-);
---1FN: ok
---2FN: ok car pas de 2eme clé
---3FN: ?
+DROP TABLE IF EXISTS article;
+DROP TABLE IF EXISTS dealer;
+DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS interest;
+DROP TABLE IF EXISTS flea_market;
+DROP TABLE IF EXISTS slot;
 
 CREATE TABLE flea_market (
 	id INT IDENTITY PRIMARY KEY,
@@ -25,6 +20,18 @@ CREATE TABLE flea_market (
 	average_rating FLOAT NOT NULL,
 	review_count INT NOT NULL
 );
+
+CREATE TABLE slot (
+	id INT IDENTITY,
+	flea_market_id INT NOT NULL,
+	is_available INT NOT NULL,
+	area FLOAT,   --techniquement pourrait dependre de flea_market_id mais on s'y interesse pas
+	PRIMARY KEY (id, flea_market_id),
+	CONSTRAINT fk_flot_flea_market FOREIGN KEY (flea_market_id) REFERENCES flea_market(id)
+);
+--1FN: ok
+--2FN: ok car pas de 2eme clé
+--3FN: ?
 
 -- user est un mot réservé donc la table est nommée person à la place
 CREATE TABLE person (
