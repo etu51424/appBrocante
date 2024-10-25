@@ -1,19 +1,23 @@
-CREATE DATABASE AppBrocante;
+CREATE DATABASE AppBrocante2;
 
 GO
 
-USE AppBrocante;
+USE AppBrocante2;
+GO
+
+USE master
+GO
+xp_readerrorlog 0, 1, N'Server is listening on'
 GO
 
 --DROP DATABASE AppBrocante;
 
-USE AppBrocante;
-
 CREATE TABLE slot (
-	id INT IDENTITY PRIMARY KEY,
+	id INT IDENTITY,
 	flea_market_id INT NOT NULL,
 	is_available INT NOT NULL,
-	area FLOAT   --techniquement pourrait dependrr de flea_market_id mais on s'y interesse pas
+	area FLOAT,   --techniquement pourrait dependre de flea_market_id mais on s'y interesse pas
+	PRIMARY KEY (id, flea_market_id)
 );
 --1FN: ok
 --2FN: ok car pas de 2eme clé
@@ -42,7 +46,7 @@ CREATE TABLE person (
 	email VARCHAR(40) NOT NULL,
 	last_edit_date DATETIME2,
 	-- stocke une photo au format varbinary (si <256k bytes) car + efficient que blob. 
-	-- idéalement devrait être dans sa propre table pour rendre "person" + efficace mais on est limité en tables
+	-- idéalement devrait être dans sa propre table pour rendre "person" + efficace. Devrais-t-on le faire ?
 	profile_picture VARBINARY(max)
 );
 
@@ -58,11 +62,10 @@ CREATE TABLE interest (
 CREATE TABLE dealer (
 	person_id INT IDENTITY PRIMARY KEY REFERENCES person(id),
 	type VARCHAR(50),
-	description VARCHAR(200), --car logique/utile/pratique pour l'interface (et présent sur maquette figma)
-	signup_date DATETIME2, --car logique/utile/pratique pour l'interface (et présent sur maquette figma)
+	description VARCHAR(200), 
+	signup_date DATETIME2,
 	average_rating FLOAT NOT NULL,
 	review_count INT NOT NULL
-	--FOREIGN KEY (person_id) 
 );
 
 CREATE TABLE article (
