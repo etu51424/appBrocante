@@ -2,6 +2,7 @@ import * as slotModel from "../model/slot.js";
 import {pool} from "../database/dbAccess.js";
 
 export const getSlot = async (req, res) => {
+    console.log(req.params);
     try{
         const slot = await slotModel.readSlot(pool, req.params);
         if (slot) {
