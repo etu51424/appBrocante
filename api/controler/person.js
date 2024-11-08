@@ -1,5 +1,5 @@
-import {pool} from "../database/dbAccess.js";
 import * as personModel from "../model/person.js";
+import {pool} from "../database/dbAccess.js";
 
 export const getPerson = async (req, res) => {
     try{
