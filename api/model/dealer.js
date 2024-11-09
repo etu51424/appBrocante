@@ -14,6 +14,6 @@ export const updateDealer = async (SQLClient) => {
 
 }
 
-export const deleteArticle = async (SQLClient) => {
+export const deleteDealer = async (SQLClient) => {
 
 }
