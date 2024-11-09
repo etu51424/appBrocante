@@ -36,7 +36,7 @@ export const updateFleaMarket = async (req, res) => {
 
 export const deleteFleaMarket = async (req, res) => {
     try{
-        await fleaMarket.FleaMarket(pool, req.params);
+        await fleaMarketModel.deleteFleaMarket(pool, req.params);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);

@@ -10,10 +10,29 @@ export const readSlot = async (SQLClient, {id, fleaMarketId}) => {
     return rows[0];
 }
 
-export const updateSlot = async (SQLClient) => {
-
+export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area}) => {
+    let query = "UPDATE person SET ";
+    const querySet = [];
+    const queryValues = [];
+    if (isAvailable){
+        queryValues.push(isAvailable);
+        querySet.push(`is_available=$${queryValues.length}`);
+    }
+    if (area){
+        queryValues.push(area);
+        querySet.push(`area=$${queryValues.length}`);
+    }
+    if (queryValues.length > 0) {
+        queryValues.push(id);
+        queryValues.push(fleaMarketId);
+        query += `${querySet.join(", ")} WHERE id = $${queryValues.length-1} AND flea_market_id = $${queryValues.length}`;
+        return await SQLClient.query(query, queryValues);
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
-export const deleteSlot = async (SQLClient) => {
-
+export const deleteSlot = async (SQLClient, {id, fleaMarketId}) => {
+    return await SQLClient.query("DELETE FROM slot WHERE id = $1 AND flea_market_id= $2", [id, fleaMarketId]);
 }

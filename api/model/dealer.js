@@ -10,10 +10,52 @@ export const readDealer = async (SQLClient, {personId}) => {
     return rows[0];
 }
 
-export const updateDealer = async (SQLClient) => {
-
+export const updateDealer = async (SQLClient, {personId, type, description, signupDate, averageRating, reviewCount}) => {
+    let query = "UPDATE person SET ";
+    const querySet = [];
+    const queryValues = [];
+    if (type){
+        queryValues.push(type);
+        querySet.push(`type=$${queryValues.length}`);
+    }
+    if (description){
+        queryValues.push(description);
+        querySet.push(`description=$${queryValues.length}`);
+    }
+    if (signupDate){
+        queryValues.push(signupDate);
+        querySet.push(`signup_date=$${queryValues.length}`);
+    }
+    if (averageRating){
+        queryValues.push(averageRating);
+        querySet.push(`average_rating=$${queryValues.length}`);
+    }
+    if (reviewCount){
+        queryValues.push(reviewCount);
+        querySet.push(`review_count=$${queryValues.length}`);
+    }
+    if (isCharity){
+        queryValues.push(isCharity);
+        querySet.push(`is_charity=$${queryValues.length}`);
+    }
+    if (averageRating){
+        queryValues.push(averageRating);
+        querySet.push(`average_rating=$${queryValues.length}`);
+    }
+    if (reviewCount){
+        queryValues.push(reviewCount);
+        querySet.push(`review_count=$${queryValues.length}`);
+    }
+    if (queryValues.length > 0) {
+        queryValues.push(personId);
+        query += `${querySet.join(", ")} WHERE person_id = $${queryValues.length}`;
+        return await SQLClient.query(query, queryValues);
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
-export const deleteDealer = async (SQLClient) => {
-
+export const deleteDealer = async (SQLClient, {personId}) => {
+    return await SQLClient.query("DELETE FROM dealer WHERE person_id = $1", [personId]);
 }

@@ -10,10 +10,41 @@ export const readArticle = async (SQLClient, {id, dealerId}) => {
     return rows[0];
 }
 
-export const updateArticle = async (SQLClient) => {
-
+export const updateArticle = async (SQLClient, {id, dealer_id, title, description, entryDate, cost, condition}) => {
+    let query = "UPDATE person SET ";
+    const querySet = [];
+    const queryValues = [];
+    if (title){
+        queryValues.push(title);
+        querySet.push(`title=$${queryValues.length}`);
+    }
+    if (description){
+        queryValues.push(description);
+        querySet.push(`description=$${queryValues.length}`);
+    }
+    if (entryDate){
+        queryValues.push(entryDate);
+        querySet.push(`entry_date=$${queryValues.length}`);
+    }
+    if (cost){
+        queryValues.push(cost);
+        querySet.push(`cost=$${queryValues.length}`);
+    }
+    if (condition){
+        queryValues.push(condition);
+        querySet.push(`condition=$${queryValues.length}`);
+    }
+    if (queryValues.length > 0) {
+        queryValues.push(id);
+        queryValues.push(dealer_id);
+        query += `${querySet.join(", ")} WHERE id = $${queryValues.length-1} AND dealer_id = $${queryValues.length}`;
+        return await SQLClient.query(query, queryValues);
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
-export const deleteArticle = async (SQLClient) => {
-
+export const deleteArticle = async (SQLClient, {id}) => {
+    return await SQLClient.query("DELETE FROM article WHERE id = $1", [id]);
 }

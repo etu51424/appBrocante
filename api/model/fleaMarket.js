@@ -10,10 +10,52 @@ export const readFleaMarket = async (SQLClient, {id}) => {
     return rows[0];
 }
 
-export const updateFleaMarket = async (SQLClient) => {
-
+export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateEnd, title, theme, isCharity, averageRating, review_count}) => {
+    let query = "UPDATE person SET ";
+    const querySet = [];
+    const queryValues = [];
+    if (address){
+        queryValues.push(address);
+        querySet.push(`address=$${queryValues.length}`);
+    }
+    if (dateStart){
+        queryValues.push(dateStart);
+        querySet.push(`date_start=$${queryValues.length}`);
+    }
+    if (dateEnd){
+        queryValues.push(dateEnd);
+        querySet.push(`date_end=$${queryValues.length}`);
+    }
+    if (title){
+        queryValues.push(title);
+        querySet.push(`title=$${queryValues.length}`);
+    }
+    if (theme){
+        queryValues.push(theme);
+        querySet.push(`theme=$${queryValues.length}`);
+    }
+    if (isCharity){
+        queryValues.push(isCharity);
+        querySet.push(`is_charity=$${queryValues.length}`);
+    }
+    if (averageRating){
+        queryValues.push(averageRating);
+        querySet.push(`average_rating=$${queryValues.length}`);
+    }
+    if (reviewCount){
+        queryValues.push(reviewCount);
+        querySet.push(`review_count=$${queryValues.length}`);
+    }
+    if (queryValues.length > 0) {
+        queryValues.push(id);
+        query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
+        return await SQLClient.query(query, queryValues);
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
-export const deleteFleaMarket = async (SQLClient) => {
-
+export const deleteFleaMarket = async (SQLClient, {id}) => {
+    return await SQLClient.query("DELETE FROM flea_market WHERE id = $1", [id]);
 }

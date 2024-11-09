@@ -1,6 +1,5 @@
 import * as interestModel from "../model/interest.js";
 import {pool} from "../database/dbAccess.js";
-import * as personModel from "../model/person.js";
 
 export const createInterest = async (req, res) => {
     try{
@@ -13,7 +12,7 @@ export const createInterest = async (req, res) => {
 
 export const getInterest = async (req, res) => {
     try{
-        const interest = await interestModel.readArticle(pool, req.params);
+        const interest = await interestModel.readInterest(pool, req.params);
         if (interest) {
             res.send(interest);
         }
@@ -36,7 +35,7 @@ export const updateInterest = async (req, res) => {
 
 export const deleteInterest = async (req, res) => {
     try{
-        await interestModel.updateInterest(pool, req.body);
+        await interestModel.deleteInterest(pool, req.body);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
