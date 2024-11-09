@@ -10,7 +10,7 @@ export const readFleaMarket = async (SQLClient, {id}) => {
     return rows[0];
 }
 
-export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateEnd, title, theme, isCharity, averageRating, review_count}) => {
+export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateEnd, title, theme, isCharity, averageRating, reviewCount}) => {
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
