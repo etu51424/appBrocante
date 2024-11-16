@@ -1,0 +1,13 @@
+node :
+
+npm init -y
+npm pkg set type=module
+npm i express
+npm i -D nodemon
+npm pkg set scripts.dev="nodemon server.js" // pour le npm run dev
+npm i pg
+npm i dotenv
+ajouter "initDB": "node scripts/JS/initDB.js" dans package.json => scripts // pour le npm run initDB
+
+Docker : 
+docker run --name AppBrocante -e POSTGRES_PASSWORD=LoveBrocante -e POSTGRES_USER=SA -e POSTGRES_DB=AppBrocante -p 5432:5432 --rm -d postgres
