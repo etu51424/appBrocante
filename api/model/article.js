@@ -48,3 +48,7 @@ export const updateArticle = async (SQLClient, {id, dealer_id, title, descriptio
 export const deleteArticle = async (SQLClient, {id}) => {
     return await SQLClient.query("DELETE FROM article WHERE id = $1", [id]);
 }
+
+export const deleteArticleByDealer = async (SQLClient, {personId}) =>{
+    return await SQLClient.query("DELETE FROM article WHERE dealer_id = $1", [personId]);
+}

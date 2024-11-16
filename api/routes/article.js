@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {createArticle,getArticle, updateArticle, deleteArticle} from "../controler/article.js";
+import {createArticle, getArticle, updateArticle, deleteArticle} from "../controler/article.js";
 
 const router = Router();
 

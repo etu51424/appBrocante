@@ -42,6 +42,7 @@ CREATE TABLE person (
 	phone_number VARCHAR(15),
 	email VARCHAR(40) NOT NULL,
 	last_edit_date TIMESTAMP,
+	password VARCHAR NOT NULL,
 	profile_picture BYTEA -- Utilisation de BYTEA pour stocker des fichiers binaires en PostgreSQL
 );
 
@@ -85,11 +86,11 @@ VALUES
     ('789 Maple Ave', '2024-09-10 08:00', '2024-09-10 16:00', 'Antique Show', 'Antique', 1, 4.8, 200);
 
 -- Insertion de données dans la table person
-INSERT INTO person (name, first_name, last_name, address, phone_number, email, last_edit_date, profile_picture)
+INSERT INTO person (name, first_name, last_name, address, phone_number, email, last_edit_date, password ,profile_picture)
 VALUES
-    ('Doe', 'John', 'Doe', '123 Elm St', '555-1234', 'jdoe@example.com', '2024-01-15', NULL),
-    ('Smith', 'Jane', 'Smith', '456 Pine St', '555-5678', 'jsmith@example.com', '2024-02-20', NULL),
-    ('Brown', 'Charlie', 'Brown', '789 Cedar Ave', '555-8765', 'cbrown@example.com', '2024-03-10', NULL);
+    ('Doe', 'John', 'Doe', '123 Elm St', '555-1234', 'jdoe@example.com', '2024-01-15', 'je' ,NULL),
+    ('Smith', 'Jane', 'Smith', '456 Pine St', '555-5678', 'jsmith@example.com', '2024-02-20', 'tu' ,NULL),
+    ('Brown', 'Charlie', 'Brown', '789 Cedar Ave', '555-8765', 'cbrown@example.com', '2024-03-10', 'il' ,NULL);
 
 -- Insertion de données dans la table dealer
 INSERT INTO dealer (person_id, type, description, signup_date, average_rating, review_count)

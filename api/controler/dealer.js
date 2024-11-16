@@ -35,7 +35,7 @@ export const updateDealer = async (req, res) => {
 
 export const deleteDealer = async (req, res) => {
     try{
-        await dealerModel.deleteDealer(pool, req.params);
+        await dealerModel.deleteDealer(req.params);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);

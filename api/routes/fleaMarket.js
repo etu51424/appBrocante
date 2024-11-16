@@ -4,8 +4,8 @@ import {createFleaMarket, getFleaMarket, updateFleaMarket, deleteFleaMarket} fro
 const router = Router();
 
 router.post('/', createFleaMarket);
-router.get('/:id', getFleaMarket);
+router.get('/:fleaMarketId', getFleaMarket);
 router.patch('/', updateFleaMarket);
-router.delete('/:id', deleteFleaMarket);
+router.delete('/:fleaMarketId', deleteFleaMarket);
 
 export default router;

@@ -36,3 +36,7 @@ export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area
 export const deleteSlot = async (SQLClient, {id, fleaMarketId}) => {
     return await SQLClient.query("DELETE FROM slot WHERE id = $1 AND flea_market_id= $2", [id, fleaMarketId]);
 }
+
+export const deleteSlotByFleaMarket = async (SQLClient, {fleaMarketId}) => {
+    return await SQLClient.query("DELETE FROM slot WHERE flea_market_id = $1", [fleaMarketId]);
+}

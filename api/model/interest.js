@@ -40,3 +40,12 @@ export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInter
 export const deleteInterest = async (SQLClient, {fleaMarketId, personId}) => {
     return await SQLClient.query("DELETE FROM interest WHERE flea_market_id, person_id = $2", [fleaMarketId, personId]);
 }
+
+export const deleteInterestByPerson = async (SQLClient, {personId}) => {
+    return await SQLClient.query("DELETE FROM interest WHERE person_id = $1", [personId]);
+}
+
+export const deleteInterestByFleaMarket = async (SQLClient, {fleaMarketId}) => {
+    return await SQLClient.query("DELETE FROM interest WHERE flea_market_id = $1", [fleaMarketId]);
+}
+

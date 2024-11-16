@@ -1,3 +1,6 @@
+import {pool} from "../database/dbAccess.js";
+import {deleteArticleByDealer} from "./article.js";
+
 export const createDealer = async (SQLClient, {personId, type, description, signupDate, averageRating, reviewCount}) => {
     const {rows} = await SQLClient.query("INSERT INTO dealer (person_id, type, description, signup_date, average_rating, review_count) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
         [personId, type, description, signupDate, averageRating, reviewCount]);
@@ -56,6 +59,39 @@ export const updateDealer = async (SQLClient, {personId, type, description, sign
     }
 }
 
-export const deleteDealer = async (SQLClient, {personId}) => {
-    return await SQLClient.query("DELETE FROM dealer WHERE person_id = $1", [personId]);
+export const deleteDealer = async ({personId}, SQLClient=null) => {
+    let shouldManageTransaction = !SQLClient;
+    if (!SQLClient) {
+        SQLClient = pool.connect();
+    }
+
+    try{
+        if(shouldManageTransaction) {
+            SQLClient = await pool.connect();
+            await SQLClient.query("BEGIN");
+        }
+
+        await deleteArticleByDealer(SQLClient, {personId});
+        await SQLClient.query("DELETE FROM dealer WHERE person_id = $1", [personId]);
+
+        if(shouldManageTransaction) {
+            await SQLClient.query("COMMIT");
+        }
+
+    } catch (err){
+        console.error(err);
+        try{
+            if(shouldManageTransaction){
+                SQLClient.query("ROLLBACK");
+            }
+        } catch (err){
+            console.error(err);
+        } finally {
+            throw new Error("Erreur dans le modelDealer");
+        }
+    } finally {
+        if (shouldManageTransaction){
+            SQLClient.release();
+        }
+    }
 }
