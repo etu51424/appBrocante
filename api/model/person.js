@@ -83,7 +83,7 @@ export const readPersonWithPassword = async (SQLClient, {personId, password}) =>
 }
 
 export const updatePerson = async (SQLClient, {id, name, firstName, lastName, address,
-        phoneNumber, email, lastEditDate, profilePicture}) => {
+        phoneNumber, email, lastEditDate, profilePicture, password}) => {
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
@@ -118,6 +118,10 @@ export const updatePerson = async (SQLClient, {id, name, firstName, lastName, ad
     if (profilePicture){
         queryValues.push(profilePicture);
         querySet.push(`profile_picture=$${queryValues.length}`);
+    }
+    if (password){
+        queryValues.push(password);
+        querySet.push(`password=$${queryValues.length}`);
     }
     if (queryValues.length > 0) {
         queryValues.push(id);

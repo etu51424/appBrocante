@@ -1,0 +1,1 @@
+import * as slotValidator from '../schemas/slot.js';
