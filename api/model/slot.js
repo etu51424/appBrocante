@@ -1,8 +1,33 @@
 export const createSlot = async (SQLClient, {fleaMarketId, isAvailable, area}) => {
-    const {rows} = await SQLClient.query("INSERT INTO slot (flea_market_id, is_available, area) VALUES ($1, $2, $3) RETURNING id",
-        [fleaMarketId, isAvailable, area]);
+    let query = "INSERT INTO slot ";
 
-    return rows[0]?.id;
+    const querySet = [];
+    const queryValues = [];
+    const dbColumns = [];
+    if (area){
+        dbColumns.push("area");
+        queryValues.push(area);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (fleaMarketId) {
+        dbColumns.push("flea_market_id");
+        queryValues.push(fleaMarketId);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (isAvailable) {
+        dbColumns.push("is_available");
+        queryValues.push(isAvailable);
+        querySet.push(`$${queryValues.length}`);
+    }
+
+    if (queryValues.length > 0){
+        query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING id`;
+        const {rows} = await SQLClient.query(query, queryValues);
+        return rows[0]?.id;
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
 export const readSlot = async (SQLClient, {id, fleaMarketId}) => {

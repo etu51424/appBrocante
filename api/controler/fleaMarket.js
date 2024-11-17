@@ -1,6 +1,7 @@
 import * as fleaMarketModel from "../model/fleaMarket.js";
 import {pool} from "../database/dbAccess.js";
-import * as personModel from "../model/person.js";
+import {deleteSlotByFleaMarket} from "../model/slot.js";
+import {deleteInterestByFleaMarket} from "../model/interest.js";
 
 export const createFleaMarket = async (req, res) => {
     try{
@@ -35,10 +36,31 @@ export const updateFleaMarket = async (req, res) => {
 }
 
 export const deleteFleaMarket = async (req, res) => {
+    let SQLClient;
     try{
-        await fleaMarketModel.deleteFleaMarket(pool, req.params);
+        SQLClient = await pool.connect();
+        await SQLClient.query("BEGIN");
+
+        await deleteSlotByFleaMarket(SQLClient, req.params);
+        await deleteInterestByFleaMarket(SQLClient, req.params);
+        await fleaMarketModel.deleteFleaMarket(SQLClient, req.params);
+
+        await SQLClient.query("COMMIT");
         res.sendStatus(204);
     } catch (err){
-        res.sendStatus(500);
+        console.error(err);
+        try{
+            if(SQLClient){
+                SQLClient.query("ROLLBACK");
+            }
+        } catch (err){
+            console.error(err);
+        } finally {
+            res.sendStatus(500);
+        }
+    } finally {
+        if (SQLClient){
+            SQLClient.release();
+        }
     }
 }

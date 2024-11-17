@@ -12,7 +12,7 @@ router.use("/person", personRouter);
 router.use("/article", articleRouter);
 router.use("/dealer", dealerRouter);
 router.use("/fleaMarket", fleaMarketRouter);
-router.use("/interests", interestsRouter);
+router.use("/interest", interestsRouter);
 router.use("/slot", slotRouter);
 
 

@@ -1,8 +1,47 @@
 export const createArticle = async (SQLClient, {dealerId, title, description, entry_date, cost, condition}) => {
-    const {rows} = await SQLClient.query("INSERT INTO article (dealer_id, title, description, entry_date, cost, condition) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
-        [dealerId, title, description, entry_date, cost, condition]);
+    let query = "INSERT INTO article ";
 
-    return rows[0]?.id;
+    const querySet = [];
+    const queryValues = [];
+    const dbColumns = [];
+    if (dealerId){
+        dbColumns.push("dealer_id");
+        queryValues.push(dealerId);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (title){
+        dbColumns.push("title");
+        queryValues.push(title);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (description){
+        dbColumns.push("description");
+        queryValues.push(description);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (entry_date){
+        dbColumns.push("entry_date");
+        queryValues.push(entry_date);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (cost){
+        dbColumns.push("cost");
+        queryValues.push(cost);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (condition){
+        dbColumns.push("condition");
+        queryValues.push(condition);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (queryValues.length > 0){
+        query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING id`;
+        const {rows} = await SQLClient.query(query, queryValues);
+        return rows[0]?.id;
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
 export const readArticle = async (SQLClient, {id, dealerId}) => {

@@ -3,10 +3,59 @@ import {deleteInterestByFleaMarket} from "./interest.js";
 import {deleteSlotByFleaMarket} from "./slot.js";
 
 export const createFleaMarket = async (SQLClient, {address, dateStart, dateEnd, title, theme, isCharity, averageRating, reviewCount}) => {
-    const {rows} = await SQLClient.query("INSERT INTO flea_market (address, date_start, date_end, title, theme, is_charity, average_rating, review_count) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
-        [address, dateStart, dateEnd, title, theme, isCharity, averageRating, reviewCount]);
+    let query = "INSERT INTO flea_market ";
 
-    return rows[0]?.id;
+    const querySet = [];
+    const queryValues = [];
+    const dbColumns = [];
+    if (address){
+        dbColumns.push("address");
+        queryValues.push(address);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (dateStart){
+        dbColumns.push("date_start");
+        queryValues.push(dateStart);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (dateEnd){
+        dbColumns.push("date_end");
+        queryValues.push(dateEnd);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (title){
+        dbColumns.push("title");
+        queryValues.push(title);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (theme){
+        dbColumns.push("theme");
+        queryValues.push(theme);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (isCharity){
+        dbColumns.push("is_charity");
+        queryValues.push(isCharity);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (averageRating) {
+        dbColumns.push("average_rating");
+        queryValues.push(averageRating);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (reviewCount) {
+        dbColumns.push("review_count");
+        queryValues.push(reviewCount);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (queryValues.length > 0){
+        query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING id`;
+        const {rows} = await SQLClient.query(query, queryValues);
+        return rows[0]?.id;
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
 export const readFleaMarket = async (SQLClient, {fleaMarketId}) => {
@@ -61,30 +110,5 @@ export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateE
 }
 
 export const deleteFleaMarket = async (SQLClient, {fleaMarketId}) => {
-    try{
-        SQLClient = await pool.connect();
-        await SQLClient.query("BEGIN");
-
-        await deleteInterestByFleaMarket(SQLClient, {fleaMarketId});
-        await deleteSlotByFleaMarket(SQLClient, {fleaMarketId});
-        await SQLClient.query("DELETE FROM flea_market WHERE id = $1", [fleaMarketId]);
-        
-        await SQLClient.query("COMMIT");
-
-    } catch (err){
-        console.error(err);
-        try{
-            if(SQLClient){
-                SQLClient.query("ROLLBACK");
-            }
-        } catch (err){
-            console.error(err);
-        } finally {
-            throw new Error("Erreur dans le modelFleaMarket");
-        }
-    } finally {
-        if (SQLClient){
-            SQLClient.release();
-        }
-    }
+    return await SQLClient.query("DELETE FROM flea_market WHERE id = $1", [fleaMarketId]);
 }

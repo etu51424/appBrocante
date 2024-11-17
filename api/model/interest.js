@@ -1,8 +1,42 @@
 export const createInterest = async (SQLClient, {fleaMarketId, personId, isInterested, isDealer, participation}) => {
-    const {rows} = await SQLClient.query("INSERT INTO interest (flea_market_id, person_id, is_interested, is_dealer, participation) VALUES ($1, $2, $3, $4, $5) RETURNING id",
-        [fleaMarketId, personId, isInterested, isDealer, participation]);
+    let query = "INSERT INTO interest ";
 
-    return rows[0]?.id;
+    const querySet = [];
+    const queryValues = [];
+    const dbColumns = [];
+    if (fleaMarketId){
+        dbColumns.push("flea_market_id");
+        queryValues.push(fleaMarketId);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (personId){
+        dbColumns.push("person_id");
+        queryValues.push(personId);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (isInterested){
+        dbColumns.push("is_interested");
+        queryValues.push(isInterested);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (isDealer){
+        dbColumns.push("is_dealer");
+        queryValues.push(isDealer);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (participation){
+        dbColumns.push("participation");
+        queryValues.push(participation);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (queryValues.length > 0){
+        query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING flea_market_id`;
+        const {rows} = await SQLClient.query(query, queryValues);
+        return rows[0]?.flea_market_id;
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
 export const readInterest = async (SQLClient, {fleaMarketId, personId}) => {
@@ -11,7 +45,7 @@ export const readInterest = async (SQLClient, {fleaMarketId, personId}) => {
 }
 
 export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInterested, isDealer, participation}) => {
-    let query = "UPDATE person SET ";
+    let query = "UPDATE interest SET ";
     const querySet = [];
     const queryValues = [];
     if (isInterested){
@@ -38,7 +72,7 @@ export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInter
 }
 
 export const deleteInterest = async (SQLClient, {fleaMarketId, personId}) => {
-    return await SQLClient.query("DELETE FROM interest WHERE flea_market_id, person_id = $2", [fleaMarketId, personId]);
+    return await SQLClient.query("DELETE FROM interest WHERE flea_market_id=$1 AND person_id = $2", [fleaMarketId, personId]);
 }
 
 export const deleteInterestByPerson = async (SQLClient, {personId}) => {

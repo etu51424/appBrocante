@@ -1,8 +1,15 @@
 import * as personModel from "../model/person.js";
 import {pool} from "../database/dbAccess.js";
+import {deleteArticleByDealer} from "../model/article.js";
+import {deleteDealer} from "../model/dealer.js";
+import {deleteInterestByPerson} from "../model/interest.js";
+import * as argon2id from "argon2";
+
 
 export const createPerson = async (req, res) => {
+
     try{
+        req.body.password = await argon2id.hash(req.body.password, {secret : Buffer.from(process.env.PEPPER)});
         const id = await personModel.createPerson(pool, req.body);
         res.status(201).json({id});
     } catch (err){
@@ -34,10 +41,32 @@ export const updatePerson = async (req, res) => {
 }
 
 export const deletePerson = async (req, res) => {
+    let SQLClient;
     try{
-        await personModel.deletePerson(pool, req.params);
+        SQLClient = await pool.connect();
+        await SQLClient.query("BEGIN");
+
+        await deleteArticleByDealer(SQLClient, req.params);
+        await deleteDealer(SQLClient, req.params);
+        await deleteInterestByPerson(SQLClient, req.params);
+        await personModel.deletePerson(SQLClient, req.params);
+
+        await SQLClient.query("COMMIT");
         res.sendStatus(204);
     } catch (err){
-        res.sendStatus(500);
+        console.error(err);
+        try{
+            if(SQLClient){
+                SQLClient.query("ROLLBACK");
+            }
+        } catch (err){
+            console.error(err);
+        } finally {
+            res.sendStatus(500);
+        }
+    } finally {
+        if (SQLClient){
+            SQLClient.release();
+        }
     }
 }

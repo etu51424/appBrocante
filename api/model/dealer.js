@@ -2,10 +2,49 @@ import {pool} from "../database/dbAccess.js";
 import {deleteArticleByDealer} from "./article.js";
 
 export const createDealer = async (SQLClient, {personId, type, description, signupDate, averageRating, reviewCount}) => {
-    const {rows} = await SQLClient.query("INSERT INTO dealer (person_id, type, description, signup_date, average_rating, review_count) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
-        [personId, type, description, signupDate, averageRating, reviewCount]);
+    let query = "INSERT INTO dealer ";
 
-    return rows[0]?.id;
+    const querySet = [];
+    const queryValues = [];
+    const dbColumns = [];
+    if (personId){
+        dbColumns.push("person_id");
+        queryValues.push(personId);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (type){
+        dbColumns.push("type");
+        queryValues.push(type);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (description){
+        dbColumns.push("description");
+        queryValues.push(description);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (signupDate){
+        dbColumns.push("signup_date");
+        queryValues.push(signupDate);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (averageRating){
+        dbColumns.push("average_rating");
+        queryValues.push(averageRating);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (reviewCount){
+        dbColumns.push("review_count");
+        queryValues.push(reviewCount);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (queryValues.length > 0){
+        query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING person_id`;
+        const {rows} = await SQLClient.query(query, queryValues);
+        return rows[0]?.person_id;
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
 export const readDealer = async (SQLClient, {personId}) => {
@@ -59,39 +98,6 @@ export const updateDealer = async (SQLClient, {personId, type, description, sign
     }
 }
 
-export const deleteDealer = async ({personId}, SQLClient=null) => {
-    let shouldManageTransaction = !SQLClient;
-    if (!SQLClient) {
-        SQLClient = pool.connect();
-    }
-
-    try{
-        if(shouldManageTransaction) {
-            SQLClient = await pool.connect();
-            await SQLClient.query("BEGIN");
-        }
-
-        await deleteArticleByDealer(SQLClient, {personId});
-        await SQLClient.query("DELETE FROM dealer WHERE person_id = $1", [personId]);
-
-        if(shouldManageTransaction) {
-            await SQLClient.query("COMMIT");
-        }
-
-    } catch (err){
-        console.error(err);
-        try{
-            if(shouldManageTransaction){
-                SQLClient.query("ROLLBACK");
-            }
-        } catch (err){
-            console.error(err);
-        } finally {
-            throw new Error("Erreur dans le modelDealer");
-        }
-    } finally {
-        if (shouldManageTransaction){
-            SQLClient.release();
-        }
-    }
+export const deleteDealer = async (SQLClient, {personId}) => {
+    return await SQLClient.query("DELETE FROM dealer WHERE person_id = $1", [personId]);
 }

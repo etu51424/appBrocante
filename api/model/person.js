@@ -1,13 +1,66 @@
-import {pool} from "../database/dbAccess.js";
-import {deleteDealer} from "./dealer.js";
-import {deleteInterestByPerson} from "./interest.js";
+import * as argon2id from "argon2";
 
 export const createPerson = async (SQLClient, {name, firstName, lastName, address,
-        phoneNumber, email, lastEditDate, profilePicture}) => {
-    const {rows} = await SQLClient.query("INSERT INTO person (name, first_name, last_name, address, phone_number, email, last_edit_date, profile_picture) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
-        [name, firstName, lastName, address, phoneNumber, email, lastEditDate, profilePicture]);
+        phoneNumber, email, lastEditDate, profile_picture, password}) => {
+    let query = "INSERT INTO person ";
 
-    return rows[0]?.id;
+    const querySet = [];
+    const queryValues = [];
+    const dbColumns = [];
+    if (firstName){
+        dbColumns.push("first_name");
+        queryValues.push(firstName);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (lastName){
+        dbColumns.push("last_name");
+        queryValues.push(lastName);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (address){
+        dbColumns.push("address");
+        queryValues.push(address);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (phoneNumber){
+        dbColumns.push("phone_number");
+        queryValues.push(phoneNumber);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (lastEditDate){
+        dbColumns.push("last_edit_date");
+        queryValues.push(lastEditDate);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (profile_picture){
+        dbColumns.push("profile_picture");
+        queryValues.push(profile_picture);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (name) {
+        dbColumns.push("name");
+        queryValues.push(name);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (email) {
+        dbColumns.push("email");
+        queryValues.push(email);
+        querySet.push(`$${queryValues.length}`);
+    }
+    if (password) {
+        dbColumns.push("password");
+        queryValues.push(password);
+        querySet.push(`$${queryValues.length}`);
+    }
+
+    if (queryValues.length > 0){
+        query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING id`;
+        const {rows} = await SQLClient.query(query, queryValues);
+        return rows[0]?.id;
+    }
+    else{
+        throw new Error("No field given");
+    }
 }
 
 export const readPerson = async (SQLClient, {personId}) => {
@@ -20,7 +73,7 @@ export const readPersonWithPassword = async (SQLClient, {personId, password}) =>
         readPerson(SQLClient, {personId}),
     ]);
     if (responses[0]) {
-        return password === responses[0].password ?
+        return await argon2id.verify(responses[0].password, password, {secret : Buffer.from(process.env.PEPPER)}) ?
             {personId : responses[0].id, status:"user"} :
             {personId : null, status : null};
     }
@@ -77,32 +130,7 @@ export const updatePerson = async (SQLClient, {id, name, firstName, lastName, ad
 }
 
 export const deletePerson = async (SQLClient, {personId}) => {
-    try{
-        SQLClient = await pool.connect();
-        await SQLClient.query("BEGIN");
-
-        await deleteDealer({personId}, SQLClient);
-        await deleteInterestByPerson(SQLClient, {personId})
-        await SQLClient.query("DELETE FROM person WHERE id = $1", [personId]);
-
-        await SQLClient.query("COMMIT");
-
-    } catch (err){
-        console.error(err);
-        try{
-            if(SQLClient){
-                SQLClient.query("ROLLBACK");
-            }
-        } catch (err){
-            console.error(err);
-        } finally {
-            throw new Error("Erreur dans le modelPerson");
-        }
-    } finally {
-        if (SQLClient){
-            SQLClient.release();
-        }
-    }
+    return await SQLClient.query("DELETE FROM person WHERE id=$1",[personId]);
 }
 
 
