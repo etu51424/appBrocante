@@ -3,7 +3,6 @@ import * as personValidator from '../schemas/person.js'
 const personValidatorMiddleware = {
     personId : async (req, res, next) => {
         try {
-            console.log("yeet")
             req.val = await personValidator.personId.validate(req.params)
             next();
         } catch (e) {
