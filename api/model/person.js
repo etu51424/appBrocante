@@ -137,4 +137,13 @@ export const deletePerson = async (SQLClient, {personId}) => {
     return await SQLClient.query("DELETE FROM person WHERE id=$1",[personId]);
 }
 
+export const promotePersonAdmin = async (SQLClient, {personId}) => {
+    return await SQLClient.query("UPDATE person SET is_admin=true WHERE id = $1", [personId]);
+}
+
+export const demotePersonAdmin = async (SQLClient, {personId}) => {
+    return await SQLClient.query("UPDATE person SET is_admin=false WHERE id = $1", [personId]);
+}
+
+
 

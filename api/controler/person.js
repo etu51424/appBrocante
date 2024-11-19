@@ -70,3 +70,21 @@ export const deletePerson = async (req, res) => {
         }
     }
 }
+
+export const promotePersonAdmin = async (req, res) => {
+    try{
+        await personModel.promotePersonAdmin(pool, req.params);
+        res.sendStatus(204);
+    } catch (err){
+        res.sendStatus(500);
+    }
+}
+
+export const demotePersonAdmin = async (req, res) => {
+    try{
+        await personModel.demotePersonAdmin(pool, req.params);
+        res.sendStatus(204);
+    } catch (err){
+        res.sendStatus(500);
+    }
+}
