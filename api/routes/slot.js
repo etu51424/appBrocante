@@ -6,8 +6,8 @@ import {default as SVM} from '../middleware/validator/validation/slot.js'
 const router = Router();
 
 router.post('/', authBasic, SVM.slotToAdd, createSlot);
-router.get('/:id/:fleaMarketId', authBasic, SVM.slotId, getSlot);
+router.get('/:id', authBasic, SVM.slotId, getSlot);
 router.patch('/', authBasic, SVM.slotToUpdate, updateSlot);
-router.delete('/:id/:fleaMarketId', authBasic, SVM.slotToDelete,deleteSlot);
+router.delete('/:id', authBasic, SVM.slotToDelete,deleteSlot);
 
 export default router;

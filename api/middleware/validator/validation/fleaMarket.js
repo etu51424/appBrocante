@@ -34,3 +34,5 @@ export const fleaMarketMiddlewares = {
         }
     }
 };
+
+export default fleaMarketMiddlewares;

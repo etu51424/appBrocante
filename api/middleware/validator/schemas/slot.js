@@ -2,25 +2,23 @@ import vine from '@vinejs/vine';
 
 const slotIdSchema = vine.object({
     id : vine.number(),
-    flea_market_id : vine.number(),
 })
 
 const slotToAddSchema = vine.object({
-    flea_market_id : vine.number(),
-    is_available : vine.number(),
+    fleaMarketId : vine.number(),
+    isAvailable : vine.number(),
     area : vine.number().optional(),
 })
 
 const slotToUpdateSchema = vine.object({
     id : vine.number(),
-    flea_market_id : vine.number().optional(),
-    is_available : vine.number().optional(),
+    fleaMarketId : vine.number().optional(),
+    isAvailable : vine.number().optional(),
     area : vine.number().optional(),
 })
 
 const slotToDeleteSchema = vine.object({
     id : vine.number(),
-    flea_market_id : vine.number(),
 })
 
 export const

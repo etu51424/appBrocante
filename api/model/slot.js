@@ -30,8 +30,8 @@ export const createSlot = async (SQLClient, {fleaMarketId, isAvailable, area}) =
     }
 }
 
-export const readSlot = async (SQLClient, {id, fleaMarketId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM slot WHERE id = $1 AND flea_market_id=$2", [id, fleaMarketId]);
+export const readSlot = async (SQLClient, {id}) => {
+    const {rows} = await SQLClient.query("SELECT * FROM slot WHERE id = $1", [id]);
     return rows[0];
 }
 
@@ -47,10 +47,13 @@ export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area
         queryValues.push(area);
         querySet.push(`area=$${queryValues.length}`);
     }
+    if (fleaMarketId){
+        queryValues.push(fleaMarketId);
+        querySet.push(`flea_market=$${queryValues.length}`);
+    }
     if (queryValues.length > 0) {
         queryValues.push(id);
-        queryValues.push(fleaMarketId);
-        query += `${querySet.join(", ")} WHERE id = $${queryValues.length-1} AND flea_market_id = $${queryValues.length}`;
+        query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
         return await SQLClient.query(query, queryValues);
     }
     else{
@@ -58,8 +61,8 @@ export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area
     }
 }
 
-export const deleteSlot = async (SQLClient, {id, fleaMarketId}) => {
-    return await SQLClient.query("DELETE FROM slot WHERE id = $1 AND flea_market_id= $2", [id, fleaMarketId]);
+export const deleteSlot = async (SQLClient, {id}) => {
+    return await SQLClient.query("DELETE FROM slot WHERE id = $1", [id]);
 }
 
 export const deleteSlotByFleaMarket = async (SQLClient, {fleaMarketId}) => {

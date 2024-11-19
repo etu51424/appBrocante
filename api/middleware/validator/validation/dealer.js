@@ -32,3 +32,5 @@ export const dealerValidatorMiddlewares = {
         }
     }
 };
+
+export default dealerValidatorMiddlewares;

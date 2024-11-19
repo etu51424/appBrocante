@@ -24,11 +24,10 @@ CREATE TABLE flea_market (
 
 -- Création de la table slot
 CREATE TABLE slot (
-	id SERIAL,
+	id SERIAL PRIMARY KEY,
 	flea_market_id INT NOT NULL,
 	is_available INT NOT NULL,
 	area REAL,   -- la remarque reste valide ici
-	PRIMARY KEY (id, flea_market_id),
 	CONSTRAINT fk_slot_flea_market FOREIGN KEY (flea_market_id) REFERENCES flea_market(id)
 );
 
@@ -69,14 +68,13 @@ CREATE TABLE dealer (
 
 -- Création de la table article
 CREATE TABLE article (
-	id SERIAL,
-	dealer_id INT REFERENCES dealer(person_id),
+	id SERIAL PRIMARY KEY,
+	dealer_id INT NOT NULL REFERENCES dealer(person_id),
 	title VARCHAR(150),
 	description VARCHAR(1000),
 	entry_date TIMESTAMP,
 	cost NUMERIC(10, 2), -- Format plus précis pour la gestion de montants monétaires
 	condition VARCHAR(50),
-	PRIMARY KEY (dealer_id, id)
 );
 
 -- Insérer des marchés aux puces
@@ -113,9 +111,10 @@ VALUES
 INSERT INTO dealer (person_id, type, description, signup_date, average_rating, review_count)
 VALUES
 (2, 'Artisan', 'Création de bijoux faits main.', '2024-09-01 10:00:00', 4.7, 25),
-(3, 'Collectionneur', 'Vente de pièces vintage et d\'antiquités.', '2024-10-10 11:30:00', 4.5, 15);
+(3, 'Collectionneur', "Vente de pièces vintage et d\'antiquités.", '2024-10-10 11:30:00', 4.5, 15);
 
--- Insérer des articles
+--  Insérer des articles
+
 INSERT INTO article (dealer_id, title, description, entry_date, cost, condition)
 VALUES
 (2, 'Collier en argent', 'Collier fait main avec des pierres précieuses.', '2024-11-01 14:00:00', 120.00, 'Neuf'),

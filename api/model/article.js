@@ -44,12 +44,12 @@ export const createArticle = async (SQLClient, {dealerId, title, description, en
     }
 }
 
-export const readArticle = async (SQLClient, {id, dealerId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM article WHERE id = $1 AND dealer_id = $2", [id, dealerId]);
+export const readArticle = async (SQLClient, {id}) => {
+    const {rows} = await SQLClient.query("SELECT * FROM article WHERE id = $1", [id]);
     return rows[0];
 }
 
-export const updateArticle = async (SQLClient, {id, dealer_id, title, description, entryDate, cost, condition}) => {
+export const updateArticle = async (SQLClient, {id, dealerId, title, description, entryDate, cost, condition}) => {
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
@@ -73,10 +73,13 @@ export const updateArticle = async (SQLClient, {id, dealer_id, title, descriptio
         queryValues.push(condition);
         querySet.push(`condition=$${queryValues.length}`);
     }
+    if (dealerId){
+        queryValues.push(dealerId);
+        querySet.push(`dealer_id=$${queryValues.length}`);
+    }
     if (queryValues.length > 0) {
         queryValues.push(id);
-        queryValues.push(dealer_id);
-        query += `${querySet.join(", ")} WHERE id = $${queryValues.length-1} AND dealer_id = $${queryValues.length}`;
+        query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
         return await SQLClient.query(query, queryValues);
     }
     else{

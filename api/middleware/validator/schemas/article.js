@@ -4,17 +4,16 @@ import vine from '@vinejs/vine';
 // schémas décrivent le format que doivent respecter les types
 
 const articleIDSchema = vine.object({
-    id: vine.number()
+    id: vine.number(),
 })
 
 // champs à valider lors de l'ajout: tous
 // sauf l'id qui est généré automatiquement à l'aide du name+password je pense
 const articleToAddSchema = vine.object({
-    dealer_id: vine.number().optional(),
+    dealerId: vine.number().optional(),
     title: vine.string().trim().optional(),
     description: vine.string().trim().optional(),
-    entry_date: vine.date().optional(),
-    //nb à 2 décimales
+    entryDate: vine.date().optional(),
     cost: vine.number().decimal(2).optional(),
     condition: vine.string().trim().optional()
 });
@@ -23,10 +22,10 @@ const articleToAddSchema = vine.object({
 // Check si l'id' est ajouté aussi lors de l'update. Peut-être pas utile
 const articleToUpdateSchema = vine.object({
     id: vine.number(),
+    dealerId: vine.number().optional(),
     title: vine.string().trim().optional(),
     description: vine.string().trim().optional(),
-    entry_date: vine.date().optional(),
-    //nb à 2 décimales
+    entryDate: vine.date().optional(),
     cost: vine.number().decimal(2).optional(),
     condition: vine.string().trim().optional()
 })
