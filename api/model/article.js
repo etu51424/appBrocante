@@ -4,32 +4,32 @@ export const createArticle = async (SQLClient, {dealerId, title, description, en
     const querySet = [];
     const queryValues = [];
     const dbColumns = [];
-    if (dealerId){
+    if (dealerId !== undefined){
         dbColumns.push("dealer_id");
         queryValues.push(dealerId);
         querySet.push(`$${queryValues.length}`);
     }
-    if (title){
+    if (title !== undefined){
         dbColumns.push("title");
         queryValues.push(title);
         querySet.push(`$${queryValues.length}`);
     }
-    if (description){
+    if (description !== undefined){
         dbColumns.push("description");
         queryValues.push(description);
         querySet.push(`$${queryValues.length}`);
     }
-    if (entry_date){
+    if (entry_date !== undefined){
         dbColumns.push("entry_date");
         queryValues.push(entry_date);
         querySet.push(`$${queryValues.length}`);
     }
-    if (cost){
+    if (cost !== undefined){
         dbColumns.push("cost");
         queryValues.push(cost);
         querySet.push(`$${queryValues.length}`);
     }
-    if (condition){
+    if (condition !== undefined){
         dbColumns.push("condition");
         queryValues.push(condition);
         querySet.push(`$${queryValues.length}`);
@@ -53,27 +53,27 @@ export const updateArticle = async (SQLClient, {id, dealerId, title, description
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
-    if (title){
+    if (title !== undefined){
         queryValues.push(title);
         querySet.push(`title=$${queryValues.length}`);
     }
-    if (description){
+    if (description !== undefined){
         queryValues.push(description);
         querySet.push(`description=$${queryValues.length}`);
     }
-    if (entryDate){
+    if (entryDate !== undefined){
         queryValues.push(entryDate);
         querySet.push(`entry_date=$${queryValues.length}`);
     }
-    if (cost){
+    if (cost !== undefined){
         queryValues.push(cost);
         querySet.push(`cost=$${queryValues.length}`);
     }
-    if (condition){
+    if (condition !== undefined){
         queryValues.push(condition);
         querySet.push(`condition=$${queryValues.length}`);
     }
-    if (dealerId){
+    if (dealerId !== undefined){
         queryValues.push(dealerId);
         querySet.push(`dealer_id=$${queryValues.length}`);
     }

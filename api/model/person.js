@@ -7,47 +7,47 @@ export const createPerson = async (SQLClient, {name, firstName, lastName, addres
     const querySet = [];
     const queryValues = [];
     const dbColumns = [];
-    if (firstName){
+    if (firstName !== undefined){
         dbColumns.push("first_name");
         queryValues.push(firstName);
         querySet.push(`$${queryValues.length}`);
     }
-    if (lastName){
+    if (lastName !== undefined){
         dbColumns.push("last_name");
         queryValues.push(lastName);
         querySet.push(`$${queryValues.length}`);
     }
-    if (address){
+    if (address !== undefined){
         dbColumns.push("address");
         queryValues.push(address);
         querySet.push(`$${queryValues.length}`);
     }
-    if (phoneNumber){
+    if (phoneNumber !== undefined){
         dbColumns.push("phone_number");
         queryValues.push(phoneNumber);
         querySet.push(`$${queryValues.length}`);
     }
-    if (lastEditDate){
+    if (lastEditDate !== undefined){
         dbColumns.push("last_edit_date");
         queryValues.push(lastEditDate);
         querySet.push(`$${queryValues.length}`);
     }
-    if (profile_picture){
+    if (profile_picture !== undefined){
         dbColumns.push("profile_picture");
         queryValues.push(profile_picture);
         querySet.push(`$${queryValues.length}`);
     }
-    if (name) {
+    if (name !== undefined) {
         dbColumns.push("name");
         queryValues.push(name);
         querySet.push(`$${queryValues.length}`);
     }
-    if (email) {
+    if (email !== undefined) {
         dbColumns.push("email");
         queryValues.push(email);
         querySet.push(`$${queryValues.length}`);
     }
-    if (password) {
+    if (password !== undefined) {
         dbColumns.push("password");
         queryValues.push(password);
         querySet.push(`$${queryValues.length}`);
@@ -87,39 +87,39 @@ export const updatePerson = async (SQLClient, {id, name, firstName, lastName, ad
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
-    if (name){
+    if (name !== undefined){
         queryValues.push(name);
         querySet.push(`name=$${queryValues.length}`);
     }
-    if (firstName){
+    if (firstName !== undefined){
         queryValues.push(firstName);
         querySet.push(`first_name=$${queryValues.length}`);
     }
-    if (lastName){
+    if (lastName !== undefined){
         queryValues.push(lastName);
         querySet.push(`last_name=$${queryValues.length}`);
     }
-    if (address){
+    if (address !== undefined){
         queryValues.push(address);
         querySet.push(`address=$${queryValues.length}`);
     }
-    if (phoneNumber){
+    if (phoneNumber !== undefined){
         queryValues.push(phoneNumber);
         querySet.push(`phone_number=$${queryValues.length}`);
     }
-    if (email){
+    if (email !== undefined){
         queryValues.push(email);
         querySet.push(`email=$${queryValues.length}`);
     }
-    if (lastEditDate){
+    if (lastEditDate !== undefined){
         queryValues.push(lastEditDate);
         querySet.push(`last_edit_date=$${queryValues.length}`);
     }
-    if (profilePicture){
+    if (profilePicture !== undefined){
         queryValues.push(profilePicture);
         querySet.push(`profile_picture=$${queryValues.length}`);
     }
-    if (password){
+    if (password !== undefined){
         queryValues.push(password);
         querySet.push(`password=$${queryValues.length}`);
     }

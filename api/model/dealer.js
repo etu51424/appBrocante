@@ -1,38 +1,35 @@
-import {pool} from "../database/dbAccess.js";
-import {deleteArticleByDealer} from "./article.js";
-
 export const createDealer = async (SQLClient, {personId, type, description, signupDate, averageRating, reviewCount}) => {
     let query = "INSERT INTO dealer ";
 
     const querySet = [];
     const queryValues = [];
     const dbColumns = [];
-    if (personId){
+    if (personId !== undefined){
         dbColumns.push("person_id");
         queryValues.push(personId);
         querySet.push(`$${queryValues.length}`);
     }
-    if (type){
+    if (type !== undefined){
         dbColumns.push("type");
         queryValues.push(type);
         querySet.push(`$${queryValues.length}`);
     }
-    if (description){
+    if (description !== undefined){
         dbColumns.push("description");
         queryValues.push(description);
         querySet.push(`$${queryValues.length}`);
     }
-    if (signupDate){
+    if (signupDate !== undefined){
         dbColumns.push("signup_date");
         queryValues.push(signupDate);
         querySet.push(`$${queryValues.length}`);
     }
-    if (averageRating){
+    if (averageRating !== undefined){
         dbColumns.push("average_rating");
         queryValues.push(averageRating);
         querySet.push(`$${queryValues.length}`);
     }
-    if (reviewCount){
+    if (reviewCount !== undefined){
         dbColumns.push("review_count");
         queryValues.push(reviewCount);
         querySet.push(`$${queryValues.length}`);
@@ -56,35 +53,35 @@ export const updateDealer = async (SQLClient, {personId, type, description, sign
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
-    if (type){
+    if (type !== undefined){
         queryValues.push(type);
         querySet.push(`type=$${queryValues.length}`);
     }
-    if (description){
+    if (description !== undefined){
         queryValues.push(description);
         querySet.push(`description=$${queryValues.length}`);
     }
-    if (signupDate){
+    if (signupDate !== undefined){
         queryValues.push(signupDate);
         querySet.push(`signup_date=$${queryValues.length}`);
     }
-    if (averageRating){
+    if (averageRating !== undefined){
         queryValues.push(averageRating);
         querySet.push(`average_rating=$${queryValues.length}`);
     }
-    if (reviewCount){
+    if (reviewCount !== undefined){
         queryValues.push(reviewCount);
         querySet.push(`review_count=$${queryValues.length}`);
     }
-    if (isCharity){
+    if (isCharity !== undefined){
         queryValues.push(isCharity);
         querySet.push(`is_charity=$${queryValues.length}`);
     }
-    if (averageRating){
+    if (averageRating !== undefined){
         queryValues.push(averageRating);
         querySet.push(`average_rating=$${queryValues.length}`);
     }
-    if (reviewCount){
+    if (reviewCount !== undefined){
         queryValues.push(reviewCount);
         querySet.push(`review_count=$${queryValues.length}`);
     }

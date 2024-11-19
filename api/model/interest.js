@@ -4,27 +4,27 @@ export const createInterest = async (SQLClient, {fleaMarketId, personId, isInter
     const querySet = [];
     const queryValues = [];
     const dbColumns = [];
-    if (fleaMarketId){
+    if (fleaMarketId !== undefined){
         dbColumns.push("flea_market_id");
         queryValues.push(fleaMarketId);
         querySet.push(`$${queryValues.length}`);
     }
-    if (personId){
+    if (personId !== undefined){
         dbColumns.push("person_id");
         queryValues.push(personId);
         querySet.push(`$${queryValues.length}`);
     }
-    if (isInterested){
+    if (isInterested !== undefined){
         dbColumns.push("is_interested");
         queryValues.push(isInterested);
         querySet.push(`$${queryValues.length}`);
     }
-    if (isDealer){
+    if (isDealer !== undefined){
         dbColumns.push("is_dealer");
         queryValues.push(isDealer);
         querySet.push(`$${queryValues.length}`);
     }
-    if (participation){
+    if (participation !== undefined){
         dbColumns.push("participation");
         queryValues.push(participation);
         querySet.push(`$${queryValues.length}`);
@@ -48,15 +48,15 @@ export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInter
     let query = "UPDATE interest SET ";
     const querySet = [];
     const queryValues = [];
-    if (isInterested){
+    if (isInterested !== undefined){
         queryValues.push(isInterested);
         querySet.push(`is_interested=$${queryValues.length}`);
     }
-    if (isDealer){
+    if (isDealer !== undefined){
         queryValues.push(isDealer);
         querySet.push(`is_dealer=$${queryValues.length}`);
     }
-    if (participation){
+    if (participation !== undefined){
         queryValues.push(participation);
         querySet.push(`participation=$${queryValues.length}`);
     }

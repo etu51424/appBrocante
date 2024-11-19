@@ -4,17 +4,17 @@ export const createSlot = async (SQLClient, {fleaMarketId, isAvailable, area}) =
     const querySet = [];
     const queryValues = [];
     const dbColumns = [];
-    if (area){
+    if (area !== undefined){
         dbColumns.push("area");
         queryValues.push(area);
         querySet.push(`$${queryValues.length}`);
     }
-    if (fleaMarketId) {
+    if (fleaMarketId !== undefined) {
         dbColumns.push("flea_market_id");
         queryValues.push(fleaMarketId);
         querySet.push(`$${queryValues.length}`);
     }
-    if (isAvailable) {
+    if (isAvailable !== undefined) {
         dbColumns.push("is_available");
         queryValues.push(isAvailable);
         querySet.push(`$${queryValues.length}`);
@@ -39,15 +39,15 @@ export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
-    if (isAvailable){
+    if (isAvailable !== undefined){
         queryValues.push(isAvailable);
         querySet.push(`is_available=$${queryValues.length}`);
     }
-    if (area){
+    if (area !== undefined){
         queryValues.push(area);
         querySet.push(`area=$${queryValues.length}`);
     }
-    if (fleaMarketId){
+    if (fleaMarketId !== undefined){
         queryValues.push(fleaMarketId);
         querySet.push(`flea_market=$${queryValues.length}`);
     }
