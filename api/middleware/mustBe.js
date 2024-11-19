@@ -1,3 +1,5 @@
+// middleware d'authorization
+
 export const dealer = (req, res, next) => {
     if(req.session.status === 'dealer'){
         next();
