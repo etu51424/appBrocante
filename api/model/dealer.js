@@ -45,12 +45,12 @@ export const createDealer = async (SQLClient, {personId, type, description, sign
 }
 
 export const readDealer = async (SQLClient, {personId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM dealer WHERE id = $1", [personId]);
+    const {rows} = await SQLClient.query("SELECT * FROM dealer WHERE person_id = $1", [personId]);
     return rows[0];
 }
 
 export const updateDealer = async (SQLClient, {personId, type, description, signupDate, averageRating, reviewCount}) => {
-    let query = "UPDATE person SET ";
+    let query = "UPDATE dealer SET ";
     const querySet = [];
     const queryValues = [];
     if (type !== undefined){
@@ -64,18 +64,6 @@ export const updateDealer = async (SQLClient, {personId, type, description, sign
     if (signupDate !== undefined){
         queryValues.push(signupDate);
         querySet.push(`signup_date=$${queryValues.length}`);
-    }
-    if (averageRating !== undefined){
-        queryValues.push(averageRating);
-        querySet.push(`average_rating=$${queryValues.length}`);
-    }
-    if (reviewCount !== undefined){
-        queryValues.push(reviewCount);
-        querySet.push(`review_count=$${queryValues.length}`);
-    }
-    if (isCharity !== undefined){
-        queryValues.push(isCharity);
-        querySet.push(`is_charity=$${queryValues.length}`);
     }
     if (averageRating !== undefined){
         queryValues.push(averageRating);

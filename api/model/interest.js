@@ -40,7 +40,7 @@ export const createInterest = async (SQLClient, {fleaMarketId, personId, isInter
 }
 
 export const readInterest = async (SQLClient, {fleaMarketId, personId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM interest WHERE id = $1 AND person_id=$2", [fleaMarketId, personId]);
+    const {rows} = await SQLClient.query("SELECT * FROM interest WHERE flea_market_id = $1 AND person_id=$2", [fleaMarketId, personId]);
     return rows[0];
 }
 

@@ -60,7 +60,7 @@ export const readFleaMarket = async (SQLClient, {fleaMarketId}) => {
 }
 
 export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateEnd, title, theme, isCharity, averageRating, reviewCount}) => {
-    let query = "UPDATE person SET ";
+    let query = "UPDATE flea_market SET ";
     const querySet = [];
     const queryValues = [];
     if (address !== undefined){

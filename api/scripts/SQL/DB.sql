@@ -27,7 +27,7 @@ CREATE TABLE slot (
 	id SERIAL PRIMARY KEY,
 	flea_market_id INT NOT NULL,
 	is_available INT NOT NULL,
-	area REAL,   -- la remarque reste valide ici
+	area REAL,
 	CONSTRAINT fk_slot_flea_market FOREIGN KEY (flea_market_id) REFERENCES flea_market(id)
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE person (
 	email VARCHAR(40) NOT NULL,
 	last_edit_date TIMESTAMP,
 	password VARCHAR NOT NULL,
-	profile_picture VARCHAR(100), -- on stocke le nom du fichier qui sera dans les dossiers de l'api
+	profile_picture VARCHAR(100),
 	is_admin BOOLEAN NOT NULL DEFAULT false
 );
 
@@ -73,8 +73,8 @@ CREATE TABLE article (
 	title VARCHAR(150),
 	description VARCHAR(1000),
 	entry_date TIMESTAMP,
-	cost NUMERIC(10, 2), -- Format plus précis pour la gestion de montants monétaires
-	condition VARCHAR(50),
+	cost NUMERIC(10, 2),
+	condition VARCHAR(50)
 );
 
 -- Insérer des marchés aux puces
@@ -111,7 +111,7 @@ VALUES
 INSERT INTO dealer (person_id, type, description, signup_date, average_rating, review_count)
 VALUES
 (2, 'Artisan', 'Création de bijoux faits main.', '2024-09-01 10:00:00', 4.7, 25),
-(3, 'Collectionneur', "Vente de pièces vintage et d\'antiquités.", '2024-10-10 11:30:00', 4.5, 15);
+(3, 'Collectionneur', 'Vente de pièces vintage et dantiquités', '2024-10-10 11:30:00', 4.5, 15);
 
 --  Insérer des articles
 

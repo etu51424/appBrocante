@@ -5,9 +5,9 @@ import {authBasic} from '../middleware/identification.js';
 import {default as SVM} from '../middleware/validator/validation/slot.js'
 const router = Router();
 
-router.post('/', authBasic, SVM.slotToAdd, createSlot);
-router.get('/:id', authBasic, SVM.slotId, getSlot);
-router.patch('/', authBasic, SVM.slotToUpdate, updateSlot);
-router.delete('/:id', authBasic, SVM.slotToDelete,deleteSlot);
+router.post('/', SVM.slotToAdd, createSlot);
+router.get('/:id', SVM.slotId, getSlot);
+router.patch('/', SVM.slotToUpdate, updateSlot);
+router.delete('/:id', SVM.slotToDelete,deleteSlot);
 
 export default router;

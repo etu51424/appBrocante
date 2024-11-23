@@ -14,7 +14,7 @@ const articleToAddSchema = vine.object({
     title: vine.string().trim().optional(),
     description: vine.string().trim().optional(),
     entryDate: vine.date().optional(),
-    cost: vine.number().decimal(2).optional(),
+    cost: vine.number().optional(),
     condition: vine.string().trim().optional()
 });
 
@@ -26,7 +26,7 @@ const articleToUpdateSchema = vine.object({
     title: vine.string().trim().optional(),
     description: vine.string().trim().optional(),
     entryDate: vine.date().optional(),
-    cost: vine.number().decimal(2).optional(),
+    cost: vine.number().optional(),
     condition: vine.string().trim().optional()
 })
 

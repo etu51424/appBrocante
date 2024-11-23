@@ -36,7 +36,7 @@ export const readSlot = async (SQLClient, {id}) => {
 }
 
 export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area}) => {
-    let query = "UPDATE person SET ";
+    let query = "UPDATE slot SET ";
     const querySet = [];
     const queryValues = [];
     if (isAvailable !== undefined){

@@ -14,7 +14,7 @@ const dealerToAddSchema = vine.object({
 });
 
 const dealerToUpdateSchema= vine.object({
-    personId : vine.string().trim(),
+    personId : vine.number(),
     type : vine.string().trim().optional(),
     lastName : vine.string().trim().optional(),
     description : vine.string().trim().optional(),

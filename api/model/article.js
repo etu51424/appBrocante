@@ -50,7 +50,7 @@ export const readArticle = async (SQLClient, {id}) => {
 }
 
 export const updateArticle = async (SQLClient, {id, dealerId, title, description, entryDate, cost, condition}) => {
-    let query = "UPDATE person SET ";
+    let query = "UPDATE article SET ";
     const querySet = [];
     const queryValues = [];
     if (title !== undefined){

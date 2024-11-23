@@ -6,10 +6,10 @@ import {default as PVM} from "../middleware/validator/validation/person.js";
 
 const router = Router();
 
-router.post('/', authBasic, PVM.personToAdd, createPerson);
-router.get('/:personId', authBasic, PVM.personId, getPerson);
-router.patch('/', authBasic, PVM.personToUpdate, updatePerson);
-router.delete('/:personId', authBasic, PVM.personToDelete, deletePerson);
+router.post('/', PVM.personToAdd, createPerson);
+router.get('/:personId', PVM.personId, getPerson);
+router.patch('/', PVM.personToUpdate, updatePerson);
+router.delete('/:personId', PVM.personToDelete, deletePerson);
 router.patch('/promote/:personId', PVM.personId,promotePersonAdmin);
 router.patch('/demote/:personId', PVM.personId, demotePersonAdmin);
 

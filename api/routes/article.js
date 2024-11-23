@@ -6,9 +6,9 @@ import {default as AVM} from '../middleware/validator/validation/article.js'
 
 const router = Router();
 
-router.post('/', authBasic, AVM.articleToAdd, createArticle);
-router.get('/:id', authBasic, AVM.articleId, getArticle);
-router.patch('/', authBasic, AVM.articleToUpdate, updateArticle);
-router.delete('/:id', authBasic, AVM.articleToDelete, deleteArticle);
+router.post('/', AVM.articleToAdd, createArticle);
+router.get('/:id', AVM.articleId, getArticle);
+router.patch('/', AVM.articleToUpdate, updateArticle);
+router.delete('/:id', AVM.articleToDelete, deleteArticle);
 
 export default router;

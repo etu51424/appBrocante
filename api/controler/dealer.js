@@ -30,6 +30,7 @@ export const updateDealer = async (req, res) => {
         await dealerModel.updateDealer(pool, req.body);
         res.sendStatus(204);
     } catch (err){
+        console.log(err)
         res.sendStatus(500);
     }
 }

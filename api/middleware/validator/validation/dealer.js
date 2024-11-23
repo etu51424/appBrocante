@@ -11,14 +11,16 @@ export const dealerValidatorMiddlewares = {
     },
     dealerToAdd : async (req, res, next) => {
         try {
-            req.val = await dealerValidator.dealerToAdd.validate(req.body); 
+            req.val = await dealerValidator.dealerToAdd.validate(req.body);
+            next();
         } catch (e) {
             res.status(400).send(e.messages);
         }
     },
     dealerToUpdate : async (req, res, next) => {
         try {
-            req.val = await dealerValidator.dealerToUpdate.validate(req.body); 
+            req.val = await dealerValidator.dealerToUpdate.validate(req.body);
+            next();
         } catch (e) {
             res.status(400).send(e.messages);
         }
@@ -27,6 +29,7 @@ export const dealerValidatorMiddlewares = {
         try { 
             // params car identique que dealerId middleware
             req.val = await dealerValidator.dealerToDelete.validate(req.params)
+            next();
         } catch (e) {
             res.status(400).send(e.messages);
         }

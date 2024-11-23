@@ -14,6 +14,7 @@ const articleValidatorMiddleware = {
     articleToAdd : async (req, res, next) => {
         try {
             req.val = await articleValidator.articleToAdd.validate(req.body);
+            next();
         } catch(e) {
             res.status(400).send(e.messages);
         }
@@ -21,6 +22,7 @@ const articleValidatorMiddleware = {
     articleToUpdate : async (req, res, next) => {
         try {
             req.val =await articleValidator.articleToUpdate.validate(req.body);
+            next();
         } catch(e) {
             res.status(400).send(e.messages);
         }

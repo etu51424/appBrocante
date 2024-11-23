@@ -6,9 +6,9 @@ import {default as IVM} from '../middleware/validator/validation/interest.js'
 
 const router = Router();
 
-router.post('/', authBasic, IVM.interestToAdd, createInterest);
-router.get('/:fleaMarketId/:personId', authBasic, IVM.interestId, getInterest);
-router.patch('/', authBasic, IVM.interestToUpdate, updateInterest);
-router.delete('/:fleaMarketId/:personId', authBasic, IVM.interestToDelete, deleteInterest);
+router.post('/', IVM.interestToAdd, createInterest);
+router.get('/:fleaMarketId/:personId', IVM.interestId, getInterest);
+router.patch('/', IVM.interestToUpdate, updateInterest);
+router.delete('/:fleaMarketId/:personId', IVM.interestToDelete, deleteInterest);
 
 export default router;
