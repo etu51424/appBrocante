@@ -32,6 +32,14 @@ const personValidatorMiddleware = {
         } catch (e) {
             res.status(400).send(e.messages);
         }
+    },
+    login : async (req, res, next) =>{
+      try{
+          req.val = await personValidator.login.validate(req.body);
+          next();
+      }  catch (e){
+          res.status(400).send(e.messages);
+      }
     }
 };
 

@@ -1,5 +1,3 @@
-import{verify} from "../utils/utils.js";
-
 export const createPerson = async (SQLClient, {name, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profile_picture, password}) => {
     let query = "INSERT INTO person ";
@@ -66,20 +64,6 @@ export const createPerson = async (SQLClient, {name, firstName, lastName, addres
 export const readPerson = async (SQLClient, {personId}) => {
     const {rows} = await SQLClient.query("SELECT * FROM person WHERE id = $1", [personId]);
     return rows[0];
-}
-
-export const readPersonWithPassword = async (SQLClient, {personId, password}) => {
-    const responses = await Promise.all([
-        readPerson(SQLClient, {personId}),
-    ]);
-    if (responses[0]) {
-        return await verify(responses[0]?.password, password, Buffer.from(process.env.PEPPER)) ?
-            {personId : responses[0].id, status:"user"} :
-            {personId : null, status : null};
-    }
-    else {
-        return {personId : null, status : null};
-    }
 }
 
 export const updatePerson = async (SQLClient, {id, name, firstName, lastName, address,

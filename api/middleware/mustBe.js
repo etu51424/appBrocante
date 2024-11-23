@@ -16,3 +16,12 @@ export const admin = (req, res, next) => {
         res.sendStatus(403);
     }
 }
+
+export const himself = (req, res, next) => {
+    if (req.session.personId === req.val.personId){
+        next();
+    }
+    else{
+        res.sendStatus(403)
+    }
+}

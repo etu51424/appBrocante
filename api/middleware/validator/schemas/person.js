@@ -26,7 +26,7 @@ const personToUpdateSchema= vine.object({
     email : vine.string().email().trim().optional(),
     lastEditDate : vine.date().optional(),
     profilePicture : vine.any().optional(),
-    password : vine.string().optional()
+    password : vine.string().optional(),
 });
 
 //redondant sur personIdSchema ptete
@@ -34,8 +34,14 @@ const personToDeleteSchema = vine.object({
     personId : vine.number(),
 })
 
+const loginSchema = vine.object({
+    personId : vine.number(),
+    password : vine.string()
+})
+
 export const
     personId = vine.compile(personIdSchema),
     personToAdd = vine.compile(personToAddSchema),
     personToUpdate = vine.compile(personToUpdateSchema),
-    personToDelete = vine.compile(personToDeleteSchema)
+    personToDelete = vine.compile(personToDeleteSchema),
+    login = vine.compile(loginSchema)

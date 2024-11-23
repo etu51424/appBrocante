@@ -9,7 +9,7 @@ import {hash} from "../utils/utils.js";
 export const createPerson = async (req, res) => {
 
     try{
-        req.body.password = await hash(req.body.password, Buffer.from(process.env.PEPPER));
+        req.body.password = await hash(req.body.password);
         const id = await personModel.createPerson(pool, req.body);
         res.status(201).json({id});
     } catch (err){
@@ -19,7 +19,7 @@ export const createPerson = async (req, res) => {
 
 export const getPerson = async (req, res) => {
     try{
-        const person = await personModel.readPerson(pool, req.params);
+        const person = await personModel.readPerson(pool, req.val);
         if (person) {
             res.send(person);
         }

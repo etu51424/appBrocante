@@ -1,16 +1,13 @@
 import {Router} from "express";
-import {createPerson, getPerson, updatePerson, deletePerson, promotePersonAdmin, demotePersonAdmin} from "../controler/person.js";
-
-import {authBasic} from "../middleware/identification.js";
+import {createPerson, getPerson, updatePerson, deletePerson} from "../controler/person.js";
+import {jwtCheck} from "../middleware/jwt.js";
 import {default as PVM} from "../middleware/validator/validation/person.js";
 
 const router = Router();
 
-router.post('/', PVM.personToAdd, createPerson);
-router.get('/:personId', PVM.personId, getPerson);
-router.patch('/', PVM.personToUpdate, updatePerson);
-router.delete('/:personId', PVM.personToDelete, deletePerson);
-router.patch('/promote/:personId', PVM.personId,promotePersonAdmin);
-router.patch('/demote/:personId', PVM.personId, demotePersonAdmin);
+router.post('/', jwtCheck, PVM.personToAdd, createPerson);
+router.get('/:personId', jwtCheck, PVM.personId, getPerson);
+router.patch('/', jwtCheck, PVM.personToUpdate, updatePerson);
+router.delete('/:personId', jwtCheck, PVM.personToDelete, deletePerson);
 
 export default router;

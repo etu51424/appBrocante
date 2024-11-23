@@ -1,4 +1,4 @@
-import {readPersonWithPassword} from "../model/person.js";
+import {readPersonWithPassword} from "../model/client.js";
 import {pool} from "../database/dbAccess.js";
 
 export const authBasic = async (req, res, next) => {
@@ -17,4 +17,4 @@ export const authBasic = async (req, res, next) => {
     } else {
         res.status(401).send('No basic authorization given');
     }
-}
+};
