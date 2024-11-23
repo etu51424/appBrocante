@@ -1,4 +1,4 @@
-import * as argon2id from "argon2";
+import{verify} from "../utils/utils.js";
 
 export const createPerson = async (SQLClient, {name, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profile_picture, password}) => {
@@ -73,7 +73,7 @@ export const readPersonWithPassword = async (SQLClient, {personId, password}) =>
         readPerson(SQLClient, {personId}),
     ]);
     if (responses[0]) {
-        return await argon2id.verify(responses[0]?.password, password, {secret : Buffer.from(process.env.PEPPER)}) ?
+        return await verify(responses[0]?.password, password, Buffer.from(process.env.PEPPER)) ?
             {personId : responses[0].id, status:"user"} :
             {personId : null, status : null};
     }

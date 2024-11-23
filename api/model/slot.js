@@ -49,7 +49,7 @@ export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area
     }
     if (fleaMarketId !== undefined){
         queryValues.push(fleaMarketId);
-        querySet.push(`flea_market=$${queryValues.length}`);
+        querySet.push(`flea_market_id=$${queryValues.length}`);
     }
     if (queryValues.length > 0) {
         queryValues.push(id);

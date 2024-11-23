@@ -26,7 +26,7 @@ CREATE TABLE flea_market (
 CREATE TABLE slot (
 	id SERIAL PRIMARY KEY,
 	flea_market_id INT NOT NULL,
-	is_available INT NOT NULL,
+	is_available BOOLEAN NOT NULL,
 	area REAL,
 	CONSTRAINT fk_slot_flea_market FOREIGN KEY (flea_market_id) REFERENCES flea_market(id)
 );
@@ -87,11 +87,11 @@ VALUES
 -- Insérer des emplacements (slots)
 INSERT INTO slot (flea_market_id, is_available, area)
 VALUES
-(1, 1, 10.5),
-(1, 0, 15.0),
-(2, 1, 8.0),
-(3, 1, 12.0),
-(3, 0, 20.0);
+(1, TRUE, 10.5),
+(1, FALSE, 15.0),
+(2, TRUE, 8.0),
+(3, TRUE, 12.0),
+(3, FALSE, 20.0);
 
 -- Insérer des personnes
 INSERT INTO person (name, first_name, last_name, address, phone_number, email, last_edit_date, password, profile_picture, is_admin)

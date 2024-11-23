@@ -35,7 +35,7 @@ export const updateInterest = async (req, res) => {
 
 export const deleteInterest = async (req, res) => {
     try{
-        await interestModel.deleteInterest(pool, req.body);
+        await interestModel.deleteInterest(pool, req.params);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);

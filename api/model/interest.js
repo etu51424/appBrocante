@@ -72,6 +72,7 @@ export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInter
 }
 
 export const deleteInterest = async (SQLClient, {fleaMarketId, personId}) => {
+    console.log(fleaMarketId, personId);
     return await SQLClient.query("DELETE FROM interest WHERE flea_market_id=$1 AND person_id = $2", [fleaMarketId, personId]);
 }
 

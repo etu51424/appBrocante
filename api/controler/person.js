@@ -3,13 +3,13 @@ import {pool} from "../database/dbAccess.js";
 import {deleteArticleByDealer} from "../model/article.js";
 import {deleteDealer} from "../model/dealer.js";
 import {deleteInterestByPerson} from "../model/interest.js";
-import * as argon2id from "argon2";
+import {hash} from "../utils/utils.js";
 
 
 export const createPerson = async (req, res) => {
 
     try{
-        req.body.password = await argon2id.hash(req.body.password, {secret : Buffer.from(process.env.PEPPER)});
+        req.body.password = await hash(req.body.password, Buffer.from(process.env.PEPPER));
         const id = await personModel.createPerson(pool, req.body);
         res.status(201).json({id});
     } catch (err){
