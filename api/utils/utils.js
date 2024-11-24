@@ -20,12 +20,6 @@ export const jwt_verify = (jwt, options={}) =>{
 }
 
 export const deleteFile = async (filePath) =>{
-    try {
-        await fs.remove(filePath);
-        console.log('File deleted successfully');
-    } catch (err) {
-        console.error('Error deleting file:', err);
-    }
-
+    return await fs.remove(filePath);
 }
 
