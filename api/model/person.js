@@ -1,3 +1,5 @@
+import {personId} from "../middleware/validator/schemas/person.js";
+
 export const createPerson = async (SQLClient, {name, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profile_picture, password}) => {
     let query = "INSERT INTO person ";
@@ -66,8 +68,9 @@ export const readPerson = async (SQLClient, {personId}) => {
     return rows[0];
 }
 
-export const updatePerson = async (SQLClient, {id, name, firstName, lastName, address,
+export const updatePerson = async (SQLClient, {personId, name, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profilePicture, password}) => {
+
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
@@ -108,7 +111,7 @@ export const updatePerson = async (SQLClient, {id, name, firstName, lastName, ad
         querySet.push(`password=$${queryValues.length}`);
     }
     if (queryValues.length > 0) {
-        queryValues.push(id);
+        queryValues.push(personId);
         query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
         return await SQLClient.query(query, queryValues);
     }
