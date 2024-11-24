@@ -3,10 +3,11 @@ import {saveAvatar} from "../model/avatar.js";
 import * as personModel from "../model/person.js";
 import {pool} from "../database/dbAccess.js";
 import {deleteFile} from "../utils/utils.js";
+import e from "express";
 
 const destFolderAvatar = "./upload/avatar";
 
-export const addAvatar = async (req, res) => {
+export const createAvatar = async (req, res) => {
     try{
         const avatar = req.files?.avatar[0];
         if (avatar !== undefined) {
@@ -23,12 +24,39 @@ export const addAvatar = async (req, res) => {
     }
 };
 
+export const getAvatar = async (req, res) => {
+
+}
+
+export const updateAvatar = async (req, res) => {
+    try{
+        let person = await personModel.readPerson(pool, req.params);
+
+        if (person?.profile_picture !== undefined && person?.profile_picture !== null) {
+            await deleteFile(`${destFolderAvatar}/${person?.profile_picture}.jpeg`);
+        }
+
+        const avatar = req.files?.avatar[0];
+        if (avatar !== undefined) {
+            let imageName = uuid();
+            await personModel.updatePerson(pool, {personId: req.params.personId, profilePicture: imageName});
+            await saveAvatar(avatar.buffer, imageName, destFolderAvatar);
+            res.sendStatus(204);
+        }
+        else{
+            res.sendStatus(400);
+        }
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+}
+
 export const deleteAvatar = async (req, res) => {
     try{
-        let person = await personModel.readPerson(pool, req.body);
-        console.log(person);
+        let person = await personModel.readPerson(pool, req.params);
         if (person?.profile_picture !== undefined) {
-            await personModel.updatePerson(pool, {personId: req.body.personId, profilePicture: null});
+            await personModel.updatePerson(pool, {personId: req.params.personId, profilePicture: null});
             await deleteFile(`${destFolderAvatar}/${person?.profile_picture}.jpeg`);
             res.sendStatus(204);
         }
@@ -37,6 +65,7 @@ export const deleteAvatar = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err){
+        console.error(err);
         res.sendStatus(500);
     }
 }
