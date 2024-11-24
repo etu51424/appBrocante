@@ -2,6 +2,7 @@ import * as argon2id from "argon2";
 import 'dotenv/config.js';
 import jsonwebtoken from 'jsonwebtoken';
 import * as fs from 'fs-extra'
+import {SMTPClient} from "emailjs";
 
 export const hash =  (password) =>{
     return argon2id.hash(password, {secret : Buffer.from(process.env.PEPPER)});
@@ -22,4 +23,27 @@ export const jwt_verify = (jwt, options={}) =>{
 export const deleteFile = async (filePath) =>{
     return await fs.remove(filePath);
 }
+
+export const sendMail = async (clientEmail, subject, text) =>{
+    const client = new SMTPClient({
+        user: 'testhenallux355@gmail.com',
+        password: process.env.EMAIL_PASSWORD,
+        host: 'smtp.gmail.com',
+        ssl: true,
+    });
+
+    try {
+        const message = await client.sendAsync({
+            text: text,
+            from: 'testhenallux355@gmail.com',
+            to: clientEmail,
+            subject: subject,
+        });
+
+        console.log('Message sent:', message);
+    } catch (err) {
+        console.error('Error sending email:', err);
+    }
+}
+
 

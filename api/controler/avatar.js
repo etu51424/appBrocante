@@ -2,8 +2,7 @@ import {v4 as uuid} from 'uuid';
 import {saveAvatar} from "../model/avatar.js";
 import * as personModel from "../model/person.js";
 import {pool} from "../database/dbAccess.js";
-import {deleteFile} from "../utils/utils.js";
-import e from "express";
+import {deleteFile, sendMail} from "../utils/utils.js";
 
 const destFolderAvatar = "./upload/avatar";
 

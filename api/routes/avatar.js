@@ -1,6 +1,6 @@
 import {Router} from "express";
 import multer from "multer";
-import {createAvatar, deleteAvatar} from "../controler/avatar.js";
+import {createAvatar, getAvatar, deleteAvatar} from "../controler/avatar.js";
 import {default as PVM} from "../middleware/validator/validation/person.js";
 
 const storage = multer.memoryStorage();
@@ -14,7 +14,7 @@ const upload = multer({
 const router = Router();
 
 router.post('/', upload.fields([{name: 'avatar', maxCount: 1}]), createAvatar);
-router.get('/:personId');
+router.get('/:personId', getAvatar);
 router.patch('/');
 router.delete('/:personId', deleteAvatar);
 
