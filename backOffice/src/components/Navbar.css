@@ -1,0 +1,76 @@
+.navbar {
+    background-color: #fff1a8;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    /*pas de justify content donc items vont au centre*/
+    justify-content: space-evenly;
+}
+
+.menu-bars {
+    margin-left: 2rem;
+    font-size: 2rem;
+    background: none;
+}
+
+.nav-menu {
+    background-color: #fff1a8;
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0; /*left: -100%; /*si enlevé, ouvre le menu affiché*/
+    transition: 850ms; /*durée de l'animation?*/
+}
+
+.nav-menu.active {
+    left: 0;
+    transition: 350ms;
+}
+
+.nav-text {
+    background-color: #fff1a8;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+}
+
+.nav-text a {
+    text-decoration: none; /*retire l'nderline*/
+    color: #924700;
+    font-size: 18px;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 4px;
+}
+
+.nav-text a:hover {
+    background-color: rgb(212, 130, 83);
+}
+
+/*ensemble de la navbar*/
+.nav-menu-items {
+    width: 100%;
+ /* width: 190px prend une petite partie de l'écran*/
+}
+
+.navbar-toggle {
+    background-color: #fff1a8;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+span {
+    margin-left: 16px;
+}
