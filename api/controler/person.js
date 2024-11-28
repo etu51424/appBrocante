@@ -3,7 +3,7 @@ import {pool} from "../database/dbAccess.js";
 import {deleteArticleByDealer} from "../model/article.js";
 import {deleteDealer} from "../model/dealer.js";
 import {deleteInterestByPerson} from "../model/interest.js";
-import {hash} from "../utils/utils.js";
+import {hash, sendMail} from "../utils/utils.js";
 
 
 export const createPerson = async (req, res) => {
@@ -12,6 +12,9 @@ export const createPerson = async (req, res) => {
         req.body.password = await hash(req.body.password);
         const id = await personModel.createPerson(pool, req.body);
         res.status(201).json({id});
+        await sendMail(req.val.email,
+            "Bienvenue sur l'AppBrocante !",
+            `Nous vous remercions pour votre inscription sur l'AppBrocante, ${req.val.name} !`,);
     } catch (err){
         res.sendStatus(500);
     }

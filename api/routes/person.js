@@ -5,7 +5,7 @@ import {default as PVM} from "../middleware/validator/validation/person.js";
 
 const router = Router();
 
-router.post('/', jwtCheck, PVM.personToAdd, createPerson);
+router.post('/', PVM.personToAdd, createPerson);
 router.get('/:personId', jwtCheck, PVM.personId, getPerson);
 router.patch('/', jwtCheck, PVM.personToUpdate, updatePerson);
 router.delete('/:personId', jwtCheck, PVM.personToDelete, deletePerson);
