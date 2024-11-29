@@ -31,18 +31,20 @@ export const sendMail = async (clientEmail, subject, text) =>{
         host: 'smtp.gmail.com',
         ssl: true,
     });
-
-    try {
-        const message = await client.sendAsync({
-            text: text,
-            from: 'testhenallux355@gmail.com',
-            to: clientEmail,
-            subject: subject,
-        });
-
-        console.log('Message sent:', message);
-    } catch (err) {
-        console.error('Error sending email:', err);
+    if (clientEmail) {
+        try {
+            const message = await client.sendAsync({
+                text: text,
+                from: 'testhenallux355@gmail.com',
+                to: clientEmail,
+                subject: subject,
+            });
+        } catch (err) {
+            throw new Error(`Error while sending email: ${err.message}`);
+        }
+    }
+    else{
+        throw new Error("No email given");
     }
 }
 

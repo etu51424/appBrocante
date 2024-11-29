@@ -34,7 +34,7 @@ CREATE TABLE slot (
 -- Création de la table person
 CREATE TABLE person (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(50) NOT NULL,
+	name VARCHAR(50) UNIQUE NOT NULL,
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
 	address VARCHAR(200),

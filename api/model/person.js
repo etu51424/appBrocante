@@ -55,8 +55,13 @@ export const createPerson = async (SQLClient, {name, firstName, lastName, addres
 
     if (queryValues.length > 0){
         query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING id`;
-        const {rows} = await SQLClient.query(query, queryValues);
-        return rows[0]?.id;
+        try {
+            const {rows} = await SQLClient.query(query, queryValues);
+            return rows[0]?.id;
+        }
+        catch(err){
+            throw new Error(`Error while creating in database : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -64,8 +69,13 @@ export const createPerson = async (SQLClient, {name, firstName, lastName, addres
 }
 
 export const readPerson = async (SQLClient, {personId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM person WHERE id = $1", [personId]);
-    return rows[0];
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM person WHERE id = $1", [personId]);
+        return rows[0];
+    }
+    catch (err){
+        throw new Error(`Error while reading in database : ${err.message}`);
+    }
 }
 
 export const updatePerson = async (SQLClient, {personId, name, firstName, lastName, address,
@@ -113,7 +123,11 @@ export const updatePerson = async (SQLClient, {personId, name, firstName, lastNa
     if (queryValues.length > 0) {
         queryValues.push(personId);
         query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
-        return await SQLClient.query(query, queryValues);
+        try {
+            return await SQLClient.query(query, queryValues);
+        } catch (err){
+            throw new Error(`Error while updating in database : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -121,15 +135,27 @@ export const updatePerson = async (SQLClient, {personId, name, firstName, lastNa
 }
 
 export const deletePerson = async (SQLClient, {personId}) => {
-    return await SQLClient.query("DELETE FROM person WHERE id=$1",[personId]);
+    try {
+        return await SQLClient.query("DELETE FROM person WHERE id=$1", [personId]);
+    } catch (err) {
+        throw new Error(`Error while deleting in database : ${err.message}`);
+    }
 }
 
 export const promotePersonAdmin = async (SQLClient, {personId}) => {
-    return await SQLClient.query("UPDATE person SET is_admin=true WHERE id = $1", [personId]);
+    try {
+        return await SQLClient.query("UPDATE person SET is_admin=true WHERE id = $1", [personId]);
+    } catch (err) {
+        throw new Error(`Error while promoting in database : ${err.message}`);
+    }
 }
 
 export const demotePersonAdmin = async (SQLClient, {personId}) => {
-    return await SQLClient.query("UPDATE person SET is_admin=false WHERE id = $1", [personId]);
+    try {
+        return await SQLClient.query("UPDATE person SET is_admin=false WHERE id = $1", [personId]);
+    } catch (err) {
+        throw new Error(`Error while demoting in database : ${err.message}`);
+    }
 }
 
 

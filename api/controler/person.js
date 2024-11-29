@@ -7,7 +7,6 @@ import {hash, sendMail} from "../utils/utils.js";
 
 
 export const createPerson = async (req, res) => {
-
     try{
         req.body.password = await hash(req.body.password);
         const id = await personModel.createPerson(pool, req.body);
@@ -17,6 +16,7 @@ export const createPerson = async (req, res) => {
             `Nous vous remercions pour votre inscription sur l'AppBrocante, ${req.val.name} !`,);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while creating person : ${err} `);
     }
 }
 
@@ -31,6 +31,7 @@ export const getPerson = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while reading person : ${err} `);
     }
 }
 
@@ -40,6 +41,7 @@ export const updatePerson = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while updating person : ${err} `);
     }
 }
 
@@ -66,6 +68,7 @@ export const deletePerson = async (req, res) => {
             console.error(err);
         } finally {
             res.sendStatus(500);
+            console.error(`Error while deleting person : ${err} `);
         }
     } finally {
         if (SQLClient){
@@ -80,6 +83,7 @@ export const promotePersonAdmin = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while promoting person : ${err} `);
     }
 }
 
@@ -89,5 +93,6 @@ export const demotePersonAdmin = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while demoting person : ${err} `);
     }
 }
