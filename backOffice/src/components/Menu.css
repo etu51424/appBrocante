@@ -1,0 +1,42 @@
+.menu {
+    background-color: #fff1a8;
+    width: 185px;
+    height: 100vh;
+    display: flex; /*comment s'affiche les élements à l'intérieur*/
+    justify-content: center;
+    transition: 850ms; /*durée de l'animation?*/
+}
+
+/*ensemble de la navbar*/
+.menu-items {
+    width: 100%;
+ /* width: 190px prend une petite partie de l'écran*/
+}
+
+.menu a {
+    text-decoration: none;
+    color: #924700;
+    font-size: 16px;
+    font-weight: normal;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+.menu a:hover {
+    background-color: rgb(226, 151, 121);
+}
+
+/*
+.menu h1, h2, p {
+    background-color: #fff1a8;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    list-style: none;
+    height: 60px;
+}*/

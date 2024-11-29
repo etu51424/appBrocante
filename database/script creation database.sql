@@ -41,7 +41,7 @@ CREATE TABLE person (
 	phone_number VARCHAR(15),
 	email VARCHAR(40) NOT NULL,
 	last_edit_date TIMESTAMP,
-	password VARCHAR NOT NULL,
+	`password` VARCHAR(40) NOT NULL,
 	profile_picture VARCHAR(100),
 	is_admin BOOLEAN NOT NULL DEFAULT false
 );
@@ -74,7 +74,7 @@ CREATE TABLE article (
 	description VARCHAR(1000),
 	entry_date TIMESTAMP,
 	cost NUMERIC(10, 2),
-	condition VARCHAR(50)
+	`condition` VARCHAR(50)
 );
 
 -- Insérer des marchés aux puces

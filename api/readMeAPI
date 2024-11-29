@@ -27,3 +27,5 @@ npm i uuid
 npm i sharp
 npm i fs-extra
 npm i emailjs
+
+npm run dev

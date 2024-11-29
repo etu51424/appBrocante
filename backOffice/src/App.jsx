@@ -8,6 +8,7 @@ import FleaMarkets from './pages/FleaMarkets.jsx';
 import Users from './pages/Users.jsx';
 import Dealers from './pages/Dealers.jsx';
 import Interests from './pages/Interests.jsx';
+import Menu from './components/Menu.jsx';
 
 function App() {
 
@@ -16,16 +17,19 @@ function App() {
       <Router>
         <div>
           <Navbar/>
-          <Routes>
-            {/* exact identifie exactement que aucun chemin donne Home plutot qu'un autre chemin */}
-            <Route path='/' exact element={<Home/>} />
-            <Route path='/article' element={<Articles/>} />
-            <Route path='/user' element={<Users/>} />
-            <Route path='/dealer' element={<Dealers/>} />
-            <Route path='/flea_market' element={<FleaMarkets/>} />
-            <Route path='/interest' element={<Interests/>} />
-            <Route path='/slot' element={<Slots/>} />
-          </Routes>
+          <div className="main-body">
+            <Menu/>
+            <Routes>
+              {/* en fonction de la route, un different affichage */}
+              <Route path='/' exact element={<Home/>} />
+              <Route path='/article' element={<Articles/>} />
+              <Route path='/user' element={<Users/>} />
+              <Route path='/dealer' element={<Dealers/>} />
+              <Route path='/flea_market' element={<FleaMarkets/>} />
+              <Route path='/interest' element={<Interests/>} />
+              <Route path='/slot' element={<Slots/>} />
+            </Routes>
+          </div>
         </div>
       </Router>
     </>

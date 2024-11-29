@@ -12,18 +12,36 @@ body {
   background-color: #ffd971; /*couleur du fond de l'appli*/
 }
 
+/*contient nav-menu + un espace pour la table (Articles, etc)*/
+.main-body {
+  display:flex;
+}
+
 .home, .users, .fleaMarkets, .dealers, .interests, .slots, .articles {
   display: flex;
   height: 90vh;
-  align-items: center;
-  justify-content: center;
+  align-items: center; 
+  justify-content: flex-start;/*puisque flex direction column => sur l'axe y : les items sont au début (haut)*/
   font-size: 3rem;
+  flex-direction: column; /*redondant avec .home*/
+  font-size: large;
+  padding: 10px;
 }
 
 .home {
-  display:flex;
-  flex-direction: column; /*logo puis le en attente... en dessous*/
+  font-size: 40px;
+  margin-left: 30vw;
 }
+
+table {
+   background-color: #ffd971;
+}
+
+td {
+  background-color: rgb(255, 153, 113);
+  padding: 7px;
+}
+
 /*
 #root {
   max-width: 1280px;
