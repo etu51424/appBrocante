@@ -5,7 +5,9 @@ import {deleteArticleByDealer} from "../model/article.js";
 export const createDealer = async (req, res) => {
     try{
         const id = await dealerModel.createDealer(pool, req.body);
-        res.status(201).json({id});
+        if (id) {
+            res.status(201).json({id});
+        }
     } catch (err){
         res.sendStatus(500);
     }

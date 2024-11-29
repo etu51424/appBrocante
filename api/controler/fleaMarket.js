@@ -6,7 +6,9 @@ import {deleteInterestByFleaMarket} from "../model/interest.js";
 export const createFleaMarket = async (req, res) => {
     try{
         const id = await fleaMarketModel.createFleaMarket(pool, req.body);
-        res.status(201).json({id});
+        if (id) {
+            res.status(201).json({id});
+        }
     } catch (err){
         res.sendStatus(500);
     }

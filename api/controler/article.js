@@ -4,7 +4,9 @@ import {pool} from "../database/dbAccess.js";
 export const createArticle = async (req, res) => {
     try{
         const id = await articleModel.createArticle(pool, req.body);
-        res.status(201).json({id});
+        if (id) {
+            res.status(201).json({id});
+        }
     } catch (err){
         res.sendStatus(500).message(`Error while creating article : ${err.message}`);
     }

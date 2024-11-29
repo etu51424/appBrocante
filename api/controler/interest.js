@@ -4,7 +4,9 @@ import {pool} from "../database/dbAccess.js";
 export const createInterest = async (req, res) => {
     try{
         const id = await interestModel.createInterest(pool, req.body);
-        res.status(201).json({id});
+        if (id) {
+            res.status(201).json({id});
+        }
     } catch (err){
         res.sendStatus(500);
     }

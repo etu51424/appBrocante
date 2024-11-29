@@ -10,10 +10,12 @@ export const createPerson = async (req, res) => {
     try{
         req.body.password = await hash(req.body.password);
         const id = await personModel.createPerson(pool, req.body);
-        res.status(201).json({id});
-        await sendMail(req.val.email,
-            "Bienvenue sur l'AppBrocante !",
-            `Nous vous remercions pour votre inscription sur l'AppBrocante, ${req.val.name} !`,);
+        if (id) {
+            res.status(201).json({id});
+            await sendMail(req.val.email,
+                "Bienvenue sur l'AppBrocante !",
+                `Nous vous remercions pour votre inscription sur l'AppBrocante, ${req.val.name} !`,);
+        }
     } catch (err){
         res.sendStatus(500);
         console.error(`Error while creating person : ${err} `);
