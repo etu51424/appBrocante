@@ -1,0 +1,75 @@
+import React from 'react'
+import { SidebarData } from '../components/SidebarData';
+
+function Articles() {
+    /*
+    const articles = [
+        {
+            id: 2,
+            dealer_id: 3,
+            title: "armoire acajou",
+            description: "dressée en bois d'acajou néerlandais",
+            entry_date: "2022-09-15",
+            cost: 9.99,
+            condition: "Les charnières sont rouillées"
+        },
+        {
+            id: 3,
+            dealer_id: 6,
+            title: "pot à lierre",
+            description: "sobre et moderne",
+            entry_date: "2024-07-15",
+            cost: 109.99,
+            condition: "bon état"
+        },
+        {
+            id: 4,
+            dealer_id: 3,
+            title: "un hélicoptère en verre",
+            description: "Fabriquée en france dans les années 70s",
+            entry_date: "2021-09-15",
+            cost: 78.95,
+            condition: "attention, fragile"
+        },
+        {
+            id: 4,
+            dealer_id: 3,
+            title: "terrarium pour geckos",
+            description: "Conçu en thailande. En plexiglass",
+            entry_date: "2020-03-30",
+            cost: 128.85,
+            condition: "peu de fissures"
+        }
+    ];
+    */
+
+    return (
+        <div className='articles'>
+            <h1>Articles</h1>
+            <table>
+                <tr>
+                    {/*obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs*/}
+                    {
+                        Object.keys(articles[0]).map(
+                            keyName =>
+                                <th>{keyName}</th>
+                            )
+                    }
+                </tr>
+            {articles.map(elem => 
+                <tr>
+                    <td>{elem.id}</td>
+                    <td>{elem.dealer_id}</td>
+                    <td>{elem.title}</td>
+                    <td>{elem.description}</td>
+                    <td>{elem.entry_date}</td>
+                    <td>{elem.cost+'€'}</td>
+                    <td>{elem.condition}</td>
+                </tr>
+            )}
+            </table>
+        </div>
+    );
+}
+
+export default Articles;

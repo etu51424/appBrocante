@@ -11,3 +11,15 @@ ajouter "initDB": "node scripts/JS/initDB.js" dans package.json => scripts // po
 
 Docker : 
 docker run --name AppBrocante -e POSTGRES_PASSWORD=LoveBrocante -e POSTGRES_USER=SA -e POSTGRES_DB=AppBrocante -p 5432:5432 --rm -d postgres
+
+npm i argon2
+npm i @vinejs/vine
+npm i jsonwebtoken
+npm i cors
+npm i multer
+npm i uuid
+npm i sharp
+npm i fs-extra
+npm i emailjs
+
+npm run dev

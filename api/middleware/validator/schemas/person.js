@@ -1,3 +1,4 @@
+console.log("entre dans le person validaotr middleware");
 import vine from '@vinejs/vine';
 
 const personIdSchema = vine.object({
@@ -32,12 +33,12 @@ const personToUpdateSchema= vine.object({
 //redondant sur personIdSchema ptete
 const personToDeleteSchema = vine.object({
     personId : vine.number(),
-})
+});
 
 const loginSchema = vine.object({
     personId : vine.number(),
     password : vine.string()
-})
+});
 
 export const
     personId = vine.compile(personIdSchema),

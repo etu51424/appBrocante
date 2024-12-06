@@ -1,8 +1,10 @@
+console.log("entre dans le clientModel");
 import {hash_verify} from "../utils/utils.js";
 import {readPerson} from "./person.js";
 import {readDealer} from "./dealer.js";
 
 export const readPersonWithPassword = async (SQLClient, {personId, password}) => {
+    console.log("entre dans readPersonWithPassword");
     const responses = await Promise.all([
         readPerson(SQLClient, {personId}),
         readDealer(SQLClient, {personId})

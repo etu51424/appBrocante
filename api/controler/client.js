@@ -5,6 +5,7 @@ import {sign} from "../utils/utils.js";
 export const login = async (req, res) => {
     try {
         const rep = await clientModel.readPersonWithPassword(pool, req.val);
+        console.log(rep);
         if(rep.personId) {
             const jwt = sign(rep, {
                 expiresIn: '8h'

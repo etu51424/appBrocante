@@ -9,7 +9,7 @@ import {default as adminRouter} from './admin.js';
 import {default as clientRouter} from './client.js'
 import {default as avatarRouter} from './avatar.js'
 
-
+console.log("entrée dans index.js");
 const router = Router();
 
 router.use("/person", personRouter);
