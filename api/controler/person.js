@@ -8,6 +8,7 @@ import {hash, sendMail} from "../utils/utils.js";
 
 export const createPerson = async (req, res) => {
     try{
+        console.log("creation d'une personne");
         req.body.password = await hash(req.body.password);
         const id = await personModel.createPerson(pool, req.body);
         if (id) {

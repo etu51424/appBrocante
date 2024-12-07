@@ -49,6 +49,14 @@ export const readArticle = async (SQLClient, {id}) => {
     return rows[0];
 }
 
+export const readAllArticles = async (SQLClient) => {
+    console.log("readAllArticles");
+    //n'obtenir que la propriété rows, les contenant
+    const {rows} = await SQLClient.query("SELECT * FROM article");
+    console.log("In model" + rows[2].title + "In model");
+    return rows;
+}
+
 export const updateArticle = async (SQLClient, {id, dealerId, title, description, entryDate, cost, condition}) => {
     let query = "UPDATE article SET ";
     const querySet = [];

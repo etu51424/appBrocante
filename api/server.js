@@ -15,7 +15,6 @@ app.use("/api/v1", RouterV1); // Routeur pour la version 1
 // Middleware d'erreur si tentative d'utilisation d'une version non implémentée
 app.use("/api/v:version", notSupportedAPIVersion);
 
-
 app.use(express.static('./upload'));
 
 app.listen(port, () => {
