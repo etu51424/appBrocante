@@ -7,10 +7,14 @@ export const login = async (req, res) => {
         const rep = await clientModel.readPersonWithPassword(pool, req.val);
         console.log(rep);
         if(rep.personId) {
-            const jwt = sign(rep, {
-                expiresIn: '8h'
-            });
-            res.status(201).send(jwt);
+            if(!rep.isBanned) {
+                const jwt = sign(rep, {
+                    expiresIn: '8h'
+                });
+                res.status(201).send(jwt);
+            } else{
+                res.sendStatus(401);
+            }
         } else {
             res.sendStatus(404);
         }

@@ -142,6 +142,8 @@ export const deletePerson = async (SQLClient, {personId}) => {
     }
 }
 
+// concerne la gestion des administrateurs
+
 export const promotePersonAdmin = async (SQLClient, {personId}) => {
     try {
         return await SQLClient.query("UPDATE person SET is_admin=true WHERE id = $1", [personId]);
@@ -158,5 +160,22 @@ export const demotePersonAdmin = async (SQLClient, {personId}) => {
     }
 }
 
+// concerne les expulsions du système
+
+export const banPerson = async (SQLClient, {personId}) => {
+    try {
+        return await SQLClient.query("UPDATE person SET is_timed_out=true WHERE id = $1", [personId]);
+    } catch (err) {
+        throw new Error(`Error while banning in database : ${err.message}`);
+    }
+}
+
+export const unbanPerson = async (SQLClient, {personId}) => {
+    try {
+        return await SQLClient.query("UPDATE person SET is_timed_out=false WHERE id = $1", [personId]);
+    } catch (err) {
+        throw new Error(`Error while unbanning in database : ${err.message}`);
+    }
+}
 
 

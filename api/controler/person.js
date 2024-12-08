@@ -80,6 +80,8 @@ export const deletePerson = async (req, res) => {
     }
 }
 
+// concernant la gestion des administrateurs
+
 export const promotePersonAdmin = async (req, res) => {
     try{
         await personModel.promotePersonAdmin(pool, req.params);
@@ -97,5 +99,41 @@ export const demotePersonAdmin = async (req, res) => {
     } catch (err){
         res.sendStatus(500);
         console.error(`Error while demoting person : ${err} `);
+    }
+}
+
+// concerne les expulsions du système
+
+export const banPerson = async (req, res) => {
+    try{
+        await personModel.banPerson(pool, req.params);
+        res.sendStatus(204);
+        let person = await personModel.readPerson(pool, req.params);
+        if (person) {
+            await sendMail(person.email,
+                "Expulsion temporaire",
+                `Nous sommes dans le regret de devoir vous annoncer que votre compte AppBrocante est désormais suspendu, ${person.name} !\nSi vous pensez qu'il s'agit d'une erreur, contactez nous.`
+                );
+        }
+
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while banning person : ${err} `);
+    }
+}
+export const unbanPerson = async (req, res) => {
+    try{
+        await personModel.unbanPerson(pool, req.params);
+        res.sendStatus(204);
+        const person = await personModel.readPerson(pool, req.params);
+        if (person) {
+            await sendMail(person.email,
+                "Rétablissement du compte",
+                `La suspension de votre compte est désormais levée, ${person.name} !`
+            );
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while unbanning person : ${err} `);
     }
 }

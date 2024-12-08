@@ -19,13 +19,14 @@ export const readPersonWithPassword = async (SQLClient, {personId, password}) =>
                 send['status'] = "client";
             }
             send['isAdmin'] = responses[0]?.is_admin;
+            send['isBanned'] = responses[0]?.is_timed_out;
         }
         else{
-            send = {personId : null, status : null, isAdmin : null};
+            send = {personId : null, status : null, isAdmin : null, isBanned: null};
         }
     }
     else {
-        send = {personId : null, status : null, isAdmin : null};
+        send = {personId : null, status : null, isAdmin : null, isBanned: null};
     }
     return send
 }

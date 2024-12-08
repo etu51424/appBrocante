@@ -43,7 +43,8 @@ CREATE TABLE person (
 	last_edit_date TIMESTAMP,
 	password VARCHAR NOT NULL,
 	profile_picture VARCHAR(100),
-	is_admin BOOLEAN NOT NULL DEFAULT false
+	is_admin BOOLEAN NOT NULL DEFAULT false,
+	is_timed_out BOOLEAN NOT NULL DEFAULT false
 );
 
 -- Création de la table interest
