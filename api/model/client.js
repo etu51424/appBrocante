@@ -1,5 +1,5 @@
 console.log("entre dans le clientModel");
-import {hash_verify} from "../utils/utils.js";
+import {hash_verify} from "../utils/hash.js";
 import {readPerson} from "./person.js";
 import {readDealer} from "./dealer.js";
 

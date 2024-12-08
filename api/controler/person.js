@@ -3,7 +3,8 @@ import {pool} from "../database/dbAccess.js";
 import {deleteArticleByDealer} from "../model/article.js";
 import {deleteDealer} from "../model/dealer.js";
 import {deleteInterestByPerson} from "../model/interest.js";
-import {hash, sendMail} from "../utils/utils.js";
+import {hash} from "../utils/hash.js";
+import {sendMail} from "../utils/mail.js";
 
 
 export const createPerson = async (req, res) => {
@@ -19,7 +20,7 @@ export const createPerson = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
-        console.error(`Error while creating person : ${err} `);
+        console.error(`Error while creating person : ${err.message} `);
     }
 }
 
@@ -34,7 +35,7 @@ export const getPerson = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
-        console.error(`Error while reading person : ${err} `);
+        console.error(`Error while reading person : ${err.message} `);
     }
 }
 
@@ -44,7 +45,7 @@ export const updatePerson = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
-        console.error(`Error while updating person : ${err} `);
+        console.error(`Error while updating person : ${err.message} `);
     }
 }
 
@@ -62,16 +63,15 @@ export const deletePerson = async (req, res) => {
         await SQLClient.query("COMMIT");
         res.sendStatus(204);
     } catch (err){
-        console.error(err);
         try{
             if(SQLClient){
                 SQLClient.query("ROLLBACK");
             }
-        } catch (err){
-            console.error(err);
+        } catch (e){
+            console.error(`Error while rollbacking : ${e.message}`);
         } finally {
             res.sendStatus(500);
-            console.error(`Error while deleting person : ${err} `);
+            console.error(`Error while deleting person : ${err.message} `);
         }
     } finally {
         if (SQLClient){
@@ -88,7 +88,7 @@ export const promotePersonAdmin = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
-        console.error(`Error while promoting person : ${err} `);
+        console.error(`Error while promoting person : ${err.message} `);
     }
 }
 
@@ -98,7 +98,7 @@ export const demotePersonAdmin = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
-        console.error(`Error while demoting person : ${err} `);
+        console.error(`Error while demoting person : ${err.message} `);
     }
 }
 
@@ -118,7 +118,7 @@ export const banPerson = async (req, res) => {
 
     } catch (err){
         res.sendStatus(500);
-        console.error(`Error while banning person : ${err} `);
+        console.error(`Error while banning person : ${err.message} `);
     }
 }
 export const unbanPerson = async (req, res) => {
@@ -134,6 +134,6 @@ export const unbanPerson = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
-        console.error(`Error while unbanning person : ${err} `);
+        console.error(`Error while unbanning person : ${err.message} `);
     }
 }

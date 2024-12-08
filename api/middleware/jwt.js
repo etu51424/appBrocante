@@ -1,4 +1,4 @@
-import {jwt_verify} from "../utils/utils.js";
+import {jwt_verify} from "../utils/jwt.js";
 import err from "jsonwebtoken/lib/JsonWebTokenError.js";
 
 export const jwtCheck = (req, res, next) => {

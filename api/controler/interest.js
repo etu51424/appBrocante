@@ -9,6 +9,7 @@ export const createInterest = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while creating interest : ${err.message}`);
     }
 }
 
@@ -23,6 +24,7 @@ export const getInterest = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while getting interest : ${err.message}`);
     }
 }
 
@@ -32,6 +34,7 @@ export const updateInterest = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while updating interest : ${err.message}`);
     }
 }
 
@@ -41,5 +44,6 @@ export const deleteInterest = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while deleting interest : ${err.message}`);
     }
 }

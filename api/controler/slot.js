@@ -10,11 +10,11 @@ export const createSlot = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while creating slot: ${err.message}`);
     }
 }
 
 export const getSlot = async (req, res) => {
-    console.log(req.params);
     try{
         const slot = await slotModel.readSlot(pool, req.params);
         if (slot) {
@@ -25,6 +25,7 @@ export const getSlot = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while getting slot: ${err.message}`);
     }
 }
 
@@ -34,6 +35,7 @@ export const updateSlot = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while updating slot: ${err.message}`);
     }
 }
 
@@ -43,5 +45,6 @@ export const deleteSlot = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while deleting slot: ${err.message}`);
     }
 }

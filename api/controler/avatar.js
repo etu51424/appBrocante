@@ -2,7 +2,7 @@ import {v4 as uuid} from 'uuid';
 import {saveAvatar} from "../model/avatar.js";
 import * as personModel from "../model/person.js";
 import {pool} from "../database/dbAccess.js";
-import {deleteFile, sendMail} from "../utils/utils.js";
+import {deleteFile} from "../utils/file.js";
 
 const destFolderAvatar = "./upload/avatar";
 
@@ -18,8 +18,8 @@ export const createAvatar = async (req, res) => {
             res.sendStatus(400);
         }
     } catch (err) {
-        console.error(err);
         res.sendStatus(500);
+        console.error(`Error while creating avatar : ${err.message}`);
     }
 };
 
@@ -46,8 +46,8 @@ export const updateAvatar = async (req, res) => {
             res.sendStatus(400);
         }
     } catch (err) {
-        console.error(err);
         res.sendStatus(500);
+        console.error(`Error while updating avatar : ${err.message}`);
     }
 }
 
@@ -64,7 +64,7 @@ export const deleteAvatar = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err){
-        console.error(err);
         res.sendStatus(500);
+        console.error(`Error while deleting avatar : ${err.message}`);
     }
 }

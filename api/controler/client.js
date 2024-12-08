@@ -1,6 +1,6 @@
 import * as clientModel from "../model/client.js";
 import {pool} from "../database/dbAccess.js";
-import {sign} from "../utils/utils.js";
+import {sign} from "../utils/jwt.js";
 
 export const login = async (req, res) => {
     try {
@@ -19,7 +19,7 @@ export const login = async (req, res) => {
             res.sendStatus(404);
         }
     } catch (err) {
-        console.error(err);
         res.sendStatus(500);
+        console.error(`Error while trying to log : ${err.message}`);
     }
 };

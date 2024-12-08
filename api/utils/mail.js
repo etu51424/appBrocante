@@ -1,10 +1,4 @@
-import * as argon2id from "argon2";
-import 'dotenv/config.js';
-import jsonwebtoken from 'jsonwebtoken';
-import * as fs from 'fs-extra'
 import {SMTPClient} from "emailjs";
-
-
 
 export const sendMail = async (clientEmail, subject, text) =>{
     const client = new SMTPClient({
@@ -29,5 +23,3 @@ export const sendMail = async (clientEmail, subject, text) =>{
         throw new Error("No email given");
     }
 }
-
-

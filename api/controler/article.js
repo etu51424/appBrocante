@@ -8,7 +8,8 @@ export const createArticle = async (req, res) => {
             res.status(201).json({id});
         }
     } catch (err){
-        res.sendStatus(500).message(`Error while creating article : ${err.message}`);
+        res.sendStatus(500);
+        console.error(`Error while creating article : ${err.message}`);
     }
 }
 
@@ -23,6 +24,7 @@ export const getArticle = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while getting article : ${err.message}`);
     }
 }
 
@@ -41,6 +43,7 @@ export const getAllArticles = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while getting all articles : ${err.message}`);
     }
 }
 
@@ -50,6 +53,7 @@ export const updateArticle = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while updating article : ${err.message}`);
     }
 }
 
@@ -59,5 +63,6 @@ export const deleteArticle = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while deleting article : ${err.message}`);
     }
 }

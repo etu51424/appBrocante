@@ -11,6 +11,7 @@ export const createFleaMarket = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while creating fleaMarket: ${err.message}`);
     }
 }
 
@@ -25,6 +26,7 @@ export const getFleaMarket = async (req, res) => {
         }
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while getting fleaMarket: ${err.message}`);
     }
 }
 
@@ -34,6 +36,7 @@ export const updateFleaMarket = async (req, res) => {
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
+        console.error(`Error while updating fleaMarket: ${err.message}`);
     }
 }
 
@@ -50,15 +53,15 @@ export const deleteFleaMarket = async (req, res) => {
         await SQLClient.query("COMMIT");
         res.sendStatus(204);
     } catch (err){
-        console.error(err);
         try{
             if(SQLClient){
                 SQLClient.query("ROLLBACK");
             }
-        } catch (err){
-            console.error(err);
+        } catch (e){
+            console.error(`Error while rollbacking : ${e.message}`);
         } finally {
             res.sendStatus(500);
+            console.error(`Error while deleting fleaMarket: ${err.message}`);
         }
     } finally {
         if (SQLClient){
