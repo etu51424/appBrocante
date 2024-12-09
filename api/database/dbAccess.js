@@ -14,7 +14,6 @@ export const pool = {
         try {
             return await pgPool.query(query, params);
         } catch (e) {
-            console.error(e);
             throw e;
         }
     },
@@ -25,7 +24,6 @@ export const pool = {
         try {
             return pgPool.connect();
         } catch (e) {
-            console.error(e);
             throw e;
         }
     }

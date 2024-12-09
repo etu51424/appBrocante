@@ -5,8 +5,8 @@ export const saveAvatar = async (imageBuffer, imageName, destFolder) => {
         .jpeg()
         .resize({
             fit: 'inside',
-            width: 1920,
-            height: 1080
+            width: 500,
+            height: 500
         })
         .toFile(`${destFolder}/${imageName}.jpeg`);
 }

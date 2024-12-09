@@ -1,5 +1,3 @@
-import {personId} from "../middleware/validator/schemas/person.js";
-
 export const createPerson = async (SQLClient, {name, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profile_picture, password}) => {
     let query = "INSERT INTO person ";

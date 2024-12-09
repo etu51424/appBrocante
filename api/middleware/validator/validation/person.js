@@ -2,7 +2,6 @@ import * as personValidator from '../schemas/person.js'
 
 const personValidatorMiddleware = {
     personId : async (req, res, next) => {
-        console.log("route/client validaotr middleware");
         try {
             req.val = await personValidator.personId.validate(req.params);
             next();

@@ -1,4 +1,3 @@
-console.log("entre dans le person validaotr middleware");
 import vine from '@vinejs/vine';
 
 const personIdSchema = vine.object({

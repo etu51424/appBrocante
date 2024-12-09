@@ -1,4 +1,3 @@
-console.log("entrer dans server.js");
 import express from "express";
 import cors from "cors";
 import {default as RouterV1} from "./routes/index.js"
