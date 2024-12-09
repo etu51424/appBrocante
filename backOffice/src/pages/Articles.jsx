@@ -9,41 +9,79 @@ function Articles() {
     const [articles, setArticles] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // affiche à l'useur simplement le chargement
+    
+    
     const adminForConnection = {
-        name: "AAA",
-        email: "aaa@gmail.com",
-        password: "password",
+        "name":"Corentin",
+        "email":"corentindemr@gmail.com",
+        "password":"pw",
     };
     console.log("Avant useEffect");
 
     // cant convert to undefined object car the useEffect is not entered
     useEffect(() => {
         console.log("Dans useEffect");
+
         const fetchAllArticles = async () => {
             try {
-                //1. Créer un utilisateur
-                const userResponse = await createUser(adminForConnection);
-                console.log("User créé : ", userResponse);
+                let userResponse;
+                try {
+                    const response = await fetch("http://localhost:3001/api/v1/person/", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body:  JSON.stringify(adminForConnection),
+                    });
+
+                    if (response.status == 500) {
+                        console.log("L'utilisateur existe deja. Login directement.");
+                    } else if (!response.ok) {
+                        throw new Error(`Echec à créer l'useur: ${response.statusText}`);
+                    } else {
+                        userResponse = await response.json();
+                        console.log("Useur créé avec succès :", userResponse);
+                    }
+                } catch (err) {
+                    console.error("Erreur durant la création de l'utilsiateur", err);
+                }
 
                 const loginBody = {
-                    "personId":userResponse.id,
-                    "password":adminForConnection.password
-                };
-                console.log("loginBody: " + userResponse.id);
-                console.log("password:" + adminForConnection.password);
+                    personId: userResponse?.id || 4, //4 par défaut si l'utilisateur existe déjà
+                    password: adminForConnection.password
+                }
 
-                //2. Login et obtenir le token
-                const loginResponse = await login(loginBody);
-                const token = loginResponse.token;
-                console.log("Token obtenu : ", token);
+                const loginResponse = await fetch("http://localhost:3001/api/v1/client/login", {
+                    method:"POST",
+                    headers:{"Content-Type": "application/json"},
+                    body: JSON.stringify(loginBody),
+                });
 
-                // 3. Récupérer les articles
-                const articles = await fetchArticles(token);
-                // articles changeront avec l'affichage
-                setArticles(articles);
+                if (!loginResponse.ok) {
+                    throw new Error(`Login raté : ${loginResponse.statusText}`);
+                }
+
+                const { token } = await loginResponse.json();
+                console.log("Login réussi. Token reçu :", token);
+
+                // Feth articles
+                const articlesResponse = await fetch("http://localhost:3001/api/v1/article/", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+                
+                if (!articlesResponse.ok) {
+                    throw new Error(`Failed to fetch articles: ${articlesResponse.statusText}`);
+                }
+
+                const articlesData = await articlesResponse.json();
+                setArticles(articlesData);
             } catch (err) {
                 console.error(err);
                 setError(err.message);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -94,6 +132,9 @@ function Articles() {
 }
 
 export default Articles;
+
+
+
 
 
     /*
