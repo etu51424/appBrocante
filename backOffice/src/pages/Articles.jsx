@@ -8,45 +8,18 @@ function Articles() {
 
     const [articles, setArticles] = useState([]);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); // affiche à l'useur simplement le chargement
+    const [isLoading, setIsLoading] = useState(true); // affiche à l'useur un "écran" de chargement
     
-    
-    const adminForConnection = {
-        "name":"Corentin",
-        "email":"corentindemr@gmail.com",
-        "password":"pw",
-    };
     console.log("Avant useEffect");
 
-    // cant convert to undefined object car the useEffect is not entered
     useEffect(() => {
         console.log("Dans useEffect");
 
         const fetchAllArticles = async () => {
             try {
-                let userResponse;
-                try {
-                    const response = await fetch("http://localhost:3001/api/v1/person/", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body:  JSON.stringify(adminForConnection),
-                    });
-
-                    if (response.status == 500) {
-                        console.log("L'utilisateur existe deja. Login directement.");
-                    } else if (!response.ok) {
-                        throw new Error(`Echec à créer l'useur: ${response.statusText}`);
-                    } else {
-                        userResponse = await response.json();
-                        console.log("Useur créé avec succès :", userResponse);
-                    }
-                } catch (err) {
-                    console.error("Erreur durant la création de l'utilsiateur", err);
-                }
-
                 const loginBody = {
-                    personId: userResponse?.id || 4, //4 par défaut si l'utilisateur existe déjà
-                    password: adminForConnection.password
+                    personId: 1,
+                    password: "pw"
                 }
 
                 const loginResponse = await fetch("http://localhost:3001/api/v1/client/login", {
@@ -55,14 +28,16 @@ function Articles() {
                     body: JSON.stringify(loginBody),
                 });
 
-                if (!loginResponse.ok) {
-                    throw new Error(`Login raté : ${loginResponse.statusText}`);
-                }
-
-                const { token } = await loginResponse.json();
+                // Normalement, le token devrait être un json.
+                // Pour éviter de modifier le token pour qu'il soit renvoyé en json côté server, j'accepte de l'interpreter en texte
+                const token = await loginResponse.text();
                 console.log("Login réussi. Token reçu :", token);
 
-                // Feth articles
+                if (!loginResponse.ok) {
+                    throw new Error(`Login raté: ${errorText}`);
+                }
+
+                // construire la requete pour recup les articles et la
                 const articlesResponse = await fetch("http://localhost:3001/api/v1/article/", {
                     method: "GET",
                     headers: {
@@ -72,7 +47,7 @@ function Articles() {
                 });
                 
                 if (!articlesResponse.ok) {
-                    throw new Error(`Failed to fetch articles: ${articlesResponse.statusText}`);
+                    throw new Error(`Regarde pop statusText car pas réussi à récup les articles: ${articlesResponse.statusText}`);
                 }
 
                 const articlesData = await articlesResponse.json();
@@ -106,25 +81,30 @@ function Articles() {
             {/* afficher l'erreur en rouge si'l yen a une*/}
 
             <table>
-                <tr>
-                    {/*obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs*/}
-                    {
-                        Object.keys(articles[0]).map(
-                            keyName =>
-                                <th>{keyName}</th>
-                            )
-                    }
-                </tr>
-            {articles.map(article => 
-                <tr>
-                    <td>{article.id}</td>
-                    <td>{article.dealer_id}</td>
-                    <td>{article.title}</td>
-                    <td>{article.description}</td>
-                    <td>{article.entry_date}</td>
-                    <td>{article.cost+'€'}</td>
-                    <td>{article.condition}</td>
-                </tr>
+                <thead>
+                    <tr>
+                        {/*obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs*/}
+                        {
+                            Object.keys(articles[0]).map(
+                                keyName =>
+                                    <th>{keyName}</th>
+                                )
+                        }
+                        
+                    </tr>
+                </thead>
+            {articles.map(article => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
+                <tbody>
+                    <tr key={article.id}>
+                        <td>{article.id}</td>
+                        <td>{article.dealer_id}</td>
+                        <td>{article.title}</td>
+                        <td>{article.description}</td>
+                        <td>{article.entry_date}</td>
+                        <td>{article.cost+'€'}</td>
+                        <td>{article.condition}</td>
+                    </tr>
+                </tbody>
             )}
             </table>
         </div>
