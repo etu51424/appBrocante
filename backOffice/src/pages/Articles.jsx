@@ -1,114 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { createUser, login } from "../api/authService";
-import { fetchArticles } from "../api/articleService";
-
-import { SidebarData } from '../components/SidebarData';
+import React from "react";
+import Page from "./Page.jsx";
+import { articlesData } from "../api/articles.js";
 
 function Articles() {
 
-    const [articles, setArticles] = useState([]);
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); // affiche à l'useur un "écran" de chargement
-    
-    console.log("Avant useEffect");
+    const title = "Articles";
+    const elementClassName = "articles";
 
-    useEffect(() => {
-        console.log("Dans useEffect");
+    // async car du pov de Page.jsx, fetcher articlesData reste une opération I/O
+    const fetchArticles = async () => {
+        return articlesData;
+    };
 
-        const fetchAllArticles = async () => {
-            try {
-                const loginBody = {
-                    personId: 1,
-                    password: "pw"
-                }
-
-                const loginResponse = await fetch("http://localhost:3001/api/v1/client/login", {
-                    method:"POST",
-                    headers:{"Content-Type": "application/json"},
-                    body: JSON.stringify(loginBody),
-                });
-
-                // Normalement, le token devrait être un json.
-                // Pour éviter de modifier le token pour qu'il soit renvoyé en json côté server, j'accepte de l'interpreter en texte
-                const token = await loginResponse.text();
-                console.log("Login réussi. Token reçu :", token);
-
-                if (!loginResponse.ok) {
-                    throw new Error(`Login raté: ${errorText}`);
-                }
-
-                // construire la requete pour recup les articles et la
-                const articlesResponse = await fetch("http://localhost:3001/api/v1/article/", {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                });
-                
-                if (!articlesResponse.ok) {
-                    throw new Error(`Regarde pop statusText car pas réussi à récup les articles: ${articlesResponse.statusText}`);
-                }
-
-                const articlesData = await articlesResponse.json();
-                setArticles(articlesData);
-            } catch (err) {
-                console.error(err);
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchAllArticles();
-    }, []);
-
-    if (isLoading) {
-        return <p>Chargement des articles...</p>;
+    //obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs
+    // tableHeader et tableBody font le rendu de la table et du body
+    const renderTableHeader = () => {
+        return Object.keys(
+            articlesData[0]).map(
+                (keyName) => (<th key={`${keyName}`}>{keyName}</th>
+            )
+        );
     }
 
-    if (error) {
-        return <p style={{ color: "red" }}>{error}</p>
+// articles.map(article => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
+    const renderTableBody = (article) => {
+        return (
+            <tr key={article.id}>
+                <td>{article.id}</td>
+                <td>{article.dealer_id}</td>
+                <td>{article.title}</td>
+                <td>{article.description}</td>
+                <td>{article.entry_date}</td>
+                <td>{article.cost+'€'}</td>
+                <td>{article.condition}</td>
+            </tr>
+        );
     }
 
-    if (articles.length === 0) {
-        return <p>Aucun article disponible.</p>;
-    }
-
-    return (
-        <div className='articles'>
-            <h1>Articles</h1>
-            {/* afficher l'erreur en rouge si'l yen a une*/}
-
-            <table>
-                <thead>
-                    <tr>
-                        {/*obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs*/}
-                        {
-                            Object.keys(articles[0]).map(
-                                keyName =>
-                                    <th>{keyName}</th>
-                                )
-                        }
-                        
-                    </tr>
-                </thead>
-            {articles.map(article => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
-                <tbody>
-                    <tr key={article.id}>
-                        <td>{article.id}</td>
-                        <td>{article.dealer_id}</td>
-                        <td>{article.title}</td>
-                        <td>{article.description}</td>
-                        <td>{article.entry_date}</td>
-                        <td>{article.cost+'€'}</td>
-                        <td>{article.condition}</td>
-                    </tr>
-                </tbody>
-            )}
-            </table>
-        </div>
-    );
+    // renvoit le rendu d'une page auquel on passe les parties personnalisées via props (paramètres)
+    return <Page 
+        fetchElementsData={fetchArticles}
+        renderTableHeader={renderTableHeader}
+        renderTableBody={renderTableBody}
+        title={title}
+        elementClassName={elementClassName}
+    />;
 }
 
 export default Articles;
