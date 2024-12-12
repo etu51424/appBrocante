@@ -1,58 +1,17 @@
 import { React, useEffect, useState } from "react";
 import Page from "./Page.jsx";
 import { articlesData } from "../api/articles.js";
-import enDict from "../translations/en/en.js";
-import frDict from "../translations/fr/fr.js"; 
 
 function Articles() {
 
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
     const title = "Articles";
-    const elementClassName = "articles";
-
-    console.log(langDict.tables);
-
-
-    const changeLanguage = () => {
-        console.log(langDict.tables.article);
-        setLangDict(window.language === "fr" ? frDict : enDict);
-    }
-
-    // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
-    useEffect(() => {
-        // listener
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-
-        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
-        // ...qui arrive bientôt, juste après la maj de la page
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []); // aucune dépendance utile ici
+    const elementClassNameSingular = "article";
+    const elementClassNamePlural = "articles";
 
     // async car du pov de Page.jsx, fetcher articlesData reste une opération I/O
     const fetchArticles = async () => {
         return articlesData;
     };
-
-    //obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs
-    // tableHeader et tableBody font le rendu de la table et du body
-    const renderTableHeader = () => {
-        return Object.keys(
-            articlesData[0]).map(
-                (keyName) => (
-                    <th key={`${keyName}`}>
-                        {
-                            langDict.tables.article.columns[keyName]
-                        }
-                    </th>
-            )
-        );
-    }
 
 // articles.map(article => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
     const renderTableBody = (article) => {
@@ -72,10 +31,10 @@ function Articles() {
     // renvoit le rendu d'une page auquel on passe les parties personnalisées via props (paramètres)
     return <Page 
         fetchElementsData={fetchArticles}
-        renderTableHeader={renderTableHeader}
         renderTableBody={renderTableBody}
         title={title}
-        elementClassName={elementClassName}
+        elementClassNameSingular={elementClassNameSingular}
+        elementClassNamePlural={elementClassNamePlural}
     />;
 }
 
