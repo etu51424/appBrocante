@@ -3,28 +3,31 @@
     height: 80px;
     display: flex;
     align-items: center;
-    /*pas de justify content donc items vont au centre*/
     justify-content: space-evenly;
+    /*pas de justify content donc items vont au centre*/
 }
 
-.headerContent {
+.logoAndTitle {
     /*display: block;*/
     /*justify-content: center;*/
-    align-items: center; /*aligne le log et le titre sur l'axe x*/
+     /*aligne le log et le titre sur l'axe x*/
     display: flex;
+    align-items: center;
     flex-direction: row; /*Le flex direction par defaut est row. Sauf qu'ici Le parent est DEJA en flex direction column. Donc set à row */
 }
 
-.headerContent h2 {
+.logoAndTitle h2 {
     margin: 0;
-    flex: 1;
 }
 
-.headerContent img {
+.logoAndTitle img {
     height: 80px;
     width: auto;
     object-fit: contain;
     padding: 0px 15px 0px 15px;
+}
+
+.langButtons {
 }
 
 

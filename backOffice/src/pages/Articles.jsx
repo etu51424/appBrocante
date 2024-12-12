@@ -1,11 +1,38 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import Page from "./Page.jsx";
 import { articlesData } from "../api/articles.js";
+import enDict from "../translations/en/en.js";
+import frDict from "../translations/fr/fr.js"; 
 
 function Articles() {
 
+    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
     const title = "Articles";
     const elementClassName = "articles";
+
+    console.log(langDict.tables);
+
+
+    const changeLanguage = () => {
+        console.log(langDict.tables.article);
+        setLangDict(window.language === "fr" ? frDict : enDict);
+    }
+
+    // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
+    useEffect(() => {
+        // listener
+        const handleLanguageChange = () => {
+            changeLanguage();
+        };
+
+        window.addEventListener("langchange", handleLanguageChange);
+
+        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
+        // ...qui arrive bientôt, juste après la maj de la page
+        return () => {
+            window.removeEventListener("langchange", handleLanguageChange);
+        };
+    }, []); // aucune dépendance utile ici
 
     // async car du pov de Page.jsx, fetcher articlesData reste une opération I/O
     const fetchArticles = async () => {
@@ -17,7 +44,12 @@ function Articles() {
     const renderTableHeader = () => {
         return Object.keys(
             articlesData[0]).map(
-                (keyName) => (<th key={`${keyName}`}>{keyName}</th>
+                (keyName) => (
+                    <th key={`${keyName}`}>
+                        {
+                            langDict.tables.article.columns[keyName]
+                        }
+                    </th>
             )
         );
     }

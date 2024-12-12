@@ -4,7 +4,7 @@ function Home() {
     return (
         <div className='home'>
             <img src="/logo.png" alt="logo" />
-            <p>En attente...</p>
+            <p>En attente ...</p>
         </div>
     );
 }

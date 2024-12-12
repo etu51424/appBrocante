@@ -42,6 +42,12 @@ td {
   padding: 7px;
 }
 
+button {
+  padding: 5px;
+  margin: 5px;
+  background-color: #ffd971;
+}
+
 /*
 #root {
   max-width: 1280px;

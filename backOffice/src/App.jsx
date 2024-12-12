@@ -10,6 +10,8 @@ import Dealers from './pages/Dealers.jsx';
 import Interests from './pages/Interests.jsx';
 import Menu from './components/Menu.jsx';
 
+window.language = "fr";
+
 function App() {
 
   return (
