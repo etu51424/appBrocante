@@ -102,7 +102,7 @@ VALUES
 ('Dupont', 'Jean', 'Dupont', '22 Rue Lafayette, Paris', '0612345678', 'jean.dupont@example.com', '2024-11-10 12:30:00', 'hashed_password_1', 'jean.jpg', FALSE),
 ('Martin', 'Sophie', 'Martin', '45 Rue de Lyon, Lyon', '0623456789', 'sophie.martin@example.com', '2024-11-12 15:45:00', 'hashed_password_2', 'sophie.png', TRUE),
 ('Durand', 'Paul', 'Durand', '78 Boulevard Haussmann, Marseille', '0634567890', 'paul.durand@example.com', '2024-11-15 09:00:00', 'hashed_password_3', 'paul.jpeg', FALSE),
-('Lord', null, null, null, null, 'lord.darkduja@gmailc.com', null, '$argon2id$v=19$m=65536,t=3,p=4$fii8KV13ByF6tO+dAn2Leg$6VIGCnEenjfkLRT4BFjC/yNkdBDVSIYKScM99KzwO7k', null, TRUE);
+('Lord', null, null, null, null, 'lord.darkduja@gmailc.com', null, 'brocante', null, TRUE);
 
 -- Insérer des intérêts
 INSERT INTO interest (flea_market_id, person_id, is_interested, is_dealer, participation)
