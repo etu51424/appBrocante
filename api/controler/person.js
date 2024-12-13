@@ -6,11 +6,10 @@ import {deleteInterestByPerson} from "../model/interest.js";
 import {hash} from "../utils/hash.js";
 import {sendMail} from "../utils/mail.js";
 
-
 export const createPerson = async (req, res) => {
     try{
-        req.body.password = await hash(req.body.password);
-        const id = await personModel.createPerson(pool, req.body);
+        req.val.password = await hash(req.val.password);
+        const id = await personModel.createPerson(pool, req.val);
         if (id) {
             res.status(201).json({id});
             await sendMail(req.val.email,
@@ -27,7 +26,7 @@ export const getPerson = async (req, res) => {
     try{
         const person = await personModel.readPerson(pool, req.val);
         if (person) {
-            res.send(person);
+            res.status(200).send(person);
         }
         else {
             res.sendStatus(404);
@@ -38,9 +37,23 @@ export const getPerson = async (req, res) => {
     }
 }
 
+export const getAllPersons = async (req, res) => {
+    try {
+        const persons = await personModel.readAllPerson(pool);
+        if (persons.length > 0) {
+            res.status(200).json(persons);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all persons : ${err.message}`);
+    }
+}
+
 export const updatePerson = async (req, res) => {
     try{
-        await personModel.updatePerson(pool, req.body);
+        await personModel.updatePerson(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -54,10 +67,10 @@ export const deletePerson = async (req, res) => {
         SQLClient = await pool.connect();
         await SQLClient.query("BEGIN");
 
-        await deleteArticleByDealer(SQLClient, req.params);
-        await deleteDealer(SQLClient, req.params);
-        await deleteInterestByPerson(SQLClient, req.params);
-        await personModel.deletePerson(SQLClient, req.params);
+        await deleteArticleByDealer(SQLClient, req.val);
+        await deleteDealer(SQLClient, req.val);
+        await deleteInterestByPerson(SQLClient, req.val);
+        await personModel.deletePerson(SQLClient, req.val);
 
         await SQLClient.query("COMMIT");
         res.sendStatus(204);
@@ -83,7 +96,7 @@ export const deletePerson = async (req, res) => {
 
 export const promotePersonAdmin = async (req, res) => {
     try{
-        await personModel.promotePersonAdmin(pool, req.params);
+        await personModel.promotePersonAdmin(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -93,7 +106,7 @@ export const promotePersonAdmin = async (req, res) => {
 
 export const demotePersonAdmin = async (req, res) => {
     try{
-        await personModel.demotePersonAdmin(pool, req.params);
+        await personModel.demotePersonAdmin(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -105,9 +118,9 @@ export const demotePersonAdmin = async (req, res) => {
 
 export const banPerson = async (req, res) => {
     try{
-        await personModel.banPerson(pool, req.params);
+        await personModel.banPerson(pool, req.val);
         res.sendStatus(204);
-        let person = await personModel.readPerson(pool, req.params);
+        let person = await personModel.readPerson(pool, req.val);
         if (person) {
             await sendMail(person.email,
                 "Expulsion temporaire",
@@ -122,9 +135,9 @@ export const banPerson = async (req, res) => {
 }
 export const unbanPerson = async (req, res) => {
     try{
-        await personModel.unbanPerson(pool, req.params);
+        await personModel.unbanPerson(pool, req.val);
         res.sendStatus(204);
-        const person = await personModel.readPerson(pool, req.params);
+        const person = await personModel.readPerson(pool, req.val);
         if (person) {
             await sendMail(person.email,
                 "Rétablissement du compte",

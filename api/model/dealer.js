@@ -36,8 +36,12 @@ export const createDealer = async (SQLClient, {personId, type, description, sign
     }
     if (queryValues.length > 0){
         query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING person_id`;
-        const {rows} = await SQLClient.query(query, queryValues);
-        return rows[0]?.person_id;
+        try {
+            const {rows} = await SQLClient.query(query, queryValues);
+            return rows[0]?.person_id;
+        } catch (err){
+            throw new Error(`Error while creating dealer : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -45,8 +49,21 @@ export const createDealer = async (SQLClient, {personId, type, description, sign
 }
 
 export const readDealer = async (SQLClient, {personId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM dealer WHERE person_id = $1", [personId]);
-    return rows[0];
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM dealer WHERE person_id = $1", [personId]);
+        return rows[0];
+    } catch (err){
+        throw new Error(`Error while reading dealer : ${err.message}`);
+    }
+}
+
+export const readAllDealers = async (SQLClient) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM dealer");
+        return rows;
+    } catch (err){
+        throw new Error(`Error while reading all dealers : ${err.message}`);
+    }
 }
 
 export const updateDealer = async (SQLClient, {personId, type, description, signupDate, averageRating, reviewCount}) => {
@@ -76,7 +93,11 @@ export const updateDealer = async (SQLClient, {personId, type, description, sign
     if (queryValues.length > 0) {
         queryValues.push(personId);
         query += `${querySet.join(", ")} WHERE person_id = $${queryValues.length}`;
-        return await SQLClient.query(query, queryValues);
+        try {
+            return await SQLClient.query(query, queryValues);
+        } catch (err){
+            throw new Error(`Error while updating dealer : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -84,5 +105,9 @@ export const updateDealer = async (SQLClient, {personId, type, description, sign
 }
 
 export const deleteDealer = async (SQLClient, {personId}) => {
-    return await SQLClient.query("DELETE FROM dealer WHERE person_id = $1", [personId]);
+    try {
+        return await SQLClient.query("DELETE FROM dealer WHERE person_id = $1", [personId]);
+    } catch (err){
+        throw new Error(`Error while deleting dealer : ${err.message}`);
+    }
 }

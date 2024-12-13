@@ -3,7 +3,7 @@ import * as dealerValidator from '../schemas/dealer.js'
 export const dealerValidatorMiddlewares = {
     dealerId : async (req, res, next) => {
         try {
-            req.val = await dealerValidator.dealerId.validate(req.params);
+            req.val = await dealerValidator.dealerId.validate(req.body);
             next();
         } catch (e) {
             res.status(400).send(e.messages);
@@ -25,15 +25,6 @@ export const dealerValidatorMiddlewares = {
             res.status(400).send(e.messages);
         }
     },
-    dealerToDelete : async (req, res, next) => {
-        try { 
-            // params car identique que dealerId middleware
-            req.val = await dealerValidator.dealerToDelete.validate(req.params)
-            next();
-        } catch (e) {
-            res.status(400).send(e.messages);
-        }
-    }
 };
 
 export default dealerValidatorMiddlewares;

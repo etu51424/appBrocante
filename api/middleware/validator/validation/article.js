@@ -1,11 +1,9 @@
 import * as articleValidator from '../schemas/article.js';
-// séparé dans son fichier comme ça importable as default
 
 const articleValidatorMiddleware = {
-    //ou appeler ça searchedArticle
     articleId: async (req, res, next) => {
         try {
-            req.val = await articleValidator.articleId.validate(req.params);
+            req.val = await articleValidator.articleId.validate(req.body);
             next();
         } catch(e) {
             res.status(400).send(e.messages);
@@ -27,14 +25,6 @@ const articleValidatorMiddleware = {
             res.status(400).send(e.messages);
         }
     },
-    articleToDelete : async (req, res, next) => {
-        try {
-            req.val  = await articleValidator.articleToDelete.validate(req.body);
-            next();
-        } catch (e) {
-            res.status(400).send(e.messages);
-        }     
-    }
 };
 
 export default articleValidatorMiddleware;

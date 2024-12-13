@@ -6,23 +6,18 @@ const slotIdSchema = vine.object({
 
 const slotToAddSchema = vine.object({
     fleaMarketId : vine.number(),
-    isAvailable : vine.number(),
+    isAvailable : vine.boolean(),
     area : vine.number().optional(),
 })
 
 const slotToUpdateSchema = vine.object({
     id : vine.number(),
     fleaMarketId : vine.number().optional(),
-    isAvailable : vine.number().optional(),
+    isAvailable : vine.boolean().optional(),
     area : vine.number().optional(),
-})
-
-const slotToDeleteSchema = vine.object({
-    id : vine.number(),
 })
 
 export const
     slotId = vine.compile(slotIdSchema),
     slotToAdd = vine.compile(slotToAddSchema),
-    slotToUpdate = vine.compile(slotToUpdateSchema),
-    slotToDelete = vine.compile(slotToDeleteSchema)
+    slotToUpdate = vine.compile(slotToUpdateSchema);

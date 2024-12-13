@@ -4,7 +4,7 @@ import {deleteArticleByDealer} from "../model/article.js";
 
 export const createDealer = async (req, res) => {
     try{
-        const id = await dealerModel.createDealer(pool, req.body);
+        const id = await dealerModel.createDealer(pool, req.val);
         if (id) {
             res.status(201).json({id});
         }
@@ -16,9 +16,9 @@ export const createDealer = async (req, res) => {
 
 export const getDealer = async (req, res) => {
     try{
-        const dealer = await dealerModel.readDealer(pool, req.params);
+        const dealer = await dealerModel.readDealer(pool, req.val);
         if (dealer) {
-            res.send(dealer);
+            res.status(200).send(dealer);
         }
         else {
             res.sendStatus(404);
@@ -29,9 +29,23 @@ export const getDealer = async (req, res) => {
     }
 }
 
+export const getAllDealers = async (req, res) => {
+    try {
+        const dealers = await dealerModel.readAllDealers(pool);
+        if (dealers.length > 0) {
+            res.status(200).json(dealers);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all dealers : ${err.message}`);
+    }
+}
+
 export const updateDealer = async (req, res) => {
     try{
-        await dealerModel.updateDealer(pool, req.body);
+        await dealerModel.updateDealer(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -45,8 +59,8 @@ export const deleteDealer = async (req, res) => {
         SQLClient = await pool.connect();
         await SQLClient.query("BEGIN");
 
-        await deleteArticleByDealer(SQLClient, req.params);
-        await dealerModel.deleteDealer(SQLClient, req.params);
+        await deleteArticleByDealer(SQLClient, req.val);
+        await dealerModel.deleteDealer(SQLClient, req.val);
 
         await SQLClient.query("COMMIT");
         res.sendStatus(204);

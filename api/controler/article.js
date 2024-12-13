@@ -3,7 +3,7 @@ import {pool} from "../database/dbAccess.js";
 
 export const createArticle = async (req, res) => {
     try{
-        const id = await articleModel.createArticle(pool, req.body);
+        const id = await articleModel.createArticle(pool, req.val);
         if (id) {
             res.status(201).json({id});
         }
@@ -15,9 +15,9 @@ export const createArticle = async (req, res) => {
 
 export const getArticle = async (req, res) => {
     try{
-        const article = await articleModel.readArticle(pool, req.params);
+        const article = await articleModel.readArticle(pool, req.val);
         if (article) {
-            res.send(article);
+            res.status(200).send(article);
         }
         else {
             res.sendStatus(404);
@@ -31,12 +31,8 @@ export const getArticle = async (req, res) => {
 export const getAllArticles = async (req, res) => {
     try {
         console.log("controler/getAllArticles");
-        const articles = await articleModel.readAllArticles(pool, req.params);
-        //.length verifie que c'est bien un array
-        console.log("In Controller " + articles[2].title + " In Controller ");
-        if (articles && articles.length > 0) {
-            console.log("In Controller 200 " + articles[2].title + " In Controller ");
-            // envoit les articles en json sinon pas interpretables par postman
+        const articles = await articleModel.readAllArticles(pool);
+        if (articles.length > 0) {
             res.status(200).json(articles);
         } else {
             res.sendStatus(404);
@@ -49,7 +45,7 @@ export const getAllArticles = async (req, res) => {
 
 export const updateArticle = async (req, res) => {
     try{
-        await articleModel.updateArticle(pool, req.body);
+        await articleModel.updateArticle(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -59,7 +55,7 @@ export const updateArticle = async (req, res) => {
 
 export const deleteArticle = async (req, res) => {
     try{
-        await articleModel.deleteArticle(pool, req.params);
+        await articleModel.deleteArticle(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);

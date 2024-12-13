@@ -31,8 +31,12 @@ export const createInterest = async (SQLClient, {fleaMarketId, personId, isInter
     }
     if (queryValues.length > 0){
         query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING flea_market_id`;
-        const {rows} = await SQLClient.query(query, queryValues);
-        return rows[0]?.flea_market_id;
+        try {
+            const {rows} = await SQLClient.query(query, queryValues);
+            return rows[0]?.flea_market_id;
+        } catch (err) {
+            throw new Error(`Error while creating interest : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -40,8 +44,21 @@ export const createInterest = async (SQLClient, {fleaMarketId, personId, isInter
 }
 
 export const readInterest = async (SQLClient, {fleaMarketId, personId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM interest WHERE flea_market_id = $1 AND person_id=$2", [fleaMarketId, personId]);
-    return rows[0];
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM interest WHERE flea_market_id = $1 AND person_id=$2", [fleaMarketId, personId]);
+        return rows[0];
+    } catch (err) {
+        throw new Error(`Error while reading interest : ${err.message}`);
+    }
+}
+
+export const readAllInterest = async (SQLClient) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM interest");
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all interest : ${err.message}`);
+    }
 }
 
 export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInterested, isDealer, participation}) => {
@@ -64,7 +81,11 @@ export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInter
         queryValues.push(fleaMarketId);
         queryValues.push(personId);
         query += `${querySet.join(", ")} WHERE flea_market_id = $${queryValues.length-1} AND person_id=$${queryValues.length}`;
-        return await SQLClient.query(query, queryValues);
+        try {
+            return await SQLClient.query(query, queryValues);
+        } catch (err) {
+            throw new Error(`Error while updating interest : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -72,15 +93,26 @@ export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInter
 }
 
 export const deleteInterest = async (SQLClient, {fleaMarketId, personId}) => {
-    console.log(fleaMarketId, personId);
-    return await SQLClient.query("DELETE FROM interest WHERE flea_market_id=$1 AND person_id = $2", [fleaMarketId, personId]);
+    try {
+        return await SQLClient.query("DELETE FROM interest WHERE flea_market_id=$1 AND person_id = $2", [fleaMarketId, personId]);
+    } catch (err) {
+        throw new Error(`Error while deleting interest : ${err.message}`);
+    }
 }
 
 export const deleteInterestByPerson = async (SQLClient, {personId}) => {
-    return await SQLClient.query("DELETE FROM interest WHERE person_id = $1", [personId]);
+    try {
+        return await SQLClient.query("DELETE FROM interest WHERE person_id = $1", [personId]);
+    } catch (err) {
+        throw new Error(`Error while deleting interest by person : ${err.message}`);
+    }
 }
 
 export const deleteInterestByFleaMarket = async (SQLClient, {fleaMarketId}) => {
-    return await SQLClient.query("DELETE FROM interest WHERE flea_market_id = $1", [fleaMarketId]);
+    try {
+        return await SQLClient.query("DELETE FROM interest WHERE flea_market_id = $1", [fleaMarketId]);
+    } catch (err) {
+        throw new Error(`Error while deleting interest by flea market : ${err.message}`);
+    }
 }
 

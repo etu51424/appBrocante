@@ -1,10 +1,11 @@
 import * as slotModel from "../model/slot.js";
 import {pool} from "../database/dbAccess.js";
+import * as personModel from "../model/person.js";
 
 
 export const createSlot = async (req, res) => {
     try{
-        const id = await slotModel.createSlot(pool, req.body);
+        const id = await slotModel.createSlot(pool, req.val);
         if (id) {
             res.status(201).json({id});
         }
@@ -16,9 +17,9 @@ export const createSlot = async (req, res) => {
 
 export const getSlot = async (req, res) => {
     try{
-        const slot = await slotModel.readSlot(pool, req.params);
+        const slot = await slotModel.readSlot(pool, req.val);
         if (slot) {
-            res.send(slot);
+            res.status(200).send(slot);
         }
         else {
             res.sendStatus(404);
@@ -29,9 +30,23 @@ export const getSlot = async (req, res) => {
     }
 }
 
+export const getAllSlots = async (req, res) => {
+    try {
+        const slots = await slotModel.readAllSlot(pool);
+        if (slots.length > 0) {
+            res.status(200).json(slots);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all slots : ${err.message}`);
+    }
+}
+
 export const updateSlot = async (req, res) => {
     try{
-        await slotModel.updateSlot(pool, req.body);
+        await slotModel.updateSlot(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -41,7 +56,7 @@ export const updateSlot = async (req, res) => {
 
 export const deleteSlot = async (req, res) => {
     try{
-        await slotModel.deleteSlot(pool, req.params);
+        await slotModel.deleteSlot(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
