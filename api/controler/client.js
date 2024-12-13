@@ -48,7 +48,7 @@ export const verifyRecoveryCode = async (req, res) => {
     try {
         let codeInDB = await clientModel.readRecoveryCode(pool, req.val);
         if (codeInDB?.recovery_code) {
-            if (codeInDB.recovery_code === req.val.code){
+            if (codeInDB.recovery_code === req.val.recoveryCode){
                 await clientModel.deleteRecoveryCode(pool, req.val);
                 res.sendStatus(200);
             }
