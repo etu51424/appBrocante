@@ -25,7 +25,7 @@ const frDictionary = {
             }
         },
         "person": {
-            "id": "Identifiant Personne",
+            "title": "Utilisateur",
             "columns": {
                 "name": "Nom",
                 "first_name": "Prénom",
