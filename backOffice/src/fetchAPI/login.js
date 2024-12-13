@@ -1,11 +1,11 @@
 const API_BASE_URL = "http://localhost:3001/api/v1";
 
 const loginBody = {
-    personId: 1,
+    username: "Test",
     password: "pw"
 }
 
-const loginResponse = await fetch(`${API_BASE_URL}/client/login`, {
+const loginResponse = await fetch(`${API_BASE_URL}/client/person/login`, {
     method:"POST",
     headers:{"Content-Type": "application/json"},
     body: JSON.stringify(loginBody),
@@ -17,5 +17,5 @@ export const token = await loginResponse.text();
 //console.log("Login réussi. Token reçu :", token);
 
 if (!loginResponse.ok) {
-    throw new Error(`Login raté: ${errorText}`);
+    throw new Error(`Login raté: ${"Login raté"}`);
 }
