@@ -67,9 +67,9 @@ export const readFleaMarket = async (SQLClient, {fleaMarketId}) => {
     }
 }
 
-export const readAllFleaMarket = async (SQLClient) => {
+export const readAllFleaMarket = async (SQLClient, {limit, offset}) => {
     try {
-        const {rows} = await SQLClient.query("SELECT * FROM flea_market");
+        const {rows} = await SQLClient.query("SELECT * FROM flea_market LIMIT $1 OFFSET $2", [limit, offset]);
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all flea market : ${err.message}`)

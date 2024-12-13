@@ -2,6 +2,7 @@ import {Router} from 'express';
 import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {admin, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {default as FMVM} from '../../../middleware/validator/validation/fleaMarket.js';
+import {default as LVM} from '../../../middleware/validator/validation/limits.js';
 import {createFleaMarket, getAllFleaMarkets, getFleaMarket, updateFleaMarket, deleteFleaMarket} from "../../../controler/fleaMarket.js";
 
 const router = Router();

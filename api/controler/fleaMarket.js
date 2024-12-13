@@ -32,7 +32,7 @@ export const getFleaMarket = async (req, res) => {
 
 export const getAllFleaMarkets = async (req, res) => {
     try {
-        const fleaMarkets = await fleaMarketModel.readAllFleaMarket(pool);
+        const fleaMarkets = await fleaMarketModel.readAllFleaMarket(pool, req.val);
         if (fleaMarkets.length > 0) {
             res.status(200).json(fleaMarkets);
         } else {

@@ -86,9 +86,9 @@ export const readPersonByUsername = async (SQLClient, {username}) => {
     }
 }
 
-export const readAllPerson = async (SQLClient) => {
+export const readAllPerson = async (SQLClient, {limit, offset}) => {
     try {
-        const {rows} = await SQLClient.query("SELECT * FROM person");
+        const {rows} = await SQLClient.query("SELECT * FROM person LIMIT $1 OFFSET $2", [limit, offset]);
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all persons : ${err.message}`);

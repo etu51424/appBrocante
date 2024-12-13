@@ -31,7 +31,7 @@ export const getDealer = async (req, res) => {
 
 export const getAllDealers = async (req, res) => {
     try {
-        const dealers = await dealerModel.readAllDealers(pool);
+        const dealers = await dealerModel.readAllDealers(pool, req.val);
         if (dealers.length > 0) {
             res.status(200).json(dealers);
         } else {

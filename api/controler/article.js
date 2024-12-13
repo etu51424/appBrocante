@@ -30,8 +30,7 @@ export const getArticle = async (req, res) => {
 
 export const getAllArticles = async (req, res) => {
     try {
-        console.log("controler/getAllArticles");
-        const articles = await articleModel.readAllArticles(pool);
+        const articles = await articleModel.readAllArticles(pool, req.val);
         if (articles.length > 0) {
             res.status(200).json(articles);
         } else {

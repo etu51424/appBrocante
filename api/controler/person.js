@@ -39,7 +39,7 @@ export const getPerson = async (req, res) => {
 
 export const getAllPersons = async (req, res) => {
     try {
-        const persons = await personModel.readAllPerson(pool);
+        const persons = await personModel.readAllPerson(pool, req.val);
         if (persons.length > 0) {
             res.status(200).json(persons);
         } else {

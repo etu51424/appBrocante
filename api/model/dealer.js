@@ -66,9 +66,9 @@ export const readDealerByUsername = async (SQLClient, {username}) => {
     }
 }
 
-export const readAllDealers = async (SQLClient) => {
+export const readAllDealers = async (SQLClient, {limit, offset}) => {
     try {
-        const {rows} = await SQLClient.query("SELECT * FROM dealer");
+        const {rows} = await SQLClient.query("SELECT * FROM dealerLIMIT $1 OFFSET $2", [limit, offset]);
         return rows;
     } catch (err){
         throw new Error(`Error while reading all dealers : ${err.message}`);

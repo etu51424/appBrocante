@@ -31,7 +31,7 @@ export const getInterest = async (req, res) => {
 
 export const getAllInterests = async (req, res) => {
     try {
-        const interests = await interestModel.readAllInterest(pool);
+        const interests = await interestModel.readAllInterest(pool, req.val);
         if (interests.length > 0) {
             res.status(200).json(interests);
         } else {

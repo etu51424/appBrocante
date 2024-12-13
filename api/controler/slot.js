@@ -32,7 +32,7 @@ export const getSlot = async (req, res) => {
 
 export const getAllSlots = async (req, res) => {
     try {
-        const slots = await slotModel.readAllSlot(pool);
+        const slots = await slotModel.readAllSlot(pool, req.val);
         if (slots.length > 0) {
             res.status(200).json(slots);
         } else {

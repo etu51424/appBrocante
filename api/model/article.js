@@ -57,10 +57,10 @@ export const readArticle = async (SQLClient, {id}) => {
     }
 }
 
-export const readAllArticles = async (SQLClient) => {
+export const readAllArticles = async (SQLClient, {limit, offset}) => {
     //n'obtenir que la propriété rows, les contenant
     try {
-        const {rows} = await SQLClient.query("SELECT * FROM article");
+        const {rows} = await SQLClient.query("SELECT * FROM article LIMIT $1 OFFSET $2", [limit, offset]);
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all article : ${err.message}`);
