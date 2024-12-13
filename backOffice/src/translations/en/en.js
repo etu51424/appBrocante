@@ -25,7 +25,7 @@ const enDictionary = {
             }
         },
         "person": {
-            "title":"Person",
+            "title":"User",
             "columns": {
                 "id":"Person ID",
                 "name":"Name",
