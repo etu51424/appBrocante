@@ -57,6 +57,15 @@ export const readDealer = async (SQLClient, {personId}) => {
     }
 }
 
+export const readDealerByUsername = async (SQLClient, {username}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM dealer WHERE EXISTS (SELECT username FROM person WHERE username = $1)", [username]);
+        return rows[0];
+    } catch (err) {
+        throw new Error(`Error while reading dealer by username : ${err.message}`);
+    }
+}
+
 export const readAllDealers = async (SQLClient) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM dealer");

@@ -5,7 +5,7 @@ const personIdSchema = vine.object({
 });
 
 const personToAddSchema = vine.object({
-    name : vine.string().trim(),
+    username : vine.string().trim(),
     firstName : vine.string().trim().optional(),
     lastName : vine.string().trim().optional(),
     address : vine.string().trim().optional(),
@@ -18,7 +18,7 @@ const personToAddSchema = vine.object({
 
 const personToUpdateSchema= vine.object({
     personId : vine.number().optional(),
-    name : vine.string().trim().optional(),
+    username : vine.string().trim().optional(),
     firstName : vine.string().trim().optional(),
     lastName : vine.string().trim().optional(),
     address : vine.string().trim().optional(),
@@ -30,7 +30,7 @@ const personToUpdateSchema= vine.object({
 });
 
 const loginSchema = vine.object({
-    personId : vine.number(),
+    username : vine.string(),
     password : vine.string()
 });
 

@@ -1,12 +1,12 @@
 import {hash_verify} from "../utils/hash.js";
-import {readPerson} from "./person.js";
-import {readDealer} from "./dealer.js";
+import {readPerson, readPersonByUsername} from "./person.js";
+import {readDealer, readDealerByUsername} from "./dealer.js";
 import {v4 as uuid} from 'uuid';
 
-export const readPersonWithPassword = async (SQLClient, {personId, password}) => {
+export const readPersonWithPassword = async (SQLClient, {username, password}) => {
     const responses = await Promise.all([
-        readPerson(SQLClient, {personId}),
-        readDealer(SQLClient, {personId})
+        readPersonByUsername(SQLClient, {username}),
+        readDealerByUsername(SQLClient, {username}),
     ]);
     let send = {};
     if (responses[0]) {

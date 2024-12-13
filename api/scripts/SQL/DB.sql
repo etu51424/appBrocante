@@ -34,14 +34,14 @@ CREATE TABLE slot (
 -- Création de la table person
 CREATE TABLE person (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(50) UNIQUE NOT NULL,
+	username VARCHAR(50) UNIQUE NOT NULL,
 	first_name VARCHAR(50),
 	last_name VARCHAR(50),
 	address VARCHAR(200),
 	phone_number VARCHAR(15),
 	email VARCHAR(40) NOT NULL,
 	last_edit_date TIMESTAMP,
-	password VARCHAR NOT NULL,
+	password VARCHAR(100) NOT NULL,
 	profile_picture VARCHAR(100),
 	is_admin BOOLEAN NOT NULL DEFAULT false,
 	is_timed_out BOOLEAN NOT NULL DEFAULT false,
@@ -96,12 +96,13 @@ VALUES
 (3, FALSE, 20.0);
 
 -- Insérer des personnes
-INSERT INTO person (name, first_name, last_name, address, phone_number, email, last_edit_date, password, profile_picture, is_admin)
+INSERT INTO person (username, first_name, last_name, address, phone_number, email, last_edit_date, password, profile_picture, is_admin)
 VALUES
 ('Test', 'Test', 'Test', '22 Rue aucune, Null', '0612345678', 'test.keto@example.com', '2024-11-10 12:30:00', 'pw', 'test.jpg', FALSE),
 ('Dupont', 'Jean', 'Dupont', '22 Rue Lafayette, Paris', '0612345678', 'jean.dupont@example.com', '2024-11-10 12:30:00', 'hashed_password_1', 'jean.jpg', FALSE),
 ('Martin', 'Sophie', 'Martin', '45 Rue de Lyon, Lyon', '0623456789', 'sophie.martin@example.com', '2024-11-12 15:45:00', 'hashed_password_2', 'sophie.png', TRUE),
-('Durand', 'Paul', 'Durand', '78 Boulevard Haussmann, Marseille', '0634567890', 'paul.durand@example.com', '2024-11-15 09:00:00', 'hashed_password_3', 'paul.jpeg', FALSE);
+('Durand', 'Paul', 'Durand', '78 Boulevard Haussmann, Marseille', '0634567890', 'paul.durand@example.com', '2024-11-15 09:00:00', 'hashed_password_3', 'paul.jpeg', FALSE),
+('Lord', null, null, null, null, 'lord.darkduja@gmailc.com', null, '$argon2id$v=19$m=65536,t=3,p=4$fii8KV13ByF6tO+dAn2Leg$6VIGCnEenjfkLRT4BFjC/yNkdBDVSIYKScM99KzwO7k', null, TRUE);
 
 -- Insérer des intérêts
 INSERT INTO interest (flea_market_id, person_id, is_interested, is_dealer, participation)
@@ -115,7 +116,8 @@ VALUES
 INSERT INTO dealer (person_id, type, description, signup_date, average_rating, review_count)
 VALUES
 (2, 'Artisan', 'Création de bijoux faits main.', '2024-09-01 10:00:00', 4.7, 25),
-(3, 'Collectionneur', 'Vente de pièces vintage et dantiquités', '2024-10-10 11:30:00', 4.5, 15);
+(3, 'Collectionneur', 'Vente de pièces vintage et dantiquités', '2024-10-10 11:30:00', 4.5, 15),
+(5, 'Gros Con', 'Vente du caca', '2024-10-10 11:30:00', 4.5, 15);
 
 --  Insérer des articles
 

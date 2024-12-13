@@ -1,4 +1,4 @@
-export const createPerson = async (SQLClient, {name, firstName, lastName, address,
+export const createPerson = async (SQLClient, {username, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profile_picture, password}) => {
     let query = "INSERT INTO person ";
 
@@ -35,9 +35,9 @@ export const createPerson = async (SQLClient, {name, firstName, lastName, addres
         queryValues.push(profile_picture);
         querySet.push(`$${queryValues.length}`);
     }
-    if (name !== undefined) {
-        dbColumns.push("name");
-        queryValues.push(name);
+    if (username !== undefined) {
+        dbColumns.push("username");
+        queryValues.push(username);
         querySet.push(`$${queryValues.length}`);
     }
     if (email !== undefined) {
@@ -76,6 +76,16 @@ export const readPerson = async (SQLClient, {personId}) => {
     }
 }
 
+export const readPersonByUsername = async (SQLClient, {username}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM person WHERE username = $1", [username]);
+        return rows[0];
+    }
+    catch (err){
+        throw new Error(`Error while reading in database : ${err.message}`);
+    }
+}
+
 export const readAllPerson = async (SQLClient) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM person");
@@ -85,14 +95,14 @@ export const readAllPerson = async (SQLClient) => {
     }
 }
 
-export const updatePerson = async (SQLClient, {personId, name, firstName, lastName, address,
+export const updatePerson = async (SQLClient, {personId, username, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profilePicture, password}) => {
 
     let query = "UPDATE person SET ";
     const querySet = [];
     const queryValues = [];
-    if (name !== undefined){
-        queryValues.push(name);
+    if (username !== undefined){
+        queryValues.push(username);
         querySet.push(`name=$${queryValues.length}`);
     }
     if (firstName !== undefined){
