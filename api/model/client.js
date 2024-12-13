@@ -4,7 +4,6 @@ import {readDealer} from "./dealer.js";
 import {v4 as uuid} from 'uuid';
 
 export const readPersonWithPassword = async (SQLClient, {personId, password}) => {
-    console.log("entre dans readPersonWithPassword");
     const responses = await Promise.all([
         readPerson(SQLClient, {personId}),
         readDealer(SQLClient, {personId})

@@ -5,7 +5,7 @@ import {deleteInterestByFleaMarket} from "../model/interest.js";
 
 export const createFleaMarket = async (req, res) => {
     try{
-        const id = await fleaMarketModel.createFleaMarket(pool, req.body);
+        const id = await fleaMarketModel.createFleaMarket(pool, req.val);
         if (id) {
             res.status(201).json({id});
         }
@@ -17,9 +17,9 @@ export const createFleaMarket = async (req, res) => {
 
 export const getFleaMarket = async (req, res) => {
     try{
-        const fleaMarket = await fleaMarketModel.readFleaMarket(pool, req.params);
+        const fleaMarket = await fleaMarketModel.readFleaMarket(pool, req.val);
         if (fleaMarket) {
-            res.send(fleaMarket);
+            res.status(200).send(fleaMarket);
         }
         else {
             res.sendStatus(404);
@@ -30,9 +30,23 @@ export const getFleaMarket = async (req, res) => {
     }
 }
 
+export const getAllFleaMarkets = async (req, res) => {
+    try {
+        const fleaMarkets = await fleaMarketModel.readAllFleaMarket(pool);
+        if (fleaMarkets.length > 0) {
+            res.status(200).json(fleaMarkets);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all flea markets : ${err.message}`);
+    }
+}
+
 export const updateFleaMarket = async (req, res) => {
     try{
-        await fleaMarketModel.updateFleaMarket(pool, req.body);
+        await fleaMarketModel.updateFleaMarket(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -46,9 +60,9 @@ export const deleteFleaMarket = async (req, res) => {
         SQLClient = await pool.connect();
         await SQLClient.query("BEGIN");
 
-        await deleteSlotByFleaMarket(SQLClient, req.params);
-        await deleteInterestByFleaMarket(SQLClient, req.params);
-        await fleaMarketModel.deleteFleaMarket(SQLClient, req.params);
+        await deleteSlotByFleaMarket(SQLClient, req.val);
+        await deleteInterestByFleaMarket(SQLClient, req.val);
+        await fleaMarketModel.deleteFleaMarket(SQLClient, req.val);
 
         await SQLClient.query("COMMIT");
         res.sendStatus(204);

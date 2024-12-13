@@ -7,7 +7,6 @@ import {sendMail} from "../utils/mail.js";
 export const login = async (req, res) => {
     try {
         const rep = await clientModel.readPersonWithPassword(pool, req.val);
-        console.log(rep);
         if(rep.personId) {
             if(!rep.isBanned) {
                 const jwt = sign(rep, {
@@ -49,7 +48,7 @@ export const verifyRecoveryCode = async (req, res) => {
     try {
         let codeInDB = await clientModel.readRecoveryCode(pool, req.val);
         if (codeInDB?.recovery_code) {
-            if (codeInDB.recovery_code === req.val.code){
+            if (codeInDB.recovery_code === req.val.recoveryCode){
                 await clientModel.deleteRecoveryCode(pool, req.val);
                 res.sendStatus(200);
             }

@@ -76,6 +76,15 @@ export const readPerson = async (SQLClient, {personId}) => {
     }
 }
 
+export const readAllPerson = async (SQLClient) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM person");
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all persons : ${err.message}`);
+    }
+}
+
 export const updatePerson = async (SQLClient, {personId, name, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profilePicture, password}) => {
 

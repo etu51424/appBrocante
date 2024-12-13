@@ -1,12 +1,12 @@
-export const createArticle = async (SQLClient, {dealerId, title, description, entry_date, cost, condition}) => {
+export const createArticle = async (SQLClient, {personId, title, description, entry_date, cost, condition}) => {
     let query = "INSERT INTO article ";
 
     const querySet = [];
     const queryValues = [];
     const dbColumns = [];
-    if (dealerId !== undefined){
+    if (personId !== undefined){
         dbColumns.push("dealer_id");
-        queryValues.push(dealerId);
+        queryValues.push(personId);
         querySet.push(`$${queryValues.length}`);
     }
     if (title !== undefined){
@@ -36,8 +36,12 @@ export const createArticle = async (SQLClient, {dealerId, title, description, en
     }
     if (queryValues.length > 0){
         query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING id`;
-        const {rows} = await SQLClient.query(query, queryValues);
-        return rows[0]?.id;
+        try {
+            const {rows} = await SQLClient.query(query, queryValues);
+            return rows[0]?.id;
+        } catch (err){
+            throw new Error(`Error while creating article : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -45,19 +49,25 @@ export const createArticle = async (SQLClient, {dealerId, title, description, en
 }
 
 export const readArticle = async (SQLClient, {id}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM article WHERE id = $1", [id]);
-    return rows[0];
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM article WHERE id = $1", [id]);
+        return rows[0];
+    } catch (err) {
+        throw new Error(`Error while reading article : ${err.message}`);
+    }
 }
 
 export const readAllArticles = async (SQLClient) => {
-    console.log("readAllArticles");
     //n'obtenir que la propriété rows, les contenant
-    const {rows} = await SQLClient.query("SELECT * FROM article");
-    console.log("In model" + rows[2].title + "In model");
-    return rows;
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM article");
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all article : ${err.message}`);
+    }
 }
 
-export const updateArticle = async (SQLClient, {id, dealerId, title, description, entryDate, cost, condition}) => {
+export const updateArticle = async (SQLClient, {id, personId, title, description, entryDate, cost, condition}) => {
     let query = "UPDATE article SET ";
     const querySet = [];
     const queryValues = [];
@@ -81,14 +91,18 @@ export const updateArticle = async (SQLClient, {id, dealerId, title, description
         queryValues.push(condition);
         querySet.push(`condition=$${queryValues.length}`);
     }
-    if (dealerId !== undefined){
-        queryValues.push(dealerId);
+    if (personId !== undefined){
+        queryValues.push(personId);
         querySet.push(`dealer_id=$${queryValues.length}`);
     }
     if (queryValues.length > 0) {
         queryValues.push(id);
         query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
-        return await SQLClient.query(query, queryValues);
+        try {
+            return await SQLClient.query(query, queryValues);
+        } catch (err) {
+            throw new Error(`Error while updating article : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -96,9 +110,17 @@ export const updateArticle = async (SQLClient, {id, dealerId, title, description
 }
 
 export const deleteArticle = async (SQLClient, {id}) => {
-    return await SQLClient.query("DELETE FROM article WHERE id = $1", [id]);
+    try {
+        return await SQLClient.query("DELETE FROM article WHERE id = $1", [id]);
+    } catch (err) {
+        throw new Error(`Error while deleting article : ${err.message}`)
+    }
 }
 
 export const deleteArticleByDealer = async (SQLClient, {personId}) =>{
-    return await SQLClient.query("DELETE FROM article WHERE dealer_id = $1", [personId]);
+    try {
+        return await SQLClient.query("DELETE FROM article WHERE dealer_id = $1", [personId]);
+    } catch (err) {
+        throw new Error(`Error while deleting article by dealer : ${err.message}`);
+    }
 }

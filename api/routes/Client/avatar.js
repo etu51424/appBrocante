@@ -1,7 +1,7 @@
 import {Router} from "express";
 import multer from "multer";
-import {createAvatar, getAvatar, deleteAvatar} from "../controler/avatar.js";
-import {default as PVM} from "../middleware/validator/validation/person.js";
+import {createAvatar, getAvatar, deleteAvatar} from "../../controler/avatar.js";
+import {default as PVM} from "../../middleware/validator/validation/person.js";
 
 const storage = multer.memoryStorage();
 const upload = multer({

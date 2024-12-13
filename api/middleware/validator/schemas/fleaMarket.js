@@ -30,5 +30,4 @@ const fleaMarketToUpdateSchema = vine.object({
 export const
     fleaMarketId = vine.compile(fleaMarketIDSchema),
     fleaMarketToAdd = vine.compile(fleaMarketToAddSchema),
-    fleaMarketToUpdate = vine.compile(fleaMarketToUpdateSchema),
-    fleaMarketToDelete = vine.compile(fleaMarketIDSchema);
+    fleaMarketToUpdate = vine.compile(fleaMarketToUpdateSchema);

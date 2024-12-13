@@ -1,9 +1,10 @@
 import * as interestModel from "../model/interest.js";
 import {pool} from "../database/dbAccess.js";
+import * as fleaMarketModel from "../model/fleaMarket.js";
 
 export const createInterest = async (req, res) => {
     try{
-        const id = await interestModel.createInterest(pool, req.body);
+        const id = await interestModel.createInterest(pool, req.val);
         if (id) {
             res.status(201).json({id});
         }
@@ -15,9 +16,9 @@ export const createInterest = async (req, res) => {
 
 export const getInterest = async (req, res) => {
     try{
-        const interest = await interestModel.readInterest(pool, req.params);
+        const interest = await interestModel.readInterest(pool, req.val);
         if (interest) {
-            res.send(interest);
+            res.status(200).send(interest);
         }
         else {
             res.sendStatus(404);
@@ -28,9 +29,23 @@ export const getInterest = async (req, res) => {
     }
 }
 
+export const getAllInterests = async (req, res) => {
+    try {
+        const interests = await interestModel.readAllInterest(pool);
+        if (interests.length > 0) {
+            res.status(200).json(interests);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all interests : ${err.message}`);
+    }
+}
+
 export const updateInterest = async (req, res) => {
     try{
-        await interestModel.updateInterest(pool, req.body);
+        await interestModel.updateInterest(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);
@@ -40,7 +55,7 @@ export const updateInterest = async (req, res) => {
 
 export const deleteInterest = async (req, res) => {
     try{
-        await interestModel.deleteInterest(pool, req.params);
+        await interestModel.deleteInterest(pool, req.val);
         res.sendStatus(204);
     } catch (err){
         res.sendStatus(500);

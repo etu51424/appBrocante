@@ -1,0 +1,12 @@
+import {Router} from 'express';
+import {jwtCheck} from "../../../middleware/identification/jwt.js";
+import {default as DVM} from '../../../middleware/validator/validation/dealer.js';
+import {himself, notBanned} from "../../../middleware/authorization/mustBe.js";
+import {createDealer} from '../../../controler/dealer.js';
+
+const router = Router();
+
+router.post('/', jwtCheck, notBanned, DVM.dealerToAdd, himself, createDealer); // pour devenir un dealer
+router.get('/'); // pour récupérer tous les dealers
+
+export default router;

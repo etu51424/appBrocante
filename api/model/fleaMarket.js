@@ -46,8 +46,12 @@ export const createFleaMarket = async (SQLClient, {address, dateStart, dateEnd, 
     }
     if (queryValues.length > 0){
         query += `(${dbColumns.join(",")}) VALUES (${querySet.join(",")}) RETURNING id`;
-        const {rows} = await SQLClient.query(query, queryValues);
-        return rows[0]?.id;
+        try {
+            const {rows} = await SQLClient.query(query, queryValues);
+            return rows[0]?.id;
+        } catch (err) {
+            throw new Error(`Error while creating flea market : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -55,8 +59,21 @@ export const createFleaMarket = async (SQLClient, {address, dateStart, dateEnd, 
 }
 
 export const readFleaMarket = async (SQLClient, {fleaMarketId}) => {
-    const {rows} = await SQLClient.query("SELECT * FROM flea_market WHERE id = $1", [fleaMarketId]);
-    return rows[0];
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM flea_market WHERE id = $1", [fleaMarketId]);
+        return rows[0];
+    } catch (err) {
+        throw new Error(`Error while reading flea market : ${err.message}`);
+    }
+}
+
+export const readAllFleaMarket = async (SQLClient) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM flea_market");
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all flea market : ${err.message}`)
+    }
 }
 
 export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateEnd, title, theme, isCharity, averageRating, reviewCount}) => {
@@ -98,7 +115,11 @@ export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateE
     if (queryValues.length > 0) {
         queryValues.push(id);
         query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
-        return await SQLClient.query(query, queryValues);
+        try {
+            return await SQLClient.query(query, queryValues);
+        } catch (err) {
+            throw new Error(`Error while updating flea market : ${err.message}`);
+        }
     }
     else{
         throw new Error("No field given");
@@ -106,5 +127,9 @@ export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateE
 }
 
 export const deleteFleaMarket = async (SQLClient, {fleaMarketId}) => {
-    return await SQLClient.query("DELETE FROM flea_market WHERE id = $1", [fleaMarketId]);
+    try {
+        return await SQLClient.query("DELETE FROM flea_market WHERE id = $1", [fleaMarketId]);
+    } catch (err) {
+        throw new Error(`Error while delete flea market : ${err.message}`)
+    }
 }

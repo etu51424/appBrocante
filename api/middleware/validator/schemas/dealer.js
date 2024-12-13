@@ -14,7 +14,7 @@ const dealerToAddSchema = vine.object({
 });
 
 const dealerToUpdateSchema= vine.object({
-    personId : vine.number(),
+    personId : vine.number().optional(),
     type : vine.string().trim().optional(),
     lastName : vine.string().trim().optional(),
     description : vine.string().trim().optional(),
@@ -23,13 +23,7 @@ const dealerToUpdateSchema= vine.object({
     reviewCount : vine.number().positive().withoutDecimals()
 });
 
-//redondant sur dealerIdSchema ptete
-const dealerToDeleteSchema = vine.object({
-    personId : vine.number()
-})
-
 export const
     dealerId = vine.compile(dealerIdSchema),
     dealerToAdd = vine.compile(dealerToAddSchema),
-    dealerToUpdate = vine.compile(dealerToUpdateSchema),
-    dealerToDelete = vine.compile(dealerToDeleteSchema)
+    dealerToUpdate = vine.compile(dealerToUpdateSchema);

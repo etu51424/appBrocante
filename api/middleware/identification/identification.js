@@ -1,5 +1,5 @@
-import {readPersonWithPassword} from "../model/client.js";
-import {pool} from "../database/dbAccess.js";
+import {readPersonWithPassword} from "../../model/client.js";
+import {pool} from "../../database/dbAccess.js";
 
 export const authBasic = async (req, res, next) => {
     const header = req.get('authorization');

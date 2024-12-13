@@ -10,7 +10,7 @@ const articleIDSchema = vine.object({
 // champs à valider lors de l'ajout: tous
 // sauf l'id qui est généré automatiquement à l'aide du name+password je pense
 const articleToAddSchema = vine.object({
-    dealerId: vine.number().optional(),
+    personId: vine.number().optional(),
     title: vine.string().trim().optional(),
     description: vine.string().trim().optional(),
     entryDate: vine.date().optional(),
@@ -22,7 +22,7 @@ const articleToAddSchema = vine.object({
 // Check si l'id' est ajouté aussi lors de l'update. Peut-être pas utile
 const articleToUpdateSchema = vine.object({
     id: vine.number(),
-    dealerId: vine.number().optional(),
+    personId: vine.number().optional(),
     title: vine.string().trim().optional(),
     description: vine.string().trim().optional(),
     entryDate: vine.date().optional(),
@@ -32,7 +32,6 @@ const articleToUpdateSchema = vine.object({
 
 // précompiler les schémas
 export const
-    articleId = vine.compile(articleIDSchema), //searchedArticle
+    articleId = vine.compile(articleIDSchema),
     articleToAdd = vine.compile(articleToAddSchema),
-    articleToUpdate = vine.compile(articleToUpdateSchema),
-    articleToDelete = vine.compile(articleIDSchema);
+    articleToUpdate = vine.compile(articleToUpdateSchema);
