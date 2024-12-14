@@ -1,9 +1,9 @@
-import { token } from "./login.js";
+import { token } from "./../login.js";
 
 const API_BASE_URL = "http://localhost:3001/api/v1";
 
-// construire la requete pour recup les articles et la
-const articlesResponse = await fetch(`${API_BASE_URL}/article/`, {
+// construire la requete pour recup les articles
+const articlesResponse = await fetch(`${API_BASE_URL}/admin/article/all`, {
     method: "GET",
     headers: {
         "Authorization": `Bearer ${token}`,

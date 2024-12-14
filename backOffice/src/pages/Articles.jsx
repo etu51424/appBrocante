@@ -1,6 +1,6 @@
-import { React, useEffect, useState } from "react";
+import { React } from "react";
 import Page from "./Page.jsx";
-import { articlesData } from "../api/articles.js";
+import { articlesData } from "../fetchAPI/CRUD/articles.js";
 
 function Articles() {
 

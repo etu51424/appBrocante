@@ -46,12 +46,11 @@ function Page({ fetchElementsData, renderTableBody, title, elementClassNameSingu
     }, []); // aucune dépendance utile ici
 
     useEffect(() => {
-        console.log("Dans useEffect");
 
         const fetchAllElements = async () => {
             try {
                 const elementsData = await fetchElementsData();
-                console.log("Données récupérées :", elementsData);
+                //console.log("Données récupérées :", elementsData);
                 setElements(elementsData); //Maintenant, le reste de la page pourrait utiliser le tableau elements
             } catch (err) {
                 console.error(err);
@@ -78,7 +77,7 @@ function Page({ fetchElementsData, renderTableBody, title, elementClassNameSingu
 
     return (
         <div className={elementClassNamePlural}>
-            <h1>{title}</h1>
+            <h1>{langDict.tables[elementClassNameSingular].title + 's'}</h1>
             {/* afficher l'erreur en rouge si'l yen a une*/}
 
             <table>

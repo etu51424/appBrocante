@@ -24,7 +24,7 @@ const frDictionary = {
                 "area": "Superficie"
             }
         },
-        "person": {
+        "user": {
             "title": "Utilisateur",
             "columns": {
                 "name": "Nom",
