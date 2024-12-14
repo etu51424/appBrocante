@@ -61,6 +61,15 @@ export const readAllInterest = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllInterestByFleaMarketId = async (SQLClient, {fleaMarketId}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM interest WHERE flea_market_id = $1", [fleaMarketId]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all interest by fleaMarketId : ${err.message}`);
+    }
+}
+
 export const updateInterest = async (SQLClient, {fleaMarketId, personId, isInterested, isDealer, participation}) => {
     let query = "UPDATE interest SET ";
     const querySet = [];

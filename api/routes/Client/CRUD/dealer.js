@@ -7,6 +7,6 @@ import {createDealer} from '../../../controler/dealer.js';
 const router = Router();
 
 router.post('/', jwtCheck, notBanned, DVM.dealerToAdd, himself, createDealer); // pour devenir un dealer
-router.get('/'); // pour récupérer tous les dealers
+
 
 export default router;

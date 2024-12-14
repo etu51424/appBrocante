@@ -1,7 +1,11 @@
 import {Router} from 'express';
+import {jwtCheck} from "../../../middleware/identification/jwt.js";
+import {default as DVM} from "../../../middleware/validator/validation/dealer.js"
+import {getAllArticlesByPersonId} from "../../../controler/article.js";
 
 const router = Router();
 
-router.get('/'); // get all articles
+// récupère tous les articles d'un dealer
+router.get('/', jwtCheck, DVM.dealerId, getAllArticlesByPersonId);
 
 export default router;

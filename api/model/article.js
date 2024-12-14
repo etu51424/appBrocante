@@ -67,6 +67,15 @@ export const readAllArticles = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllArticlesByPersonId = async (SQLClient, {personId}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM article WHERE dealer_id = $1", [personId]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all articles by personID : ${err.message}`);
+    }
+}
+
 export const updateArticle = async (SQLClient, {id, personId, title, description, entryDate, cost, condition}) => {
     let query = "UPDATE article SET ";
     const querySet = [];

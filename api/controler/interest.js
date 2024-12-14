@@ -43,6 +43,20 @@ export const getAllInterests = async (req, res) => {
     }
 }
 
+export const getAllInterestsByFleaMarketId = async (req, res) => {
+    try {
+        const interests = await interestModel.readAllInterestByFleaMarketId(pool, req.val);
+        if (interests.length > 0) {
+            res.status(200).json(interests);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all interests : ${err.message}`);
+    }
+}
+
 export const updateInterest = async (req, res) => {
     try{
         await interestModel.updateInterest(pool, req.val);

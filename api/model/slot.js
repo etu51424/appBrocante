@@ -52,6 +52,15 @@ export const readAllSlot = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllSlotByFleaMarketId = async (SQLClient, {fleaMarketId}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM slot WHERE flea_market_id = $1", [fleaMarketId]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all slots by fleaMarketId : ${err.message}`);
+    }
+}
+
 export const updateSlot = async (SQLClient, {id, fleaMarketId, isAvailable, area}) => {
     let query = "UPDATE slot SET ";
     const querySet = [];

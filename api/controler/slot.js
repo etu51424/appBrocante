@@ -44,6 +44,20 @@ export const getAllSlots = async (req, res) => {
     }
 }
 
+export const getAllSlotsByFleaMarketId = async (req, res) => {
+    try {
+        const slots = await slotModel.readAllSlotByFleaMarketId(pool, req.val);
+        if (slots.length > 0) {
+            res.status(200).json(slots);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all slots by fleaMarketId : ${err.message}`);
+    }
+}
+
 export const updateSlot = async (req, res) => {
     try{
         await slotModel.updateSlot(pool, req.val);

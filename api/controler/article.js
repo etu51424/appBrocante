@@ -42,6 +42,20 @@ export const getAllArticles = async (req, res) => {
     }
 }
 
+export const getAllArticlesByPersonId = async (req, res) => {
+    try {
+        const articles = await articleModel.readAllArticlesByPersonId(pool, req.val);
+        if (articles.length > 0) {
+            res.status(200).json(articles);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all articles by personId : ${err.message}`);
+    }
+}
+
 export const updateArticle = async (req, res) => {
     try{
         await articleModel.updateArticle(pool, req.val);
