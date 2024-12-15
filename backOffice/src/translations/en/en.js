@@ -1,5 +1,9 @@
 const enDictionary = {
     "home":"Home",
+    "welcome":"Welcome to the back-office",
+    "loading":"Loading...",
+    "app_brocante":"AppBrocante - Admin Dashboard",
+    "graph":"Number of Flea Markets per Month of the year",
     "tables":{
         "flea_market": {
             "title":"Flea Market",

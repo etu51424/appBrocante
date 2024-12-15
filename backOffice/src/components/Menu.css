@@ -29,14 +29,3 @@
 .menu a:hover {
     background-color: rgb(231, 190, 76);
 }
-
-/*
-.menu h1, h2, p {
-    background-color: #fff1a8;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 8px 0px 8px 16px;
-    list-style: none;
-    height: 60px;
-}*/

@@ -5,8 +5,6 @@ import * as IoIcons from 'react-icons/io';
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js"; 
 
-/*you cant both export an array and use useState . Iahev to have two files. */
-
 const SidebarData = () => {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 

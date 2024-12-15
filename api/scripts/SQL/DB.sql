@@ -2,12 +2,13 @@
 -- Il suffit d'être connecté à la bonne base de données.
 
 -- Suppression des tables si elles existent déjà
+-- Suppression des tables si elles existent déjà
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS dealer CASCADE;
 DROP TABLE IF EXISTS person CASCADE;
 DROP TABLE IF EXISTS interest CASCADE;
-DROP TABLE IF EXISTS flea_market CASCADE;
 DROP TABLE IF EXISTS slot CASCADE;
+DROP TABLE IF EXISTS flea_market CASCADE;
 
 -- Création de la table flea_market
 CREATE TABLE flea_market (
@@ -79,12 +80,63 @@ CREATE TABLE article (
 	condition VARCHAR(50)
 );
 
--- Insérer des marchés aux puces
+-- Insérer des brocantes
 INSERT INTO flea_market (address, date_start, date_end, title, theme, is_charity, average_rating, review_count)
 VALUES
 ('123 Rue de la Paix, Paris', '2024-12-01 09:00:00', '2024-12-01 18:00:00', 'Marché de Noël', 'Artisanat', TRUE, 4.8, 50),
 ('456 Avenue des Champs, Lyon', '2024-12-15 10:00:00', '2024-12-15 20:00:00', 'Marché Vintage', 'Antiquités', FALSE, 4.5, 30),
-('789 Boulevard Saint-Michel, Marseille', '2025-01-10 08:00:00', '2025-01-10 17:00:00', 'Marché de Printemps', 'Plantes', TRUE, 4.9, 20);
+('789 Boulevard Saint-Michel, Marseille', '2025-01-10 08:00:00', '2025-01-10 17:00:00', 'Marché de Printemps', 'Plantes', TRUE, 4.9, 20),
+
+('Grand-Place, Mons, Belgique', '2024-12-20 09:00:00', '2024-12-20 18:00:00', 'Marché Solidaire de Noël', 'Volontariat', TRUE, 4.7, 45),
+('Rue de Fer 25, Namur, Belgique', '2024-12-22 10:00:00', '2024-12-22 16:00:00', 'Bourse aux Vêtements Hivernaux', 'Mode', TRUE, 4.6, 32),
+('Parc Astrid, Charleroi, Belgique', '2025-01-14 08:00:00', '2025-01-14 14:00:00', 'Brocante du Nouvel An', 'Antiquités', FALSE, 4.8, 28),
+('Place Saint-Pierre, Bastogne, Belgique', '2025-04-08 09:00:00', '2025-04-08 16:00:00', 'Brocante de Printemps', 'Jouets', TRUE, 4.5, 25),
+('Rue des Prés 18, Dinant, Belgique', '2025-05-12 10:00:00', '2025-05-12 15:00:00', 'Marché de la Solidarité', 'Livres', TRUE, 4.6, 19),
+('Place du Marché, La Louvière, Belgique', '2025-06-18 08:30:00', '2025-06-18 14:30:00', 'Brocante du Quartier', 'Objets Divers', FALSE, 4.7, 35),
+('Rue du Château, Chimay, Belgique', '2025-07-20 09:00:00', '2025-07-20 13:00:00', 'Fête de Village et Brocante', 'Traditions Locales', TRUE, 4.9, 42),
+
+
+('Markt 1, Bruges, Belgique', '2024-12-15 09:00:00', '2024-12-15 17:00:00', 'Marché des Créateurs', 'Artisanat', TRUE, 4.9, 60),
+('Korenmarkt, Gand, Belgique', '2025-01-05 10:00:00', '2025-01-05 18:00:00', 'Foire de la Ville', 'Écologie', FALSE, 4.5, 42),
+('Vrijdagmarkt, Anvers, Belgique', '2025-02-10 08:30:00', '2025-02-10 15:00:00', 'Brocante de Luxe', 'Produits de Luxe', FALSE, 4.8, 50),
+('Place du Bourg, Ypres, Belgique', '2025-03-14 09:30:00', '2025-03-14 17:00:00', 'Marché des Trouvailles', 'Antiquités', FALSE, 4.6, 38),
+('Rue des Tisserands, Courtrai, Belgique', '2025-04-22 10:00:00', '2025-04-22 16:00:00', 'Marché Vintage', 'Mode', TRUE, 4.7, 28),
+('Place de l''Église, Aalst, Belgique', '2025-05-30 08:00:00', '2025-05-30 14:00:00', 'Brocante de Quartier', 'Objets Variés', FALSE, 4.5, 20),
+('Place de la Gare, Ostende, Belgique', '2025-06-25 09:00:00', '2025-06-25 17:00:00', 'Brocante Marine', 'Nautisme', FALSE, 4.8, 34),
+
+
+('Place Guillaume II, Luxembourg', '2025-01-12 09:00:00', '2025-01-12 17:00:00', 'Marché aux Trésors', 'Bijoux', FALSE, 4.7, 35),
+('Rue Philippe II, Luxembourg', '2025-02-01 10:00:00', '2025-02-01 16:00:00', 'Brocante Gourmande', 'Gastronomie', FALSE, 4.6, 25),
+('Parc Municipal, Esch-sur-Alzette, Luxembourg', '2025-03-08 09:00:00', '2025-03-08 13:00:00', 'Concours Entre Villages : Brocante et Jeux', 'Traditions Locales', TRUE, 4.9, 40),
+('Place du Marché, Differdange, Luxembourg', '2025-04-10 09:30:00', '2025-04-10 14:30:00', 'Marché Printanier', 'Plantes', TRUE, 4.5, 18),
+('Place de l''Étoile, Luxembourg', '2025-05-15 10:00:00', '2025-05-15 17:00:00', 'Brocante de Ville', 'Objets Divers', FALSE, 4.7, 22),
+
+
+('Halle des Foires, Liège, Belgique', '2025-02-20 09:00:00', '2025-02-20 19:00:00', 'Salon du Bien-Être', 'Santé', FALSE, 4.8, 55),
+('Parc du Cinquantenaire, Bruxelles, Belgique', '2025-03-15 08:00:00', '2025-03-15 18:00:00', 'Brocante Printanière', 'Jardinage', TRUE, 4.9, 75),
+('Place Communale, Bastogne, Belgique', '2025-04-01 07:00:00', '2025-04-01 14:00:00', 'Kermesse et Brocante de Village', 'Culture Locale', TRUE, 4.6, 38),
+('Place du Perron, Verviers, Belgique', '2025-06-12 09:00:00', '2025-06-12 16:00:00', 'Marché d''Été', 'Produits Artisanaux', TRUE, 4.8, 40),
+('Place des Tilleuls, Marche-en-Famenne, Belgique', '2025-07-08 08:30:00', '2025-07-08 13:30:00', 'Foire au Troque', 'Objets Divers', FALSE, 4.6, 29),
+('Place de la République, Arlon, Belgique', '2025-08-20 09:00:00', '2025-08-20 17:00:00', 'Marché du Patrimoine', 'Histoire', TRUE, 4.7, 24),
+('Place de la Cathédrale, Tournai, Belgique', '2025-03-15 09:00:00', '2025-03-15 16:00:00', 'Brocante Religieuse de Carême', 'Religion', TRUE, 4.7, 20),
+('Parvis de l’Église Saint-Joseph, Namur, Belgique', '2025-04-02 10:00:00', '2025-04-02 17:00:00', 'Marché de la Foi', 'Religion', TRUE, 4.8, 15),
+('Campus de Louvain-la-Neuve, Belgique', '2025-05-10 09:00:00', '2025-05-10 18:00:00', 'Brocante Étudiante', 'Universitaire', FALSE, 4.5, 42),
+('Place de l’Opéra, Liège, Belgique', '2025-06-01 12:00:00', '2025-06-01 22:00:00', 'Marché des Mélomanes', 'Musique', TRUE, 4.9, 30),
+('Place Communale, Charleroi, Belgique', '2025-07-14 10:00:00', '2025-07-14 16:00:00', 'Salon Geek & Brocante', 'Fan-Themed', FALSE, 4.8, 48),
+('Parc Léopold, Bruxelles, Belgique', '2025-08-20 08:00:00', '2025-08-20 14:00:00', 'Brocante Littéraire', 'Culture', TRUE, 4.7, 33),
+('Place du Marché, Waterloo, Belgique', '2025-09-10 10:00:00', '2025-09-10 17:00:00', 'Marché des Historiens', 'Histoire', FALSE, 4.6, 25),
+('Salle Communale, Binche, Belgique', '2025-10-20 09:00:00', '2025-10-20 16:00:00', 'Brocante du Carnaval', 'Culture Locale', TRUE, 4.9, 40),
+('Place de l’Évêché, Arlon, Belgique', '2025-11-15 09:00:00', '2025-11-15 15:00:00', 'Marché Médiéval', 'Culture', FALSE, 4.8, 28),
+('Église Saint-Martin, Bastogne, Belgique', '2025-12-12 09:00:00', '2025-12-12 16:00:00', 'Brocante et Chorale de Noël', 'Musique', TRUE, 4.8, 37),
+('Place des Francs, Mons, Belgique', '2025-12-20 10:00:00', '2025-12-20 18:00:00', 'Marché de la Bande Dessinée', 'Fan-Themed', FALSE, 4.7, 19),
+('Quai du Commerce, Bruxelles, Belgique', '2026-01-10 09:00:00', '2026-01-10 17:00:00', 'Brocante Geek', 'Fan-Themed', FALSE, 4.9, 50),
+('Place de la Concorde, Namur, Belgique', '2026-02-05 10:00:00', '2026-02-05 16:00:00', 'Marché de la Diversité', 'Culture', TRUE, 4.7, 21),
+('Rue de la Liberté, Liège, Belgique', '2026-03-12 08:00:00', '2026-03-12 14:00:00', 'Brocante des Cinéphiles', 'Fan-Themed', FALSE, 4.6, 29),
+
+('Rue Haute 100, Bruxelles, Belgique', '2024-12-18 09:00:00', '2024-12-18 17:00:00', 'Marché aux Puces des Marolles', 'Objets Variés', FALSE, 4.7, 150),
+('Quai de la Batte, Liège, Belgique', '2024-12-24 08:00:00', '2024-12-24 13:00:00', 'Marché aux Puces de la Batte', 'Antiquités', FALSE, 4.8, 120),
+('Place Verte, Ath, Belgique', '2025-05-18 09:00:00', '2025-05-18 14:00:00', 'Marché aux Puces Rural', 'Objets Divers', TRUE, 4.6, 31);
+
 
 -- Insérer des emplacements (slots)
 INSERT INTO slot (flea_market_id, is_available, area)

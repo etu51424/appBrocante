@@ -13,7 +13,7 @@ function Dealers() {
         return dealersData;
     };
 
-// dataElem.map(dataElem => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
+    // dataElem.map(dataElem => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
     const renderTableBody = (dealer) => {
         return (
             <tr key={dealer.person_id}>

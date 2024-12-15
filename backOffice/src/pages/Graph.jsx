@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js"; 
 
-function Home() {
+function Graph() {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
     const changeLanguage = () => {
@@ -25,10 +25,11 @@ function Home() {
         };
     }, []); // aucune dépendance utile ici
 
+
+
     return (
-        <div className='home'>
-            <img src="/logo.png" alt="logo" />
-            <p>{langDict.welcome}</p>
+        <div className='graph'>
+            <p>{langDict.graph}</p>
         </div>
     );
 }
