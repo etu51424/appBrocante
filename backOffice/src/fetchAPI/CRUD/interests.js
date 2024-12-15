@@ -1,6 +1,4 @@
-import { token } from "./../login.js";
-
-const API_BASE_URL = "http://localhost:3001/api/v1";
+import { token, API_BASE_URL } from "./../login.js";
 
 const interestsResponse = await fetch(`${API_BASE_URL}/admin/interest/all`, {
     method: "GET",

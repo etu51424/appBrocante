@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js"; 
 
-function Graph() {
+function Stats() {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
     const changeLanguage = () => {
@@ -28,10 +28,10 @@ function Graph() {
 
 
     return (
-        <div className='graph'>
-            <p>{langDict.graph}</p>
+        <div className='stats'>
+            <p>{langDict.stats.title}</p>
         </div>
     );
 }
 
-export default Home;
+export default Stats;

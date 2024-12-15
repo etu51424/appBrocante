@@ -8,7 +8,6 @@ import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 
 function Menu() {
-
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
     //console.log(langDict);
@@ -74,6 +73,12 @@ function Menu() {
         title: langDict.tables.slot.title + 's',
         path: '/slot',
         icon: <IoIcons.IoIosPaper />,
+        cName: 'nav-text'
+    },
+    {
+        title: langDict.stats.simple_title,
+        path: '/stats',
+        icon: <IoIcons.IoIosStats  />,
         cName: 'nav-text'
     }
     ];

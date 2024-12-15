@@ -129,12 +129,12 @@ VALUES
 ('Place de l’Évêché, Arlon, Belgique', '2025-11-15 09:00:00', '2025-11-15 15:00:00', 'Marché Médiéval', 'Culture', FALSE, 4.8, 28),
 ('Église Saint-Martin, Bastogne, Belgique', '2025-12-12 09:00:00', '2025-12-12 16:00:00', 'Brocante et Chorale de Noël', 'Musique', TRUE, 4.8, 37),
 ('Place des Francs, Mons, Belgique', '2025-12-20 10:00:00', '2025-12-20 18:00:00', 'Marché de la Bande Dessinée', 'Fan-Themed', FALSE, 4.7, 19),
-('Quai du Commerce, Bruxelles, Belgique', '2026-01-10 09:00:00', '2026-01-10 17:00:00', 'Brocante Geek', 'Fan-Themed', FALSE, 4.9, 50),
-('Place de la Concorde, Namur, Belgique', '2026-02-05 10:00:00', '2026-02-05 16:00:00', 'Marché de la Diversité', 'Culture', TRUE, 4.7, 21),
-('Rue de la Liberté, Liège, Belgique', '2026-03-12 08:00:00', '2026-03-12 14:00:00', 'Brocante des Cinéphiles', 'Fan-Themed', FALSE, 4.6, 29),
+('Quai du Commerce, Bruxelles, Belgique', '2025-01-10 09:00:00', '2025-01-10 17:00:00', 'Brocante Geek', 'Fan-Themed', FALSE, 4.9, 50),
+('Place de la Concorde, Namur, Belgique', '2025-02-05 10:00:00', '2025-02-05 16:00:00', 'Marché de la Diversité', 'Culture', TRUE, 4.7, 21),
+('Rue de la Liberté, Liège, Belgique', '2025-03-12 08:00:00', '2025-03-12 14:00:00', 'Brocante des Cinéphiles', 'Fan-Themed', FALSE, 4.6, 29),
 
 ('Rue Haute 100, Bruxelles, Belgique', '2024-12-18 09:00:00', '2024-12-18 17:00:00', 'Marché aux Puces des Marolles', 'Objets Variés', FALSE, 4.7, 150),
-('Quai de la Batte, Liège, Belgique', '2024-12-24 08:00:00', '2024-12-24 13:00:00', 'Marché aux Puces de la Batte', 'Antiquités', FALSE, 4.8, 120),
+('Quai de la Batte, Liège, Belgique', '2024-12-24 08:00:00', '2025-12-24 13:00:00', 'Marché aux Puces de la Batte', 'Antiquités', FALSE, 4.8, 120),
 ('Place Verte, Ath, Belgique', '2025-05-18 09:00:00', '2025-05-18 14:00:00', 'Marché aux Puces Rural', 'Objets Divers', TRUE, 4.6, 31);
 
 
@@ -150,7 +150,7 @@ VALUES
 -- Insérer des personnes
 INSERT INTO person (username, first_name, last_name, address, phone_number, email, last_edit_date, password, profile_picture, is_admin)
 VALUES
-('Test', 'Test', 'Test', '22 Rue aucune, Null', '0612345678', 'test.keto@example.com', '2024-11-10 12:30:00', 'pw', 'test.jpg', TRUE),
+('Test', 'Test', 'Test', '22 Rue aucune, Null', '0612345678', 'test.keto@example.com', '2025-11-10 12:30:00', 'pw', 'test.jpg', TRUE),
 ('Dupont', 'Jean', 'Dupont', '22 Rue Lafayette, Paris', '0612345678', 'jean.dupont@example.com', '2024-11-10 12:30:00', 'hashed_password_1', 'jean.jpg', FALSE),
 ('Martin', 'Sophie', 'Martin', '45 Rue de Lyon, Lyon', '0623456789', 'sophie.martin@example.com', '2024-11-12 15:45:00', 'hashed_password_2', 'sophie.png', TRUE),
 ('Durand', 'Paul', 'Durand', '78 Boulevard Haussmann, Marseille', '0634567890', 'paul.durand@example.com', '2024-11-15 09:00:00', 'hashed_password_3', 'paul.jpeg', FALSE),

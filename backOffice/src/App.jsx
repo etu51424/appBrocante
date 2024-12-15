@@ -8,6 +8,7 @@ import FleaMarkets from './pages/FleaMarkets.jsx';
 import Users from './pages/Users.jsx';
 import Dealers from './pages/Dealers.jsx';
 import Interests from './pages/Interests.jsx';
+import Stats from './pages/Stats.jsx';
 import Menu from './components/Menu.jsx';
 
 window.language = "fr";
@@ -30,6 +31,7 @@ function App() {
               <Route path='/flea_market' element={<FleaMarkets/>} />
               <Route path='/interest' element={<Interests/>} />
               <Route path='/slot' element={<Slots/>} />
+              <Route path='/stats' element={<Stats/>} />
             </Routes>
           </div>
         </div>

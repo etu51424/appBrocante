@@ -3,7 +3,10 @@ const frDictionary = {
     "welcome":"Bienvenue sur le back-office",
     "loading":"Chargement...",
     "app_brocante":"AppBrocante - Menu Administrateur",
-    "graph_title":"Nombre de brocantes par mois",
+    "stats": {
+        "title":"Nombre de brocantes par mois",
+        "simple_title":"Statistiques",
+    },
     "tables":{
         "flea_market": {
             "title":"Brocante",
