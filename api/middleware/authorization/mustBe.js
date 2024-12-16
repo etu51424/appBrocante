@@ -18,6 +18,7 @@ export const admin = (req, res, next) => {
 
 export const notBanned = (req, res, next) => {
     if (!req.session.isBanned){
+        console.log(req.session);
         next();
     } else {
         res.sendStatus(403);

@@ -124,7 +124,7 @@ export const banPerson = async (req, res) => {
         if (person) {
             await sendMail(person.email,
                 "Expulsion temporaire",
-                `Nous sommes dans le regret de devoir vous annoncer que votre compte AppBrocante est désormais suspendu, ${person.name} !\nSi vous pensez qu'il s'agit d'une erreur, contactez nous.`
+                `Nous sommes dans le regret de devoir vous annoncer que votre compte AppBrocante est désormais suspendu, ${person.username} !\nSi vous pensez qu'il s'agit d'une erreur, contactez nous.`
                 );
         }
 
@@ -141,7 +141,7 @@ export const unbanPerson = async (req, res) => {
         if (person) {
             await sendMail(person.email,
                 "Rétablissement du compte",
-                `La suspension de votre compte est désormais levée, ${person.name} !`
+                `La suspension de votre compte est désormais levée, ${person.username} !`
             );
         }
     } catch (err){

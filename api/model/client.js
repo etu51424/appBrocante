@@ -51,7 +51,7 @@ export const readRecoveryCode = async (SQLClient, {personId}) => {
 
 export const deleteRecoveryCode = async (SQLClient, {personId}) => {
     try {
-        return await SQLClient.query("UPDATE person SET recovery_code = NULL WHERE id = $2", [personId]);
+        return await SQLClient.query("UPDATE person SET recovery_code = NULL WHERE id = $1", [personId]);
     } catch (err) {
         throw new Error(`Error while deleting recovery code : ${err.message}`);
     }
