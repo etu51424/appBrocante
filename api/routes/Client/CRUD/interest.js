@@ -7,9 +7,9 @@ import {createInterest, updateInterest, deleteInterest, getAllInterestsByFleaMar
 
 const router = Router();
 // pour récupérer tous les intérets d'une brocante
-router.get('/', jwtCheck, FMVM.fleaMarketId, getAllInterestsByFleaMarketId);
+router.get('/:fleaMarketId', jwtCheck, FMVM.fleaMarketId, getAllInterestsByFleaMarketId);
 router.post('/', jwtCheck, notBanned, IVM.interestToAdd, himself, createInterest); // pour créer son intéret
 router.patch('/', jwtCheck, notBanned, IVM.interestToUpdate, himself, updateInterest); // pour modifier un de ses interets
-router.delete('/', jwtCheck, notBanned, IVM.interestId, himself, deleteInterest); // pour supprimer un de ses intéret
+router.delete('/:fleaMarketId', jwtCheck, notBanned, FMVM.fleaMarketId, himself, deleteInterest); // pour supprimer un de ses intéret
 
 export default router;

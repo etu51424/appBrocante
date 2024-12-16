@@ -6,6 +6,6 @@ import {getAllArticlesByPersonId} from "../../../controler/article.js";
 const router = Router();
 
 // récupère tous les articles d'un dealer
-router.get('/', jwtCheck, DVM.dealerId, getAllArticlesByPersonId);
+router.get('/:personId', jwtCheck, DVM.dealerId, getAllArticlesByPersonId);
 
 export default router;

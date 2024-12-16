@@ -6,6 +6,6 @@ import {getAllSlotsByFleaMarketId} from "../../../controler/slot.js";
 const router = Router();
 
 // pour récupérer tous les slots d'une brocante
-router.get('/', jwtCheck, FMVM.fleaMarketId, getAllSlotsByFleaMarketId);
+router.get('/:fleaMarketId', jwtCheck, FMVM.fleaMarketId, getAllSlotsByFleaMarketId);
 
 export default router;
