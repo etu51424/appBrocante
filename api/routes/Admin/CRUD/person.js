@@ -9,8 +9,8 @@ const router = Router();
 
 router.post("/", jwtCheck, admin, notBanned, PVM.personToAdd, createPerson);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllPersons);
-router.get("/", jwtCheck, admin, notBanned, PVM.personId, getPerson);
+router.get("/:personId", jwtCheck, admin, notBanned, PVM.personId, getPerson);
 router.patch("/", jwtCheck, admin, notBanned, PVM.personToUpdate, updatePerson);
-router.delete("/", jwtCheck, admin, notBanned, PVM.personId, deletePerson);
+router.delete("/:personId", jwtCheck, admin, notBanned, PVM.personId, deletePerson);
 
 export default router;

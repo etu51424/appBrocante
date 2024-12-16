@@ -8,10 +8,254 @@ import {createDealer, updateDealer, deleteDealer, getDealer, getAllDealers} from
 
 const router = Router();
 
+/**
+ * @swagger
+ * /dealer:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Dealer
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/DealerToAdd'
+ *      responses:
+ *          201:
+ *              $ref: '#/components/responses/DealerAdded'
+ *          400:
+ *              description: the error(s) described
+ *              content:
+ *                  text/plain:
+ *                      schema:
+ *                          type: string
+ *          401:
+ *              $ref: '#/components/responses/UnauthorizedError'
+ *          403:
+ *              description: Authorization error
+ *              content:
+ *                   application/json:
+ *                      schema:
+ *                         type: object
+ *                         oneOf:
+ *                              - $ref: '#/components/responses/mustBeNotBanned'
+ *                              - $ref: '#/components/responses/mustBeAdmin'
+ *                      examples:
+ *                          mustBeNotBanned:
+ *                              summary: User is banned
+ *                              value:
+ *                                  message: "User is banned"
+ *                          mustBeAdmin:
+ *                              summary: User is not an admin
+ *                              value:
+ *                                  message: "User is not an admin"
+ *          500:
+ *              description: Error server
+ */
+
+/**
+ * @swagger
+ * /dealer/{id}:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Dealer
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *              type: number
+ *              description: The ID of the dealer to fetch
+ *      responses:
+ *          200:
+ *              $ref: '#/components/responses/getDealer'
+ *          400:
+ *              description: the error(s) described
+ *              content:
+ *                  text/plain:
+ *                      schema:
+ *                          type: string
+ *          401:
+ *              $ref: '#/components/responses/UnauthorizedError'
+ *          403:
+ *              description: Authorization error
+ *              content:
+ *                   application/json:
+ *                      schema:
+ *                         type: object
+ *                         oneOf:
+ *                              - $ref: '#/components/responses/mustBeNotBanned'
+ *                              - $ref: '#/components/responses/mustBeAdmin'
+ *                      examples:
+ *                          mustBeNotBanned:
+ *                              summary: User is banned
+ *                              value:
+ *                                  message: "User is banned"
+ *                          mustBeAdmin:
+ *                              summary: User is not an admin
+ *                              value:
+ *                                  message: "User is not an admin"
+ *          500:
+ *              description: Error server
+ */
+
+/**
+ * @swagger
+ * /dealer/all:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Dealer
+ *      parameters:
+ *          - in: query
+ *            name: limit
+ *            required: false
+ *            schema:
+ *              type: number
+ *              default: 10
+ *              description: The limit of element by page
+ *          - in: query
+ *            name: page
+ *            required: false
+ *            schema:
+ *              type: number
+ *              default: 1
+ *              description: The page of elements
+ *      responses:
+ *          200:
+ *              $ref: '#/components/responses/getAllDealers'
+ *          400:
+ *              description: the error(s) described
+ *              content:
+ *                  text/plain:
+ *                      schema:
+ *                          type: string
+ *          401:
+ *              $ref: '#/components/responses/UnauthorizedError'
+ *          403:
+ *              description: Authorization error
+ *              content:
+ *                   application/json:
+ *                      schema:
+ *                         type: object
+ *                         oneOf:
+ *                              - $ref: '#/components/responses/mustBeNotBanned'
+ *                              - $ref: '#/components/responses/mustBeAdmin'
+ *                      examples:
+ *                          mustBeNotBanned:
+ *                              summary: User is banned
+ *                              value:
+ *                                  message: "User is banned"
+ *                          mustBeAdmin:
+ *                              summary: User is not an admin
+ *                              value:
+ *                                  message: "User is not an admin"
+ *          500:
+ *              description: Error server
+ */
+
+/**
+ * @swagger
+ * /dealer:
+ *  patch:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Dealer
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/DealerToUpdate'
+ *      responses:
+ *          204:
+ *              description: Dealer updated
+ *          400:
+ *              description: the error(s) described
+ *              content:
+ *                  text/plain:
+ *                      schema:
+ *                          type: string
+ *          401:
+ *              $ref: '#/components/responses/UnauthorizedError'
+ *          403:
+ *              description: Authorization error
+ *              content:
+ *                   application/json:
+ *                      schema:
+ *                         type: object
+ *                         oneOf:
+ *                              - $ref: '#/components/responses/mustBeNotBanned'
+ *                              - $ref: '#/components/responses/mustBeAdmin'
+ *                      examples:
+ *                          mustBeNotBanned:
+ *                              summary: User is banned
+ *                              value:
+ *                                  message: "User is banned"
+ *                          mustBeAdmin:
+ *                              summary: User is not an admin
+ *                              value:
+ *                                  message: "User is not an admin"
+ *          500:
+ *              description: Error server
+ */
+
+/**
+ * @swagger
+ * /dealer/{id}:
+ *  delete:
+ *      security:
+ *          - bearerAuth: []
+ *      tags:
+ *          - Dealer
+ *      parameters:
+ *         - in: path
+ *           name: id
+ *           schema:
+ *             type: integer
+ *           required: true
+ *           description: Numeric ID of the Dealer to delete
+ *      responses:
+ *          204:
+ *              description: Dealer deleted
+ *          400:
+ *              description: the error(s) described
+ *              content:
+ *                  text/plain:
+ *                      schema:
+ *                          type: string
+ *          401:
+ *              $ref: '#/components/responses/UnauthorizedError'
+ *          403:
+ *              description: Authorization error
+ *              content:
+ *                   application/json:
+ *                      schema:
+ *                         type: object
+ *                         oneOf:
+ *                              - $ref: '#/components/responses/mustBeNotBanned'
+ *                              - $ref: '#/components/responses/mustBeAdmin'
+ *                      examples:
+ *                          mustBeNotBanned:
+ *                              summary: User is banned
+ *                              value:
+ *                                  message: "User is banned"
+ *                          mustBeAdmin:
+ *                              summary: User is not an admin
+ *                              value:
+ *                                  message: "User is not an admin"
+ *          500:
+ *              description: Error server
+ */
+
 router.post("/", jwtCheck, admin, notBanned, DVM.dealerToAdd, createDealer);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllDealers);
-router.get("/", jwtCheck, admin, notBanned, DVM.dealerId, getDealer);
+router.get("/:personId", jwtCheck, admin, notBanned, DVM.dealerId, getDealer);
 router.patch("/", jwtCheck, admin, notBanned, DVM.dealerToUpdate, updateDealer);
-router.delete("/", jwtCheck, admin, notBanned, DVM.dealerId, deleteDealer);
+router.delete("/:personId", jwtCheck, admin, notBanned, DVM.dealerId, deleteDealer);
 
 export default router;

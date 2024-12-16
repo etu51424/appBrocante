@@ -1,5 +1,18 @@
 import {jwt_verify} from "../../utils/jwt.js";
 
+/**
+ * @swagger
+ * components:
+ *  securitySchemes:
+ *      bearerAuth:
+ *          type: http
+ *          scheme: bearer
+ *          bearerFormat: JWT
+ *  responses:
+ *     UnauthorizedError:
+ *        description: JWT is missing or invalid
+ */
+
 export const jwtCheck = (req, res, next) => {
     const header = req.get('authorization');
     if(header?.includes('Bearer')){

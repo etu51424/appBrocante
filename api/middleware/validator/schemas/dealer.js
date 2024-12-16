@@ -5,8 +5,8 @@ const dealerIdSchema = vine.object({
 });
 
 const dealerToAddSchema = vine.object({
+    personId : vine.number().optional(),
     type : vine.string().trim().optional(),
-    lastName : vine.string().trim().optional(),
     description : vine.string().trim().optional(),
     signupDate : vine.date().optional(),
     averageRating : vine.number().min(1).max(5), //avec decimales
@@ -14,13 +14,12 @@ const dealerToAddSchema = vine.object({
 });
 
 const dealerToUpdateSchema= vine.object({
-    personId : vine.number().optional(),
+    personId : vine.number(),
     type : vine.string().trim().optional(),
-    lastName : vine.string().trim().optional(),
     description : vine.string().trim().optional(),
     signupDate : vine.date().optional(),
-    averageRating : vine.number().min(1).max(5), //avec decimales
-    reviewCount : vine.number().positive().withoutDecimals()
+    averageRating : vine.number().min(1).max(5).optional(),
+    reviewCount : vine.number().positive().withoutDecimals().optional()
 });
 
 export const

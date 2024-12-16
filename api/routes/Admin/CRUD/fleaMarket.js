@@ -9,8 +9,8 @@ const router = Router();
 
 router.post("/", jwtCheck, admin, notBanned, FMVM.fleaMarketToAdd, createFleaMarket);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllFleaMarkets);
-router.get("/", jwtCheck, admin, notBanned, FMVM.fleaMarketId, getFleaMarket);
+router.get("/:fleaMarketId", jwtCheck, admin, notBanned, FMVM.fleaMarketId, getFleaMarket);
 router.patch("/", jwtCheck, admin, notBanned, FMVM.fleaMarketToUpdate, updateFleaMarket);
-router.delete("/", jwtCheck, admin, notBanned, FMVM.fleaMarketId, deleteFleaMarket);
+router.delete("/:fleaMarketId", jwtCheck, admin, notBanned, FMVM.fleaMarketId, deleteFleaMarket);
 
 export default router;

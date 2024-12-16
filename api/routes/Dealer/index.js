@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {default as articleRouter} from './CRUD/aticle.js';
+import {default as articleRouter} from './CRUD/article.js';
 import {default as dealerRouter} from './CRUD/dealer.js';
 import {default as fleaMarketRouter} from './CRUD/fleaMarket.js';
 import {default as slotRouter} from './CRUD/slot.js';

@@ -9,8 +9,8 @@ const router = Router();
 
 router.post("/", jwtCheck, admin, notBanned, IVM.interestToAdd, createInterest);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllInterests);
-router.get("/", jwtCheck, admin, notBanned, IVM.interestId, getInterest);
+router.get("/:fleaMarketId/:personId", jwtCheck, admin, notBanned, IVM.interestId, getInterest);
 router.patch("/", jwtCheck, admin, notBanned, IVM.interestToUpdate, updateInterest);
-router.delete("/", jwtCheck, admin, notBanned, IVM.interestId, deleteInterest);
+router.delete("/:fleaMarketId/:personId", jwtCheck, admin, notBanned, IVM.interestId, deleteInterest);
 
 export default router;

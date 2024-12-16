@@ -2,6 +2,69 @@ import * as dealerModel from "../model/dealer.js";
 import {pool} from "../database/dbAccess.js";
 import {deleteArticleByDealer} from "../model/article.js";
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Dealer:
+ *          type: object
+ *          properties:
+ *              person_id:
+ *                  type: number
+ *              type:
+ *                  type: string
+ *              description:
+ *                  type: string
+ *              signup_date:
+ *                  type: string
+ *                  format: date
+ *              average_rating:
+ *                  type: number
+ *              review_count:
+ *                  type: string
+ */
+
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *      getDealer:
+ *          description: the Dealer
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Dealer'
+ */
+
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *      getAllDealers:
+ *          description: all the Dealers
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#/components/schemas/Dealer'
+ */
+
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *      DealerAdded:
+ *          description: the Dealer
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          id:
+ *                              type: integer
+ */
+
 export const createDealer = async (req, res) => {
     try{
         const id = await dealerModel.createDealer(pool, req.val);

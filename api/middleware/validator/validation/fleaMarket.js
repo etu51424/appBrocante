@@ -3,7 +3,7 @@ import * as fleaMarketValidator from '../schemas/fleaMarket.js'
 export const fleaMarketMiddlewares = {
     fleaMarketId : async (req, res, next) => {
         try {
-            req.val = await fleaMarketValidator.fleaMarketId.validate(req.body)
+            req.val = await fleaMarketValidator.fleaMarketId.validate(req.params)
             next();
         } catch (e) {
             res.status(400).send(e.messages);

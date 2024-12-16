@@ -1,6 +1,71 @@
 import * as articleModel from "../model/article.js";
 import {pool} from "../database/dbAccess.js";
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Article:
+ *          type: object
+ *          properties:
+ *              id:
+ *                  type: number
+ *              person_id:
+ *                  type: number
+ *              title:
+ *                  type: string
+ *              description:
+ *                  type: string
+ *              entry_date:
+ *                  type: string
+ *                  format: date
+ *              cost:
+ *                  type: number
+ *              condition:
+ *                  type: string
+ */
+
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *      getArticle:
+ *          description: the article
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Article'
+ */
+
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *      getAllArticles:
+ *          description: all the articles
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#/components/schemas/Article'
+ */
+
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *      ArticleAdded:
+ *          description: the Article
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          id:
+ *                              type: integer
+ */
+
 export const createArticle = async (req, res) => {
     try{
         const id = await articleModel.createArticle(pool, req.val);

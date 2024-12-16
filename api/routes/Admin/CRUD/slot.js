@@ -9,8 +9,8 @@ const router = Router();
 
 router.post("/", jwtCheck, admin, notBanned, SVM.slotToAdd, createSlot);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllSlots);
-router.get("/", jwtCheck, admin, notBanned, SVM.slotId, getSlot);
+router.get("/:id", jwtCheck, admin, notBanned, SVM.slotId, getSlot);
 router.patch("/", jwtCheck, admin, notBanned, SVM.slotId, updateSlot);
-router.delete("/", jwtCheck, admin, notBanned, SVM.slotId, deleteSlot);
+router.delete("/:id", jwtCheck, admin, notBanned, SVM.slotId, deleteSlot);
 
 export default router;
