@@ -6,6 +6,7 @@ import {default as interestRouter} from "./CRUD/interest.js";
 import {default as personRouter} from "./CRUD/person.js";
 import {default as slotRouter} from "./CRUD/slot.js";
 import {default as securityRouter} from "./security.js";
+import {default as avatarRouter} from "./avatar.js"
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/interest", interestRouter);
 router.use("/person", personRouter);
 router.use("/slot", slotRouter);
 router.use("/security", securityRouter);
+router.use("/avatar", avatarRouter);
 
 export default router;

@@ -2,6 +2,8 @@ import * as fleaMarketModel from "../model/fleaMarket.js";
 import {pool} from "../database/dbAccess.js";
 import {deleteSlotByFleaMarket} from "../model/slot.js";
 import {deleteInterestByFleaMarket} from "../model/interest.js";
+import {readPerson} from "../model/person.js";
+import {getDistance} from "../utils/map.js"
 
 export const createFleaMarket = async (req, res) => {
     try{
@@ -41,6 +43,32 @@ export const getAllFleaMarkets = async (req, res) => {
     } catch (err){
         res.sendStatus(500);
         console.error(`Error while getting all flea markets : ${err.message}`);
+    }
+}
+
+export const getAllFleaMarketsWithinRange = async (req, res) =>{
+    try {
+        const fleaMarkets = await fleaMarketModel.readAllFleaMarketWithoutLimit(pool);
+        const person = await readPerson(pool, req.val);
+        if (fleaMarkets.length > 0 && person) {
+            if (person.address){
+                const distances = await Promise.all(
+                    fleaMarkets.map(fleaMarket =>
+                        getDistance(person.address, fleaMarket.address, process.env.MAP_API_KEY)
+                    )
+                );
+                // cette ligne va filtrer les fleaMarkets en fonction de la distance en parametre
+                const fleaMarketsInRange = fleaMarkets.filter((_, index) => distances[index] <= req.val.range);
+                res.status(200).json(fleaMarketsInRange);
+            } else {
+                res.status(404).send("The user does not have a referenced address");
+            }
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all flea markets withing range : ${err.message}`);
     }
 }
 

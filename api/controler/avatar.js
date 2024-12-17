@@ -11,7 +11,7 @@ export const createAvatar = async (req, res) => {
         const avatar = req.files?.avatar[0];
         if (avatar !== undefined) {
             let imageName = uuid();
-            await personModel.updatePerson(pool, {personId: req.body.personId, profilePicture: imageName});
+            await personModel.updatePerson(pool, {personId: req.val.personId, profilePicture: imageName});
             await saveAvatar(avatar.buffer, imageName, destFolderAvatar);
             res.sendStatus(201);
         } else{
@@ -24,7 +24,20 @@ export const createAvatar = async (req, res) => {
 };
 
 export const getAvatar = async (req, res) => {
-
+    try{
+        const person = await personModel.readPerson(pool, req.val);
+        if (person) {
+            res.status(200).send(
+                person.profile_picture ? `http://localhost:3001/avatar/${person.profile_picture}` : 'http://localhost:3001/avatar/default.jpg'
+            );
+        }
+        else{
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        res.sendStatus(500);
+        console.error(`Error while getting avatar : ${err.message}`);
+    }
 }
 
 export const updateAvatar = async (req, res) => {
@@ -38,7 +51,7 @@ export const updateAvatar = async (req, res) => {
         const avatar = req.files?.avatar[0];
         if (avatar !== undefined) {
             let imageName = uuid();
-            await personModel.updatePerson(pool, {personId: req.params.personId, profilePicture: imageName});
+            await personModel.updatePerson(pool, {personId: req.val.personId, profilePicture: imageName});
             await saveAvatar(avatar.buffer, imageName, destFolderAvatar);
             res.sendStatus(204);
         }
@@ -53,17 +66,17 @@ export const updateAvatar = async (req, res) => {
 
 export const deleteAvatar = async (req, res) => {
     try{
-        let person = await personModel.readPerson(pool, req.params);
-        if (person?.profile_picture !== undefined) {
-            await personModel.updatePerson(pool, {personId: req.params.personId, profilePicture: null});
-            await deleteFile(`${destFolderAvatar}/${person?.profile_picture}.jpeg`);
+        let person = await personModel.readPerson(pool, req.val);
+        if (person?.profile_picture !== undefined && person?.profile_picture !== null) {
+            await personModel.updatePerson(pool, {personId: req.val.personId, profilePicture: null});
+            await deleteFile(`${destFolderAvatar}/${person?.profile_picture}`);
             res.sendStatus(204);
         }
         else{
-            console.error("No profile picture found for this user");
-            res.sendStatus(404);
+            res.status(404).send("No profile picture found for this user");
         }
-    } catch (err){
+    }
+    catch (err) {
         res.sendStatus(500);
         console.error(`Error while deleting avatar : ${err.message}`);
     }
