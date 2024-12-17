@@ -37,15 +37,3 @@ const fetchDealersData = async (limit = 10, page = 1) => {
 }
 
 export const getDealersData = fetchDealersData;
-
-/*
-const dealersResponse = await fetch(`${API_BASE_URL}/admin/dealer/all`, {
-    method: "GET",
-    headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-    },
-});
-
-export const dealersData = await dealersResponse.json();
-*/

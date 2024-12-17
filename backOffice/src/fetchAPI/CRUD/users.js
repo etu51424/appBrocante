@@ -38,15 +38,3 @@ const fetchUsersData = async (limit = 10, page = 1) => {
 }
 
 export const getUsersData = fetchUsersData;
-/*
-const usersResponse = await fetch(`${API_BASE_URL}/admin/person/all`, {
-    method: "GET",
-    headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-    },
-});
-
-
-export const usersData = await usersResponse.json();
-*/
