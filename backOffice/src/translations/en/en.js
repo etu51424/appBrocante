@@ -1,4 +1,5 @@
 const enDictionary = {
+    "date_format":"en-EN",
     "home":"Home",
     "welcome":"Welcome to the back-office",
     "loading":"Loading...",
@@ -7,6 +8,10 @@ const enDictionary = {
         "title":"Number of Flea Markets per Month of the year",
         "simple_title":"Stats",
     },
+    "error":"Error",
+    "yes":"Yes",
+    "no":"No",
+    "table_no_data":"Warning, this table is empty!",
     "tables":{
         "flea_market": {
             "title":"Flea Market",

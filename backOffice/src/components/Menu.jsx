@@ -10,8 +10,6 @@ import * as IoIcons from 'react-icons/io';
 function Menu() {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
-    //console.log(langDict);
-    //console.log(langDict.tables.article.title);
     const changeLanguage = () => {
         setLangDict(window.language === "fr" ? frDict : enDict);
     }

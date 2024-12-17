@@ -1,4 +1,5 @@
 const frDictionary = {
+    "date_format":"fr-FR",
     "home":"Accueil",
     "welcome":"Bienvenue sur le back-office",
     "loading":"Chargement...",
@@ -7,6 +8,10 @@ const frDictionary = {
         "title":"Nombre de brocantes par mois",
         "simple_title":"Statistiques",
     },
+    "error":"Erreur",
+    "yes":"Oui",
+    "no":"Non",
+    "table_no_data":"Attention, cette table est vide !",
     "tables":{
         "flea_market": {
             "title":"Brocante",
@@ -34,6 +39,7 @@ const frDictionary = {
         "user": {
             "title": "Utilisateur",
             "columns": {
+                "id":"Identifiant Utilisateur",
                 "name": "Nom",
                 "first_name": "Prénom",
                 "last_name": "Nom de famille",
