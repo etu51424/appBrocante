@@ -11,6 +11,7 @@ import {default as slotRouter} from './CRUD/slot.js';
 
 const router = Router();
 
+
 /*
 ------------------------------
             CRUD

@@ -9,12 +9,13 @@ const router = Router();
 
 /**
  * @swagger
- * /article:
+ * /admin/article:
  *  post:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Article
+ *      description: This route is used to create a new article in the system with admin access.
  *      requestBody:
  *          content:
  *              application/json:
@@ -55,12 +56,13 @@ const router = Router();
 
 /**
  * @swagger
- * /article/{id}:
+ * /admin/article/{id}:
  *  get:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Article
+ *      description: This route is used to get an article in the system with admin access.
  *      parameters:
  *          - in: path
  *            name: id
@@ -103,12 +105,13 @@ const router = Router();
 
 /**
  * @swagger
- * /article/all:
+ * /admin/article/all:
  *  get:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Article
+ *      description: This route is used to get all the articles in the system with admin access.
  *      parameters:
  *          - in: query
  *            name: limit
@@ -159,12 +162,13 @@ const router = Router();
 
 /**
  * @swagger
- * /article:
+ * /admin/article:
  *  patch:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Article
+ *      description: This route is used to update an article in the system with admin access.
  *      requestBody:
  *          content:
  *              application/json:
@@ -205,12 +209,13 @@ const router = Router();
 
 /**
  * @swagger
- * /article/{id}:
+ * /admin/article/{id}:
  *  delete:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Article
+ *      description: This route is used to delete an article in the system with admin access.
  *      parameters:
  *         - in: path
  *           name: id

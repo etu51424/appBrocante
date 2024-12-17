@@ -10,12 +10,13 @@ const router = Router();
 
 /**
  * @swagger
- * /dealer:
+ * /admin/dealer:
  *  post:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Dealer
+ *      description: This route is used to create a new dealer in the system with admin access.
  *      requestBody:
  *          content:
  *              application/json:
@@ -56,12 +57,13 @@ const router = Router();
 
 /**
  * @swagger
- * /dealer/{id}:
+ * /admin/dealer/{id}:
  *  get:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Dealer
+ *      description: This route is used to get a dealer in the system with admin access.
  *      parameters:
  *          - in: path
  *            name: id
@@ -104,12 +106,13 @@ const router = Router();
 
 /**
  * @swagger
- * /dealer/all:
+ * /admin/dealer/all:
  *  get:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Dealer
+ *      description: This route is used to get all the dealers in the system with admin access.
  *      parameters:
  *          - in: query
  *            name: limit
@@ -160,12 +163,13 @@ const router = Router();
 
 /**
  * @swagger
- * /dealer:
+ * /admin/dealer:
  *  patch:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Dealer
+ *      description: This route is used to update a dealer in the system with admin access.
  *      requestBody:
  *          content:
  *              application/json:
@@ -206,12 +210,13 @@ const router = Router();
 
 /**
  * @swagger
- * /dealer/{id}:
+ * /admin/dealer/{id}:
  *  delete:
  *      security:
  *          - bearerAuth: []
  *      tags:
  *          - Dealer
+ *      description: This route is used to delete a dealer in the system with admin access.
  *      parameters:
  *         - in: path
  *           name: id
