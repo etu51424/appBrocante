@@ -133,8 +133,8 @@ VALUES
 ('Place de la Concorde, Namur, Belgique', '2025-02-05 10:00:00', '2025-02-05 16:00:00', 'Marché de la Diversité', 'Culture', TRUE, 4.7, 21),
 ('Rue de la Liberté, Liège, Belgique', '2025-03-12 08:00:00', '2025-03-12 14:00:00', 'Brocante des Cinéphiles', 'Fan-Themed', FALSE, 4.6, 29),
 
-('Rue Haute 100, Bruxelles, Belgique', '2024-12-18 09:00:00', '2024-12-18 17:00:00', 'Marché aux Puces des Marolles', 'Objets Variés', FALSE, 4.7, 150),
-('Quai de la Batte, Liège, Belgique', '2024-12-24 08:00:00', '2025-12-24 13:00:00', 'Marché aux Puces de la Batte', 'Antiquités', FALSE, 4.8, 120),
+('Rue Haute 100, Bruxelles, Belgique', '2025-12-18 09:00:00', '2024-12-18 17:00:00', 'Marché aux Puces des Marolles', 'Objets Variés', FALSE, 4.7, 150),
+('Quai de la Batte, Liège, Belgique', '2025-12-24 08:00:00', '2025-12-24 13:00:00', 'Marché aux Puces de la Batte', 'Antiquités', FALSE, 4.8, 120),
 ('Place Verte, Ath, Belgique', '2025-05-18 09:00:00', '2025-05-18 14:00:00', 'Marché aux Puces Rural', 'Objets Divers', TRUE, 4.6, 31);
 
 
