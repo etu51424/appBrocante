@@ -57,7 +57,7 @@ const router = Router();
 
 /**
  * @swagger
- * /admin/dealer/{id}:
+ * /admin/dealer/{personId}:
  *  get:
  *      security:
  *          - bearerAuth: []
@@ -66,7 +66,7 @@ const router = Router();
  *      description: This route is used to get a dealer in the system with admin access.
  *      parameters:
  *          - in: path
- *            name: id
+ *            name: personId
  *            required: true
  *            schema:
  *              type: number
@@ -112,11 +112,11 @@ const router = Router();
  *          - bearerAuth: []
  *      tags:
  *          - Dealer
- *      description: This route is used to get all the dealers in the system with admin access.
  *      parameters:
  *          - in: query
  *            name: limit
  *            required: false
+ *            description : The limit of element returned by page
  *            schema:
  *              type: number
  *              default: 10
@@ -210,7 +210,7 @@ const router = Router();
 
 /**
  * @swagger
- * /admin/dealer/{id}:
+ * /admin/dealer/{personId}:
  *  delete:
  *      security:
  *          - bearerAuth: []
@@ -219,7 +219,7 @@ const router = Router();
  *      description: This route is used to delete a dealer in the system with admin access.
  *      parameters:
  *         - in: path
- *           name: id
+ *           name: personId
  *           schema:
  *             type: integer
  *           required: true

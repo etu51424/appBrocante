@@ -32,7 +32,7 @@ export const admin = (req, res, next) => {
  * components:
  *  responses:
  *      mustBeNotBanned:
- *          description: the action must be realized by a person whose is not banned from the system
+ *          description: the action must be realized by a person who is not banned from the system
  */
 
 export const notBanned = (req, res, next) => {
