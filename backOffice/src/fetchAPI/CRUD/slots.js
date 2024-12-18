@@ -37,3 +37,13 @@ const fetchSlotsData = async (limit = 10, page = 1) => {
 }
 
 export const getSlotsData = fetchSlotsData;
+/*
+const slotsResponse = await fetch(`${API_BASE_URL}/admin/slot/all`, {
+    method: "GET",
+    headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+    },
+});
+
+export const slotsData = await slotsResponse.json();*/

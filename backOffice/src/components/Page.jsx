@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js"; 
+import "../css/Page.css";
 
 // reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
-function Page({ fetchElementsData, renderTableBody, title, elementClassNameSingular, elementClassNamePlural}) {
-
+function Page({ 
+        getElementsData, 
+        renderTableBody, 
+        title, 
+        elementClassNameSingular, 
+        elementClassNamePlural,
+        paginationArrows,
+    }) {
+            
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
     const [elements, setElements] = useState([]);
     const [error, setError] = useState(null);
@@ -47,10 +55,9 @@ function Page({ fetchElementsData, renderTableBody, title, elementClassNameSingu
 
     useEffect(() => {
 
-        const fetchAllElements = async () => {
+        const getAllElements = async () => {
             try {
-                const elementsData = await fetchElementsData();
-                //console.log("Données récupérées :", elementsData);
+                const elementsData = await getElementsData();
                 setElements(elementsData); //Maintenant, le reste de la page pourrait utiliser le tableau elements
             } catch (err) {
                 console.error(err);
@@ -60,37 +67,46 @@ function Page({ fetchElementsData, renderTableBody, title, elementClassNameSingu
             }
         };
 
-        fetchAllElements();
-    }, [fetchElementsData]);
+        getAllElements();
+    }, [getElementsData]);
 
     if (isLoading) {
-        return <p>Chargement des données...</p>;
+        return <p>{langDict.loading}</p>;
     }
 
     if (error) {
-        return <p style={{ color: "red" }}>{error}</p>
+        return <p>{error}</p>;
     }
-    
+
+    // Verif que elements n'est pas vide. Sans ça, le tableau refuse de s'afficher car elements n'a pas été check
     if (elements.length === 0) {
-        return <p>Aucune donnée n'est présente dans cette table.</p>;
+        return <p>{langDict.table_no_data}</p>;
     }
 
     return (
-        <div className={elementClassNamePlural}>
-            <h1>{langDict.tables[elementClassNameSingular].title + 's'}</h1>
-            {/* afficher l'erreur en rouge si'l yen a une*/}
-
-            <table>
-                <thead key="head">
-                    <tr>{renderTableHeader()}</tr>
-                </thead>
-                <tbody>
-                    {/*obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs*/}
-                    {/*tableHeader et tableBody font le rendu de la table et du body*/}
-                    {elements.map(renderTableBody)}
-                </tbody>
-            </table>
-        </div>
+        <>
+            <div className="page">
+                <div className={elementClassNamePlural}>
+                    <div className="page-header">
+                        <div></div>
+                        <h1>{langDict.tables[elementClassNameSingular].title + 's'}</h1>
+                        {paginationArrows}
+                    </div>
+                    <div className="rows-table">
+                        <table>
+                            <thead key="head">
+                                <tr>{renderTableHeader()}</tr>
+                            </thead>
+                            <tbody>
+                                {/*obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs*/}
+                                {/*tableHeader et tableBody font le rendu de la table et du body*/}
+                                {elements.map(renderTableBody)}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
 

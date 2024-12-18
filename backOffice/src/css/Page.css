@@ -27,17 +27,13 @@
     justify-content: space-around;
 }
 
-.pagination-controls {
+.pagination-arrows {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.pagination-controls button {
-    margin: 0 10px;
-    padding: 10px 20px;
-}
-
-.limit-selector {
-    margin: 10px 0;
+.pagination-arrows button {
+    margin: 10px;
+    padding: 5px 20px;
 }
