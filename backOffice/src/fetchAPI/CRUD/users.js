@@ -27,7 +27,9 @@ const fetchUsersData = async (limit = 10, page = 1) => {
         }
     );
 
-    if (!currentPageResponse.ok) {
+    console.log("GH :" + currentPageResponse.status);
+
+    if (currentPageResponse.status !== 200) {
         throw new Error(`Echec à fetch les objets : ${response.statusText}`);
     } else {
         const data = await currentPageResponse.json();

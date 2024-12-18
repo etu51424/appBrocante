@@ -26,7 +26,7 @@ const fetchArticlesData = async (limit = 10, page = 1) => {
         }
     );
 
-    if (!currentPageResponse.ok) {
+    if (currentPageResponse.status !== 200) {
         throw new Error(`Echec à fetch les objets : ${response.statusText}`);
     } else {
         const data = await currentPageResponse.json();

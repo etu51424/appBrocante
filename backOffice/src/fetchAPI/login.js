@@ -12,11 +12,14 @@ const loginResponse = await fetch(`${API_BASE_URL}/client/person/login`, {
     body: JSON.stringify(loginBody),
 });
 
+//console.log(loginResponse.status);
+
+if (loginResponse.status !== 201) {
+    throw new Error(`Login raté: ${"Login raté"}`);
+}
+
 // Normalement, le token devrait être un json.
 // Pour éviter de modifier le token pour qu'il soit renvoyé en json côté server, j'accepte de l'interpreter en texte
 export const token = await loginResponse.text();
 //console.log("Login réussi. Token reçu :", token);
 
-if (!loginResponse.ok) {
-    throw new Error(`Login raté: ${"Login raté"}`);
-}

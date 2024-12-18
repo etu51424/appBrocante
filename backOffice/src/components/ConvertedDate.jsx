@@ -28,7 +28,7 @@ function ConvertedDate({ longFormatDate }) {
     const convertToFrDate = (longDate) => {
         // créer une Date js
         const date = new Date(longDate);
-        const convertedDate = date.toLocaleDateString(langDict.date_format,{ timeZone: "Europe/Paris" });
+        const convertedDate = date.toLocaleDateString(langDict.date_format);
 
         // utiliser la méthode Date de js et préciser qu'on veut une date fr JJ/MM/AAAA
         return convertedDate;
