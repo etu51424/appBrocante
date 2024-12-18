@@ -30,7 +30,6 @@ const fetchArticlesData = async (limit = 10, page = 1) => {
         throw new Error(`Echec à fetch les objets : ${response.statusText}`);
     } else {
         const data = await currentPageResponse.json();
-        console.log(data);
         const noMoreData = nextPageResponse.status === 404;
 
         return { data, noMoreData }; // Successful fetch
