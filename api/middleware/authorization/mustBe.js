@@ -1,4 +1,4 @@
-import {readArticle} from "../../model/article.js";
+import {readArticle} from "../../model/CRUD/article.js";
 import {pool} from "../../database/dbAccess.js";
 
 // middleware d'authorization

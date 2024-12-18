@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {dealer, himself, notBanned, owner} from "../../../middleware/authorization/mustBe.js";
 import {default as AVM} from '../../../middleware/validator/validation/article.js';
-import {createArticle, updateArticle, deleteArticle} from "../../../controler/article.js";
+import {createArticle, updateArticle, deleteArticle} from "../../../controler/CRUD/article.js";
 
 const router = Router();
 

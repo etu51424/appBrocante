@@ -1,6 +1,6 @@
 import {hash_verify} from "../utils/hash.js";
-import {readPerson, readPersonByUsername} from "./person.js";
-import {readDealer, readDealerByUsername} from "./dealer.js";
+import {readPersonByUsername} from "./CRUD/person.js";
+import {readDealerByUsername} from "./CRUD/dealer.js";
 import {v4 as uuid} from 'uuid';
 
 export const readPersonWithPassword = async (SQLClient, {username, password}) => {

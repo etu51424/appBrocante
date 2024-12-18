@@ -3,7 +3,7 @@ import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {default as PVM} from '../../../middleware/validator/validation/person.js'
 import {himself, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {login} from "../../../controler/client.js";
-import {createPerson, getPerson, updatePerson, deletePerson} from "../../../controler/person.js";
+import {createPerson, getPerson, updatePerson, deletePerson} from "../../../controler/CRUD/person.js";
 
 const router = Router();
 

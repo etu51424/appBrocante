@@ -1,6 +1,5 @@
-import * as interestModel from "../model/interest.js";
-import {pool} from "../database/dbAccess.js";
-import * as fleaMarketModel from "../model/fleaMarket.js";
+import * as interestModel from "../../model/CRUD/interest.js";
+import {pool} from "../../database/dbAccess.js";
 
 export const createInterest = async (req, res) => {
     try{

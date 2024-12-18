@@ -1,10 +1,10 @@
-import * as personModel from "../model/person.js";
-import {pool} from "../database/dbAccess.js";
-import {deleteArticleByDealer} from "../model/article.js";
-import {deleteDealer} from "../model/dealer.js";
-import {deleteInterestByPerson} from "../model/interest.js";
-import {hash} from "../utils/hash.js";
-import {sendMail} from "../utils/mail.js";
+import * as personModel from "../../model/CRUD/person.js";
+import {pool} from "../../database/dbAccess.js";
+import {deleteArticleByDealer} from "../../model/CRUD/article.js";
+import {deleteDealer} from "../../model/CRUD/dealer.js";
+import {deleteInterestByPerson} from "../../model/CRUD/interest.js";
+import {hash} from "../../utils/hash.js";
+import {sendMail} from "../../utils/mail.js";
 
 export const createPerson = async (req, res) => {
     try{
@@ -89,63 +89,5 @@ export const deletePerson = async (req, res) => {
         if (SQLClient){
             SQLClient.release();
         }
-    }
-}
-
-// concernant la gestion des administrateurs
-
-export const promotePersonAdmin = async (req, res) => {
-    try{
-        await personModel.promotePersonAdmin(pool, req.val);
-        res.sendStatus(204);
-    } catch (err){
-        res.sendStatus(500);
-        console.error(`Error while promoting person : ${err.message} `);
-    }
-}
-
-export const demotePersonAdmin = async (req, res) => {
-    try{
-        await personModel.demotePersonAdmin(pool, req.val);
-        res.sendStatus(204);
-    } catch (err){
-        res.sendStatus(500);
-        console.error(`Error while demoting person : ${err.message} `);
-    }
-}
-
-// concerne les expulsions du système
-
-export const banPerson = async (req, res) => {
-    try{
-        await personModel.banPerson(pool, req.val);
-        res.sendStatus(204);
-        let person = await personModel.readPerson(pool, req.val);
-        if (person) {
-            await sendMail(person.email,
-                "Expulsion temporaire",
-                `Nous sommes dans le regret de devoir vous annoncer que votre compte AppBrocante est désormais suspendu, ${person.username} !\nSi vous pensez qu'il s'agit d'une erreur, contactez nous.`
-                );
-        }
-
-    } catch (err){
-        res.sendStatus(500);
-        console.error(`Error while banning person : ${err.message} `);
-    }
-}
-export const unbanPerson = async (req, res) => {
-    try{
-        await personModel.unbanPerson(pool, req.val);
-        res.sendStatus(204);
-        const person = await personModel.readPerson(pool, req.val);
-        if (person) {
-            await sendMail(person.email,
-                "Rétablissement du compte",
-                `La suspension de votre compte est désormais levée, ${person.username} !`
-            );
-        }
-    } catch (err){
-        res.sendStatus(500);
-        console.error(`Error while unbanning person : ${err.message} `);
     }
 }

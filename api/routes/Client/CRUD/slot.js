@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {default as FMVM} from '../../../middleware/validator/validation/fleaMarket.js';
-import {getAllSlotsByFleaMarketId} from "../../../controler/slot.js";
+import {getAllSlotsByFleaMarketId} from "../../../controler/CRUD/slot.js";
 
 const router = Router();
 

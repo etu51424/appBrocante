@@ -1,5 +1,4 @@
 import * as dealerValidator from '../schemas/dealer.js'
-import vine from "@vinejs/vine";
 
 export const dealerValidatorMiddlewares = {
     dealerId : async (req, res, next) => {

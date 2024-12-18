@@ -1,7 +1,5 @@
-import * as slotModel from "../model/slot.js";
-import {pool} from "../database/dbAccess.js";
-import * as personModel from "../model/person.js";
-
+import * as slotModel from "../../model/CRUD/slot.js";
+import {pool} from "../../database/dbAccess.js";
 
 export const createSlot = async (req, res) => {
     try{

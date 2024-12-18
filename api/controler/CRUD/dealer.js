@@ -1,6 +1,6 @@
-import * as dealerModel from "../model/dealer.js";
-import {pool} from "../database/dbAccess.js";
-import {deleteArticleByDealer} from "../model/article.js";
+import * as dealerModel from "../../model/CRUD/dealer.js";
+import {pool} from "../../database/dbAccess.js";
+import {deleteArticleByDealer} from "../../model/CRUD/article.js";
 
 /**
  * @swagger

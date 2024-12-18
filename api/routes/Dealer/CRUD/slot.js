@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {dealer, himself, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {default as SVM} from '../../../middleware/validator/validation/slot.js'
-import {createSlot, updateSlot, deleteSlot} from "../../../controler/slot.js";
+import {createSlot, updateSlot, deleteSlot} from "../../../controler/CRUD/slot.js";
 
 const router = Router();
 

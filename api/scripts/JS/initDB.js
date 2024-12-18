@@ -18,10 +18,6 @@ import {hash} from "../../utils/hash.js";
             await pool.query("UPDATE person SET password = $1 WHERE id = $2", [hashedPassword, user.id]);
         }
 
-        // vérifier que les mdp sont hashés
-        //const {rows} = await pool.query("SELECT id, password FROM person");
-        //console.log(rows);
-
     } catch (e) {
         console.error("Erreur :", e);
     }

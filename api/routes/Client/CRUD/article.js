@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {default as DVM} from "../../../middleware/validator/validation/dealer.js"
-import {getAllArticlesByPersonId} from "../../../controler/article.js";
+import {getAllArticlesByPersonId} from "../../../controler/CRUD/article.js";
 
 const router = Router();
 

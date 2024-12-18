@@ -85,6 +85,15 @@ export const readAllFleaMarketWithoutLimit = async (SQLClient) => {
     }
 }
 
+export const readAllFleaMarketBetweenDates = async (SQLClient, {dateStart, dateEnd}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM flea_market WHERE date_start BETWEEN $1 AND $2", [dateStart, dateEnd]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all flea markets between two dates : ${err.message}`)
+    }
+}
+
 export const updateFleaMarket = async (SQLClient, {id ,address, dateStart, dateEnd, title, theme, isCharity, averageRating, reviewCount}) => {
     let query = "UPDATE flea_market SET ";
     const querySet = [];

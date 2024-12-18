@@ -1,7 +1,6 @@
 import {Router} from "express";
 import multer from "multer";
 import {createAvatar, getAvatar, deleteAvatar, updateAvatar} from "../../controler/avatar.js";
-import {default as PVM} from "../../middleware/validator/validation/person.js";
 import {himself, notBanned} from "../../middleware/authorization/mustBe.js";
 import {jwtCheck} from "../../middleware/identification/jwt.js";
 

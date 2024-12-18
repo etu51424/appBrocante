@@ -10,13 +10,33 @@ import {default as avatarRouter} from "./avatar.js"
 
 const router = Router();
 
+/*
+------------------------------
+            CRUD
+------------------------------
+ */
+
 router.use("/article", articleRouter);
 router.use("/dealer", dealerRouter);
 router.use("/fleaMarket", fleaMarketRouter);
 router.use("/interest", interestRouter);
 router.use("/person", personRouter);
 router.use("/slot", slotRouter);
+
+/*
+------------------------------
+           SECURITY
+------------------------------
+ */
+
 router.use("/security", securityRouter);
+
+/*
+------------------------------
+           AVATAR
+------------------------------
+ */
+
 router.use("/avatar", avatarRouter);
 
 export default router;

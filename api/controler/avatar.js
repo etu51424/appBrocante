@@ -1,6 +1,6 @@
 import {v4 as uuid} from 'uuid';
 import {saveAvatar} from "../model/avatar.js";
-import * as personModel from "../model/person.js";
+import * as personModel from "../model/CRUD/person.js";
 import {pool} from "../database/dbAccess.js";
 import {deleteFile} from "../utils/file.js";
 

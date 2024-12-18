@@ -3,7 +3,7 @@ import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {admin, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {default as DVM} from '../../../middleware/validator/validation/dealer.js';
 import {default as LVM} from '../../../middleware/validator/validation/limits.js';
-import {createDealer, updateDealer, deleteDealer, getDealer, getAllDealers} from "../../../controler/dealer.js";
+import {createDealer, updateDealer, deleteDealer, getDealer, getAllDealers} from "../../../controler/CRUD/dealer.js";
 
 
 const router = Router();

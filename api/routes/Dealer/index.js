@@ -6,6 +6,12 @@ import {default as slotRouter} from './CRUD/slot.js';
 
 const router = Router();
 
+/*
+------------------------------
+            CRUD
+------------------------------
+ */
+
 router.use('/article', articleRouter);
 router.use('/dealer', dealerRouter);
 router.use('/fleaMarket', fleaMarketRouter);

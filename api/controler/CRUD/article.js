@@ -1,5 +1,5 @@
-import * as articleModel from "../model/article.js";
-import {pool} from "../database/dbAccess.js";
+import * as articleModel from "../../model/CRUD/article.js";
+import {pool} from "../../database/dbAccess.js";
 
 /**
  * @swagger

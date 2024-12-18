@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {dealer, himself, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {default as DVM} from '../../../middleware/validator/validation/dealer.js'
-import {updateDealer, deleteDealer} from "../../../controler/dealer.js";
+import {updateDealer, deleteDealer} from "../../../controler/CRUD/dealer.js";
 
 const router = Router();
 

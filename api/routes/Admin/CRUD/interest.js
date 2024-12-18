@@ -3,7 +3,7 @@ import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {admin, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {default as IVM} from '../../../middleware/validator/validation/interest.js';
 import {default as LVM} from '../../../middleware/validator/validation/limits.js';
-import {createInterest, updateInterest, getInterest, getAllInterests, deleteInterest} from "../../../controler/interest.js";
+import {createInterest, updateInterest, getInterest, getAllInterests, deleteInterest} from "../../../controler/CRUD/interest.js";
 
 const router = Router();
 

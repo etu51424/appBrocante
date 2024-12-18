@@ -1,9 +1,9 @@
-import * as fleaMarketModel from "../model/fleaMarket.js";
-import {pool} from "../database/dbAccess.js";
-import {deleteSlotByFleaMarket} from "../model/slot.js";
-import {deleteInterestByFleaMarket} from "../model/interest.js";
-import {readPerson} from "../model/person.js";
-import {getDistance} from "../utils/map.js"
+import * as fleaMarketModel from "../../model/CRUD/fleaMarket.js";
+import {pool} from "../../database/dbAccess.js";
+import {deleteSlotByFleaMarket} from "../../model/CRUD/slot.js";
+import {deleteInterestByFleaMarket} from "../../model/CRUD/interest.js";
+import {readPerson} from "../../model/CRUD/person.js";
+import {getDistance} from "../../utils/map.js"
 
 export const createFleaMarket = async (req, res) => {
     try{
@@ -69,6 +69,20 @@ export const getAllFleaMarketsWithinRange = async (req, res) =>{
     } catch (err){
         res.sendStatus(500);
         console.error(`Error while getting all flea markets withing range : ${err.message}`);
+    }
+}
+
+export const getAllFleaMarketsBetweenDates = async (req, res) => {
+    try {
+        const fleaMarkets = await fleaMarketModel.readAllFleaMarketBetweenDates(pool, req.val);
+        if (fleaMarkets.length > 0) {
+            res.status(200).json(fleaMarkets);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all flea markets between two dates : ${err.message}`);
     }
 }
 

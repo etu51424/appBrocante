@@ -8,8 +8,6 @@ const port = 3001;
 app.use(express.json());
 app.use(cors());
 
-
-
 // Routeur pour la version 1
 app.use("/api/v1", RouterV1);
 
