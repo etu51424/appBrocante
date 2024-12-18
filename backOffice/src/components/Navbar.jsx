@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import "./Navbar.css";
+import "../css/Navbar.css";
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js"; 
 

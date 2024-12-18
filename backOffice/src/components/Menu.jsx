@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import "./Menu.css";
+import "../css/Menu.css";
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js"; 
 import * as FaIcons from "react-icons/fa";

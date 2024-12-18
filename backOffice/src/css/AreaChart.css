@@ -1,0 +1,10 @@
+/*sans definir la taille du container sen px et %, il ne s'affiche pass*/
+.chart {
+    width: 500px;
+    height: 500px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 100%;
+  }

@@ -11,6 +11,7 @@ import Interests from './pages/Interests.jsx';
 import Stats from './pages/Stats.jsx';
 import Menu from './components/Menu.jsx';
 
+
 window.language = "fr";
 
 function App() {
