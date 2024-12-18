@@ -38,17 +38,3 @@ const fetchArticlesData = async (limit = 10, page = 1) => {
 }
 
 export const getArticlesData = fetchArticlesData;
-
-
-/*
-// construire la requete pour recup les articles
-const articlesResponse = await fetch(`${API_BASE_URL}/admin/article/all`, {
-    method: "GET",
-    headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-    },
-});
-
-export const getArticlesData = await articlesResponse.json();
-*/
