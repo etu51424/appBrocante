@@ -1,0 +1,6 @@
+.stats {
+    display:flex;
+    width:70vw;
+    padding-top: 5vh;
+    justify-content: center;
+}
