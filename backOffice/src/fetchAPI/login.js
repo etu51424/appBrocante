@@ -1,4 +1,5 @@
 export const API_BASE_URL = "http://localhost:3001/api/v1";
+//import {hash, hash_verify} from './hash.js';
 
 const loginBody = {
     username: "Test",
