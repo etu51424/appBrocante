@@ -17,14 +17,14 @@ const fleaMarketToAddSchema = vine.object({
 
 const fleaMarketToUpdateSchema = vine.object({
     fleaMarketId: vine.number(),
-    address: vine.string().trim(),
-    dateStart: vine.date(),
-    dateEnd: vine.date().afterField('dateStart'),
+    address: vine.string().trim().optional(),
+    dateStart: vine.date().optional(),
+    dateEnd: vine.date().afterField('dateStart').optional(),
     title: vine.string().trim().optional(),
     theme: vine.string().trim().optional(),
     isCharity: vine.boolean().optional(),
-    averageRating: vine.number().min(1).max(5), //avec decimales
-    reviewCount : vine.number().positive().withoutDecimals()
+    averageRating: vine.number().min(1).max(5).optional(), //avec decimales
+    reviewCount : vine.number().positive().withoutDecimals().optional()
 });
 
 export const

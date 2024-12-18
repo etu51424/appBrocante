@@ -17,7 +17,7 @@ const interestToUpdateSchema = vine.object({
     fleaMarketId: vine.number(),
     personId : vine.number().optional(),
     isInterested : vine.boolean().optional(),
-    isDealer : vine.boolean(),
+    isDealer : vine.boolean().optional(),
     participation : vine.number().optional(),
 });
 
