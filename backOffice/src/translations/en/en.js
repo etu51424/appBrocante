@@ -5,13 +5,14 @@ const enDictionary = {
     "loading":"Loading...",
     "app_brocante":"AppBrocante - Admin Dashboard",
     "stats": {
-        "title":"Number of Flea Markets per Month of the year",
+        "title":"Monthly count of Flea Markets",
         "simple_title":"Stats",
     },
     "error":"Error",
     "yes":"Yes",
     "no":"No",
     "table_no_data":"Warning, this table is empty!",
+    "fleaMarketCountGraphLegend":"Flea market count",
     "tables":{
         "flea_market": {
             "title":"Flea Market",

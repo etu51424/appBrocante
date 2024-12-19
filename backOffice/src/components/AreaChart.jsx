@@ -11,60 +11,19 @@ import {
     Legend,
 } from 'recharts';
 import "../css/AreaChart.css";
-import { getFleaMarketsData } from "../fetchAPI/CRUD/fleaMarkets.js";
+import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js";
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
 
-const productSales = [
-    {
-        name:'Jan',
-        product1: 4000, //datakey :nom de la propriété dans le data array
-        product2:2400,
-    },
-    {
-        name:'Feb',
-        product1:3000,
-        product2:2210,
-    },
-    {
-        name:'Mar',
-        product1:2000,
-        product2:2290,
-    },
-    {
-        name:'Apr',
-        product1:2780,
-        product2:2000,
-    },
-    {
-        name:'May',
-        product1:2893,
-        product2:1890,
-    },
-    {
-        name:'Jun',
-        product1:1900,
-        product2:1790,
-    },
-];
 
 const AreaChartComponent = () => {
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
     const [data, setData] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(10); // Limite par défaut
-    //prévient si la dernière page de données existe ou non
-    const [noMoreData, setIsThereMoreData] = useState(false); 
-
     // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
-    const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
-    }
-
-    // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
+    // on utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
     useEffect(() => {
         // listener
         const handleLanguageChange = () => {
@@ -78,29 +37,139 @@ const AreaChartComponent = () => {
         return () => {
             window.removeEventListener("langchange", handleLanguageChange);
         };
-    }, []); // aucune dépendance utile ici
+    }, []); // aucune dépendance utile ici 
+    
+    const changeLanguage = () => {
+        setLangDict(window.language === "fr" ? frDict : enDict);
+    }
 
-    const getFleaMarkets = async () => {
+    useEffect(() => {
+        const getFleaMarketsWithinDates = async (dateStart, dateEnd) => {
+            setIsLoading(true);
 
-        try {
-            const { data, noMoreData } = await getFleaMarketsData(limit, currentPage);
+            try {
 
-            setData(data);
-            setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
+                const data = await getFMDataWithinDates(dateStart, dateEnd);
+                //console.log("data below 1");
+                //console.log(data);
 
-            //console.log(data);
-        } catch (err) {
-            setError(langDict.error);
+                //const myJSON = JSON.stringify(data);
+                //console.log(myJSON);
+
+                const monthCountDatapoints = createMarketsPerMonthDict(data);
+                
+                setData(monthCountDatapoints);
+
+                //console.log(data);
+            } catch (err) {
+                setError("error");
+            }
+
+            setIsLoading(false);
+        };
+    
+        getFleaMarketsWithinDates();
+    }, []);
+
+
+    const createMarketsPerMonthDict = (data) => {
+
+        function nextMonthOfYear(currentMonth) {
+            // split vers un tableau le mois+l'année
+            const year = parseInt(currentMonth.slice(0, 4), 10);
+            const month = parseInt(currentMonth.slice(4, 6), 10);
+        
+            const nextMonth = month + 1;
+        
+            // passage à l'année d'après
+            if (nextMonth > 12) {
+                return `${year + 1}01`;
+            }
+        
+            // padStart force un nombre dans un certain nombre de caractère. Ici 2. et force le caractère qui commence "start" à être un caractère
+            //nécessaire pour respecter format au sein du dictionnaire marketsPerMonthCount
+            return `${year}${String(nextMonth).padStart(2, "0")}`;
         }
-    };
 
-    const getData = () => {
-        getFleaMarkets(); //obtient les données et les met dans l'obj data
-        return data;
+        //étape 1: compter le nombre de mois entre dateStart et dateEnd
+        function countMonthsWithinDates(dateStart, dateEnd) {
+            var months;
+            months = (dateEnd.getFullYear() - dateStart.getFullYear()) * 12;
+            months -= dateStart.getMonth();
+            months += dateEnd.getMonth();
+            return months <= 0 ? 0 : months;
+        }
+
+        const dateStartVar = "2024-01-01";
+        const dateEndVar = "2026-01-09";
+
+        const dateStart = new Date(dateStartVar);
+        const dateEnd = new Date(dateEndVar);
+
+        // étape 1 : compter le nombre de brocantes pour chaque mois entre ces deux dates
+        let marketsPerMonthCount = {};
+        let monthCount = countMonthsWithinDates(dateStart, dateEnd);
+        //console.log("month count :" + monthCount);
+
+        let monthOfYear = `${dateStart.getFullYear()}${dateStart.getMonth()+1}`;
+        // pour chaque mois, on veut recenser le nombre de brocantes
+        for (let i = 0; i < monthCount; i++) {
+
+            marketsPerMonthCount[i] = {
+            monthOfYear : monthOfYear, 
+            marketCount : 0
+            };
+
+            // crée la propriété pour le prochain mois
+            monthOfYear = nextMonthOfYear(monthOfYear);
+        }
+        //console.log(marketsPerMonthCount);
+
+        
+        //console.log("data below 2");
+        //console.log(data);
+        // étape 2: pour chaque brocante, on a son date_start et son date_end. Incrémenter tous les mois tant que cette brocante a eu lieu
+        // 
+        // incrémenter chaque mois dont le year+month se situe entre date_start et date_end, toutes deux inclues
+        data.map((market) => {
+
+            const marketDateStart = new Date(market.date_start);
+            const marketDateEnd = new Date(market.date_end);
+            //console.log("Parsed dates:", new Date(market.date_start), new Date(market.date_end));
+
+            const firstMonthOfMarket = `${marketDateStart.getFullYear()}${String(marketDateStart.getMonth()+1).padStart(2, "0")}`;
+            const lastMonthOfMarket = `${marketDateEnd.getFullYear()}${String(marketDateEnd.getMonth()+1).padStart(2, "0")}`;
+
+            let iMonthOfYear = 0;
+            // avancer jusqu'au premier mois de cette brocante
+            while (marketsPerMonthCount[iMonthOfYear] &&
+                marketsPerMonthCount[iMonthOfYear].monthOfYear < firstMonthOfMarket) {
+
+                iMonthOfYear++;
+            }
+            // compter tant que la brocante a lieu
+            while (marketsPerMonthCount[iMonthOfYear] &&
+                marketsPerMonthCount[iMonthOfYear].monthOfYear <= lastMonthOfMarket) {
+
+                //noter que cette brocante a eu lieu à ce mois
+                marketsPerMonthCount[iMonthOfYear].marketCount++;
+
+                iMonthOfYear++;
+            }
+        });
+
+        //console.log(marketsPerMonthCount);
+
+        const monthCountDatapoints = Object.values(marketsPerMonthCount).map((entry) => ({
+            month: entry.monthOfYear, // axe x
+            count: entry.marketCount, // axe y
+        }));
+
+        return monthCountDatapoints;
     }
 
     if (isLoading) {
-        return <p>{langDict.loading}</p>;
+        return <p>{"loading"}</p>;
     }
 
     if (error) {
@@ -110,10 +179,10 @@ const AreaChartComponent = () => {
     return (
         <div className="chart">
             <div className="chart-container">
-                <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart width={500} height={400} data={productSales}>
+                <ResponsiveContainer width="300%" height="100%">
+                    <AreaChart width={100} height={400} data={data}>
                         <YAxis />
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="month" />
 
                         <CartesianGrid 
                             strokeDasharray="5 5"
@@ -125,9 +194,10 @@ const AreaChartComponent = () => {
                         
                         <Area
                             type="monotone"
+                            name={langDict.fleaMarketCountGraphLegend}
                             stroke="#0b8f52"
                             fill="#4ec88f"
-                            dataKey="product1" 
+                            dataKey="count" 
                         />
                     </AreaChart>
                 </ResponsiveContainer>
@@ -137,3 +207,4 @@ const AreaChartComponent = () => {
 };
 
 export default AreaChartComponent;
+

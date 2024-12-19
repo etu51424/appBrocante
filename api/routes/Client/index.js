@@ -14,7 +14,7 @@ const router = Router();
 ------------------------------
             CRUD
 ------------------------------
- */
+*/
 
 router.use("/article", articleRouter);
 router.use("/dealer", dealerRouter);

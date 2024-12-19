@@ -7,9 +7,15 @@ import {getAllFleaMarketsBetweenDates, getAllFleaMarketsWithinRange} from "../..
 
 const router = Router();
 
+router.use((req, res, next) => {
+            console.log(`Req arrivée à : ${req.method} ${req.originalUrl}`);
+            next();
+        });
+
 // pour récupérer toutes les brocantes dans un périmètre
 router.get('/inRange', jwtCheck, MapVM.mapRange, himself, getAllFleaMarketsWithinRange);
 // pour récupérer toutes les brocantes entre deux dates
 router.get('/inDates', jwtCheck, DateVM.dates, getAllFleaMarketsBetweenDates);
 
 export default router;
+

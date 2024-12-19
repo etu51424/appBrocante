@@ -7,6 +7,10 @@ import "../css/Stats.css";
 function Stats() {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
+    const changeLanguage = () => {
+        setLangDict(window.language === "fr" ? frDict : enDict);
+    }
+
     // on utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
     useEffect(() => {
         // listener
@@ -25,8 +29,8 @@ function Stats() {
 
     return (
         <div className='stats'>
-            <main className="flex min-h-screen flex-col items-center justify-center px-4 md:px-8 xl:px-10 py-44">
-                <div className="grid xl:grid-cols-3 lg:grid-cols-2 w-full gap-10 max-w-[1400px]">
+            <main className="statsIn">
+                <div className="statsInIn">
                     <GridItem title={langDict.stats.title}>
                         <AreaChart/>
                     </GridItem>

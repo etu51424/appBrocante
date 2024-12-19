@@ -12,6 +12,7 @@ const frDictionary = {
     "yes":"Oui",
     "no":"Non",
     "table_no_data":"Attention, cette table est vide !",
+    "fleaMarketCountGraphLegend":"Nombre de brocantes",
     "tables":{
         "flea_market": {
             "title":"Brocante",
