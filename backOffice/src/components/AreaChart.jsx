@@ -123,11 +123,7 @@ const AreaChartComponent = () => {
             // crée la propriété pour le prochain mois
             monthOfYear = nextMonthOfYear(monthOfYear);
         }
-        //console.log(marketsPerMonthCount);
-
         
-        //console.log("data below 2");
-        //console.log(data);
         // étape 2: pour chaque brocante, on a son date_start et son date_end. Incrémenter tous les mois tant que cette brocante a eu lieu
         // 
         // incrémenter chaque mois dont le year+month se situe entre date_start et date_end, toutes deux inclues
@@ -135,7 +131,6 @@ const AreaChartComponent = () => {
 
             const marketDateStart = new Date(market.date_start);
             const marketDateEnd = new Date(market.date_end);
-            //console.log("Parsed dates:", new Date(market.date_start), new Date(market.date_end));
 
             const firstMonthOfMarket = `${marketDateStart.getFullYear()}${String(marketDateStart.getMonth()+1).padStart(2, "0")}`;
             const lastMonthOfMarket = `${marketDateEnd.getFullYear()}${String(marketDateEnd.getMonth()+1).padStart(2, "0")}`;
@@ -157,8 +152,6 @@ const AreaChartComponent = () => {
                 iMonthOfYear++;
             }
         });
-
-        //console.log(marketsPerMonthCount);
 
         const monthCountDatapoints = Object.values(marketsPerMonthCount).map((entry) => ({
             month: entry.monthOfYear, // axe x

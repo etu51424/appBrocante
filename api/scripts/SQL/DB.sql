@@ -135,8 +135,9 @@ VALUES
 
 ('Rue Haute 100, Bruxelles, Belgique', '2025-12-18 09:00:00', '2024-12-18 17:00:00', 'Marché aux Puces des Marolles', 'Objets Variés', FALSE, 4.7, 150),
 ('Quai de la Batte, Liège, Belgique', '2025-12-24 08:00:00', '2025-12-24 13:00:00', 'Marché aux Puces de la Batte', 'Antiquités', FALSE, 4.8, 120),
-('Place Verte, Ath, Belgique', '2025-05-18 09:00:00', '2025-05-18 14:00:00', 'Marché aux Puces Rural', 'Objets Divers', TRUE, 4.6, 31);
-
+('Place Verte, Ath, Belgique', '2025-05-18 09:00:00', '2025-05-18 14:00:00', 'Marché aux Puces Rural', 'Objets Divers', TRUE, 4.6, 31),
+('Place Rouge, Wepion, Belgique', '2026-01-18 09:00:00', '2026-05-18 14:00:00', 'Marché divers', 'Objets Divers', TRUE, 4.1, 31),
+('Rue de l Eglise, Lens, Belgique', '2026-04-18 09:00:00', '2026-06-18 14:00:00', 'Marché divers', 'Objets Divers', TRUE, 4.1, 38);
 
 -- Insérer des emplacements (slots)
 INSERT INTO slot (flea_market_id, is_available, area)

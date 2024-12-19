@@ -12,6 +12,28 @@ const fetchInterestsData = async (limit = 10, page = 1) => {
             },
         }
     );
+
+    //Verifier si la page d'après existe, pour déterminer si on doit proposer ou non à l'useur d'accéder à la page d'après
+    //Moyen d'optimiser: ne pas fetch celle ci si nb données de la table précédente < limit
+    const nextPageResponse = await fetch(
+        `${API_BASE_URL}/admin/interest/all?${limit}&page=${page+1}`, 
+        {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }
+    );
+
+    if (currentPageResponse.status !== 200) {
+        throw new Error(`Echec à fetch les objets : ${response.statusText}`);
+    } else {
+        const data = await currentPageResponse.json();
+        const noMoreData = nextPageResponse.status === 404;
+
+        return { data, noMoreData };
+    }
 }
 
 export const getInterestsData = fetchInterestsData;

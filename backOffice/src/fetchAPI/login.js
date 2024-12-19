@@ -12,7 +12,6 @@ const loginResponse = await fetch(`${API_BASE_URL}/client/person/login`, {
     body: JSON.stringify(loginBody),
 });
 
-//console.log(loginResponse.status);
 
 if (loginResponse.status !== 201) {
     throw new Error(`Login raté: ${"Login raté"}`);
