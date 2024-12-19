@@ -6,9 +6,9 @@ function DateSelector({changeDateElem}) {
 
     // créer les années
     const years = [];
-    for (let iYear = 2020; iYear <= 2030; iYear++) {
+    for (let year = 2020; year <= 2030; year++) {
         // convertit en string sinon err
-        years.push(iYear.toString());
+        years.push(year.toString());
     }
 
     // idem pour les mois
@@ -22,13 +22,13 @@ function DateSelector({changeDateElem}) {
     // afin de changer le mois de la date lors d'un clic
     const changeYear = (event) => {
         setYear(event.target.value);
-        changeDateElem(`${event.target.value}${month}`); 
+        changeDateElem(`${event.target.value}-${month}-01`); 
     };
 
     //idem pour l'année
     const changeMonth = (event) => {
         setMonth(event.target.value);
-        changeDateElem(`${year}${event.target.value}`); 
+        changeDateElem(`${year}-${event.target.value}-01`); 
     };
 
     return (

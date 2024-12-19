@@ -10,7 +10,6 @@ function Stats() {
     const [dateStart, setDateStart] = useState();
     const [dateEnd, setDateEnd] = useState();
 
-
     const changeLanguage = () => {
         setLangDict(window.language === "fr" ? frDict : enDict);
     }
@@ -31,6 +30,7 @@ function Stats() {
         };
     }, []); // aucune dépendance utile ici 
 
+    // changeDateStart et changeDateEnd détectent un changement et update le prop passé au sous-composant AreaCharts
     const changeDateStart = (date) => {
         console.log("date start selectionnée :", date); 
         setDateStart(date);
@@ -44,12 +44,18 @@ function Stats() {
     return (
         <div className='stats'>
             <div className='dateSelects'>
+                <p className='dateSelectsPara'>{langDict.stats.month_start} :</p>
                 <DateSelector changeDateElem={changeDateStart} />
+
+                <p className='dateSelectsPara'>{langDict.stats.month_end} :</p>
                 <DateSelector changeDateElem={changeDateEnd} />
             </div>
             <div className="statsGraph">
                 <GridItem title={langDict.stats.title}>
-                    <AreaChart/>
+                    <AreaChart
+                        dateStartProp={dateStart}
+                        dateEndProp={dateEnd}
+                    />
                 </GridItem>
             </div>
         </div>

@@ -88,9 +88,9 @@ function Page({
             <div className="page">
                 <div className={elementClassNamePlural}>
                     <div className="page-header">
-                        <div></div>
-                        <h1>{langDict.tables[elementClassNameSingular].title + 's'}</h1>
-                        {paginationArrows}
+                    {paginationArrows}
+                    <h1>{langDict.tables[elementClassNameSingular].title + 's'}</h1>
+                    <div></div>
                     </div>
                     <div className="rows-table">
                         <table>

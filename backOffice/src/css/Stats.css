@@ -16,5 +16,9 @@
 }
 
 .dateSelect {
-    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dateSelectsPara {
+    padding-left: 7px;
 }

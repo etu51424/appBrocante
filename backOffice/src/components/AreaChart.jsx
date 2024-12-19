@@ -16,12 +16,19 @@ import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
 
 
-const AreaChartComponent = () => {
+const AreaChartComponent = ({ 
+        dateStartProp,
+        dateEndProp
+    }) => {
+
     const [data, setData] = useState([]);
     // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
+    
+    //const [dateStart, setDateStart] = useState();
+    //const [dateEnd, setDateEnd] = useState();
 
     // on utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
     useEffect(() => {
@@ -44,32 +51,43 @@ const AreaChartComponent = () => {
     }
 
     useEffect(() => {
-        const getFleaMarketsWithinDates = async (dateStart, dateEnd) => {
+        console.log("Prop change detected:");
+        console.log("dateStartProp", dateStartProp);
+        console.log("dateEndProp", dateEndProp);
+
+        // valeurs par défaut si l'utilisateur n'a pas encore choisi une date
+        if (dateStartProp === undefined) {
+            dateStartProp = "2023-01-01"
+        } 
+        if (dateEndProp === undefined) {
+            dateEndProp = "2027-01-01"
+        }
+
+        const getFleaMarketsWithinDates = async (dateStartProp, dateEndProp) => {
             setIsLoading(true);
 
             try {
-
-                const data = await getFMDataWithinDates(dateStart, dateEnd);
-                //console.log("data below 1");
-                //console.log(data);
+                const data = await getFMDataWithinDates(dateStartProp, dateEndProp);
+                console.log("data below 1");
+                console.log(data);
 
                 //const myJSON = JSON.stringify(data);
                 //console.log(myJSON);
 
-                const monthCountDatapoints = createMarketsPerMonthDict(data);
-                
-                setData(monthCountDatapoints);
+                console.log("dateStart" + dateStartProp);
+                console.log("dateEnd" + dateEndProp);
 
-                //console.log(data);
+                const monthCountDatapoints = createMarketsPerMonthDict(data);
+                setData(monthCountDatapoints);
             } catch (err) {
                 setError("error");
             }
-
             setIsLoading(false);
         };
     
         getFleaMarketsWithinDates();
-    }, []);
+        // 2 dépendances : les deux props
+    }, [dateStartProp, dateEndProp]);
 
 
     const createMarketsPerMonthDict = (data) => {
@@ -100,8 +118,10 @@ const AreaChartComponent = () => {
             return months <= 0 ? 0 : months;
         }
 
-        const dateStartVar = "2024-01-01";
-        const dateEndVar = "2026-01-09";
+        console.log("DateStartVar :" + dateStartProp);
+        console.log("DateEndVar :" + dateEndProp);
+        const dateStartVar = dateStartProp; // AAAA-MM-JJ
+        const dateEndVar = dateEndProp; // AAAA-MM-JJ
 
         const dateStart = new Date(dateStartVar);
         const dateEnd = new Date(dateEndVar);
@@ -187,7 +207,7 @@ const AreaChartComponent = () => {
                         
                         <Area
                             type="monotone"
-                            name={langDict.fleaMarketCountGraphLegend}
+                            name={langDict.stats.legend}
                             stroke="#0b8f52"
                             fill="#4ec88f"
                             dataKey="count" 

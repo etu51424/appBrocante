@@ -7,6 +7,9 @@ const enDictionary = {
     "stats": {
         "title":"Monthly count of Flea Markets",
         "simple_title":"Stats",
+        "month_start":"Starting month",
+        "month_end":"Ending month",
+        "legend":"Flea market count"
     },
     "error":"Error",
     "yes":"Yes",

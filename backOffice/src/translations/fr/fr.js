@@ -7,6 +7,8 @@ const frDictionary = {
     "stats": {
         "title":"Nombre de brocantes par mois",
         "simple_title":"Statistiques",
+        "month_start":"Mois de début",
+        "month_end":"Mois de fin"
     },
     "error":"Erreur",
     "yes":"Oui",
