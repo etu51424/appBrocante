@@ -1,93 +1,93 @@
 const nlDictionary = {
-    "date_format":"fr-FR",
-    "home":"Accueil",
-    "welcome":"Bienvenue sur le back-office",
-    "loading":"Chargement...",
-    "app_brocante":"AppBrocante - Menu Administrateur",
+    "date_format":"nl-NL",
+    "home":"Home",
+    "welcome":"Welkom bij de backoffice",
+    "loading":"Laden...",
+    "app_brocante":"AppBrocante - Beheermenu",
     "stats": {
-        "title":"Nombre de brocantes par mois",
-        "simple_title":"Statistiques",
-        "month_start":"Mois de début",
-        "month_end":"Mois de fin"
+        "title":"Aantal rommelmarkten per maand",
+        "simple_title":"Statistieken",
+        "month_start":"Beginmaand",
+        "month_end":"Eindmaand"
     },
-    "error":"Erreur",
-    "yes":"Oui",
-    "no":"Non",
-    "table_no_data":"Attention, cette table est vide !",
-    "fleaMarketCountGraphLegend":"Nombre de brocantes",
+    "error":"Fout",
+    "yes":"Ja",
+    "no":"Nee",
+    "table_no_data":"Opgelet, deze tabel is leeg!",
+    "fleaMarketCountGraphLegend":"Aantal rommelmarkten",
     "tables":{
         "flea_market": {
-            "title":"Brocante",
+            "title":"Rommelmarkt",
             "columns":{
-                "id": "Identifiant Brocante",
-                "address": "Adresse",
-                "date_start": "Date de début",
-                "date_end": "Date de fin",
-                "title": "Titre",
-                "theme": "Thème",
-                "is_charity": "Charité",
-                "average_rating": "Avis moyen",
-                "review_count": "Nombre d'avis"
+                "id": "Rommelmarkt-ID",
+                "address": "Adres",
+                "date_start": "Begindatum",
+                "date_end": "Einddatum",
+                "title": "Titel",
+                "theme": "Thema",
+                "is_charity": "Liefdadigheid",
+                "average_rating": "Gemiddelde beoordeling",
+                "review_count": "Aantal beoordelingen"
             }
         },
         "slot": {
-            "title":"Emplacement",
+            "title":"Standplaats",
             "columns": {
-                "id": "Identifiant Emplacement",
-                "flea_market_id": "Identifiant Brocante",
-                "is_available": "Disponibilité",
-                "area": "Superficie"
+                "id": "Standplaats-ID",
+                "flea_market_id": "Rommelmarkt-ID",
+                "is_available": "Beschikbaarheid",
+                "area": "Oppervlakte"
             }
         },
         "user": {
-            "title": "Utilisateur",
+            "title": "Gebruiker",
             "columns": {
-                "id":"Identifiant Utilisateur",
-                "name": "Nom",
-                "first_name": "Prénom",
-                "last_name": "Nom de famille",
-                "address": "Adresse",
-                "phone_number": "Numéro de téléphone",
-                "email": "Email",
-                "last_edit_date": "Date de dernière modification",
-                "password": "Mot de passe",
-                "profile_picture": "Photo de profil",
-                "is_admin": "Est administrateur",
-                "is_timed_out": "Est bloqué",
-                "recovery_code": "Code de récupération"
+                "id":"Gebruikers-ID",
+                "name": "Naam",
+                "first_name": "Voornaam",
+                "last_name": "Achternaam",
+                "address": "Adres",
+                "phone_number": "Telefoonnummer",
+                "email": "E-mail",
+                "last_edit_date": "Laatste wijzigingsdatum",
+                "password": "Wachtwoord",
+                "profile_picture": "Profielfoto",
+                "is_admin": "Is beheerder",
+                "is_timed_out": "Is geblokkeerd",
+                "recovery_code": "Herstelcode"
             }
         },
         "interest": {
-            "title":"Intérêt",
+            "title":"Interesse",
             "columns": {
-                "flea_market_id": "Identifiant Brocante",
-                "person_id": "Identifiant Personne",
-                "is_interested": "Est intéressé",
-                "is_dealer": "Est brocanteur",
-                "participation": "Participation"
+                "flea_market_id": "Rommelmarkt-ID",
+                "person_id": "Persoons-ID",
+                "is_interested": "Is geïnteresseerd",
+                "is_dealer": "Is handelaar",
+                "participation": "Deelname"
             }
         },
         "dealer": {
-            "title":"Brocanteur",
+            "title":"Handelaar",
             "columns":{
-                "person_id": "Identifiant Personne",
+                "person_id": "Persoons-ID",
                 "type": "Type",
-                "description": "Description",
-                "signup_date": "Date d'inscription",
-                "average_rating": "Avis moyen",
-                "review_count": "Nombre d'avis"
+                "description": "Beschrijving",
+                "signup_date": "Inschrijfdatum",
+                "average_rating": "Gemiddelde beoordeling",
+                "review_count": "Aantal beoordelingen"
             }
         },
         "article": {
-            "title":"Article",
+            "title":"Artikel",
             "columns":{
-                "id": "Identifiant Article",
-                "dealer_id": "Identifiant Commerçant",
-                "title": "Titre",
-                "description": "Description",
-                "entry_date": "Date d'ajout",
-                "cost": "Coût",
-                "condition": "État"
+                "id": "Artikel-ID",
+                "dealer_id": "Handelaars-ID",
+                "title": "Titel",
+                "description": "Beschrijving",
+                "entry_date": "Toevoegdatum",
+                "cost": "Kosten",
+                "condition": "Toestand"
             }
         }
     }
