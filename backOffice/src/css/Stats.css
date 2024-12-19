@@ -1,7 +1,20 @@
+
 .stats {
     display:flex;
     width:100vw;
     padding-top: 5vh;
     margin-left: 3vw;
     justify-content: left;
+    flex-direction: column;
+}
+
+.dateSelects {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.dateSelect {
+    padding-left: 10px;
 }

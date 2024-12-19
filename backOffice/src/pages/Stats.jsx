@@ -2,10 +2,14 @@ import React, {useState, useEffect} from 'react';
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
 import AreaChart from '../components/AreaChart.jsx';
+import DateSelector from '../components/DateSelector.jsx';
 import "../css/Stats.css";
 
 function Stats() {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
+    const [dateStart, setDateStart] = useState();
+    const [dateEnd, setDateEnd] = useState();
+
 
     const changeLanguage = () => {
         setLangDict(window.language === "fr" ? frDict : enDict);
@@ -27,24 +31,35 @@ function Stats() {
         };
     }, []); // aucune dépendance utile ici 
 
+    const changeDateStart = (date) => {
+        console.log("date start selectionnée :", date); 
+        setDateStart(date);
+    };
+
+    const changeDateEnd = (date) => {
+        console.log("date end selectionnée :", date); 
+        setDateEnd(date);
+    };
+
     return (
         <div className='stats'>
-            <main className="statsIn">
-                <div className="statsInIn">
-                    <GridItem title={langDict.stats.title}>
-                        <AreaChart/>
-                    </GridItem>
-                </div>
-            </main>
+            <div className='dateSelects'>
+                <DateSelector changeDateElem={changeDateStart} />
+                <DateSelector changeDateElem={changeDateEnd} />
+            </div>
+            <div className="statsGraph">
+                <GridItem title={langDict.stats.title}>
+                    <AreaChart/>
+                </GridItem>
+            </div>
         </div>
     );
 }
 
 function GridItem({title, children}) {
     return (
-        <div className="flex flex-col items-center justify-center p-4 border border-slate-900
-        bg-slate-900/50 rounded-xl h-[400px]">
-            <h3 className="text-2xl font-semibold text-white mb-4">{title}</h3>
+        <div className="statsGrid">
+            <h3 className="gridTitle">{title}</h3>
             {children}
         </div>
     );

@@ -1,5 +1,5 @@
 import Navbar from './components/Navbar.jsx';
-import './App.css';
+import './css/App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Slots from './pages/Slots.jsx';

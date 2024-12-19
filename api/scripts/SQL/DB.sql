@@ -83,6 +83,9 @@ CREATE TABLE article (
 -- Insérer des brocantes
 INSERT INTO flea_market (address, date_start, date_end, title, theme, is_charity, average_rating, review_count)
 VALUES
+('Parc Léopold, Bruxelles, Belgique', '2024-01-20 08:00:00', '2024-01-28 14:00:00', 'Brocante Manucure', 'Culture', TRUE, 4.5, 33),
+('Parc Léopold, Bruxelles, Belgique', '2024-03-20 08:00:00', '2024-07-20 14:00:00', 'Brocante Littéraire', 'Culture', TRUE, 4.7, 33),
+('Place du Marché, Waterloo, Belgique', '2024-7-10 10:00:00', '2025-08-10 17:00:00', 'Marché des Historiens', 'Histoire', FALSE, 4.6, 25),
 ('123 Rue de la Paix, Paris', '2024-12-01 09:00:00', '2024-12-01 18:00:00', 'Marché de Noël', 'Artisanat', TRUE, 4.8, 50),
 ('456 Avenue des Champs, Lyon', '2024-12-15 10:00:00', '2024-12-15 20:00:00', 'Marché Vintage', 'Antiquités', FALSE, 4.5, 30),
 ('789 Boulevard Saint-Michel, Marseille', '2025-01-10 08:00:00', '2025-01-10 17:00:00', 'Marché de Printemps', 'Plantes', TRUE, 4.9, 20),
@@ -120,6 +123,9 @@ VALUES
 ('Place de la République, Arlon, Belgique', '2025-08-20 09:00:00', '2025-08-20 17:00:00', 'Marché du Patrimoine', 'Histoire', TRUE, 4.7, 24),
 ('Place de la Cathédrale, Tournai, Belgique', '2025-03-15 09:00:00', '2025-03-15 16:00:00', 'Brocante Religieuse de Carême', 'Religion', TRUE, 4.7, 20),
 ('Parvis de l’Église Saint-Joseph, Namur, Belgique', '2025-04-02 10:00:00', '2025-04-02 17:00:00', 'Marché de la Foi', 'Religion', TRUE, 4.8, 15),
+('Halle des Foires, Liège, Belgique', '2025-04-20 09:00:00', '2025-04-29 19:00:00', 'Salon du Bien-Être', 'Santé', FALSE, 4.8, 55),
+('Parc Municipal, Esch-sur-Alzette, Luxembourg', '2025-04-18 09:00:00', '2025-04-30 13:00:00', 'Concours Entre Villages : Brocante et Jeux', 'Traditions Locales', TRUE, 4.9, 40),
+('Rue Haute 100, Bruxelles, Belgique', '2025-05-18 09:00:00', '2024-05-21 17:00:00', 'Marché aux Puces des Marolles', 'Objets Variés', FALSE, 4.7, 150),
 ('Campus de Louvain-la-Neuve, Belgique', '2025-05-10 09:00:00', '2025-05-10 18:00:00', 'Brocante Étudiante', 'Universitaire', FALSE, 4.5, 42),
 ('Place de l’Opéra, Liège, Belgique', '2025-06-01 12:00:00', '2025-06-01 22:00:00', 'Marché des Mélomanes', 'Musique', TRUE, 4.9, 30),
 ('Place Communale, Charleroi, Belgique', '2025-07-14 10:00:00', '2025-07-14 16:00:00', 'Salon Geek & Brocante', 'Fan-Themed', FALSE, 4.8, 48),
@@ -138,6 +144,7 @@ VALUES
 ('Place Verte, Ath, Belgique', '2025-05-18 09:00:00', '2025-05-18 14:00:00', 'Marché aux Puces Rural', 'Objets Divers', TRUE, 4.6, 31),
 ('Place Rouge, Wepion, Belgique', '2026-01-18 09:00:00', '2026-05-18 14:00:00', 'Marché divers', 'Objets Divers', TRUE, 4.1, 31),
 ('Rue de l Eglise, Lens, Belgique', '2026-04-18 09:00:00', '2026-06-18 14:00:00', 'Marché divers', 'Objets Divers', TRUE, 4.1, 38);
+
 
 -- Insérer des emplacements (slots)
 INSERT INTO slot (flea_market_id, is_available, area)

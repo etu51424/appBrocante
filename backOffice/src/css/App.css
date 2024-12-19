@@ -33,19 +33,40 @@ body {
   margin-left: 30vw;
 }
 
+
+a {
+  color: #924700;
+}
+
 table {
    background-color: #ffd971;
 }
 
+th {
+  background-color: #ffa347;
+  padding: 3px;
+  font-style: italic;
+}
+
 td {
-  background-color: rgb(255, 153, 113);
+  background-color: #ffa347;
+  /*border: 2px solid;*/
+  /*border-color: #924700;*/
   padding: 7px;
 }
 
 button {
   padding: 5px;
   margin: 5px;
-  background-color: #ffd971;
+  background-color: #ffa347;
+  border-color: #924700;
+}
+
+select {
+    padding: 5px;
+    margin: 5px;
+    background-color: #ffa347;
+    border-color: #924700;
 }
 
 /*
