@@ -8,13 +8,13 @@ const frDictionary = {
         "title":"Nombre de brocantes par mois",
         "simple_title":"Statistiques",
         "month_start":"Mois de début",
-        "month_end":"Mois de fin"
+        "month_end":"Mois de fin",
+        "legend":"Nombre de brocantes"
     },
     "error":"Erreur",
     "yes":"Oui",
     "no":"Non",
     "table_no_data":"Attention, cette table est vide !",
-    "fleaMarketCountGraphLegend":"Nombre de brocantes",
     "tables":{
         "flea_market": {
             "title":"Brocante",
