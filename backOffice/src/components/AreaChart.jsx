@@ -72,7 +72,7 @@ const AreaChartComponent = ({
             //console.log("dateStartProp + dateEndProp + token :" + token);
 
             try {
-                const data = await exponentialRetry(() => getFMDataWithinDates(dateStartProp, dateEndProp));
+                const data = await exponentialRetry(() => getFMDataWithinDates(token, dateStartProp, dateEndProp));
 
                 const monthCountDatapoints = createMarketsPerMonthDict(data);
                 setData(monthCountDatapoints);
