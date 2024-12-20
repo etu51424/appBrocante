@@ -20,6 +20,5 @@ export async function login(username, password) {
     // Normalement, le token devrait être un json.
     // Pour éviter de modifier le token pour qu'il soit renvoyé en json côté server, j'accepte de l'interpreter en texte
     const token = await loginResponse.text();
-    //console.log("Login réussi. Token reçu :", token);
     return token;
 }

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import "../css/Navbar.css";
-import enDict from "../translations/en/en.js";
-import frDict from "../translations/fr/fr.js"; 
+import frDict from "../translations/fr/fr.js";
+import languageDictProvider from "../utils/language.js";
 
 function Navbar() {
   const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
@@ -10,7 +10,7 @@ function Navbar() {
     window.language = lang;
 
     //set la langue uniquement pour Navbar.jsx
-    setLangDict(lang == "fr" ? frDict : enDict);
+    setLangDict(languageDictProvider(window.language));
 
     // dispatch un événement "langchange" à travers et dans l'objet window (donc toute la vue, ce qui inlcut tous les composants)
     //changeant la langue sur toutes les pages
@@ -29,6 +29,7 @@ function Navbar() {
             <div className="langButtons">
               <button onClick={() => handleChangeLanguage("en")}><img src="/en.png" alt="logo" width="46px"/></button>
               <button onClick={() => handleChangeLanguage("fr")}><img src="/fr.png" alt="logo" width="46px"/></button>
+              <button onClick={() => handleChangeLanguage("nl")}><img src="/nl.png" alt="logo" width="46px"/></button>
           </div>
         </div>
     </>

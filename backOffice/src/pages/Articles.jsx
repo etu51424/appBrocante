@@ -1,11 +1,11 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
-import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
-import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
 import { getArticlesData } from "../fetchAPI/CRUD/articles.js";
+import languageDictProvider from "../utils/language.js";
+import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 function Articles() {
 
@@ -13,7 +13,7 @@ function Articles() {
     const elementClassNameSingular = "article";
     const elementClassNamePlural = "articles";
 
-    const { token } = useAuth();
+    
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10); // Limite par défaut
@@ -30,7 +30,7 @@ function Articles() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await getArticlesData(token, limit, currentPage);
+            const { data, noMoreData } = await exponentialRetry(() =>getArticlesData(limit, currentPage));
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
@@ -86,7 +86,7 @@ function Articles() {
     };
 
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        languageDictProvider(window.language);
     }
 
     // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
@@ -140,47 +140,3 @@ function Articles() {
 }
 
 export default Articles;
-
-
-
-
-
-    /*
-    const articles = [
-        {
-            id: 2,
-            dealer_id: 3,
-            title: "armoire acajou",
-            description: "dressée en bois d'acajou néerlandais",
-            entry_date: "2022-09-15",
-            cost: 9.99,
-            condition: "Les charnières sont rouillées"
-        },
-        {
-            id: 3,
-            dealer_id: 6,
-            title: "pot à lierre",
-            description: "sobre et moderne",
-            entry_date: "2024-07-15",
-            cost: 109.99,
-            condition: "bon état"
-        },
-        {
-            id: 4,
-            dealer_id: 3,
-            title: "un hélicoptère en verre",
-            description: "Fabriquée en france dans les années 70s",
-            entry_date: "2021-09-15",
-            cost: 78.95,
-            condition: "attention, fragile"
-        },
-        {
-            id: 4,
-            dealer_id: 3,
-            title: "terrarium pour geckos",
-            description: "Conçu en thailande. En plexiglass",
-            entry_date: "2020-03-30",
-            cost: 128.85,
-            condition: "peu de fissures"
-        }
-    ];*/

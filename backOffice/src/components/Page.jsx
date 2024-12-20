@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import enDict from "../translations/en/en.js";
-import frDict from "../translations/fr/fr.js"; 
+import frDict from "../translations/fr/fr.js";
 import "../css/Page.css";
+import languageDictProvider from "../utils/language.js";
 
 // reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
 function Page({ 
@@ -34,7 +34,7 @@ function Page({
     }
 
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        setLangDict(languageDictProvider(window.language));
     }
 
     // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language

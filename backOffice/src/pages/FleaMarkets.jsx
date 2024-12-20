@@ -1,14 +1,13 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
-import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { getFleaMarketsData } from "../fetchAPI/CRUD/fleaMarkets.js";
 import * as IoIcons from 'react-icons/io';
-import enDict from "../translations/en/en.js";
-import frDict from "../translations/fr/fr.js"; 
+import frDict from "../translations/fr/fr.js";
+import languageDictProvider from "../utils/language.js";
+import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 function FleaMarkets() {
-    const { token } = useAuth();
     const title = "Flea Markets";
     const elementClassNameSingular = "flea_market";
     const elementClassNamePlural = "fleaMarkets";
@@ -29,7 +28,7 @@ function FleaMarkets() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await getFleaMarketsData(token, limit, currentPage);
+            const { data, noMoreData } = await exponentialRetry(() => getFleaMarketsData(limit, currentPage));
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
@@ -85,7 +84,7 @@ function FleaMarkets() {
     };
 
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        languageDictProvider(window.language);
     }
 
     // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language

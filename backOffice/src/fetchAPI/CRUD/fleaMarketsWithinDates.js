@@ -18,7 +18,6 @@ const fetchFleaMarketsDataWithinDates = async (token, dateStart = '2024-01-01', 
         throw new Error(`Echec à fetch les objets : ${response.statusText}`);
     } else {
         const data = await response.json();
-        //console.log(data);
         return data;
     }
 }

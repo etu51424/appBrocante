@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "./../login.js";
 
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
-const fetchUsersData = async (token, limit = 10, page = 1) => {
+export const getUsersData = async (token, limit = 10, page = 1) => {
     const currentPageResponse = await fetch(
         `${API_BASE_URL}/admin/person/all?${limit}&page=${page}`, 
         {
@@ -36,4 +36,63 @@ const fetchUsersData = async (token, limit = 10, page = 1) => {
     }
 }
 
-export const getUsersData = fetchUsersData;
+export const createUser = async (body) =>{
+    const response = await fetch(
+        `${API_BASE_URL}/admin/person/`,
+        {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify(body)
+        }
+    );
+
+    if (response.status !== 201) {
+        throw new Error(`Echec à la création : ${response.statusText}`);
+    } else {
+        return await response.json();
+    }
+}
+
+export const updateUser = async (body) =>{
+    const response = await fetch(
+        `${API_BASE_URL}/admin/person/`,
+        {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify(body)
+        }
+    );
+
+    if (response.status !== 204) {
+        throw new Error(`Echec à la modification : ${response.statusText}`);
+    }
+    else{
+        return "Article updated successfully.";
+    }
+}
+
+export const deleteUser = async (id) =>{
+    const response = await fetch(
+        `${API_BASE_URL}/admin/person/${id}`,
+        {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }
+    );
+
+    if (response.status !== 204) {
+        throw new Error(`Echec à la supression : ${response.statusText}`);
+    }
+    else{
+        return "Article deleted successfully.";
+    }
+}
