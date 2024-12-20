@@ -21,6 +21,8 @@ const AreaChartComponent = ({
         dateEndProp
     }) => {
 
+    const { token } = useAuth();
+
     const [data, setData] = useState([]);
     // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);
@@ -63,11 +65,11 @@ const AreaChartComponent = ({
             dateEndProp = "2027-01-01"
         }
 
-        const getFleaMarketsWithinDates = async (dateStartProp, dateEndProp) => {
+        const getFleaMarketsWithinDates = async (token, dateStartProp, dateEndProp) => {
             setIsLoading(true);
 
             try {
-                const data = await getFMDataWithinDates(dateStartProp, dateEndProp);
+                const data = await getFMDataWithinDates(token, dateStartProp, dateEndProp);
                 console.log("data below 1");
                 console.log(data);
 

@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
+import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
 import enDict from "../translations/en/en.js";
@@ -7,6 +8,7 @@ import frDict from "../translations/fr/fr.js";
 import { getUsersData } from "../fetchAPI/CRUD/users.js";
 
 function Users() {
+    const { token } = useAuth();
 
     const title = "Users";
     const elementClassNameSingular = "user";
@@ -29,7 +31,7 @@ function Users() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await getUsersData(limit, currentPage);
+            const { data, noMoreData } = await getUsersData(token, limit, currentPage);
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination

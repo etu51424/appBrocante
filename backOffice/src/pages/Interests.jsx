@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
+import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
 import enDict from "../translations/en/en.js";
@@ -8,6 +9,7 @@ import { getInterestsData } from "../fetchAPI/CRUD/interests.js";
 
 function Interests() {
 
+    const { token } = useAuth();
     const title = "Interests";
     const elementClassNameSingular = "interest";
     const elementClassNamePlural = "interests";
@@ -28,7 +30,7 @@ function Interests() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await getInterestsData(limit, currentPage);
+            const { data, noMoreData } = await getInterestsData(token, limit, currentPage);
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination

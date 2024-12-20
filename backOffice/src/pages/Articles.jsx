@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
+import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
 import enDict from "../translations/en/en.js";
@@ -12,7 +13,7 @@ function Articles() {
     const elementClassNameSingular = "article";
     const elementClassNamePlural = "articles";
 
-    
+    const { token } = useAuth();
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10); // Limite par défaut
@@ -29,7 +30,7 @@ function Articles() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await getArticlesData(limit, currentPage);
+            const { data, noMoreData } = await getArticlesData(token, limit, currentPage);
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination

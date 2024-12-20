@@ -6,6 +6,7 @@ import DateSelector from '../components/DateSelector.jsx';
 import "../css/Stats.css";
 
 function Stats() {
+    
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
     const [dateStart, setDateStart] = useState();
     const [dateEnd, setDateEnd] = useState();

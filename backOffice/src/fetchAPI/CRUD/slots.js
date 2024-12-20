@@ -1,7 +1,8 @@
-import { token, API_BASE_URL } from "./../login.js";
+import { API_BASE_URL } from "./../login.js";
 
+//reçoit le token
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
-const fetchSlotsData = async (limit = 10, page = 1) => {
+const fetchSlotsData = async (token, limit = 10, page = 1) => {
     const currentPageResponse = await fetch(
         `${API_BASE_URL}/admin/slot/all?${limit}&page=${page}`, 
         {

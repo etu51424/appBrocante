@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
+import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { getFleaMarketsData } from "../fetchAPI/CRUD/fleaMarkets.js";
 import * as IoIcons from 'react-icons/io';
@@ -7,6 +8,7 @@ import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js"; 
 
 function FleaMarkets() {
+    const { token } = useAuth();
     const title = "Flea Markets";
     const elementClassNameSingular = "flea_market";
     const elementClassNamePlural = "fleaMarkets";
@@ -27,7 +29,7 @@ function FleaMarkets() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await getFleaMarketsData(limit, currentPage);
+            const { data, noMoreData } = await getFleaMarketsData(token, limit, currentPage);
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
