@@ -2,6 +2,7 @@ import { API_BASE_URL } from "./../login.js";
 
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
 const fetchFleaMarketsData = async (token, limit = 10, page = 1) => {
+    console.log("fetchFleaMarketsData reçoit token");
     const currentPageResponse = await fetch(
         `${API_BASE_URL}/admin/fleaMarket/all?${limit}&page=${page}`, 
         {

@@ -33,12 +33,12 @@ function Stats() {
 
     // changeDateStart et changeDateEnd détectent un changement et update le prop passé au sous-composant AreaCharts
     const changeDateStart = (date) => {
-        console.log("date start selectionnée :", date); 
+        //console.log("date start selectionnée :", date); 
         setDateStart(date);
     };
 
     const changeDateEnd = (date) => {
-        console.log("date end selectionnée :", date); 
+        //console.log("date end selectionnée :", date); 
         setDateEnd(date);
     };
 

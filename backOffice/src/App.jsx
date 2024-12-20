@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar.jsx';
 import './css/App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Slots from './pages/Slots.jsx';
 import Articles from './pages/Articles.jsx';
@@ -28,7 +28,9 @@ function App() {
             <div className="main-body">
               <Menu/>
               <Routes>
-                {/* en fonction de la route, un different affichage */}
+                <Route path='/login' element={<LoginForm />} />
+
+                {/* en fonction de la route privée, un different affichage */}
                 <Route path='/login' element={<LoginForm />} />
                 <Route path='/' element={<PrivateRoute element={<Home/>} />} />
                 <Route path='/article' element={<PrivateRoute element={<Articles/>}/>} />
@@ -38,6 +40,9 @@ function App() {
                 <Route path='/interest' element={<PrivateRoute element={<Interests/>} />} />
                 <Route path='/slot' element={<PrivateRoute element={<Slots/>} />} />
                 <Route path='/stats' element={<PrivateRoute element={<Stats/>} />} />
+
+                {/* route par défaut */}
+                <Route path='*' element={<Navigate to="/login" replace />} />
               </Routes>
             </div>
           </div>

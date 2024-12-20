@@ -14,6 +14,7 @@ import "../css/AreaChart.css";
 import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js";
 import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
+import { useAuth } from "./AuthProvider.jsx";
 
 
 const AreaChartComponent = ({ 
@@ -21,7 +22,10 @@ const AreaChartComponent = ({
         dateEndProp
     }) => {
 
+    console.log("useAuth das areacharts :" + useAuth);
+
     const { token } = useAuth();
+    console.log("token dans areaharts: " + token);
 
     const [data, setData] = useState([]);
     // utile pour le debugging
@@ -53,9 +57,6 @@ const AreaChartComponent = ({
     }
 
     useEffect(() => {
-        console.log("Prop change detected:");
-        console.log("dateStartProp", dateStartProp);
-        console.log("dateEndProp", dateEndProp);
 
         // valeurs par défaut si l'utilisateur n'a pas encore choisi une date
         if (dateStartProp === undefined) {
@@ -65,8 +66,9 @@ const AreaChartComponent = ({
             dateEndProp = "2027-01-01"
         }
 
-        const getFleaMarketsWithinDates = async (token, dateStartProp, dateEndProp) => {
+        const getFleaMarketsWithinDates = async (dateStartProp, dateEndProp) => {
             setIsLoading(true);
+            //console.log("dateStartProp + dateEndProp + token :" + token);
 
             try {
                 const data = await getFMDataWithinDates(token, dateStartProp, dateEndProp);
