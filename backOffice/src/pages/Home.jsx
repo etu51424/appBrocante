@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import frDict from "../translations/fr/fr.js";
+import { useAuth } from "../components/AuthProvider.jsx";
+
 import languageDictProvider from "../utils/language.js";
 
 function Home() {

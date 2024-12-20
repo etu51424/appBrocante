@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from "react";
+import { useAuth } from "../components/AuthProvider.jsx";
+
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
@@ -8,6 +10,7 @@ import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 function Dealers() {
+    const { token } = useAuth();
 
     const title = "Dealers";
     const elementClassNameSingular = "dealer";
@@ -29,7 +32,7 @@ function Dealers() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() => getDealersData(limit, currentPage));
+            const { data, noMoreData } = await exponentialRetry(() => getDealersData(token, limit, currentPage));
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination

@@ -23,9 +23,11 @@ const AreaChartComponent = ({
         dateEndProp
     }) => {
 
-    console.log("useAuth das areacharts :" + useAuth);
+    //console.log("useAuth das areacharts :" + useAuth);
 
-    console.log("token dans areaharts: " + token);
+    const { token } = useAuth();
+    
+    //console.log("token dans areaharts: " + token);
     const [data, setData] = useState([]);
     // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);

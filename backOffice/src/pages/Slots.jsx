@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from "react";
+import { useAuth } from "../components/AuthProvider.jsx";
+
 import Page from "../components/Page.jsx";
 import * as IoIcons from 'react-icons/io';
 import frDict from "../translations/fr/fr.js";
@@ -7,6 +9,7 @@ import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 function Slots() {
+    const { token } = useAuth();
 
     const title = "Slots";
     const elementClassNameSingular = "slot";
@@ -28,7 +31,7 @@ function Slots() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() => getSlotsData(limit, currentPage)) ;
+            const { data, noMoreData } = await exponentialRetry(() => getSlotsData(token, limit, currentPage)) ;
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination

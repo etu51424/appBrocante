@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+
 import frDict from "../translations/fr/fr.js";
 import AreaChart from '../components/AreaChart.jsx';
 import DateSelector from '../components/DateSelector.jsx';

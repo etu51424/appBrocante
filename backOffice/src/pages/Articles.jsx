@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from "react";
+import { useAuth } from "../components/AuthProvider.jsx";
+
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
@@ -8,6 +10,7 @@ import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 function Articles() {
+    const { token } = useAuth();
 
     const title = "Articles";
     const elementClassNameSingular = "article";
@@ -30,7 +33,7 @@ function Articles() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() =>getArticlesData(limit, currentPage));
+            const { data, noMoreData } = await exponentialRetry(() =>getArticlesData(token, limit, currentPage));
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
