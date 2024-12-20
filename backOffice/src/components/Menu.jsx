@@ -11,7 +11,8 @@ function Menu() {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
     const changeLanguage = () => {
-        languageDictProvider(window.language);
+        const newDict = languageDictProvider(window.language);
+        setLangDict(newDict);
     }
 
 // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
