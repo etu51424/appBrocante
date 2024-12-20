@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "./../login.js";
 
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
-const fetchFleaMarketsData = async (token, limit = 10, page = 1) => {
+export const getFleaMarketsData = async (token, limit = 10, page = 1) => {
     const currentPageResponse = await fetch(
         `${API_BASE_URL}/admin/fleaMarket/all?${limit}&page=${page}`, 
         {
@@ -11,6 +11,7 @@ const fetchFleaMarketsData = async (token, limit = 10, page = 1) => {
                 "Content-Type": "application/json",
             },
         }
+
     );
 
     //Verifier si la page d'après existe, pour déterminer si on doit proposer ou non à l'useur d'accéder à la page d'après
@@ -36,4 +37,63 @@ const fetchFleaMarketsData = async (token, limit = 10, page = 1) => {
     }
 }
 
-export const getFleaMarketsData = fetchFleaMarketsData;
+export const createFleaMarketData = async (body) =>{
+    const response = await fetch(
+        `${API_BASE_URL}/admin/fleaMarket/`,
+        {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify(body)
+        }
+    );
+
+    if (response.status !== 201) {
+        throw new Error(`Echec à la création : ${response.statusText}`);
+    } else {
+        return await response.json();
+    }
+}
+
+export const updateFleaMarket = async (body) =>{
+    const response = await fetch(
+        `${API_BASE_URL}/admin/fleaMarket/`,
+        {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify(body)
+        }
+    );
+
+    if (response.status !== 204) {
+        throw new Error(`Echec à la modification : ${response.statusText}`);
+    }
+    else{
+        return "Article updated successfully.";
+    }
+}
+
+export const deleteFleaMarket = async (id) =>{
+    const response = await fetch(
+        `${API_BASE_URL}/admin/fleaMarket/${id}`,
+        {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }
+    );
+
+    if (response.status !== 204) {
+        throw new Error(`Echec à la supression : ${response.statusText}`);
+    }
+    else{
+        return "Article deleted successfully.";
+    }
+}

@@ -12,16 +12,15 @@ import {
 } from 'recharts';
 import "../css/AreaChart.css";
 import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js";
-import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
+import languageDictProvider from "../utils/language.js";
+import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 
 const AreaChartComponent = ({ 
         dateStartProp,
         dateEndProp
     }) => {
-
-    const { token } = useAuth();
 
     const [data, setData] = useState([]);
     // utile pour le debugging
@@ -47,15 +46,12 @@ const AreaChartComponent = ({
             window.removeEventListener("langchange", handleLanguageChange);
         };
     }, []); // aucune dépendance utile ici 
-    
+
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        languageDictProvider(window.language);
     }
 
     useEffect(() => {
-        console.log("Prop change detected:");
-        console.log("dateStartProp", dateStartProp);
-        console.log("dateEndProp", dateEndProp);
 
         // valeurs par défaut si l'utilisateur n'a pas encore choisi une date
         if (dateStartProp === undefined) {
@@ -65,19 +61,11 @@ const AreaChartComponent = ({
             dateEndProp = "2027-01-01"
         }
 
-        const getFleaMarketsWithinDates = async (token, dateStartProp, dateEndProp) => {
+        const getFleaMarketsWithinDates = async (dateStartProp, dateEndProp) => {
             setIsLoading(true);
 
             try {
-                const data = await getFMDataWithinDates(token, dateStartProp, dateEndProp);
-                console.log("data below 1");
-                console.log(data);
-
-                //const myJSON = JSON.stringify(data);
-                //console.log(myJSON);
-
-                console.log("dateStart" + dateStartProp);
-                console.log("dateEnd" + dateEndProp);
+                const data = await exponentialRetry(() => getFMDataWithinDates(dateStartProp, dateEndProp));
 
                 const monthCountDatapoints = createMarketsPerMonthDict(data);
                 setData(monthCountDatapoints);
@@ -119,9 +107,6 @@ const AreaChartComponent = ({
             months += dateEnd.getMonth();
             return months <= 0 ? 0 : months;
         }
-
-        console.log("DateStartVar :" + dateStartProp);
-        console.log("DateEndVar :" + dateEndProp);
         const dateStartVar = dateStartProp; // AAAA-MM-JJ
         const dateEndVar = dateEndProp; // AAAA-MM-JJ
 
@@ -131,7 +116,6 @@ const AreaChartComponent = ({
         // étape 1 : compter le nombre de brocantes pour chaque mois entre ces deux dates
         let marketsPerMonthCount = {};
         let monthCount = countMonthsWithinDates(dateStart, dateEnd);
-        //console.log("month count :" + monthCount);
 
         let monthOfYear = `${dateStart.getFullYear()}${dateStart.getMonth()+1}`;
         // pour chaque mois, on veut recenser le nombre de brocantes

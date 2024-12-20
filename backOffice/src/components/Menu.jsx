@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import "../css/Menu.css";
-import enDict from "../translations/en/en.js";
-import frDict from "../translations/fr/fr.js"; 
+import frDict from "../translations/fr/fr.js";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
+import languageDictProvider from "../utils/language.js";
 
 function Menu() {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        languageDictProvider(window.language);
     }
 
 // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language

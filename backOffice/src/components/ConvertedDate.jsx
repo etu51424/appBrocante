@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import enDict from "../translations/en/en.js";
-import frDict from "../translations/fr/fr.js"; 
+import frDict from "../translations/fr/fr.js";
+import languageDictProvider from "../utils/language.js";
 
 function ConvertedDate({ longFormatDate }) {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
-    
+
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        languageDictProvider(window.language);
     }
 
     // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
 import AreaChart from '../components/AreaChart.jsx';
 import DateSelector from '../components/DateSelector.jsx';
 import "../css/Stats.css";
+import languageDictProvider from "../utils/language.js";
 
 function Stats() {
     
@@ -12,7 +12,7 @@ function Stats() {
     const [dateEnd, setDateEnd] = useState();
 
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        languageDictProvider(window.language);
     }
 
     // on utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
@@ -33,12 +33,10 @@ function Stats() {
 
     // changeDateStart et changeDateEnd détectent un changement et update le prop passé au sous-composant AreaCharts
     const changeDateStart = (date) => {
-        console.log("date start selectionnée :", date); 
         setDateStart(date);
     };
 
     const changeDateEnd = (date) => {
-        console.log("date end selectionnée :", date); 
         setDateEnd(date);
     };
 

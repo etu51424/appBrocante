@@ -1,14 +1,14 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
-import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
-import enDict from "../translations/en/en.js";
 import frDict from "../translations/fr/fr.js";
 import { getDealersData } from "../fetchAPI/CRUD/dealers.js";
+import languageDictProvider from "../utils/language.js";
+import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 function Dealers() {
-    const { token } = useAuth();
+
     const title = "Dealers";
     const elementClassNameSingular = "dealer";
     const elementClassNamePlural = "dealers";
@@ -29,7 +29,7 @@ function Dealers() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await getDealersData(token, limit, currentPage);
+            const { data, noMoreData } = await exponentialRetry(() => getDealersData(limit, currentPage));
 
             setData(data);
             setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
@@ -85,7 +85,7 @@ function Dealers() {
     };
 
     const changeLanguage = () => {
-        setLangDict(window.language === "fr" ? frDict : enDict);
+        languageDictProvider(window.language);
     }
 
     // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
