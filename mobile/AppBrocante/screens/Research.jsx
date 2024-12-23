@@ -4,7 +4,6 @@ import MapView, { Marker } from 'react-native-maps'; // Importation de MapView e
 import * as Location from 'expo-location'; // Importation de l'API Location d'Expo
 import {Button} from 'react-native-paper'; // Importation du bouton de Paper
 import Icon from 'react-native-vector-icons/Ionicons';
-import {test} from "../fetchAPI/tests"
 
 export default function Research() {
     const initialRegion = {
@@ -118,7 +117,6 @@ export default function Research() {
         if (previousRegion) {
             setRegion(previousRegion);
         }
-        console.log(test())
     };
 
     const resetMapToNorth = () => {
