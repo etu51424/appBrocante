@@ -85,7 +85,6 @@ function MainTabs() {
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
-
   return (
     <PaperProvider>
       <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
