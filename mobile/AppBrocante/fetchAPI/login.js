@@ -1,4 +1,6 @@
-export const API_BASE_URL = "http://192.168.1.34:3001/api/v1";
+import {statusCodes} from "./utils/statusCodes";
+
+export const API_BASE_URL = `http://192.168.1.34:3001/api/v1`;
 export let USER_TOKEN = null
 
 export async function login(username, password) {
@@ -14,11 +16,10 @@ export async function login(username, password) {
             body: JSON.stringify(loginBody),
         });
 
-        if (loginResponse.status !== 201) {
-            console.error(`Login raté: ${"Login raté"}`);
-        }
+        let statusIsValid = await statusCodes(response);
 
-        USER_TOKEN = loginResponse.text();
+        if (statusIsValid) USER_TOKEN = await loginResponse.text();;
+
     } catch (e) {
         console.error(`Erreur lors du login : ${e.message}`);
     }

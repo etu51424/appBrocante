@@ -8,6 +8,6 @@ const router = Router();
 
 router.post("/", jwtCheck, dealer, notBanned, AVM.articleToAdd, himself, createArticle);
 router.patch("/", jwtCheck, dealer, notBanned, AVM.articleToUpdate, himself, owner ,updateArticle);
-router.delete("/", jwtCheck, dealer, notBanned, AVM.articleId, himself, owner, deleteArticle);
+router.delete("/:id", jwtCheck, dealer, notBanned, AVM.articleId, himself, owner, deleteArticle);
 
 export default router;
