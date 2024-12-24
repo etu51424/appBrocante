@@ -16,9 +16,9 @@ export async function login(username, password) {
             body: JSON.stringify(loginBody),
         });
 
-        let statusIsValid = await statusCodes(response);
+        let statusIsValid = await statusCodes(loginResponse);
 
-        if (statusIsValid) USER_TOKEN = await loginResponse.text();;
+        if (statusIsValid) USER_TOKEN = await loginResponse.text();
 
     } catch (e) {
         console.error(`Erreur lors du login : ${e.message}`);
