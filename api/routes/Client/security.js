@@ -5,7 +5,7 @@ import {default as PVM} from "../../middleware/validator/validation/person.js"
 
 const router = Router();
 
-router.get('/', PVM.personId,getRecoveryCode);
-router.patch('/', RVM.recoveryCode, verifyRecoveryCode);
+router.get('/:personId', PVM.personId,getRecoveryCode);
+router.patch('/',RVM.recoveryCode, verifyRecoveryCode);
 
 export default router;

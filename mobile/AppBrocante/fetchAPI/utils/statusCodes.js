@@ -9,7 +9,7 @@ export const statusCodes = async (response) => {
             return true;
         // codes d'erreur
         case 400:
-        case 401 :
+        case 401:
         case 500:
             throw new Error(await response.text());
         case 404:

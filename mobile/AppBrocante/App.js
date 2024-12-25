@@ -3,14 +3,16 @@ import { StyleSheet, View, Switch } from 'react-native';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Provider as PaperProvider } from 'react-native-paper';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {Provider as ReactNativeProvider} from "react-redux";
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import store from "./store";
 import CreateAccount from './screens/user/CreateAccount';
 import LogIn from './screens/user/LogIn';
 import Research from './screens/Research';
 import Setting from './screens/Setting';
 import Wait from './screens/Wait';
+import Help from './screens/user/Help';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -86,16 +88,20 @@ function MainTabs() {
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   return (
-    <PaperProvider>
-      <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-        <NavigationContainer theme={LightTheme}>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="MainTabs" component={MainTabs} />
-            <Stack.Screen name="CreateAccount" component={CreateAccount} />
-            <Stack.Screen name="Wait" component={Wait} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </LoadingContext.Provider>
-    </PaperProvider>
+      <ReactNativeProvider store={store}>
+        <PaperProvider>
+          <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+            <NavigationContainer theme={LightTheme}>
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="MainTabs" component={MainTabs} />
+                <Stack.Screen name="CreateAccount" component={CreateAccount} />
+                <Stack.Screen name="Wait" component={Wait} />
+                <Stack.Screen name="Help" component={Help} />
+                <Stack.Screen name="LogIn" component={LogIn} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </LoadingContext.Provider>
+        </PaperProvider>
+      </ReactNativeProvider>
   );
 }

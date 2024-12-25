@@ -1,30 +1,56 @@
-import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
-import { useNavigation, useFocusEffect } from '@react-navigation/native'; // Import du hook
 import React, { useState, useCallback } from "react";
+import { StyleSheet, Text, View, SafeAreaView, Image, Alert } from "react-native";
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Button, TextInput } from "react-native-paper";
-
-
+import { useDispatch } from "react-redux"; // Hook pour dispatcher des actions
+import { login } from "../../store/slice/person"; // Import de l'action login
+import { login as loginAPI } from "../../fetchAPI/login"; // API fictive pour login
 
 export default function LogIn() {
-    const navigation = useNavigation(); // Utilisation du hook pour accéder à la navigation
+    const navigation = useNavigation();
+    const dispatch = useDispatch(); // Hook Redux pour dispatcher des actions
+
     const [form, setForm] = useState({
-        email: '',
+        username: '',
         password: '',
     });
 
     const resetForm = () => {
         setForm({
-            email: '',
+            username: '',
             password: '',
         });
     };
 
-    // Utilisation de useFocusEffect pour réinitialiser les champs à chaque fois que l'écran est réaffiché
+    // Réinitialise le formulaire lorsque l'écran est focalisé
     useFocusEffect(
         useCallback(() => {
-            resetForm(); // Réinitialiser le formulaire lorsque l'écran est focalisé
+            resetForm();
         }, [])
     );
+
+    const handleLogin = async () => {
+        if (form.username && form.password) {
+            try {
+                const userData = await loginAPI(form.username, form.password);
+
+                if (userData) {
+                    dispatch(login(userData));
+                } else {
+                    throw new Error("Invalid username or password");
+                }
+
+                // Afficher une alerte pour confirmer la connexion
+                Alert.alert("Success", "You are now logged in!", [
+                    { text: "OK", onPress: () => navigation.navigate("Research") }, // Navigue vers l'écran principal
+                ]);
+            } catch (error) {
+                Alert.alert("Login Failed", error.message || "Invalid username or password.");
+            }
+        } else {
+            Alert.alert("Error", "Please fill in all fields.");
+        }
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#E5D289' }}>
@@ -36,15 +62,14 @@ export default function LogIn() {
                         alt="Logo"
                     />
 
-                    <Text style={styles.inputLabel}>Email Address</Text>
+                    <Text style={styles.inputLabel}>Username</Text>
                     <TextInput
                         style={styles.inputControl}
                         autoCapitalize="none"
                         autoCorrect={false}
-                        keyboardType="email-address"
-                        placeholder="address@example.com"
-                        value={form.email}
-                        onChangeText={email => setForm({ ...form, email })} // Correction : onChangeText
+                        placeholder="Enter your username"
+                        value={form.username}
+                        onChangeText={username => setForm({ ...form, username })}
                     />
 
                     <Text style={styles.inputLabel}>Password</Text>
@@ -53,26 +78,29 @@ export default function LogIn() {
                         style={styles.inputControl}
                         placeholder="Password"
                         value={form.password}
-                        onChangeText={password => setForm({ ...form, password })} // Correction : onChangeText
+                        onChangeText={password => setForm({ ...form, password })}
                     />
 
                     <Button
                         style={styles.button}
-                        onPress={() => {
-                            console.log('Sign In pressed');
-                        }}
+                        onPress={handleLogin} // Appelle la fonction handleLogin
                     >
                         <Text style={styles.textButton}>Log in</Text>
                     </Button>
 
-                    {/* Navigation vers CreateAccount */}
                     <Text
-                      style={styles.switchPage}
-                      onPress={() => navigation.navigate('CreateAccount')} // Navigue dans le MainTabs
+                        style={styles.switchPage}
+                        onPress={() => navigation.navigate('CreateAccount')}
                     >
                         Create an account
                     </Text>
 
+                    <Button
+                        style={styles.helpButton}
+                        onPress={() => navigation.navigate('Help')} // Redirige vers l'écran Help
+                    >
+                        <Text style={styles.textButton}>Je n'arrive pas à me connecter</Text>
+                    </Button>
                 </View>
             </View>
         </SafeAreaView>
@@ -108,7 +136,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '500',
         color: '#B0855A',
-        marginBottom: 15, // Ajout d'espacement entre les entrées
+        marginBottom: 15,
     },
     button: {
         backgroundColor: '#3F2100',
@@ -116,15 +144,21 @@ const styles = StyleSheet.create({
         marginTop: 18,
         paddingVertical: 8,
     },
+    helpButton: {
+        backgroundColor: '#B0855A',
+        borderRadius: 8,
+        marginTop: 12,
+        paddingVertical: 8,
+    },
     textButton: {
         color: '#F0E6B3',
-        fontSize: 21,
+        fontSize: 18,
         textAlign: 'center',
     },
     switchPage: {
         color: '#3F2100',
         fontSize: 18,
         textAlign: 'center',
-        marginTop: 12, // Espacement plus conséquent
+        marginTop: 12,
     },
 });

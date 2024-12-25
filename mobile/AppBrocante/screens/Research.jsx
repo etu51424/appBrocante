@@ -117,6 +117,7 @@ export default function Research() {
         if (previousRegion) {
             setRegion(previousRegion);
         }
+
     };
 
     const resetMapToNorth = () => {
