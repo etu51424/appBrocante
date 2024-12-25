@@ -108,9 +108,11 @@ export const getAllArticles = async (req, res) => {
 }
 
 export const getAllArticlesByPersonId = async (req, res) => {
+    console.log("articles")
     try {
         const articles = await articleModel.readAllArticlesByPersonId(pool, req.val);
         if (articles.length > 0) {
+            console.log(articles)
             res.status(200).json(articles);
         } else {
             res.sendStatus(404);

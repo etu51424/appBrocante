@@ -516,7 +516,7 @@ VALUES
 ('Dupont', 'Jean', 'Dupont', '22 Rue Lafayette, Paris', '0612345678', 'jean.dupont@example.com', '2024-11-10 12:30:00', 'hashed_password_1', 'jean.jpg', FALSE),
 ('Martin', 'Sophie', 'Martin', '45 Rue de Lyon, Lyon', '0623456789', 'sophie.martin@example.com', '2024-11-12 15:45:00', 'hashed_password_2', 'sophie.png', TRUE),
 ('Durand', 'Paul', 'Durand', '78 Boulevard Haussmann, Marseille', '0634567890', 'paul.durand@example.com', '2024-11-15 09:00:00', 'hashed_password_3', 'paul.jpeg', FALSE),
-('Admin', null, null, null, null, 'xavier.dujardin1@gmail.com', null, 'brocante', null, TRUE),
+('Admin', null, null, 'Namur', null, 'xavier.dujardin1@gmail.com', null, 'brocante', null, TRUE),
 ('User', null, null, null, null, 'xavier.dujardin1@gmail.com', null, 'bidondon', null, TRUE),
 ('UserDealer', null, null, null, null, 'xavier.dujardin1@gmail.com', null, 'brocanteur', null, TRUE),
 ('CalmentJo', 'Joanna', 'Calment', '1 Rue Silence, Gembloux', '0619045651', 'joanna.calment@example.com', '2024-10-09 12:30:00', 'lutecia', 'joannacalment.jpg', FALSE),
