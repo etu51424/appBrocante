@@ -1,0 +1,20 @@
+{
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "username": "Gebruikersnaam",
+    "address": "Adres",
+    "phoneNumber": "Telefoonnummer",
+    "email": "E-mailadres",
+    "password": "Wachtwoord",
+    "createAccount": "Account aanmaken",
+    "logIn": "Inloggen",
+    "enterAnAddress": "Voer een adres in",
+    "radius": "Straal (km)",
+    "startDate": "Begindatum",
+    "endDate": "Einddatum",
+    "applyFilters": "Filters toepassen",
+    "cancel": "Annuleren",
+    "selectALanguage": "Selecteer een taal",
+    "chooseLanguage": "Kies...",
+    "darkMode": "Donkere modus"
+}
