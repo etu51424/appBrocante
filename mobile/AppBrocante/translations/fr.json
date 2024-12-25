@@ -1,0 +1,20 @@
+{
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "username": "Nom d'utilisateur",
+    "address": "Adresse",
+    "phoneNumber": "Numéro de téléphone",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "createAccount": "Créer un compte",
+    "logIn": "Se connecter",
+    "enterAnAddress": "Saisir une adresse",
+    "radius": "Rayon (km)",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "applyFilters": "Appliquer les filtres",
+    "cancel": "Annuler",
+    "selectALanguage": "Sélectionner une langue",
+    "chooseLanguage": "Choisissez...",
+    "darkMode": "Mode sombre"
+}
