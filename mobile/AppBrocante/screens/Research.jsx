@@ -4,6 +4,9 @@ import MapView, { Marker } from 'react-native-maps'; // Importation de MapView e
 import * as Location from 'expo-location'; // Importation de l'API Location d'Expo
 import {Button} from 'react-native-paper'; // Importation du bouton de Paper
 import Icon from 'react-native-vector-icons/Ionicons';
+import {getAllFleaMarketsInRange} from "../fetchAPI/CRUD/fleaMarket";
+import {adaptedDateFormat} from "../utils/date";
+import { useNavigation } from '@react-navigation/native';
 
 export default function Research() {
     const initialRegion = {
@@ -24,6 +27,7 @@ export default function Research() {
     const [selectedView, setSelectedView] = useState('map'); // Initialement "map"
     const [locations, setLocations] = useState([])
     const [previousRegion, setPreviousRegion] = useState(null); // Pour restaurer la vue précédente
+    const [fleaMarkets, setFleaMarkets] = useState({});
 
     // Fonction pour vérifier et demander les autorisations de localisation
     const checkPermissions = async () => {
@@ -69,9 +73,9 @@ export default function Research() {
                     latitude: result.geometry.location.lat,
                     longitude: result.geometry.location.lng,
                 }));
-    
+
                 setLocations(results); // Mettre à jour la liste des emplacements
-    
+
                 // Centrer la caméra sur le premier résultat
                 if (mapViewRef.current && results.length > 0) {
                     mapViewRef.current.animateCamera({
@@ -87,7 +91,7 @@ export default function Research() {
             Alert.alert('Error', 'Failed to fetch the location.');
         }
     };
-    
+
     // Fonction pour afficher la fenêtre modale de filtre
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -103,6 +107,7 @@ export default function Research() {
 
     useEffect(() => {
         checkPermissions();
+        getFleaMarkets(); // Récupération des marchés aux puces
     }, []);
 
     // Sauvegarder l'état de la carte lors du passage à la vue "list"
@@ -128,6 +133,82 @@ export default function Research() {
             }, 500);
         }
     };
+
+    const getFleaMarkets = async () => {
+        try {
+
+            // const data = await getAllFleaMarketsInRange(100);
+            const data = [
+                {
+                    "id": 1,
+                    "address": "123 Rue de la Paix, Paris",
+                    "date_start": "2024-12-01T08:00:00.000Z",
+                    "date_end": "2024-12-01T17:00:00.000Z",
+                    "title": "Marché de Noël",
+                    "theme": "Artisanat",
+                    "is_charity": true,
+                    "average_rating": 4.8,
+                    "review_count": 50
+                },
+                {
+                    "id": 2,
+                    "address": "456 Avenue des Champs, Lyon",
+                    "date_start": "2024-12-15T09:00:00.000Z",
+                    "date_end": "2024-12-25T19:00:00.000Z",
+                    "title": "Marché Vintage",
+                    "theme": "Antiquités",
+                    "is_charity": false,
+                    "average_rating": 4.5,
+                    "review_count": 30
+                },
+                {
+                    "id": 3,
+                    "address": "456 Avenue des Champs, Lyon",
+                    "date_start": "2024-12-15T09:00:00.000Z",
+                    "date_end": "2024-12-25T19:00:00.000Z",
+                    "title": "Marché Vintage",
+                    "theme": "Antiquités",
+                    "is_charity": false,
+                    "average_rating": 4.5,
+                    "review_count": 30
+                },
+            ]
+
+
+            if (data){
+                setFleaMarkets(data);
+                const updatedLocations = await Promise.all(
+                    data.map(async (market, index) => {
+                        const apiKey = 'AIzaSyDzlIRt44c757pVdKLQm1_Awk4MBoxE9JE';
+                        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(market.address)}&key=${apiKey}`;
+                        const response = await fetch(url);
+                        const data = await response.json();
+
+                        if (data.status === 'OK') {
+                            const location = data.results[0].geometry.location;
+                            return {
+                                id: index.toString(),
+                                name: market.name,
+                                latitude: location.lat,
+                                longitude: location.lng,
+                            };
+                        } else {
+                            console.warn(`Geocoding failed for address: ${market.address}`);
+                            return null;
+                        }
+                    })
+                );
+
+                // Filtrer les emplacements valides uniquement
+                setLocations(updatedLocations.filter(location => location !== null));
+            }
+        } catch (error) {
+            console.error('Failed to fetch flea markets:', error);
+        }
+    };
+
+    const navigation = useNavigation();
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -161,18 +242,26 @@ export default function Research() {
                     </MapView>
                 ) : (
                     <FlatList
-                        data={locations}
-                        keyExtractor={(item) => item.id}
+                        data={fleaMarkets}
+                        keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
-                            <View style={styles.listItem}>
-                                <Text style={styles.listItemText}>{item.name}</Text>
+                            <TouchableOpacity
+                                style={styles.listItem}
+                                onPress={() => {
+                                    // Naviguer vers l'écran des détails et passer l'objet fleaMarket en paramètre
+                                    navigation.navigate('FleaMarketDetails', { market: item });
+                                }}
+                            >
+                                <Text style={styles.listItemText}>{item.title}</Text>
+                                <Text style={styles.listItemCoords}>{item.address}</Text>
                                 <Text style={styles.listItemCoords}>
-                                    Lat: {item.latitude}, Lng: {item.longitude}
+                                    {adaptedDateFormat(item.date_start)} - {adaptedDateFormat(item.date_end)}
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
                         )}
                         contentContainerStyle={styles.listContainer}
                     />
+
                 )}
                 {/* Conteneur de la barre de recherche */}
                 <View style={styles.searchContainer}>
@@ -217,6 +306,11 @@ export default function Research() {
                     >
                         <Icon name="list" size={25} color="#3F2100" />
                     </TouchableOpacity>
+                    {/* Bouton pour rafraîchir les brocantes */}
+                    <TouchableOpacity style={styles.refreshButton} onPress={getFleaMarkets}>
+                        <Icon name="refresh" size={25} color="#3F2100" />
+                    </TouchableOpacity>
+
                 </View>
                 {/* Modal for Filters */}
                 <Modal
@@ -253,7 +347,7 @@ export default function Research() {
                                     onChangeText={setEndDate}
                                     placeholder="YYYY-MM-DD"
                                 />
-                            </View> 
+                            </View>
                             <View style={styles.buttonContainer}>
                                 <Button style={styles.button} onPress={applyFilters}>
                                     <Text style={styles.textButton}>Apply Filters</Text>

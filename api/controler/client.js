@@ -32,6 +32,7 @@ export const getRecoveryCode = async (req, res) => {
     try{
         let code = await clientModel.createRecoveryCode(pool, req.val);
         let person = await personModel.readPerson(pool, req.val);
+        console.log(person)
         if (code && person) {
            await sendMail(person?.email,
                "Code de récupération",
@@ -48,7 +49,9 @@ export const getRecoveryCode = async (req, res) => {
 }
 
 export const verifyRecoveryCode = async (req, res) => {
+    console.log(req.val)
     try {
+
         let codeInDB = await clientModel.readRecoveryCode(pool, req.val);
         if (codeInDB?.recovery_code) {
             if (codeInDB.recovery_code === req.val.recoveryCode){

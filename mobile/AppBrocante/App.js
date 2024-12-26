@@ -13,6 +13,11 @@ import Research from './screens/Research';
 import Setting from './screens/Setting';
 import Wait from './screens/Wait';
 import Help from './screens/user/Help';
+import Interests from './screens/Interests';
+import DealerDetails from './screens/DealerDetails';
+import InterestsDetails from './screens/InterestDetails';
+import FleaMarketDetails from './screens/FleaMarketDetails';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -98,6 +103,10 @@ export default function App() {
                 <Stack.Screen name="Wait" component={Wait} />
                 <Stack.Screen name="Help" component={Help} />
                 <Stack.Screen name="LogIn" component={LogIn} />
+                <Stack.Screen name="FleaMarketDetails" component={FleaMarketDetails} />
+                <Stack.Screen name="Interests" component={Interests} />
+                <Stack.Screen name="InterestDetails" component={InterestsDetails} />
+                <Stack.Screen name="DealerDetails" component={DealerDetails} />
               </Stack.Navigator>
             </NavigationContainer>
           </LoadingContext.Provider>

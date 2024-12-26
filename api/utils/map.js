@@ -5,9 +5,10 @@ async function getCoordinates(address, apiKey) {
     const data = await response.json();
     if (data.results.length > 0) {
         const { lat, lng } = data.results[0].geometry;
+        console.log(address)
         return { lat, lng };
     } else {
-        throw new Error("Adress not found");
+        console.log(response.status)
     }
 }
 

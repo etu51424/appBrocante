@@ -189,7 +189,8 @@ VALUES
 (1, 1, TRUE, FALSE, 1),
 (1, 2, TRUE, TRUE, 2),
 (3, 3, FALSE, TRUE, 0),
-(2, 4, TRUE, FALSE, 1);
+(2, 4, TRUE, FALSE, 1),
+(2, 22, TRUE, FALSE, 1);
 
 -- Insérer des marchands
 INSERT INTO dealer (person_id, type, description, signup_date, average_rating, review_count)
@@ -214,8 +215,7 @@ VALUES
 (18, 'Voyante', 'Materiel occulte', '2024-02-10 03:01:00', 4.0, 50),
 (19, 'Artisan', 'Vente d objets divers', '2024-01-19 14:01:00', 4.8, 59),
 (20, 'Artisan', 'Vente d objets divers', '2024-05-15 11:01:00', 4.8, 66),
-(21, 'Potier', 'Poterie', '2024-06-01 11:09:00', 3.5, 39),
-(22, 'Chasseur', 'Fourrures rares du grand Nord', '2024-06-01 11:09:00', 4.8, 48);
+(21, 'Potier', 'Poterie', '2024-06-01 11:09:00', 3.5, 39);
 
 
 --  Insérer des articles
@@ -243,7 +243,6 @@ VALUES
 (19, 'Porte-bouteilles en métal', 'Porte-bouteilles pouvant contenir 12 bouteilles.', '2024-11-27 16:45:00', 35.00, 'Neuf'),
 (20, 'Robe de mariée ancienne', 'Robe en dentelle des années 1940.', '2024-11-29 11:00:00', 200.00, 'Très bon état'),
 (21, 'Couteau de poche', 'Couteau pliant artisanal avec manche en bois.', '2024-12-01 09:30:00', 25.00, 'Bon état'),
-(22, 'Piano droit', 'Piano d’étude en acajou.', '2024-12-02 18:00:00', 600.00, 'Très bon état'),
 (2, 'Tapis berbère', 'Tapis tissé à la main avec des motifs colorés.', '2024-12-03 15:45:00', 180.00, 'Neuf'),
 (2, 'Lampe à pétrole', 'Lampe vintage en verre et métal.', '2024-12-05 13:30:00', 70.00, 'Très bon état'),
 (5, 'Carafe en cristal', 'Carafe pour vin ou eau, design classique.', '2024-12-06 10:15:00', 90.00, 'Très bon état'),
@@ -303,7 +302,6 @@ VALUES
 (19, 'Table basse en marbre2', 'Petite table avec un plateau en marbre blanc.', '2024-12-21 15:15:00', 250.00, 'Très bon état'),
 (20, 'Lampe d’architecte2', 'Lampe réglable pour bureau.', '2024-12-22 10:45:00', 70.00, 'Très bon état'),
 (21, 'Livre sur la botanique2', 'Guide illustré des plantes de Belgique.', '2024-12-23 12:30:00', 25.00, 'Très bon état'),
-(22, 'Machine à écrire2', 'Machine à écrire vintage en parfait état de marche.', '2024-12-24 14:45:00', 150.00, 'Très bon état'),
 (13, 'Set de verres à vin2', 'Lot de 6 verres en cristal.', '2024-12-25 11:15:00', 75.00, 'Neuf'),
 (14, 'Pochette en soie2', 'Pochette brodée à la main.', '2024-12-26 13:00:00', 40.00, 'Très bon état');
 

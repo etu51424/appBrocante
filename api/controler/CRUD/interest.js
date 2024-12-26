@@ -1,4 +1,5 @@
 import * as interestModel from "../../model/CRUD/interest.js";
+import * as personModel from "../../model/CRUD/person.js";
 import {pool} from "../../database/dbAccess.js";
 
 export const createInterest = async (req, res) => {
@@ -46,6 +47,10 @@ export const getAllInterestsByFleaMarketId = async (req, res) => {
     try {
         const interests = await interestModel.readAllInterestByFleaMarketId(pool, req.val);
         if (interests.length > 0) {
+            for (let i = 0; i < interests.length; i++) {
+
+                interests[i]['person'] = await personModel.readPerson(pool,{personId : interests[i].person_id});
+            }
             res.status(200).json(interests);
         } else {
             res.sendStatus(404);
