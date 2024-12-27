@@ -3,6 +3,7 @@ import {saveAvatar} from "../model/avatar.js";
 import * as personModel from "../model/CRUD/person.js";
 import {pool} from "../database/dbAccess.js";
 import {deleteFile} from "../utils/file.js";
+import {internalIP} from "../server.js";
 
 const destFolderAvatar = "./upload/avatar";
 
@@ -28,7 +29,7 @@ export const getAvatar = async (req, res) => {
         const person = await personModel.readPerson(pool, req.val);
         if (person) {
             res.status(200).send(
-                person.profile_picture ? `http://localhost:3001/avatar/${person.profile_picture}` : 'http://localhost:3001/avatar/default.jpg'
+                person.profile_picture ? `http://${internalIP}:3001/avatar/${person.profile_picture}` : `http://${internalIP}:3001/avatar/default.jpg`
             );
         }
         else{

@@ -37,7 +37,9 @@ export const createInterest = async (body) => {
                 body: JSON.stringify(body),
             }
         );
-        return await response.json();
+        let statusIsValid = await statusCodes(response);
+
+        if (statusIsValid) return await response.json();
     }
     catch (e) {
         throw new Error(`Erreur lors de la création de l'intéret : ${e.message}`);
@@ -58,7 +60,7 @@ export const updateInterest = async (body) => {
                 body: JSON.stringify(body),
             }
         );
-        return await response.json();
+        return await statusCodes(response);
     }
     catch (e) {
         throw new Error(`Erreur lors de la modification de l'intéret : ${e.message}`);
@@ -78,7 +80,7 @@ export const deleteInterestByFleaMarket = async (fleaMarketId) => {
                 },
             }
         );
-        return await response.json();
+        return await statusCodes(response);
     }
     catch (e) {
         throw new Error(`Erreur lors de la supression d'un intéret : ${e.message}`);

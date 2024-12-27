@@ -1,7 +1,6 @@
 import {API_BASE_URL, USER_TOKEN} from "../login";
 import {statusCodes} from "../utils/statusCodes";
 
-// recoit un tableau d'intérets
 export const getPerson = async () => {
     try {
         const response = await fetch(

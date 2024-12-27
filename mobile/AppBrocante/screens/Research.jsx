@@ -98,12 +98,34 @@ export default function Research() {
     };
 
     // Appliquer les filtres
-    const applyFilters = () => {
+    const applyFilters = async () => {
         console.log(`Radius: ${radius} km`);
         console.log(`Start Date: ${startDate}`);
         console.log(`End Date: ${endDate}`);
+
         toggleModal(); // Fermer la modale après avoir appliqué les filtres
+
+        try {
+            let radius = radius || 10;
+            // Récupérer les marchés aux puces en fonction des filtres appliqués
+            let fetchedFleaMarkets = await getAllFleaMarketsInRange(radius);
+
+            if (startDate) {
+                fetchedFleaMarkets.filter((fleaMarket) => {
+
+                })
+            }
+            if (endDate){
+                fetchedFleaMarkets.filter((fleaMarket) => {
+
+                })
+            }
+
+        } catch (error) {
+            console.error('Error applying filters:', error);
+        }
     };
+
 
     useEffect(() => {
         checkPermissions();

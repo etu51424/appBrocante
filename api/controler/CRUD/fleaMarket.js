@@ -47,7 +47,11 @@ export const getAllFleaMarkets = async (req, res) => {
 }
 
 export const getAllFleaMarketsWithinRange = async (req, res) =>{
+    console.log(req.val);
+    res.sendStatus(200);
+    /*
     try {
+
         const fleaMarkets = await fleaMarketModel.readAllFleaMarketWithoutLimit(pool);
         const person = await readPerson(pool, req.val);
         if (fleaMarkets.length > 0 && person) {
@@ -70,6 +74,8 @@ export const getAllFleaMarketsWithinRange = async (req, res) =>{
         res.sendStatus(500);
         console.error(`Error while getting all flea markets withing range : ${err.message}`);
     }
+
+     */
 }
 
 export const getAllFleaMarketsBetweenDates = async (req, res) => {

@@ -6,7 +6,7 @@ import internalIp from "internal-ip";
 const app = express();
 const port = 3001;
 
-const internalIP = internalIp.v4.sync();
+export const internalIP = internalIp.v4.sync();
 
 app.use(express.json());
 app.use(cors());

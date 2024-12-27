@@ -11,6 +11,10 @@ const FleaMarketDetails = ({ route }) => {
         navigation.navigate('Interests', { fleaMarketId: market.id }); // Navigation avec paramètre
     };
 
+    const handleNavigateToSlots = () => {
+        navigation.navigate('Slots', { fleaMarketId: market.id }); // Navigation avec paramètre
+    };
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.header}>
@@ -41,11 +45,14 @@ const FleaMarketDetails = ({ route }) => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={handleNavigateToInterests} style={styles.interestsButton}>
+                <TouchableOpacity onPress={handleNavigateToInterests} style={styles.button}>
                     <Text style={styles.buttonText}>View Interests</Text>
                 </TouchableOpacity>
 
-                {/* Bouton "Back" */}
+                <TouchableOpacity onPress={handleNavigateToSlots} style={styles.button}>
+                    <Text style={styles.buttonText}>View Slots</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Text style={styles.buttonText}>Back</Text>
                 </TouchableOpacity>
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignItems: 'center',
     },
-    interestsButton: {
+    button: {
         backgroundColor: '#6B4E18',
         paddingVertical: 10,
         paddingHorizontal: 20,

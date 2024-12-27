@@ -17,6 +17,7 @@ import Interests from './screens/Interests';
 import DealerDetails from './screens/DealerDetails';
 import InterestsDetails from './screens/InterestDetails';
 import FleaMarketDetails from './screens/FleaMarketDetails';
+import Slots from './screens/Slots';
 
 
 const Tab = createBottomTabNavigator();
@@ -107,6 +108,7 @@ export default function App() {
                 <Stack.Screen name="Interests" component={Interests} />
                 <Stack.Screen name="InterestDetails" component={InterestsDetails} />
                 <Stack.Screen name="DealerDetails" component={DealerDetails} />
+                <Stack.Screen name="Slots" component={Slots} />
               </Stack.Navigator>
             </NavigationContainer>
           </LoadingContext.Provider>

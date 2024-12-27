@@ -4,7 +4,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Button, TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux"; // Hook pour dispatcher des actions
 import { login } from "../../store/slice/person"; // Import de l'action login
-import { login as loginAPI } from "../../fetchAPI/login"; // API fictive pour login
+import { login as loginAPI } from "../../fetchAPI/login";
+import {getPerson} from "../../fetchAPI/CRUD/person"; // API fictive pour login
 
 export default function LogIn() {
     const navigation = useNavigation();
@@ -32,10 +33,22 @@ export default function LogIn() {
     const handleLogin = async () => {
         if (form.username && form.password) {
             try {
-                const userData = await loginAPI(form.username, form.password);
+                const loginData = await loginAPI(form.username, form.password);
 
-                if (userData) {
-                    dispatch(login(userData));
+                if (loginData){
+                    const userData = await getPerson();
+                    if (userData) {
+                        const adaptedUserData = {
+                            personId : userData.id,
+                            username : userData.username,
+                            firstName : userData.first_name,
+                            lastName : userData.last_name,
+                            email : userData.email,
+                            phoneNumber : userData.phone_number,
+                            address : userData.address,
+                        }
+                        dispatch(login(adaptedUserData));
+                    }
                 } else {
                     throw new Error("Invalid username or password");
                 }
