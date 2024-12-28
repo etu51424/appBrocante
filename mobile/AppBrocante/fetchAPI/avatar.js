@@ -41,3 +41,26 @@ export const getSelfAvatar = async () => {
         throw new Error(`Erreur lors de la récupération de l'avatar : ${e.message}`);
     }
 }
+
+// recoit un identifiant numérique
+export const createAvatar = async (body) => {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/client/avatar`,
+            {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${USER_TOKEN}`,
+                    "Content-Type": "application/json",
+                },
+                body: body,
+            }
+        );
+        let statusIsValid = await statusCodes(response);
+
+        if (statusIsValid) return await response.json();
+    }
+    catch (e) {
+        throw new Error(`Erreur lors de l'upload de l'avatar : ${e.message}`);
+    }
+}
