@@ -5,7 +5,7 @@ import * as Location from 'expo-location'; // Importation de l'API Location d'Ex
 import {Button} from 'react-native-paper'; // Importation du bouton de Paper
 import Icon from 'react-native-vector-icons/Ionicons';
 import {getAllFleaMarketsInRange} from "../fetchAPI/CRUD/fleaMarket";
-import {adaptedDateFormat} from "../utils/date";
+import {adaptedDateFormat, isBefore} from "../utils/date";
 import { useNavigation } from '@react-navigation/native';
 
 export default function Research() {
@@ -99,30 +99,34 @@ export default function Research() {
 
     // Appliquer les filtres
     const applyFilters = async () => {
-        console.log(`Radius: ${radius} km`);
-        console.log(`Start Date: ${startDate}`);
-        console.log(`End Date: ${endDate}`);
 
         toggleModal(); // Fermer la modale après avoir appliqué les filtres
 
         try {
-            let radius = radius || 10;
-            // Récupérer les marchés aux puces en fonction des filtres appliqués
             let fetchedFleaMarkets = await getAllFleaMarketsInRange(radius);
 
             if (startDate) {
-                fetchedFleaMarkets.filter((fleaMarket) => {
-
+                fetchedFleaMarkets = fetchedFleaMarkets.filter((fleaMarket) => {
+                    return !isBefore(startDate, fleaMarket.date_start);
                 })
             }
             if (endDate){
-                fetchedFleaMarkets.filter((fleaMarket) => {
-
+                fetchedFleaMarkets = fetchedFleaMarkets.filter((fleaMarket) => {
+                    return isBefore(endDate, fleaMarket.date_end)
                 })
             }
-
+            setFleaMarkets(fetchedFleaMarkets);
         } catch (error) {
             console.error('Error applying filters:', error);
+        }
+    };
+
+    const filterMarketsByAddress = () => {
+        if (address) {
+            const filteredMarkets = fleaMarkets.filter((fleaMarket) =>
+                fleaMarket.address.toLowerCase().includes(address.toLowerCase()) // Comparaison insensible à la casse
+            );
+            setFleaMarkets(filteredMarkets);
         }
     };
 
@@ -292,10 +296,10 @@ export default function Research() {
                         style={styles.searchInput}
                         placeholder="Enter an address"
                         value={address}
-                        onChangeText={setAddress}
+                        onChangeText={(text) => setAddress(text)}
                     />
                     {/* Bouton de recherche */}
-                    <TouchableOpacity style={styles.searchButton} onPress={searchAddress}>
+                    <TouchableOpacity style={styles.searchButton} onPress={filterMarketsByAddress}>
                         <Icon name="search" size={20} color="#3F2100" />
                     </TouchableOpacity>
                     {/* Bouton de filtre */}

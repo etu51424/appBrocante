@@ -1,4 +1,5 @@
 export const statusCodes = async (response) => {
+    console.log(response.status);
     switch (response.status) {
         // codes valides
         case 200:

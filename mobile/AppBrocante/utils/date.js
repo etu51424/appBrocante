@@ -7,3 +7,12 @@ export const adaptedDateFormat = (dateString) => {
 
     return `${day}/${month}/${year}`;
 }
+
+export const isBefore = (filterDate, fleaMarketDate) => {
+    const inputDate = new Date(filterDate);
+
+    const comparisonDate = new Date(fleaMarketDate);
+
+    console.log(inputDate.getTime() >= comparisonDate.getTime())
+    return inputDate.getTime() >= comparisonDate.getTime();
+}

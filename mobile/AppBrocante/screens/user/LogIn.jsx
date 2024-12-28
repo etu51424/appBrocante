@@ -55,7 +55,7 @@ export default function LogIn() {
 
                 // Afficher une alerte pour confirmer la connexion
                 Alert.alert("Success", "You are now logged in!", [
-                    { text: "OK", onPress: () => navigation.navigate("Research") }, // Navigue vers l'écran principal
+                    { text: "OK", onPress: () => navigation.navigate("UpdateProfile") }, // Navigue vers l'écran principal
                 ]);
             } catch (error) {
                 Alert.alert("Login Failed", error.message || "Invalid username or password.");

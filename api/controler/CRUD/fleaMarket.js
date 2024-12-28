@@ -47,11 +47,8 @@ export const getAllFleaMarkets = async (req, res) => {
 }
 
 export const getAllFleaMarketsWithinRange = async (req, res) =>{
-    console.log(req.val);
-    res.sendStatus(200);
-    /*
-    try {
 
+    try {
         const fleaMarkets = await fleaMarketModel.readAllFleaMarketWithoutLimit(pool);
         const person = await readPerson(pool, req.val);
         if (fleaMarkets.length > 0 && person) {
@@ -63,6 +60,7 @@ export const getAllFleaMarketsWithinRange = async (req, res) =>{
                 );
                 // cette ligne va filtrer les fleaMarkets en fonction de la distance en parametre
                 const fleaMarketsInRange = fleaMarkets.filter((_, index) => distances[index] <= req.val.range);
+                console.log(fleaMarketsInRange);
                 res.status(200).json(fleaMarketsInRange);
             } else {
                 res.status(404).send("The user does not have a referenced address");
@@ -74,8 +72,6 @@ export const getAllFleaMarketsWithinRange = async (req, res) =>{
         res.sendStatus(500);
         console.error(`Error while getting all flea markets withing range : ${err.message}`);
     }
-
-     */
 }
 
 export const getAllFleaMarketsBetweenDates = async (req, res) => {

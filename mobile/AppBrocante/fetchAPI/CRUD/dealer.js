@@ -1,6 +1,27 @@
 import {API_BASE_URL, USER_TOKEN} from "../login";
 import {statusCodes} from "../utils/statusCodes";
 
+export const getDealer = async () => {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/dealer/dealer/me`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${USER_TOKEN}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        let statusIsValid = await statusCodes(response);
+
+        if (statusIsValid) return await response.json();
+    }
+    catch (e) {
+        throw new Error(`Erreur lors de la récupération du profil : ${e.message}`);
+    }
+}
+
 // recoit un identifiant numérique
 export const createDealer = async (body) => {
     try {
@@ -38,9 +59,7 @@ export const updateDealer = async (body) => {
                 body: JSON.stringify(body),
             }
         );
-        let statusIsValid = await statusCodes(response);
-
-        if (statusIsValid) return await response.json();
+        return await statusCodes(response);
     }
     catch (e) {
         throw new Error(`Erreur lors de la modification du dealer : ${e.message}`);

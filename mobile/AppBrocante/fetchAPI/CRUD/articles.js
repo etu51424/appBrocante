@@ -60,9 +60,7 @@ export const updateArticle = async (body) => {
                 body: JSON.stringify(body),
             }
         );
-        let statusIsValid = await statusCodes(response);
-
-        if (statusIsValid) return await response.json();
+        return await statusCodes(response);
     }
     catch (e) {
         throw new Error(`Erreur lors de la modification de l'article : ${e.message}`);
@@ -82,9 +80,7 @@ export const deleteArticle = async (articleId) => {
                 },
             }
         );
-        let statusIsValid = await statusCodes(response);
-
-        if (statusIsValid) return await response.json();
+        return await statusCodes(response);
     }
     catch (e) {
         throw new Error(`Erreur lors de la supression d'un article : ${e.message}`);

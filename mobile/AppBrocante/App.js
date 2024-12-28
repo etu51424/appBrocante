@@ -4,9 +4,10 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import {Provider as PaperProvider} from 'react-native-paper';
-import {Provider as ReactNativeProvider} from "react-redux";
+import {Provider as ReactNativeProvider, useSelector} from "react-redux";
 import Icon from 'react-native-vector-icons/Ionicons';
 import store from "./store";
+import {selectIsAuthenticated} from "./store/slice/person";
 import CreateAccount from './screens/user/CreateAccount';
 import LogIn from './screens/user/LogIn';
 import Research from './screens/Research';
@@ -17,9 +18,11 @@ import Interests from './screens/Interests';
 import DealerDetails from './screens/DealerDetails';
 import InterestsDetails from './screens/InterestDetails';
 import FleaMarketDetails from './screens/FleaMarketDetails';
+import UpdateProfile from './screens/user/UpdateProfile';
 import Slots from './screens/Slots';
+import Articles from './screens/Articles';
 
-
+// Définir la barre de navigation du bas
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -38,9 +41,9 @@ const LightTheme = {
   },
 };
 
-// Écran Tab avec la navigation
 function MainTabs() {
   const { setIsLoading } = useContext(LoadingContext);
+  const isAuthenticated = useSelector(selectIsAuthenticated); // Accéder à l'état d'authentification
 
   const navigateWithLoading = (navigation, screenName) => {
     setIsLoading(true);
@@ -49,66 +52,72 @@ function MainTabs() {
       navigation.navigate(screenName);
     }, 2000);
   };
-  
 
   return (
-    <Tab.Navigator
-      initialRouteName="Research"
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: LightTheme.colors.tabBarBackground,
-          height: 60,
-        },
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
-
-          if (route.name === 'User') {
-            iconName = 'person';
-          } else if (route.name === 'Research') { 
-            iconName = 'search';
-          } else if (route.name === 'Setting') {
-            iconName = 'settings';
+      <Tab.Navigator
+          initialRouteName="Research"
+          screenOptions={({ route }) => ({
+            headerShown: false,
+            tabBarStyle: {
+              backgroundColor: LightTheme.colors.tabBarBackground,
+              height: 60,
+            },
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
+              if (route.name === 'User') {
+                iconName = 'person';
+              } else if (route.name === 'Research') {
+                iconName = 'search';
+              } else if (route.name === 'Setting') {
+                iconName = 'settings';
+              }
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: LightTheme.colors.tabBarActive,
+            tabBarInactiveTintColor: LightTheme.colors.tabBarInactive,
+          })}
+      >
+        <Tab.Screen name="User"  options={{tabBarVisible: true}}>
+          {({ navigation }) =>
+              isAuthenticated ? (
+                  <UpdateProfile navigation={navigation} />
+              ) : (
+                  <LogIn navigation={navigation} navigateWithLoading={navigateWithLoading} />
+              )
           }
-
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: LightTheme.colors.tabBarActive,
-        tabBarInactiveTintColor: LightTheme.colors.tabBarInactive,
-      })}
-    >
-      <Tab.Screen name="User">
-        {(props) => <LogIn {...props} navigateWithLoading={navigateWithLoading} />}
-      </Tab.Screen>
-      <Tab.Screen name="Research">
-        {(props) => <Research {...props} navigateWithLoading={navigateWithLoading} />}
-      </Tab.Screen>
-      <Tab.Screen name="Setting">
-        {(props) => <Setting {...props} navigateWithLoading={navigateWithLoading} />}
-      </Tab.Screen>
-    </Tab.Navigator>
+        </Tab.Screen>
+        <Tab.Screen name="Research" options={{tabBarVisible: true}}>
+          {(props) => <Research {...props} navigateWithLoading={navigateWithLoading} />}
+        </Tab.Screen>
+        <Tab.Screen name="Setting" options={{tabBarVisible: true}}>
+          {(props) => <Setting {...props} navigateWithLoading={navigateWithLoading} />}
+        </Tab.Screen>
+      </Tab.Navigator>
   );
 }
 
-
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
+
   return (
       <ReactNativeProvider store={store}>
         <PaperProvider>
           <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
             <NavigationContainer theme={LightTheme}>
               <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="MainTabs" component={MainTabs} />
-                <Stack.Screen name="CreateAccount" component={CreateAccount} />
-                <Stack.Screen name="Wait" component={Wait} />
-                <Stack.Screen name="Help" component={Help} />
-                <Stack.Screen name="LogIn" component={LogIn} />
-                <Stack.Screen name="FleaMarketDetails" component={FleaMarketDetails} />
-                <Stack.Screen name="Interests" component={Interests} />
-                <Stack.Screen name="InterestDetails" component={InterestsDetails} />
-                <Stack.Screen name="DealerDetails" component={DealerDetails} />
-                <Stack.Screen name="Slots" component={Slots} />
+                <Stack.Screen name="MainTabs" component={MainTabs} options={{tabBarVisible: true}}/>
+                {/* Ajoutez ici les autres écrans qui ne doivent pas être dans la barre de navigation du bas */}
+                <Stack.Screen name="CreateAccount" component={CreateAccount} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="Wait" component={Wait} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="Help" component={Help} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="LogIn" component={LogIn} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="FleaMarketDetails" component={FleaMarketDetails} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="Interests" component={Interests} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="InterestDetails" component={InterestsDetails} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="DealerDetails" component={DealerDetails} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="Slots" component={Slots} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="UpdateProfile" component={UpdateProfile} options={{tabBarVisible: true}}/>
+                <Stack.Screen name="Articles" component={Articles} options={{tabBarVisible: true}}/>
               </Stack.Navigator>
             </NavigationContainer>
           </LoadingContext.Provider>

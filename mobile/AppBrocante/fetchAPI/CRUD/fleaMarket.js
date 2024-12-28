@@ -2,8 +2,9 @@ import {API_BASE_URL, USER_TOKEN} from "../login";
 import {statusCodes} from "../utils/statusCodes";
 
 // recoit un tableau de flea markets
-export const getAllFleaMarketsInRange = async (range = 10) => {
+export const getAllFleaMarketsInRange = async (range) => {
     try {
+        range = range || 10
         const response = await fetch(
             `${API_BASE_URL}/client/fleaMarket/inRange?range=${range}`,
             {

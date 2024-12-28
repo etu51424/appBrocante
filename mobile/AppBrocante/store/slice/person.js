@@ -27,7 +27,7 @@ export const userSlice = createSlice({
             }
         },
         read: (state) => {
-            return state;
+            return state.user;
         },
         update: (state, action) => {
             if (action.payload) {
@@ -56,7 +56,7 @@ export const userSlice = createSlice({
 })
 
 export const selectPersonId = (state) => state.user.personId;
-export const selectIsAuthenticated = (state) => !!state.personId;
+export const selectIsAuthenticated = (state) => !!state.user.personId;
 
 export const { login, read, update,logout} = userSlice.actions;
 

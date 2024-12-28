@@ -10,6 +10,7 @@
     "testAPi": "run fetchAPI/tests.js"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-community/slider": "^4.5.5",
     "@react-navigation/bottom-tabs": "^7.0.6",
     "@react-navigation/native": "^7.0.3",

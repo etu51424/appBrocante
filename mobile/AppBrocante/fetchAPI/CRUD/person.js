@@ -59,9 +59,7 @@ export const updatePerson = async (body) => {
                 body: JSON.stringify(body),
             }
         );
-        let statusIsValid = await statusCodes(response);
-
-        if (statusIsValid) return await response.json();
+        return await statusCodes(response);
     }
     catch (e) {
         throw new Error(`Erreur lors de la modification de la person : ${e.message}`);
