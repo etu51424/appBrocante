@@ -8,6 +8,7 @@ import { createDealer, updateDealer, getDealer } from "../../fetchAPI/CRUD/deale
 
 const UpdateProfile = ({ navigation }) => {
     const dispatch = useDispatch();
+    const langDict = useSelector((state) => state.language.langDict);
 
     const user = useSelector(read).payload.user;
     const personId = useSelector(selectPersonId);
@@ -127,7 +128,7 @@ const UpdateProfile = ({ navigation }) => {
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={styles.container}>
-                <Text style={styles.header}>Mettre à jour le profil</Text>
+                <Text style={styles.header}>{langDict.updateProfile}</Text>
                 <View style={styles.photoContainer}>
                     {profilePhoto ? (
                         <Image
@@ -135,115 +136,115 @@ const UpdateProfile = ({ navigation }) => {
                             style={styles.profilePhoto}
                         />
                     ) : (
-                        <Text style={styles.noPhotoText}>Pas de photo de profil</Text>
+                        <Text style={styles.noPhotoText}>{langDict.noProfilePic}</Text>
                     )}
                 </View>
                 <View style={styles.field}>
-                    <Text style={styles.label}>Prénom</Text>
+                    <Text style={styles.label}>{langDict.firstName}</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Prénom"
+                        placeholder={langDict.firstName}
                         value={firstName}
                         onChangeText={setFirstName}
                     />
                 </View>
                 <View style={styles.field}>
-                    <Text style={styles.label}>Nom</Text>
+                    <Text style={styles.label}>{langDict.lastName}</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Nom"
+                        placeholder={langDict.lastName}
                         value={lastName}
                         onChangeText={setLastName}
                     />
                 </View>
                 <View style={styles.field}>
-                    <Text style={styles.label}>Email</Text>
+                    <Text style={styles.label}>{langDict.email}</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Email"
+                        placeholder={langDict.email}
                         value={email}
                         onChangeText={setEmail}
                         keyboardType="email-address"
                     />
                 </View>
                 <View style={styles.field}>
-                    <Text style={styles.label}>Numéro de téléphone</Text>
+                    <Text style={styles.label}>{langDict.phoneNumber}</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Numéro de téléphone"
+                        placeholder={langDict.phoneNumber}
                         value={phoneNumber}
                         onChangeText={setPhoneNumber}
                         keyboardType="phone-pad"
                     />
                 </View>
                 <View style={styles.field}>
-                    <Text style={styles.label}>Adresse</Text>
+                    <Text style={styles.label}>{langDict.address}</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Adresse"
+                        placeholder={langDict.address}
                         value={address}
                         onChangeText={setAddress}
                     />
                 </View>
                 <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
-                    <Text style={styles.updateButtonText}>Mettre à jour</Text>
+                    <Text style={styles.updateButtonText}>{langDict.update}</Text>
                 </TouchableOpacity>
                 {dealer ? (
                     <>
-                        <Text style={styles.header}>Profil Dealer</Text>
+                        <Text style={styles.header}>{langDict.dealerProfile}</Text>
                         <View style={styles.field}>
-                            <Text style={styles.label}>Type</Text>
+                            <Text style={styles.label}>{langDict.type}</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Type"
+                                placeholder={langDict.type}
                                 value={type}
                                 onChangeText={setType}
                             />
                         </View>
                         <View style={styles.field}>
-                            <Text style={styles.label}>Description</Text>
+                            <Text style={styles.label}>{langDict.description}</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Description"
+                                placeholder={langDict.description}
                                 value={description}
                                 onChangeText={setDescription}
                             />
                         </View>
                         <TouchableOpacity style={styles.updateButton} onPress={handleDealerUpdate}>
-                            <Text style={styles.updateButtonText}>Mettre à jour le Dealer</Text>
+                            <Text style={styles.updateButtonText}>{langDict.updateDealer}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.updateButton} onPress={() => navigation.navigate('Articles')}>
-                            <Text style={styles.updateButtonText}>Voir mes articles</Text>
+                            <Text style={styles.updateButtonText}>{langDict.seeMyArticles}</Text>
                         </TouchableOpacity>
                     </>
                 ) : (
                     <>
-                        <Text style={styles.header}>Créer un compte Dealer</Text>
+                        <Text style={styles.header}>{langDict.createDealerAccount}</Text>
                         <View style={styles.field}>
-                            <Text style={styles.label}>Type</Text>
+                            <Text style={styles.label}>{langDict.type}</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Type"
+                                placeholder={langDict.type}
                                 value={type}
                                 onChangeText={setType}
                             />
                         </View>
                         <View style={styles.field}>
-                            <Text style={styles.label}>Description</Text>
+                            <Text style={styles.label}>{langDict.description}</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Description"
+                                placeholder={langDict.description}
                                 value={description}
                                 onChangeText={setDescription}
                             />
                         </View>
                         <TouchableOpacity style={styles.updateButton} onPress={handleDealerCreation}>
-                            <Text style={styles.updateButtonText}>Créer le Dealer</Text>
+                            <Text style={styles.updateButtonText}>{langDict.createDealer}</Text>
                         </TouchableOpacity>
                     </>
                 )}
                 <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                    <Text style={styles.logoutButtonText}>Déconnexion</Text>
+                    <Text style={styles.logoutButtonText}>{langDict.logOut}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

@@ -53,25 +53,25 @@ export default function CreateAccount(){
 
                     <Text style={styles.inputLabel}>{langDict.firstName}</Text>
                     <TextInput style={styles.inputControl}
-                    placeholder="FirstName"
+                    placeholder={langDict.firstName}
                     value={form.firstname}
                     onChangeText={firstname => setForm ({...form, firstname})}/>
 
                     <Text style={styles.inputLabel}>{langDict.lastName}</Text>
                     <TextInput style={styles.inputControl}
-                    placeholder="LastName"
+                    placeholder={langDict.lastName}
                     value={form.lastname}
                     onChangeText={lastname => setForm ({...form, lastname})}/>
 
                     <Text style={styles.inputLabel}>{langDict.username}</Text>
                     <TextInput style={styles.inputControl}
-                    placeholder="UserName"
+                    placeholder={langDict.username}
                     value={form.username}
                     onChangeText={username => setForm ({...form, username})}/>
 
                     <Text style={styles.inputLabel}>{langDict.address}</Text>
                     <TextInput style={styles.inputControl}
-                    placeholder="Address"
+                    placeholder={langDict.address}
                     value={form.address}
                     onChangeText={address => setForm ({...form, address})}/>
 
@@ -95,7 +95,7 @@ export default function CreateAccount(){
                     <TextInput 
                     secureTextEntry
                     style={styles.inputControl}
-                    placeholder="Password"
+                    placeholder={langDict.password}
                     value={form.password}
                     onchangeText={password => setForm ({ ...form, password })}
                     />

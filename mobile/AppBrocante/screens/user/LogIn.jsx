@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux"; // Hook pour dispatcher des actions
 import { login } from "../../store/slice/person"; // Import de l'action login
 import { login as loginAPI } from "../../fetchAPI/login";
 import {getPerson} from "../../fetchAPI/CRUD/person"; // API fictive pour login
+import { useSelector } from "react-redux";
 
 export default function LogIn() {
     const navigation = useNavigation();
@@ -30,6 +31,8 @@ export default function LogIn() {
         }, [])
     );
 
+    const langDict = useSelector((state) => state.language.langDict);
+
     const handleLogin = async () => {
         if (form.username && form.password) {
             try {
@@ -50,18 +53,18 @@ export default function LogIn() {
                         dispatch(login(adaptedUserData));
                     }
                 } else {
-                    throw new Error("Invalid username or password");
+                    throw new Error(langDict.invalidUsernameOrPassword);
                 }
 
                 // Afficher une alerte pour confirmer la connexion
-                Alert.alert("Success", "You are now logged in!", [
+                Alert.alert(langDict.success, langDict.youAreNowLoggedIn, [
                     { text: "OK", onPress: () => navigation.navigate("UpdateProfile") }, // Navigue vers l'écran principal
                 ]);
             } catch (error) {
-                Alert.alert("Login Failed", error.message || "Invalid username or password.");
+                Alert.alert(langDict.loginFailed, error.message || langDict.invalidUsernameOrPassword);
             }
         } else {
-            Alert.alert("Error", "Please fill in all fields.");
+            Alert.alert(langDict.error, langDict.plsFillInAllFields);
         }
     };
 
@@ -75,21 +78,21 @@ export default function LogIn() {
                         alt="Logo"
                     />
 
-                    <Text style={styles.inputLabel}>Username</Text>
+                    <Text style={styles.inputLabel}>{langDict.username}</Text>
                     <TextInput
                         style={styles.inputControl}
                         autoCapitalize="none"
                         autoCorrect={false}
-                        placeholder="Enter your username"
+                        placeholder={langDict.enterYourUsername}
                         value={form.username}
                         onChangeText={username => setForm({ ...form, username })}
                     />
 
-                    <Text style={styles.inputLabel}>Password</Text>
+                    <Text style={styles.inputLabel}>{langDict.password}</Text>
                     <TextInput
                         secureTextEntry
                         style={styles.inputControl}
-                        placeholder="Password"
+                        placeholder={langDict.password}
                         value={form.password}
                         onChangeText={password => setForm({ ...form, password })}
                     />
@@ -98,21 +101,21 @@ export default function LogIn() {
                         style={styles.button}
                         onPress={handleLogin} // Appelle la fonction handleLogin
                     >
-                        <Text style={styles.textButton}>Log in</Text>
+                        <Text style={styles.textButton}>{langDict.logIn}</Text>
                     </Button>
 
                     <Text
                         style={styles.switchPage}
                         onPress={() => navigation.navigate('CreateAccount')}
                     >
-                        Create an account
+                        {langDict.createAccount}
                     </Text>
 
                     <Button
                         style={styles.helpButton}
                         onPress={() => navigation.navigate('Help')} // Redirige vers l'écran Help
                     >
-                        <Text style={styles.textButton}>Je n'arrive pas à me connecter</Text>
+                        <Text style={styles.textButton}>{langDict.cantLogin}</Text>
                     </Button>
                 </View>
             </View>

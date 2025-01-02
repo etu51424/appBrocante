@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import {getAvatar} from "../fetchAPI/avatar";
+import { useSelector } from 'react-redux';
 
 const InterestDetails = ({ route, navigation }) => {
     const { person } = route.params; // Récupère les détails de la personne
     const [profilePictureUrl, setProfilePictureUrl] = useState(''); // État pour stocker l'URL de la photo
+    const langDict = useSelector((state) => state.language.langDict);
 
     useEffect(() => {
         // Vous pouvez ici effectuer un appel API pour récupérer l'URL de l'image si nécessaire
@@ -27,24 +29,24 @@ const InterestDetails = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Person Details</Text>
+            <Text style={styles.title}>{langDict.personDetails}</Text>
             <Image
                 source={{ uri: profilePictureUrl || `https://example.com/profiles/${person.profile_picture}` }} // Utilisation de l'URL récupérée ou de l'URL par défaut
                 style={styles.profilePicture}
             />
-            <Text style={styles.detail}>Username: {person.username}</Text>
-            <Text style={styles.detail}>Name: {person.first_name} {person.last_name}</Text>
-            <Text style={styles.detail}>Address: {person.address}</Text>
-            <Text style={styles.detail}>Phone: {person.phone_number}</Text>
-            <Text style={styles.detail}>Email: {person.email}</Text>
+            <Text style={styles.detail}>{langDict.username}: {person.username}</Text>
+            <Text style={styles.detail}>{langDict.firstName}: {person.first_name} {person.last_name}</Text>
+            <Text style={styles.detail}>{langDict.address}: {person.address}</Text>
+            <Text style={styles.detail}>{langDict.phoneNumber}: {person.phone_number}</Text>
+            <Text style={styles.detail}>{langDict.email}: {person.email}</Text>
             <Text style={styles.detail}>Admin: {person.is_admin ? "Yes" : "No"}</Text>
 
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Text style={styles.backButtonText}>Back</Text>
+                <Text style={styles.backButtonText}>{langDict.back}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={navigateToDealerDetails} style={styles.dealerButton}>
-                <Text style={styles.dealerButtonText}>View Dealer Details</Text>
+                <Text style={styles.dealerButtonText}>{langDict.viewDealerDetails}</Text>
             </TouchableOpacity>
         </View>
     );

@@ -7,8 +7,61 @@
     "email":"Email Address",
     "password":"Password",
     "createAccount":"Create Account",
+    "cantLogin":"I can't log in",
     "logIn":"Log in",
     "enterAnAddress":"Enter an address",
+
+    "help":"Help",
+    "finalize":"Finalize",
+
+    "updateProfile":"Update profile",
+    "noProfilePic":"No profile picture",
+    "update":"Update",
+    "dealerProfile":"Dealer profile",
+    "description":"Description",
+    "updateDealer":"Update dealer",
+    "seeMyArticles":"See my articles",
+    "createDealerAccount":"Create dealer account",
+    "createDealer":"Create dealer",
+    "logOut":"Log out",
+
+    "price":"Price",
+    "condition":"Condition",
+    "edit":"Edit",
+    "delete":"Delete",
+    "addAnArticle":"Add an article",
+    "addANewArticle":"Add a new article",
+    "add":"Add",
+    "back":"Back",
+
+    "dealerDetails":"Dealer details",
+    "personID":"Person ID",
+    "noRegisteredArticle":"No saved article",
+    
+    "dates":"Dates",
+    "averageRating":"Average rating",
+    "numberOfReviews":"Number of reviews",
+    "viewInterests":"View Interests",
+    "viewSlots":"View Slots",
+    "personDetails":"Person details",
+    "admin":"Admin",
+    "viewDealerDetails":"View Dealer Details",
+
+    "interests":"Interests",
+    "fleaMarketID":"Flea Market ID",
+    "updateInterest":"Update interest",
+    "deleteInterest":"Delete interest",
+    "placeInterest":"Place interest",
+    "dealer":"Dealer",
+    "submit":"Submit",
+    
+    "slotsForFleaMarketID":"Slots for Flea Market ID",
+    "loadingSlots":"Loading slots...",
+    "noSlotsAvailable":"No slots available for this flea market.",
+    "slotID":"Slot ID",
+    "availability":"Availability",
+    "area":"Area",
+
     "radius":"Radius (km)",
     "startDate":"Start Date",
     "endDate":"End Date",
@@ -16,5 +69,77 @@
     "cancel":"Cancel",
     "selectALanguage":"Select a language",
     "chooseLanguage":"Choose...",
-    "darkMode":"Dark Mode"
+    "darkMode":"Dark Mode",
+
+    "entryDate":"Entry date",
+
+    "error":"Error",
+    "yourRecoveryRequestHas":"Your recovery request has been submitted.",
+    "plsEnterYourId":"Please Enter your Id.",
+    "success":"Success",
+    "codeIsValidated":"The code is validated",
+    "recoveryCodeInvalid":"The recovery code is invalid.",
+    "plsEnterRecovCode":"Please enter the recovery code.",
+    "enterYourId":"Enter your id",
+    "enterRecovCode":"Enter recovery code",
+    
+    "invalidUsernameOrPassword":"Invalid username or password",
+    "youAreNowLoggedIn":"You are now logged in!",
+    "loginFailed":"Login Failed",
+    "plsFillInAllFields":"Please fill in all fields.",
+    "enterYourUsername":"Enter your username",
+    
+    "type":"Type",
+    "errorGetArticles":"Erreur when getting the articles:",
+    "articleSuccess":"Successfully added article",
+    "impossibleToAddArticle":"Impossible to add the article",
+    "errorWhenAddingArticle":"Error when adding to the article:",
+    
+    "articleDeleteSuccess":"Successfully deleted article",
+    "impDelArt":"Impossible to delete article",
+    
+    "artDelSuc":"Successfully edited article",
+    "errWhEditArt":"Error when editing article",
+    
+    "impEdiArt":"Impossible to edit article",
+    
+    "title":"Title",
+    "ediArt":"Modify article",
+    
+    "errWhLoadArts":"Error when loading articles:",
+    
+    "errWhLoadInts":"Error when loading interests:",
+    "partMustBeInt":"The participation must be an integer greater than 0.",
+    
+    "yourInterestWasEdited":"Your interest was edited",
+    "intWasAdd":"Your interest was added",
+    
+    "errWhAddLoadInt":"Error when adding/loading the interest",
+    "impPlaceEditInt":"Impossible de placer ou modifier l'intérêt. Veuillez réessayer.",
+    
+    "modifyInterest":"Modify interest",
+    "intWasDel":"Your interest has been deleted",
+    "errWhDelInt":"Error when deleting interest. Try again",
+    "impDelInt":"Impossible to delete interest. Try again",
+    "interested":"Interested",
+    "yes":"Yes",
+    "no":"No",
+    "participation":"Participation",
+    
+    "permDenied":"Permission denied",
+    "permAccDen":"Permission to access was denied",
+    
+    "failUserLoc":"Failed to fetch user location:",
+    "noResFoundAddr":"No results found for the address.",
+    
+    "errLoc":"Error fetching location:",
+    "failLoc":"Failed to fetch the location.",
+    "errFilters":"Error applying filters:",
+    
+    "geocodeFail":"Geocoding failed for address",
+    "marketFail":"Failed to fetch flea markets",
+    
+    "errSlots":"Error when fetching slots",
+    "available":"Available",
+    "unavailable":"Unavailable"
 }

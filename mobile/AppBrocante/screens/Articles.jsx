@@ -15,13 +15,15 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
     const [condition, setCondition] = useState('');
     const personId = useSelector(selectPersonId);
 
+    const langDict = useSelector((state) => state.language.langDict);
+
     useEffect(() => {
         const fetchArticles = async () => {
             try {
                 const articlesData = await getArticlesByDealer(personId); // Remplacez par une requête réelle
                 setArticles(articlesData);
             } catch (error) {
-                console.error("Erreur lors de la récupération des articles:", error);
+                console.error(langDict.errorGetArticles, error);
             }
         };
         fetchArticles();
@@ -31,15 +33,15 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
         <View style={styles.articleCard}>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
-            <Text style={styles.info}>Prix: {item.cost} €</Text>
-            <Text style={styles.info}>Condition: {item.condition}</Text>
+            <Text style={styles.info}>{langDict.price}: {item.cost} €</Text>
+            <Text style={styles.info}>{langDict.condition}: {item.condition}</Text>
 
             {/* Bouton pour modifier l'article */}
             <TouchableOpacity
                 style={[styles.button, styles.editButton]}
                 onPress={() => handleEditArticle(item)}
             >
-                <Text style={styles.buttonText}>Modifier</Text>
+                <Text style={styles.buttonText}>{langDict.edit}</Text>
             </TouchableOpacity>
 
             {/* Bouton pour supprimer l'article */}
@@ -47,14 +49,14 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
                 style={[styles.button, styles.deleteButton]}
                 onPress={() => handleDeleteArticle(item.id)}
             >
-                <Text style={styles.buttonText}>Supprimer</Text>
+                <Text style={styles.buttonText}>{langDict.delete}</Text>
             </TouchableOpacity>
         </View>
     );
 
     const handleAddArticle = async () => {
         if (!title || !description || !cost || !condition) {
-            Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
+            Alert.alert(langDict.error, langDict.plsFillInAllFields);
             return;
         }
 
@@ -70,14 +72,14 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
             // Remplacer par la fonction d'ajout d'article réelle
             const addedArticle = await createArticle(newArticle); // Fonction à définir pour ajouter un article via l'API
             if (addedArticle) {
-                Alert.alert('Succès', 'Article ajouté avec succès.');
+                Alert.alert(langDict.success, langDict.articleSuccess);
                 setArticles((prevArticles) => [addedArticle, ...prevArticles]);
                 setIsAdding(false); // Masquer le formulaire après ajout
             } else {
-                Alert.alert('Erreur', 'Impossible d\'ajouter l\'article.');
+                Alert.alert(langDict.error, langDict.impossibleToAddArticle);
             }
         } catch (error) {
-            console.error("Erreur lors de l'ajout de l'article:", error);
+            console.error(langDict.errorWhenAddingArticle, error);
         }
     };
 
@@ -86,10 +88,10 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
             // Appel à la fonction pour supprimer un article via l'API
             await deleteArticle(articleId);
             setArticles((prevArticles) => prevArticles.filter((article) => article.id !== articleId));
-            Alert.alert('Succès', 'Article supprimé avec succès.');
+            Alert.alert(langDict.success, '');
         } catch (error) {
-            console.error("Erreur lors de la suppression de l'article:", error);
-            Alert.alert('Erreur', 'Impossible de supprimer l\'article.');
+            console.error(langDict.articleDeleteSuccess, error);
+            Alert.alert(langDict.error, langDict.impDelArt);
         }
     };
 
@@ -104,7 +106,7 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
 
     const handleUpdateArticle = async () => {
         if (!title || !description || !cost || !condition) {
-            Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
+            Alert.alert(langDict.error, langDict.plsFillInAllFields);
             return;
         }
 
@@ -123,12 +125,12 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
                         article.id === selectedArticle.id ? updatedArticle : article
                     )
                 );
-                Alert.alert('Succès', 'Article modifié avec succès.');
+                Alert.alert(langDict.success, langDict.artDelSuc);
                 setIsEditing(false); // Masquer le formulaire après modification
             }
         } catch (error) {
-            console.error("Erreur lors de la modification de l'article:", error);
-            Alert.alert('Erreur', 'Impossible de modifier l\'article.');
+            console.error(langDict.errWhEditArt, error);
+            Alert.alert(langDict.error, langDict.impEdiArt);
         }
     };
 
@@ -150,43 +152,43 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
             />
 
             <TouchableOpacity style={styles.button} onPress={() => setIsAdding(true)}>
-                <Text style={styles.buttonText}>Ajouter un article</Text>
+                <Text style={styles.buttonText}>{langDict.addAnArticle}</Text>
             </TouchableOpacity>
 
             {isAdding && (
                 <View style={styles.formContainer}>
-                    <Text style={styles.formHeader}>Ajouter un nouvel article</Text>
+                    <Text style={styles.formHeader}>{langDict.addANewArticle}</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Titre"
+                        placeholder={langDict.title}
                         value={title}
                         onChangeText={setTitle}
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Description"
+                        placeholder={langDict.description}
                         value={description}
                         onChangeText={setDescription}
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Prix"
+                        placeholder={langDict.price}
                         value={cost}
                         onChangeText={setCost}
                         keyboardType="numeric"
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Condition"
+                        placeholder={langDict.condition}
                         value={condition}
                         onChangeText={setCondition}
                     />
                     <View style={styles.formButtons}>
                         <TouchableOpacity style={styles.button} onPress={handleAddArticle}>
-                            <Text style={styles.buttonText}>Ajouter</Text>
+                            <Text style={styles.buttonText}>{langDict.add}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={handleBack}>
-                            <Text style={styles.buttonText}>Annuler</Text>
+                            <Text style={styles.buttonText}>{langDict.cancel}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -194,38 +196,38 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
 
             {isEditing && (
                 <View style={styles.formContainer}>
-                    <Text style={styles.formHeader}>Modifier l'article</Text>
+                    <Text style={styles.formHeader}>{langDict.ediArt}</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Titre"
+                        placeholder={langDict.title}
                         value={title}
                         onChangeText={setTitle}
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Description"
+                        placeholder={langDict.description}
                         value={description}
                         onChangeText={setDescription}
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Prix"
+                        placeholder={langDict.price}
                         value={cost}
                         onChangeText={setCost}
                         keyboardType="numeric"
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Condition"
+                        placeholder={langDict.condition}
                         value={condition}
                         onChangeText={setCondition}
                     />
                     <View style={styles.formButtons}>
                         <TouchableOpacity style={styles.button} onPress={handleUpdateArticle}>
-                            <Text style={styles.buttonText}>Modifier</Text>
+                            <Text style={styles.buttonText}>{langDict.edit}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={handleBack}>
-                            <Text style={styles.buttonText}>Annuler</Text>
+                            <Text style={styles.buttonText}>{langDict.cancel}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -233,7 +235,7 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
 
             {/* Bouton Retour */}
             <TouchableOpacity style={styles.button} onPress={handleBackNav}>
-                <Text style={styles.buttonText}>Retour</Text>
+                <Text style={styles.buttonText}>{langDict.back}</Text>
             </TouchableOpacity>
         </View>
     );

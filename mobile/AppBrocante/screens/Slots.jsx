@@ -14,7 +14,7 @@ const Slots = ({ route, navigation }) => {
                 const fetchedSlots = await getSlotsByFleaMarket(fleaMarketId); // API call
                 setSlots(fetchedSlots);
             } catch (error) {
-                console.error("Erreur lors de la récupération des slots:", error);
+                console.error(langDict.errSlots, error);
             } finally {
                 setLoading(false);
             }
@@ -25,27 +25,27 @@ const Slots = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Slots for Flea Market ID: {fleaMarketId}</Text>
+            <Text style={styles.title}>{langDict.slotsForFleaMarketID}: {fleaMarketId}</Text>
             {loading ? (
-                <Text style={styles.loadingText}>Loading slots...</Text>
+                <Text style={styles.loadingText}>{langDict.loadingSlots}</Text>
             ) : slots.length === 0 ? (
-                <Text style={styles.noSlotsText}>No slots available for this flea market.</Text>
+                <Text style={styles.noSlotsText}>{langDict.noSlotsAvailable}</Text>
             ) : (
                 <ScrollView contentContainerStyle={styles.slotList}>
                     {slots.map((slot) => (
                         <View key={slot.id} style={styles.slotItem}>
-                            <Text style={styles.slotDetail}>Slot ID: {slot.id}</Text>
+                            <Text style={styles.slotDetail}>{langDict.slotID}: {slot.id}</Text>
                             <Text style={styles.slotDetail}>
-                                Availability: {slot.is_available ? "Available" : "Unavailable"}
+                            {langDict.availability}: {slot.is_available ? langDict.available : langDict.unavailable}
                             </Text>
-                            <Text style={styles.slotDetail}>Area: {slot.area} m²</Text>
+                            <Text style={styles.slotDetail}>{langDict.area}: {slot.area} m²</Text>
                         </View>
                     ))}
                 </ScrollView>
             )}
 
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Text style={styles.backButtonText}>Back</Text>
+                <Text style={styles.backButtonText}>{langDict.back}</Text>
             </TouchableOpacity>
         </View>
     );

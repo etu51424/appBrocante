@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {getAllFleaMarketsInRange} from "../fetchAPI/CRUD/fleaMarket";
 import {adaptedDateFormat, isBefore} from "../utils/date";
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 export default function Research() {
     const initialRegion = {
@@ -28,6 +29,7 @@ export default function Research() {
     const [locations, setLocations] = useState([])
     const [previousRegion, setPreviousRegion] = useState(null); // Pour restaurer la vue précédente
     const [fleaMarkets, setFleaMarkets] = useState({});
+    const langDict = useSelector((state) => state.language.langDict);
 
     // Fonction pour vérifier et demander les autorisations de localisation
     const checkPermissions = async () => {
@@ -35,7 +37,7 @@ export default function Research() {
         if (status === 'granted') {
             getUserLocation();
         } else {
-            Alert.alert('Permission Denied', 'Permission to access location was denied');
+            Alert.alert(langDict.permDenied, langDict.permAccDen);
         }
     };
 
@@ -54,7 +56,7 @@ export default function Research() {
                 longitudeDelta: 0.0421,
             });
         } catch (error) {
-            console.error('Failed to fetch user location:', error);
+            console.error(langDict.failUserLoc, error);
         }
     };
 
@@ -84,11 +86,11 @@ export default function Research() {
                     }, { duration: 1000 });
                 }
             } else {
-                Alert.alert('Error', 'No results found for the address.');
+                Alert.alert(langDict.error, langDict.noResFoundAddr);
             }
         } catch (error) {
-            console.error('Error fetching location:', error);
-            Alert.alert('Error', 'Failed to fetch the location.');
+            console.error(langDict.errLoc, error);
+            Alert.alert(langDict.error, langDict.failLoc);
         }
     };
 
@@ -117,7 +119,7 @@ export default function Research() {
             }
             setFleaMarkets(fetchedFleaMarkets);
         } catch (error) {
-            console.error('Error applying filters:', error);
+            console.error(langDict.errFilters, error);
         }
     };
 
@@ -219,7 +221,7 @@ export default function Research() {
                                 longitude: location.lng,
                             };
                         } else {
-                            console.warn(`Geocoding failed for address: ${market.address}`);
+                            console.warn(`${langDict.geocodeFail}: ${market.address}`);
                             return null;
                         }
                     })
@@ -229,7 +231,7 @@ export default function Research() {
                 setLocations(updatedLocations.filter(location => location !== null));
             }
         } catch (error) {
-            console.error('Failed to fetch flea markets:', error);
+            console.error(langDict.marketFail, error);
         }
     };
 
@@ -347,7 +349,7 @@ export default function Research() {
                 >
                     <View style={styles.modalBackground}>
                         <View style={styles.modalContainer}>
-                            <Text style={styles.modalText}>Radius (km):</Text>
+                            <Text style={styles.modalText}>{langDict.radius} (km):</Text>
                             <View style={styles.inputContainer}>
                                 <TextInput
                                     style={styles.input}
@@ -356,7 +358,7 @@ export default function Research() {
                                     keyboardType="numeric"
                                 />
                             </View>
-                            <Text style={styles.modalText}>Start Date:</Text>
+                            <Text style={styles.modalText}>{langDict.startDate}:</Text>
                             <View style={styles.inputContainer}>
                                 <TextInput
                                     style={styles.input}
@@ -365,7 +367,7 @@ export default function Research() {
                                     placeholder="YYYY-MM-DD"
                                 />
                             </View>
-                            <Text style={styles.modalText}>End Date:</Text>
+                            <Text style={styles.modalText}>{langDict.endDate}:</Text>
                             <View style={styles.inputContainer}>
                                 <TextInput
                                     style={styles.input}
@@ -376,10 +378,10 @@ export default function Research() {
                             </View>
                             <View style={styles.buttonContainer}>
                                 <Button style={styles.button} onPress={applyFilters}>
-                                    <Text style={styles.textButton}>Apply Filters</Text>
+                                    <Text style={styles.textButton}>{langDict.applyFilters}</Text>
                                 </Button>
                                 <Button style={styles.button} onPress={toggleModal}>
-                                    <Text style={styles.textButton}>Cancel</Text>
+                                    <Text style={styles.textButton}>{langDict.cancel}</Text>
                                 </Button>
                             </View>
                         </View>

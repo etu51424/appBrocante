@@ -42,14 +42,10 @@ export default function LanguageSelector() {
     // puis dispatch ce nouveau state.langDict et state.Language sur toutes les autres pages.
     // lang est un obj contenant le label, la value (en, nl, fr) et un flag
 
-    console.log("Dispatching language change to (lang.value) directly :", lang.value); // Log only the language code
-    console.log("Dispatching language change to (as an { value : language.value object) }):", { value: lang.value });
-    console.log("Langue contient plusieurs trucs:", lang);
     dispatch(changeLanguage({value: lang.value}));
   };
 
   const langDict = useSelector((state) => state.language.langDict);
-  console.log('langDict from Redux:', langDict);
 
   return (
     <View style={styles.container}>
@@ -67,7 +63,7 @@ export default function LanguageSelector() {
           }}
         >
           <Text style={styles.dropdownButtonText}>
-            {selectedLanguage ? selectedLanguage.label : 'Choose...'}
+            {selectedLanguage ? selectedLanguage.label : langDict.chooseLanguage}
           </Text>
         </TouchableOpacity>
       </View>

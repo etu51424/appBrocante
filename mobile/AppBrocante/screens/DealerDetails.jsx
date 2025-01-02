@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { getArticlesByDealer } from "../fetchAPI/CRUD/articles.js"; // Assurez-vous que cette fonction existe
+import { useSelector } from 'react-redux';
 
 const DealerDetails = ({ route, navigation }) => {
     const { personId } = route.params; // Récupère le personId
     const [articles, setArticles] = useState([]); // État pour stocker les articles
+    const langDict = useSelector((state) => state.language.langDict);
 
     useEffect(() => {
         // Fonction pour récupérer les articles associés au dealer
@@ -13,7 +15,7 @@ const DealerDetails = ({ route, navigation }) => {
                 const fetchedArticles = await getArticlesByDealer(personId); // Récupérer les articles via l'API
                 setArticles(fetchedArticles); // Stocker les articles dans l'état
             } catch (error) {
-                console.error("Erreur lors du chargement des articles:", error);
+                console.error(langDict.errWhLoadArts, error);
             }
         };
 
@@ -22,28 +24,28 @@ const DealerDetails = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Dealer Details</Text>
-            <Text style={styles.subtitle}>Person ID: {personId}</Text>
+            <Text style={styles.title}>{langDict.dealerDetails}</Text>
+            <Text style={styles.subtitle}>{langDict.personId}: {personId}</Text>
 
             {/* Vérification si la liste d'articles est vide */}
             {articles.length === 0 ? (
-                <Text style={styles.noArticlesMessage}>Aucun article enregistré</Text>
+                <Text style={styles.noArticlesMessage}>{langDict.noRegisteredArticle}</Text>
             ) : (
                 <ScrollView style={styles.articleList} contentContainerStyle={styles.articleListContent}>
                     {articles.map((article) => (
                         <View key={article.id} style={styles.articleItem}>
                             <Text style={styles.articleTitle}>{article.title}</Text>
                             <Text style={styles.articleDescription}>{article.description}</Text>
-                            <Text style={styles.articleCost}>Cost: ${article.cost}</Text>
-                            <Text style={styles.articleCondition}>Condition: {article.condition}</Text>
-                            <Text style={styles.articleDate}>Entry Date: {new Date(article.entry_date).toLocaleDateString()}</Text>
+                            <Text style={styles.articleCost}>{langDict.price}: ${article.cost}</Text>
+                            <Text style={styles.articleCondition}>{langDict.condition}: {article.condition}</Text>
+                            <Text style={styles.articleDate}>{langDict.entryDate}: {new Date(article.entry_date).toLocaleDateString()}</Text>
                         </View>
                     ))}
                 </ScrollView>
             )}
 
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Text style={styles.backButtonText}>Back</Text>
+                <Text style={styles.backButtonText}>{langDict.back}</Text>
             </TouchableOpacity>
         </View>
     );

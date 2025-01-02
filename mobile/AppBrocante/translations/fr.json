@@ -7,8 +7,61 @@
     "email": "Adresse e-mail",
     "password": "Mot de passe",
     "createAccount": "Créer un compte",
+    "cantLogin":"Je n'arrive pas à me connecter",
     "logIn": "Se connecter",
     "enterAnAddress": "Saisir une adresse",
+
+    "help":"Aide",
+    "finalize":"Finaliser",
+
+    "updateProfile":"Mettre à jour le profil",
+    "noProfilePic":"Pas de photo de profil",
+    "update":"Mettre à jour",
+    "dealerProfile":"Profil du brocanteur",
+    "description":"Description",
+    "updateDealer":"Mettre à jour le brocanteur",
+    "seeMyArticles":"Voir mes articles",
+    "createDealerAccount":"Créer un compte brocanteur",
+    "createDealer":"Créer le brocanteur",
+    "logOut":"Déconnexion",
+
+    "price":"Prix",
+    "condition":"État",
+    "edit":"Modifier",
+    "delete":"Supprimer",
+    "addAnArticle":"Ajouter un article",
+    "addANewArticle":"Ajouter un nouvel article",
+    "add":"Ajouter",
+    "back":"Retour",
+
+    "dealerDetails":"Détails du brocanteur",
+    "personID":"ID de la personne",
+    "noRegisteredArticle":"Aucun article enregistré",
+
+    "dates":"Dates",
+    "averageRating":"Note moyenne",
+    "numberOfReviews":"Nombre d'avis",
+    "viewInterests":"Voir les intérêts",
+    "viewSlots":"Voir les emplacements",
+    "personDetails":"Détails de la personne",
+    "admin":"Administrateur",
+    "viewDealerDetails":"Voir les détails du brocanteur",
+
+    "interests":"Intérêts",
+    "fleaMarketID":"ID du marché aux puces",
+    "updateInterest":"Mettre à jour l'intérêt",
+    "deleteInterest":"Supprimer l'intérêt",
+    "placeInterest":"Placer un intérêt",
+    "dealer":"Brocanteur",
+    "submit":"Soumettre",
+
+    "slotsForFleaMarketID":"Emplacements pour l'ID du marché aux puces",
+    "loadingSlots":"Chargement des emplacements...",
+    "noSlotsAvailable":"Aucun emplacement disponible pour ce marché aux puces.",
+    "slotID":"ID de l'emplacement",
+    "availability":"Disponibilité",
+    "area":"Superficie",
+
     "radius": "Rayon (km)",
     "startDate": "Date de début",
     "endDate": "Date de fin",
@@ -16,5 +69,77 @@
     "cancel": "Annuler",
     "selectALanguage": "Sélectionner une langue",
     "chooseLanguage": "Choisissez...",
-    "darkMode": "Mode sombre"
+    "darkMode": "Mode sombre",
+
+    "entryDate":"Date d'entrée",
+
+    "error":"Erreur",
+    "yourRecoveryRequestHas":"Votre demande de récupération a été soumise.",
+    "plsEnterYourId":"Veuillez entrer votre identifiant.",
+    "success":"Succès",
+    "codeIsValidated":"Le code est validé.",
+    "recoveryCodeInvalid":"Le code de récupération est invalide.",
+    "plsEnterRecovCode":"Veuillez entrer le code de récupération.",
+    "enterYourId":"Entrez votre identifiant",
+    "enterRecovCode":"Entrez le code de récupération",
+    
+    "invalidUsernameOrPassword":"Nom d'utilisateur ou mot de passe invalide",
+    "youAreNowLoggedIn":"Vous êtes maintenant connecté !",
+    "loginFailed":"Échec de la connexion",
+    "plsFillInAllFields":"Veuillez remplir tous les champs.",
+    "enterYourUsername":"Entrez votre nom d'utilisateur",
+    
+    "type":"Type",
+    "errorGetArticles":"Erreur lors de la récupération des articles :",
+    "articleSuccess":"Article ajouté avec succès",
+    "impossibleToAddArticle":"Impossible d'ajouter l'article",
+    "errorWhenAddingArticle":"Erreur lors de l'ajout de l'article :",
+    
+    "articleDeleteSuccess":"Article supprimé avec succès",
+    "impDelArt":"Impossible de supprimer l'article",
+    
+    "artDelSuc":"Article modifié avec succès",
+    "errWhEditArt":"Erreur lors de la modification de l'article",
+    
+    "impEdiArt":"Impossible de modifier l'article",
+    
+    "title":"Titre",
+    "ediArt":"Modifier l'article",
+    
+    "errWhLoadArts":"Erreur lors du chargement des articles :",
+    
+    "errWhLoadInts":"Erreur lors du chargement des intérêts :",
+    "partMustBeInt":"La participation doit être un entier supérieur à 0.",
+    
+    "yourInterestWasEdited":"Votre intérêt a été modifié",
+    "intWasAdd":"Votre intérêt a été ajouté",
+    
+    "errWhAddLoadInt":"Erreur lors de l'ajout/chargement de l'intérêt",
+    "impPlaceEditInt":"Impossible de placer ou modifier l'intérêt. Veuillez réessayer.",
+    
+    "modifyInterest":"Modifier l'intérêt",
+    "intWasDel":"Votre intérêt a été supprimé",
+    "errWhDelInt":"Erreur lors de la suppression de l'intérêt. Réessayez.",
+    "impDelInt":"Impossible de supprimer l'intérêt. Réessayez.",
+    "interested":"Intéressé",
+    "yes":"Oui",
+    "no":"Non",
+    "participation":"Participation",
+    
+    "permDenied":"Permission refusée",
+    "permAccDen":"Permission d'accès refusée",
+    
+    "failUserLoc":"Échec de la récupération de la localisation de l'utilisateur :",
+    "noResFoundAddr":"Aucun résultat trouvé pour l'adresse.",
+    
+    "errLoc":"Erreur lors de la récupération de la localisation :",
+    "failLoc":"Échec de la récupération de la localisation.",
+    "errFilters":"Erreur lors de l'application des filtres :",
+    
+    "geocodeFail":"Échec du géocodage pour l'adresse",
+    "marketFail":"Échec de la récupération des brocantes",
+    
+    "errSlots":"Erreur lors de la récupération des emplacements",
+    "available":"Disponible",
+    "unavailable":"Indisponible"
 }

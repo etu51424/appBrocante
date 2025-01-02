@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Importation pour la navigation
 import { adaptedDateFormat } from "../utils/date";
+import { useSelector } from 'react-redux';
 
 const FleaMarketDetails = ({ route }) => {
     const { market } = route.params; // Récupérer les données passées depuis l'écran précédent
     const navigation = useNavigation(); // Accéder à la navigation
+    const langDict = useSelector((state) => state.language.langDict);
 
     const handleNavigateToInterests = () => {
         navigation.navigate('Interests', { fleaMarketId: market.id }); // Navigation avec paramètre
@@ -23,7 +25,7 @@ const FleaMarketDetails = ({ route }) => {
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Address:</Text>
+                <Text style={styles.sectionTitle}>{langDict.address}:</Text>
                 <Text style={styles.sectionContent}>{market.address}</Text>
             </View>
 
@@ -35,26 +37,26 @@ const FleaMarketDetails = ({ route }) => {
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Average Rating:</Text>
+                <Text style={styles.sectionTitle}>{langDict.averageRating}:</Text>
                 <Text style={styles.sectionContent}>{market.average_rating} ⭐</Text>
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Number of Reviews:</Text>
+                <Text style={styles.sectionTitle}>{langDict.numberOfReviews}:</Text>
                 <Text style={styles.sectionContent}>{market.review_count}</Text>
             </View>
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={handleNavigateToInterests} style={styles.button}>
-                    <Text style={styles.buttonText}>View Interests</Text>
+                    <Text style={styles.buttonText}>{langDict.viewInterests}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={handleNavigateToSlots} style={styles.button}>
-                    <Text style={styles.buttonText}>View Slots</Text>
+                    <Text style={styles.buttonText}>{langDict.viewSlots}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Text style={styles.buttonText}>Back</Text>
+                    <Text style={styles.buttonText}>{langDict.back}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

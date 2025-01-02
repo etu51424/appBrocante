@@ -13,6 +13,7 @@ const InterestsScreen = ({ route, navigation }) => {
     const [participation, setParticipation] = useState('');
     const [hasPlacedInterest, setHasPlacedInterest] = useState(false);
     const [existingInterest, setExistingInterest] = useState(null);
+    const langDict = useSelector((state) => state.language.langDict);
 
     const personId = useSelector(selectPersonId);
 
@@ -34,7 +35,7 @@ const InterestsScreen = ({ route, navigation }) => {
                 setParticipation('');
             }
         } catch (error) {
-            console.error("Erreur lors du chargement des intérêts:", error);
+            console.error(langDict.errWhLoadInts, error);
         }
     };
 
@@ -47,7 +48,7 @@ const InterestsScreen = ({ route, navigation }) => {
     // Fonction pour gérer l'envoi du formulaire
     const handleSubmitInterest = async () => {
         if (!participation || parseInt(participation) <= 0) {
-            Alert.alert("Erreur", "La participation doit être un entier supérieur à 0.");
+            Alert.alert(langDict.error, langDict.partMustBeInt);
             return;
         }
 
@@ -60,7 +61,7 @@ const InterestsScreen = ({ route, navigation }) => {
                     isDealer,
                     participation: parseInt(participation),
                 });
-                Alert.alert("Succès", "Votre intérêt a été modifié.");
+                Alert.alert(langDict.success, langDict.yourInterestWasEdited);
             } else {
                 // Créer un nouvel intérêt
                 await createInterest({
@@ -69,7 +70,7 @@ const InterestsScreen = ({ route, navigation }) => {
                     isDealer,
                     participation: parseInt(participation),
                 });
-                Alert.alert("Succès", "Votre intérêt a été ajouté.");
+                Alert.alert(langDict.success, langDict.intWasAdd);
             }
 
             // Fermer le modal et recharger la liste des intérêts
@@ -77,8 +78,8 @@ const InterestsScreen = ({ route, navigation }) => {
             setModalVisible(false);
             loadInterests();
         } catch (error) {
-            console.error("Erreur lors de l'ajout/du changement de l'intérêt:", error);
-            Alert.alert("Erreur", "Impossible de placer ou modifier l'intérêt. Veuillez réessayer.");
+            console.error(langDict.errWhAddLoadInt, error);
+            Alert.alert(langDict.error, langDict.impPlaceEditInt);
         }
     };
 
@@ -86,22 +87,22 @@ const InterestsScreen = ({ route, navigation }) => {
     const handleDeleteInterest = async () => {
         try {
             await deleteInterestByFleaMarket(fleaMarketId);
-            Alert.alert("Succès", "Votre intérêt a été supprimé.");
+            Alert.alert(langDict.success, langDict.intWasDel);
             setHasPlacedInterest(false);
             setExistingInterest(null);
             setIsDealer(false);
             setParticipation('');
             loadInterests();
         } catch (error) {
-            console.error("Erreur lors de la suppression de l'intérêt:", error);
-            Alert.alert("Erreur", "Impossible de supprimer l'intérêt. Veuillez réessayer.");
+            console.error(langDict.errWhDelInt, error);
+            Alert.alert(langDict.error, langDict.impDelInt);
         }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Interests</Text>
-            <Text style={styles.subtitle}>Flea Market ID: {fleaMarketId}</Text>
+            <Text style={styles.title}>{langDict.interests}</Text>
+            <Text style={styles.subtitle}>{langDict.fleaMarketID}: {fleaMarketId}</Text>
 
             <ScrollView style={styles.interestList} contentContainerStyle={styles.interestListContent}>
                 {interests.map((interest) => (
@@ -110,15 +111,15 @@ const InterestsScreen = ({ route, navigation }) => {
                         style={styles.interestItem}
                         onPress={() => navigation.navigate('InterestDetails', { person: interest.person })}
                     >
-                        <Text style={styles.interestName}>Person ID: {interest.person_id}</Text>
+                        <Text style={styles.interestName}>{langDict.personID}: {interest.person_id}</Text>
                         <Text style={styles.interestDetails}>
-                            Interested: {interest.is_interested ? "Yes" : "No"}
+                            {langDict.interested} {interest.is_interested ? langDict.yes : langDict.no}
                         </Text>
                         <Text style={styles.interestDetails}>
-                            Dealer: {interest.is_dealer ? "Yes" : "No"}
+                        {langDict.dealer}: {interest.is_dealer ? langDict.yes : langDict.no}
                         </Text>
                         <Text style={styles.interestDetails}>
-                            Participation: {interest.participation}
+                            {langDict.participation}: {interest.participation}
                         </Text>
                     </TouchableOpacity>
                 ))}
@@ -131,7 +132,7 @@ const InterestsScreen = ({ route, navigation }) => {
                         onPress={() => setModalVisible(true)}
                         style={styles.updateInterestButton}
                     >
-                        <Text style={styles.updateInterestButtonText}>Update Interest</Text>
+                        <Text style={styles.updateInterestButtonText}>{langDict.updateInterest}</Text>
                     </TouchableOpacity>
 
                     {/* Bouton pour supprimer l'intérêt */}
@@ -139,7 +140,7 @@ const InterestsScreen = ({ route, navigation }) => {
                         onPress={handleDeleteInterest}
                         style={styles.deleteInterestButton}
                     >
-                        <Text style={styles.deleteInterestButtonText}>Delete Interest</Text>
+                        <Text style={styles.deleteInterestButtonText}>{langDict.deleteInterest}</Text>
                     </TouchableOpacity>
                 </>
             ) : (
@@ -148,7 +149,7 @@ const InterestsScreen = ({ route, navigation }) => {
                     onPress={() => setModalVisible(true)}
                     style={styles.placeInterestButton}
                 >
-                    <Text style={styles.placeInterestButtonText}>Place Interest</Text>
+                    <Text style={styles.placeInterestButtonText}>{langDict.placeInterest}</Text>
                 </TouchableOpacity>
             )}
 
@@ -156,41 +157,41 @@ const InterestsScreen = ({ route, navigation }) => {
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>
-                            {hasPlacedInterest ? "Modify Interest" : "Place Interest"}
+                            {hasPlacedInterest ? langDict.modifyInterest : langDict.placeInterest}
                         </Text>
 
-                        <Text style={styles.hiddenField}>FleaMarket ID: {fleaMarketId}</Text>
-                        <Text style={styles.hiddenField}>Person ID: {personId}</Text>
+                        <Text style={styles.hiddenField}>{langDict.fleaMarketID}: {fleaMarketId}</Text>
+                        <Text style={styles.hiddenField}>{langDict.personID}: {personId}</Text>
 
                         <View style={styles.switchContainer}>
-                            <Text style={styles.label}>Dealer:</Text>
+                            <Text style={styles.label}>{langDict.dealer}:</Text>
                             <Switch value={isDealer} onValueChange={setIsDealer} />
                         </View>
 
                         <TextInput
                             style={styles.input}
-                            placeholder="Participation"
+                            placeholder={langDict.participation}
                             keyboardType="numeric"
                             value={participation}
                             onChangeText={setParticipation}
                         />
 
                         <TouchableOpacity onPress={handleSubmitInterest} style={styles.modalButton}>
-                            <Text style={styles.modalButtonText}>Submit</Text>
+                            <Text style={styles.modalButtonText}>{langDict.submit}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             onPress={() => setModalVisible(false)}
                             style={[styles.modalButton, styles.cancelButton]}
                         >
-                            <Text style={styles.modalButtonText}>Cancel</Text>
+                            <Text style={styles.modalButtonText}>{langDict.cancel}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
 
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Text style={styles.backButtonText}>Back</Text>
+                <Text style={styles.backButtonText}>{langDict.back}</Text>
             </TouchableOpacity>
         </View>
     );

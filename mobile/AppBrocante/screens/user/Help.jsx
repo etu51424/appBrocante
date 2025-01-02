@@ -3,18 +3,20 @@ import { View, Text, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { getRecoveryCode, verifyRecoveryCode } from "../../fetchAPI/recovery";
 import { useNavigation } from '@react-navigation/native'; // Import pour la navigation
+import { useSelector } from "react-redux";
 
 export default function Help() {
     const [id, setId] = useState(''); // Identifiant de l'utilisateur
     const [recoveryCode, setRecoveryCode] = useState(''); // Code de récupération
     const navigation = useNavigation(); // Hook pour la navigation
+    const langDict = useSelector((state) => state.language.langDict);
 
     const handleSubmit = async () => {
         if (id) {
             await getRecoveryCode(id);
-            Alert.alert("Submit", "Your recovery request has been submitted.");
+            Alert.alert(langDict.submit, langDict.yourRecoveryRequestHas);
         } else {
-            Alert.alert("Error", "Please Enter your Id.");
+            Alert.alert(langDict.error, langDict.plsEnterYourId);
         }
     };
 
@@ -27,21 +29,21 @@ export default function Help() {
             };
              const result = await verifyRecoveryCode(body);
             if (result) {
-                Alert.alert("Success", "Le code est validé !", [
+                Alert.alert(langDict.success, langDict.codeIsValidated, [
                     { text: "OK", onPress: () => navigation.navigate("LogIn") }, // Navigue vers l'écran principal
                 ]);
             } else {
                 // Affichage du message d'erreur si le code est invalide
-                Alert.alert("Error", "The recovery code is invalid.");
+                Alert.alert(langDict.error, langDict.recoveryCodeInvalid);
             }
         } else {
-            Alert.alert("Error", "Please enter the recovery code.");
+            Alert.alert(langDict.error, langDict.plsEnterRecovCode);
         }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Help</Text>
+            <Text style={styles.title}>{langDict.help}</Text>
 
             <View style={styles.inputGroup}>
                 <TextInput
@@ -49,7 +51,7 @@ export default function Help() {
                     value={id}
                     onChangeText={setId}
                     style={styles.input}
-                    placeholder="Enter your id"
+                    placeholder={langDict.enterYourId}
                 />
             </View>
 
@@ -58,7 +60,7 @@ export default function Help() {
                 onPress={handleSubmit} // Soumettre les informations
                 style={styles.submitButton}
             >
-                Submit
+                {langDict.submit}
             </Button>
 
             <View style={styles.inputGroup}>
@@ -67,7 +69,7 @@ export default function Help() {
                     value={recoveryCode}
                     onChangeText={setRecoveryCode}
                     style={styles.input}
-                    placeholder="Enter recovery code"
+                    placeholder={langDict.enterRecovCode}
                 />
             </View>
 
@@ -76,7 +78,7 @@ export default function Help() {
                 onPress={handleFinalize} // Finaliser l'action avec le code de récupération
                 style={styles.finalizeButton}
             >
-                Finalize
+                {langDict.finalize}
             </Button>
         </View>
     );
