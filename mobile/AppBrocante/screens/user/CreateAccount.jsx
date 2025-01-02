@@ -3,7 +3,7 @@ import { useNavigation , useFocusEffect} from '@react-navigation/native';
 import React, {useState, useCallback} from "react";
 import { Button, TextInput } from "react-native-paper";
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { useSelector } from "react-redux";
 
 export default function CreateAccount(){
     const navigation = useNavigation();
@@ -29,6 +29,8 @@ export default function CreateAccount(){
         });
     };
 
+    const langDict = useSelector((state) => state.language.langDict);
+
     // Utilisation de useFocusEffect pour réinitialiser les champs à chaque fois que l'écran est réaffiché
     useFocusEffect(
         useCallback(() => {
@@ -49,37 +51,37 @@ export default function CreateAccount(){
                         alt= "Logo"
                     />
 
-                    <Text style={styles.inputLabel}>FirstName</Text>
+                    <Text style={styles.inputLabel}>{langDict.firstName}</Text>
                     <TextInput style={styles.inputControl}
                     placeholder="FirstName"
                     value={form.firstname}
                     onChangeText={firstname => setForm ({...form, firstname})}/>
 
-                    <Text style={styles.inputLabel}>LastName</Text>
+                    <Text style={styles.inputLabel}>{langDict.lastName}</Text>
                     <TextInput style={styles.inputControl}
                     placeholder="LastName"
                     value={form.lastname}
                     onChangeText={lastname => setForm ({...form, lastname})}/>
 
-                    <Text style={styles.inputLabel}>UserName</Text>
+                    <Text style={styles.inputLabel}>{langDict.username}</Text>
                     <TextInput style={styles.inputControl}
                     placeholder="UserName"
                     value={form.username}
                     onChangeText={username => setForm ({...form, username})}/>
 
-                    <Text style={styles.inputLabel}>Address</Text>
+                    <Text style={styles.inputLabel}>{langDict.address}</Text>
                     <TextInput style={styles.inputControl}
                     placeholder="Address"
                     value={form.address}
                     onChangeText={address => setForm ({...form, address})}/>
 
-                    <Text style={styles.inputLabel}>PhoneNumber</Text>
+                    <Text style={styles.inputLabel}>{langDict.phoneNumber}</Text>
                     <TextInput style={styles.inputControl}
                     placeholder="04xxxxxxxx"
                     value={form.phoneNumber}
                     onChangeText={phoneNumber => setForm ({...form, phoneNumber})}/>
 
-                    <Text style={styles.inputLabel}>Email Address</Text>
+                    <Text style={styles.inputLabel}>{langDict.email}</Text>
                     <TextInput style={styles.inputControl}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -89,7 +91,7 @@ export default function CreateAccount(){
                     onchangeText={email => setForm ({ ...form, email })}
                     />
 
-                    <Text style={styles.inputLabel}>Password</Text>
+                    <Text style={styles.inputLabel}>{langDict.password}</Text>
                     <TextInput 
                     secureTextEntry
                     style={styles.inputControl}
@@ -100,7 +102,7 @@ export default function CreateAccount(){
                     
                 
                     <Button style= {styles.button} onPress= {() => {}}>
-                        <Text style= {styles.textButton}>Create Account</Text>
+                        <Text style= {styles.textButton}>{langDict.createAccount}</Text>
                     </Button>
                 </View>
             </View>

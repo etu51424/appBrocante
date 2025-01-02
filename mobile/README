@@ -1,4 +1,7 @@
 
+npm i react-redux
+npm i @reduxjs/toolkit
+
 - a faire :
     lier à l'api
     photo utilisateur

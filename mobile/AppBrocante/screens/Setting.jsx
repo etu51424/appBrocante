@@ -8,6 +8,8 @@ import {
   FlatList,
   Switch,
 } from 'react-native';
+import { changeLanguage } from "../store/slice/language";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function LanguageSelector() {
   const languages = [
@@ -28,15 +30,32 @@ export default function LanguageSelector() {
 
   // Fonction pour sélectionner une langue
   const selectLanguage = (language) => {
+    handleChangeLanguage(language);
     setSelectedLanguage(language);
     setDropdownOpen(false);
   };
+
+  const dispatch = useDispatch();
+  
+  const handleChangeLanguage = (lang) => {
+    // update la langue globalement. Passe la nouvelle langue. changeLanguage change de dictionnaire. 
+    // puis dispatch ce nouveau state.langDict et state.Language sur toutes les autres pages.
+    // lang est un obj contenant le label, la value (en, nl, fr) et un flag
+
+    console.log("Dispatching language change to (lang.value) directly :", lang.value); // Log only the language code
+    console.log("Dispatching language change to (as an { value : language.value object) }):", { value: lang.value });
+    console.log("Langue contient plusieurs trucs:", lang);
+    dispatch(changeLanguage({value: lang.value}));
+  };
+
+  const langDict = useSelector((state) => state.language.langDict);
+  console.log('langDict from Redux:', langDict);
 
   return (
     <View style={styles.container}>
       {/* Ligne unique pour "Select a Language" et le bouton déroulant */}
       <View style={styles.row}>
-        <Text style={styles.label}>Select a Language</Text>
+        <Text style={styles.label}>{langDict.selectALanguage}</Text>
 
         {/* Bouton pour afficher/masquer la liste */}
         <TouchableOpacity
@@ -73,7 +92,7 @@ export default function LanguageSelector() {
 
       {/* Ligne pour le mode clair/sombre */}
       <View style={styles.row}>
-        <Text style={styles.label}>Dark Mode</Text>
+        <Text style={styles.label}>{langDict.darkMode}</Text>
         <Switch
           value={isDarkMode}
           onValueChange={() => setIsDarkMode((prevMode) => !prevMode)}
