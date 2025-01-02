@@ -14,7 +14,7 @@ const languageSlice = createSlice({
             // retourne tjr un tout nouvel obj
             return {
                 ...state,
-                language: action.payload.value, // Fix if you're passing the entire object
+                language: action.payload.value,
                 langDict: languageDictProvider(action.payload.value), // pase uniquement le language code
             };
         }
@@ -23,10 +23,3 @@ const languageSlice = createSlice({
 
 export const { changeLanguage } = languageSlice.actions;
 export default languageSlice.reducer;
-
-
-/*
-const changeLanguageReducer = (state, action) => {
-    state.language = action.payload;
-    state.langDict = languageDictProvider(action.payload);
-};*/

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TextInput, StyleSheet, SafeAreaView, Alert, Modal, Text, TouchableOpacity, FlatList} from 'react-native';
-import MapView, { Marker } from 'react-native-maps'; // Importation de MapView et Marker
-import * as Location from 'expo-location'; // Importation de l'API Location d'Expo
-import {Button} from 'react-native-paper'; // Importation du bouton de Paper
+// on importe MapView et Marker
+import MapView, { Marker } from 'react-native-maps'; 
+
+import * as Location from 'expo-location'; 
+import {Button} from 'react-native-paper'; 
 import Icon from 'react-native-vector-icons/Ionicons';
 import {getAllFleaMarketsInRange} from "../fetchAPI/CRUD/fleaMarket";
 import {adaptedDateFormat, isBefore} from "../utils/date";
@@ -22,16 +24,17 @@ export default function Research() {
     const [userLocation, setUserLocation] = useState(null);
     const [address, setAddress] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
-    const [radius, setRadius] = useState(10); // en kilomètres
+    const [radius, setRadius] = useState(10); 
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [selectedView, setSelectedView] = useState('map'); // Initialement "map"
+    const [selectedView, setSelectedView] = useState('map'); 
     const [locations, setLocations] = useState([])
-    const [previousRegion, setPreviousRegion] = useState(null); // Pour restaurer la vue précédente
+    // permet de revenir à la view d'avant
+    const [previousRegion, setPreviousRegion] = useState(null); 
     const [fleaMarkets, setFleaMarkets] = useState({});
     const langDict = useSelector((state) => state.language.langDict);
 
-    // Fonction pour vérifier et demander les autorisations de localisation
+// verifie qu'on peut obtenir la location du système
     const checkPermissions = async () => {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status === 'granted') {
@@ -41,7 +44,7 @@ export default function Research() {
         }
     };
 
-    // Fonction pour obtenir la géolocalisation de l'utilisateur
+    // se charge d'obtenir la location de l'useur
     const getUserLocation = async () => {
         try {
             const location = await Location.getCurrentPositionAsync({
@@ -68,7 +71,7 @@ export default function Research() {
             const data = await response.json();
 
             if (data.status === 'OK') {
-                // Extraction de tous les résultats
+                // extrait de results l'id, l'addr' la latitude/longitude
                 const results = data.results.map((result, index) => ({
                     id: index.toString(),
                     name: result.formatted_address,
@@ -76,9 +79,9 @@ export default function Research() {
                     longitude: result.geometry.location.lng,
                 }));
 
-                setLocations(results); // Mettre à jour la liste des emplacements
+                setLocations(results); // MAJ la liste des locations
 
-                // Centrer la caméra sur le premier résultat
+                // on centre la caméra sur la première location (= un result)
                 if (mapViewRef.current && results.length > 0) {
                     mapViewRef.current.animateCamera({
                         center: { latitude: results[0].latitude, longitude: results[0].longitude },
@@ -94,15 +97,15 @@ export default function Research() {
         }
     };
 
-    // Fonction pour afficher la fenêtre modale de filtre
+    // affiche la petite fenetre de filtre
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
 
-    // Appliquer les filtres
+    // utiliser les filtres sélectionnés par l'useur  -sur les brocantes
     const applyFilters = async () => {
 
-        toggleModal(); // Fermer la modale après avoir appliqué les filtres
+        toggleModal(); // plus besoin du modal, on le ferme
 
         try {
             let fetchedFleaMarkets = await getAllFleaMarketsInRange(radius);
@@ -126,7 +129,8 @@ export default function Research() {
     const filterMarketsByAddress = () => {
         if (address) {
             const filteredMarkets = fleaMarkets.filter((fleaMarket) =>
-                fleaMarket.address.toLowerCase().includes(address.toLowerCase()) // Comparaison insensible à la casse
+                // verifie si une adresse correspond à une autre (on ignore les majuscules)
+                fleaMarket.address.toLowerCase().includes(address.toLowerCase()) 
             );
             setFleaMarkets(filteredMarkets);
         }
@@ -135,16 +139,17 @@ export default function Research() {
 
     useEffect(() => {
         checkPermissions();
-        getFleaMarkets(); // Récupération des marchés aux puces
+        getFleaMarkets(); 
     }, []);
 
-    // Sauvegarder l'état de la carte lors du passage à la vue "list"
+    // On passe à la view avec la liste des brocantes.
+    // donc retenir l'état de la carte dans un useState
     const switchToListView = () => {
         setPreviousRegion(region);
         setSelectedView('list');
     };
 
-    // Restaurer l'état de la carte lors du retour à la vue "map"
+    // le réutiliser quand l'useur revient à la view carte
     const switchToMapView = () => {
         setSelectedView('map');
         if (previousRegion) {
@@ -241,7 +246,7 @@ export default function Research() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                {/* MapView avec géolocalisation de l'utilisateur */}
+
                 {selectedView === 'map' ? (
                     <MapView
                         ref={mapViewRef}
@@ -252,14 +257,12 @@ export default function Research() {
                         scrollEnabled={true}
                         mapType='standard'
                     >
-                        {/* Marqueur pour la localisation de l'utilisateur */}
                         {userLocation && userLocation.latitude && userLocation.longitude && (
                             <Marker coordinate={{ latitude: userLocation.latitude, longitude: userLocation.longitude }}>
                                 <View style={styles.customMarker} />
                             </Marker>
                         )}
 
-                        {/* Marqueurs pour tous les résultats de recherche */}
                         {locations.map(location => (
                             <Marker
                                 key={location.id}
@@ -276,7 +279,6 @@ export default function Research() {
                             <TouchableOpacity
                                 style={styles.listItem}
                                 onPress={() => {
-                                    // Naviguer vers l'écran des détails et passer l'objet fleaMarket en paramètre
                                     navigation.navigate('FleaMarketDetails', { market: item });
                                 }}
                             >
@@ -291,26 +293,21 @@ export default function Research() {
                     />
 
                 )}
-                {/* Conteneur de la barre de recherche */}
                 <View style={styles.searchContainer}>
-                    {/* TextInput pour entrer l'adresse */}
                     <TextInput
                         style={styles.searchInput}
-                        placeholder="Enter an address"
+                        placeholder={langDict.enterAddr}
                         value={address}
                         onChangeText={(text) => setAddress(text)}
                     />
-                    {/* Bouton de recherche */}
                     <TouchableOpacity style={styles.searchButton} onPress={filterMarketsByAddress}>
                         <Icon name="search" size={20} color="#3F2100" />
                     </TouchableOpacity>
-                    {/* Bouton de filtre */}
                     <TouchableOpacity style={styles.searchButton} onPress={toggleModal} >
                         <Icon name="funnel" size={20} color="#3F2100" />
                     </TouchableOpacity>
                 </View>
 
-                {/* Bouton pour rediriger la carte vers le nord */}
                 {selectedView === 'map' && (
                     <TouchableOpacity style={styles.northButton} onPress={resetMapToNorth}>
                         <Icon name="compass" size={30} color="#3F2100" />
@@ -334,13 +331,11 @@ export default function Research() {
                     >
                         <Icon name="list" size={25} color="#3F2100" />
                     </TouchableOpacity>
-                    {/* Bouton pour rafraîchir les brocantes */}
                     <TouchableOpacity style={styles.refreshButton} onPress={getFleaMarkets}>
                         <Icon name="refresh" size={25} color="#3F2100" />
                     </TouchableOpacity>
 
                 </View>
-                {/* Modal for Filters */}
                 <Modal
                     visible={isModalVisible}
                     animationType="slide"
@@ -475,14 +470,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalContainer: {
-        backgroundColor: '#E5D289', // Fond de la modale
+        backgroundColor: '#E5D289', 
         padding: 20,
         borderRadius: 10,
-        width: '80%', // Ajustez la largeur
-        alignItems: 'flex-start', // Alignement des éléments à gauche
+        width: '80%', 
+        alignItems: 'flex-start', 
     },
     modalText: {
-        color: '#3F2100', // Couleur de texte
+        color: '#3F2100', 
         fontSize: 16,
         marginBottom: 8,
     },
@@ -504,22 +499,22 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 20,
         flexDirection: 'row',
-        justifyContent: 'space-between',  // Cela garantit que les boutons sont bien espacés
-        width: '100%',  // Assurez-vous que le conteneur prend toute la largeur disponible
+        justifyContent: 'space-between',  // les boutons sont équitablement répartis
+        width: '100%', 
     },
     button: {
         backgroundColor: '#3F2100',
         borderRadius: 8,
-        paddingVertical: 12,  // Assurez-vous que les boutons sont assez grands et ont la même taille
-        flex: 1,  // Cela garantit que chaque bouton prend une largeur égale
-        marginHorizontal: 5,  // Espacement entre les boutons
-        justifyContent: 'center',  // Centrer le texte à l'intérieur du bouton
+        paddingVertical: 12,  
+        flex: 1,  // chaq bouton fait la meme taille
+        marginHorizontal: 5,  
+        justifyContent: 'center',  // textButton est au centre du bouton
         alignItems: 'center',
     },
     textButton: {
         color: '#F0E6B3',
         fontSize: 21,
-        textAlign: 'center',  // Assurez-vous que le texte est bien centré
+        textAlign: 'center',
     },
     listContainer: {
         padding: 10,

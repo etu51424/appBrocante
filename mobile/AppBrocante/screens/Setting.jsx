@@ -18,17 +18,12 @@ export default function LanguageSelector() {
     { label: 'Nederlands', value: 'nl', flag: require('../assets/nl.png') },
   ];
 
-  // Langue par défaut : anglais
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-
-  // État pour le mode clair/sombre
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // État pour capturer la largeur du bouton
   const [buttonWidth, setButtonWidth] = useState(0);
 
-  // Fonction pour sélectionner une langue
+
   const selectLanguage = (language) => {
     handleChangeLanguage(language);
     setSelectedLanguage(language);
@@ -38,8 +33,8 @@ export default function LanguageSelector() {
   const dispatch = useDispatch();
   
   const handleChangeLanguage = (lang) => {
-    // update la langue globalement. Passe la nouvelle langue. changeLanguage change de dictionnaire. 
-    // puis dispatch ce nouveau state.langDict et state.Language sur toutes les autres pages.
+    // update la langue globalement.
+    // puis dispatch ce nouveau state
     // lang est un obj contenant le label, la value (en, nl, fr) et un flag
 
     dispatch(changeLanguage({value: lang.value}));
@@ -49,17 +44,16 @@ export default function LanguageSelector() {
 
   return (
     <View style={styles.container}>
-      {/* Ligne unique pour "Select a Language" et le bouton déroulant */}
       <View style={styles.row}>
         <Text style={styles.label}>{langDict.selectALanguage}</Text>
 
-        {/* Bouton pour afficher/masquer la liste */}
+        {/*bouton pour afficher/cacher la liste*/}
         <TouchableOpacity
           style={styles.dropdownButton}
           onPress={() => setDropdownOpen(!isDropdownOpen)}
           onLayout={(event) => {
             const { width } = event.nativeEvent.layout;
-            setButtonWidth(width); // Capturer la largeur du bouton
+            setButtonWidth(width);
           }}
         >
           <Text style={styles.dropdownButtonText}>
@@ -68,12 +62,11 @@ export default function LanguageSelector() {
         </TouchableOpacity>
       </View>
 
-      {/* Liste déroulante */}
       {isDropdownOpen && (
         <FlatList
           data={languages}
           keyExtractor={(item) => item.value}
-          style={[styles.dropdownList, { width: buttonWidth }]} // Appliquer la largeur du bouton
+          style={[styles.dropdownList, { width: buttonWidth }]}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.languageItem}
@@ -86,7 +79,6 @@ export default function LanguageSelector() {
         />
       )}
 
-      {/* Ligne pour le mode clair/sombre */}
       <View style={styles.row}>
         <Text style={styles.label}>{langDict.darkMode}</Text>
         <Switch
@@ -115,31 +107,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
-    flex: 1, // Prend la moitié gauche de l'écran
+    flex: 1, // 1/2 écran. Est en premier donc à gauche
   },
   dropdownButton: {
     backgroundColor: '#F0E6B3',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 8,
-    flex: 1, // Prend la moitié droite de l'écran
+    flex: 1, // prend la moitié de l'espace à droite
     marginLeft: 10,
   },
   dropdownButtonText: {
     fontSize: 16,
     color: '#333',
-    textAlign: 'center', // Centrer le texte
+    textAlign: 'center', 
   },
   dropdownList: {
     backgroundColor: '#F0E6B3',
     borderRadius: 8,
-    elevation: 3, // Ombre (Android)
+    elevation: 3, 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    maxHeight: 150, // Limiter la hauteur pour le défilement
+    maxHeight: 150, //quand l'useur scroll, ceci est la hauteur maximale
     marginTop: 10,
-    alignSelf: 'flex-end', // Aligner à dro
+    alignSelf: 'flex-end', 
   },
   languageItem: {
     flexDirection: 'row',

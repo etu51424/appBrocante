@@ -141,5 +141,24 @@
     
     "errSlots":"Erreur lors de la récupération des emplacements",
     "available":"Disponible",
-    "unavailable":"Indisponible"
+    "unavailable":"Indisponible",
+
+    "search":"Rechercher",
+    "user":"Utilisateur",
+    "setting":"Paramètre",
+    "enterAddr":"Entrer une adresse",
+
+    "errWhGetProfilePic": "Erreur lors de la récupération de la photo de profil",
+    "errWhGetDealer": "Erreur lors de la récupération du brocanteur",
+    "errSomeFieldsMustBe": "Les champs pour le prénom, le nom de famille et l'adresse mail doivent être remplis",
+    "pWasUpd": "Votre profil a été mis à jour",
+    "pWasNotUpd": "Votre profil n'a pas pu être mis à jour",
+    "errWhEditProfile": "Erreur lors de la modification du profil",
+    "typeDescMust": "Les champs type et description doivent être remplis",
+    "dealerAccountCreated": "Compte brocanteur créé",
+    "couldntCreateDeaAcc": "Impossible de créer le compte brocanteur",
+    "errWhCreatDeaAcc": "Erreur lors de la création du compte brocanteur :",
+    "dealerProfileUpd": "Le profil brocanteur a été mis à jour",
+    "noDealProfileUpd": "Impossible de mettre à jour le profil brocanteur",
+    "errWhUpdDeaProfile": "Erreur lors de la mise à jour du profil brocanteur"
 }

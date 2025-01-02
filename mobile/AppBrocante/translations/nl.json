@@ -141,6 +141,25 @@
     
     "errSlots":"Fout bij het ophalen van de emplacements",
     "available":"Beschikbaar",
-    "unavailable":"Niet beschikbaar"
+    "unavailable":"Niet beschikbaar",
+
+    "search":"Zoeken",
+    "user":"Gebruiker",
+    "setting":"Instelling",
+    "enterAddr":"Voer een adres in",
+
+    "errWhGetProfilePic": "Fout bij het ophalen van de profielfoto",
+    "errWhGetDealer": "Fout bij het ophalen van de brocanteur",
+    "errSomeFieldsMustBe": "De velden voor voornaam, achternaam en e-mail moeten worden ingevuld",
+    "pWasUpd": "Uw profiel is bijgewerkt",
+    "pWasNotUpd": "Uw profiel kon niet worden bijgewerkt",
+    "errWhEditProfile": "Fout bij het bewerken van het profiel",
+    "typeDescMust": "De velden type en beschrijving moeten worden ingevuld",
+    "dealerAccountCreated": "Brocanteursaccount aangemaakt",
+    "couldntCreateDeaAcc": "Kon het brocanteursaccount niet aanmaken",
+    "errWhCreatDeaAcc": "Fout bij het aanmaken van het brocanteursaccount:",
+    "dealerProfileUpd": "Het profiel van de brocanteur is bijgewerkt",
+    "noDealProfileUpd": "Het profiel van de brocanteur kon niet worden bijgewerkt",
+    "errWhUpdDeaProfile": "Fout bij het bijwerken van het profiel van de brocanteur"
 }
 

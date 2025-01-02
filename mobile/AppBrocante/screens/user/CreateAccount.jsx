@@ -31,10 +31,11 @@ export default function CreateAccount(){
 
     const langDict = useSelector((state) => state.language.langDict);
 
-    // Utilisation de useFocusEffect pour réinitialiser les champs à chaque fois que l'écran est réaffiché
+    // useFocusEffect reinit les champs à chaque fois que l'écran est réaffiché
     useFocusEffect(
         useCallback(() => {
-            resetForm(); // Réinitialiser le formulaire lorsque l'écran est focalisé
+            // le formulaire est reinit quand l'écran est en focus
+            resetForm(); 
         }, [])
     );
     return (

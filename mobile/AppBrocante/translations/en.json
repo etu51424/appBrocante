@@ -141,5 +141,24 @@
     
     "errSlots":"Error when fetching slots",
     "available":"Available",
-    "unavailable":"Unavailable"
+    "unavailable":"Unavailable",
+
+    "search":"Search",
+    "user":"User",
+    "setting":"Setting",
+    "enterAddr":"Enter an address",
+    
+    "errWhGetProfilePic":"Error when trying to get the profile picture",
+    "errWhGetDealer":"Error when trying to get the dealer",
+    "errSomeFieldsMustBe":"The fields for the first name, last name and mail must be filled",
+    "pWasUpd":"Your profile has been updated",
+    "pWasNotUpd":"Your profile could not be updated",
+    "errWhEditProfile":"Error when editing the profile",
+    "typeDescMust":"The fields type and description must be filled",
+    "dealerAccountCreated":"Dealer account created",
+    "couldntCreateDeaAcc":"Could not create dealer account",
+    "errWhCreatDeaAcc":"Error when creating dealer account:",
+    "dealerProfileUpd":"Dealer profile has been updated",
+    "noDealProfileUpd":"Could not update dealer profile",
+    "errWhUpdDeaProfile":"Error when updating dealer profile"
 }

@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { getSlotsByFleaMarket } from "../fetchAPI/CRUD/slots"; // Assurez-vous que cette fonction existe et récupère les slots
+import { getSlotsByFleaMarket } from "../fetchAPI/CRUD/slots";
 
 const Slots = ({ route, navigation }) => {
-    const { fleaMarketId } = route.params; // Récupère l'ID du marché aux puces
-    const [slots, setSlots] = useState([]); // État pour stocker les slots
-    const [loading, setLoading] = useState(true); // État pour gérer le chargement
+    const { fleaMarketId } = route.params;
+    const [slots, setSlots] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fonction pour récupérer les slots associés au marché
         const fetchSlots = async () => {
             try {
-                const fetchedSlots = await getSlotsByFleaMarket(fleaMarketId); // API call
+                const fetchedSlots = await getSlotsByFleaMarket(fleaMarketId);
                 setSlots(fetchedSlots);
             } catch (error) {
                 console.error(langDict.errSlots, error);

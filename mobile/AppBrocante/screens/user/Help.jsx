@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { getRecoveryCode, verifyRecoveryCode } from "../../fetchAPI/recovery";
-import { useNavigation } from '@react-navigation/native'; // Import pour la navigation
+import { useNavigation } from '@react-navigation/native';
 import { useSelector } from "react-redux";
 
 export default function Help() {
-    const [id, setId] = useState(''); // Identifiant de l'utilisateur
-    const [recoveryCode, setRecoveryCode] = useState(''); // Code de récupération
-    const navigation = useNavigation(); // Hook pour la navigation
+    const [id, setId] = useState(''); 
+    const [recoveryCode, setRecoveryCode] = useState(''); 
+    const navigation = useNavigation(); 
     const langDict = useSelector((state) => state.language.langDict);
 
     const handleSubmit = async () => {
@@ -20,7 +20,7 @@ export default function Help() {
         }
     };
 
-    // Fonction pour finaliser l'action (Finalize)
+    
     const handleFinalize = async () => {
         if (recoveryCode && id) {
             let body = {
@@ -33,7 +33,6 @@ export default function Help() {
                     { text: "OK", onPress: () => navigation.navigate("LogIn") }, // Navigue vers l'écran principal
                 ]);
             } else {
-                // Affichage du message d'erreur si le code est invalide
                 Alert.alert(langDict.error, langDict.recoveryCodeInvalid);
             }
         } else {
@@ -57,7 +56,7 @@ export default function Help() {
 
             <Button
                 mode="contained"
-                onPress={handleSubmit} // Soumettre les informations
+                onPress={handleSubmit}
                 style={styles.submitButton}
             >
                 {langDict.submit}
@@ -75,7 +74,7 @@ export default function Help() {
 
             <Button
                 mode="contained"
-                onPress={handleFinalize} // Finaliser l'action avec le code de récupération
+                onPress={handleFinalize} // cliqué => écran finalisé
                 style={styles.finalizeButton}
             >
                 {langDict.finalize}

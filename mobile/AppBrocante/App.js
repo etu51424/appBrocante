@@ -42,9 +42,12 @@ const LightTheme = {
 };
 
 function MainTabs() {
+  //const langDict = useSelector((state) => state.language.langDict);
   const { setIsLoading } = useContext(LoadingContext);
-  const isAuthenticated = useSelector(selectIsAuthenticated); // Accéder à l'état d'authentification
-
+  // authentifie l'useur (login / create account) avant d'accéder au reste
+  const isAuthenticated = useSelector(selectIsAuthenticated); 
+  const langDict = useSelector((state) => state.language.langDict);
+  
   const navigateWithLoading = (navigation, screenName) => {
     setIsLoading(true);
     setTimeout(() => {
@@ -55,7 +58,7 @@ function MainTabs() {
 
   return (
       <Tab.Navigator
-          initialRouteName="Research"
+          initialRouteName={"Research"}
           screenOptions={({ route }) => ({
             headerShown: false,
             tabBarStyle: {
@@ -77,7 +80,9 @@ function MainTabs() {
             tabBarInactiveTintColor: LightTheme.colors.tabBarInactive,
           })}
       >
-        <Tab.Screen name="User"  options={{tabBarVisible: true}}>
+        <Tab.Screen
+        name="User"
+        options={{ tabBarLabel: langDict.user }}>
           {({ navigation }) =>
               isAuthenticated ? (
                   <UpdateProfile navigation={navigation} />
@@ -86,10 +91,14 @@ function MainTabs() {
               )
           }
         </Tab.Screen>
-        <Tab.Screen name="Research" options={{tabBarVisible: true}}>
+        <Tab.Screen
+        name="Research"
+        options={{ tabBarLabel: langDict.search }}>
           {(props) => <Research {...props} navigateWithLoading={navigateWithLoading} />}
         </Tab.Screen>
-        <Tab.Screen name="Setting" options={{tabBarVisible: true}}>
+        <Tab.Screen
+        name="Setting"
+        options={{ tabBarLabel: langDict.user }}>
           {(props) => <Setting {...props} navigateWithLoading={navigateWithLoading} />}
         </Tab.Screen>
       </Tab.Navigator>
@@ -106,7 +115,6 @@ export default function App() {
             <NavigationContainer theme={LightTheme}>
               <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="MainTabs" component={MainTabs} options={{tabBarVisible: true}}/>
-                {/* Ajoutez ici les autres écrans qui ne doivent pas être dans la barre de navigation du bas */}
                 <Stack.Screen name="CreateAccount" component={CreateAccount} options={{tabBarVisible: true}}/>
                 <Stack.Screen name="Wait" component={Wait} options={{tabBarVisible: true}}/>
                 <Stack.Screen name="Help" component={Help} options={{tabBarVisible: true}}/>

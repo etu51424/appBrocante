@@ -4,34 +4,33 @@ import {getAvatar} from "../fetchAPI/avatar";
 import { useSelector } from 'react-redux';
 
 const InterestDetails = ({ route, navigation }) => {
-    const { person } = route.params; // Récupère les détails de la personne
-    const [profilePictureUrl, setProfilePictureUrl] = useState(''); // État pour stocker l'URL de la photo
+    const { person } = route.params; // récup et contient la personne
+    const [profilePictureUrl, setProfilePictureUrl] = useState(''); 
     const langDict = useSelector((state) => state.language.langDict);
 
     useEffect(() => {
-        // Vous pouvez ici effectuer un appel API pour récupérer l'URL de l'image si nécessaire
         const fetchProfilePicture = async () => {
             try {
                 const response = await getAvatar(person.id);
                 console.log(response)
-                setProfilePictureUrl(response); // Mettez à jour l'URL de l'image
+                setProfilePictureUrl(response);
             } catch (error) {
                 console.error("Error fetching profile picture:", error);
             }
         };
 
-        fetchProfilePicture(); // Appel API lors du chargement du composant
-    }, [person.profile_picture]); // Exécutez l'effet quand les détails de la personne changent
+        fetchProfilePicture();
+    }, [person.profile_picture]);
 
     const navigateToDealerDetails = () => {
-        navigation.navigate('DealerDetails', { personId: person.id }); // Redirige vers DealerDetails avec person_id
+        navigation.navigate('DealerDetails', { personId: person.id });
     };
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{langDict.personDetails}</Text>
             <Image
-                source={{ uri: profilePictureUrl || `https://example.com/profiles/${person.profile_picture}` }} // Utilisation de l'URL récupérée ou de l'URL par défaut
+                source={{ uri: profilePictureUrl || `https://example.com/profiles/${person.profile_picture}` }}
                 style={styles.profilePicture}
             />
             <Text style={styles.detail}>{langDict.username}: {person.username}</Text>

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Alert } from "react-native";
 import { createArticle, getArticlesByDealer, deleteArticle, updateArticle } from "../fetchAPI/CRUD/articles";
 import { useSelector } from "react-redux";
-import { selectPersonId } from "../store/slice/person"; // API fictive pour récupérer les articles
+import { selectPersonId } from "../store/slice/person";
 
-export default function Articles({ navigation }) { // Ajout de 'navigation' pour revenir à l'écran précédent
+export default function Articles({ navigation }) { 
     const [articles, setArticles] = useState([]);
-    const [isAdding, setIsAdding] = useState(false); // Etat pour afficher ou masquer le formulaire d'ajout d'article
-    const [isEditing, setIsEditing] = useState(false); // Etat pour afficher ou masquer le formulaire de modification
-    const [selectedArticle, setSelectedArticle] = useState(null); // Article sélectionné pour modification
+    const [isAdding, setIsAdding] = useState(false); 
+    const [isEditing, setIsEditing] = useState(false); 
+    const [selectedArticle, setSelectedArticle] = useState(null); 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [cost, setCost] = useState('');
@@ -20,7 +20,7 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const articlesData = await getArticlesByDealer(personId); // Remplacez par une requête réelle
+                const articlesData = await getArticlesByDealer(personId);
                 setArticles(articlesData);
             } catch (error) {
                 console.error(langDict.errorGetArticles, error);
@@ -69,12 +69,12 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
                 cost: parseFloat(cost),
                 condition,
             };
-            // Remplacer par la fonction d'ajout d'article réelle
-            const addedArticle = await createArticle(newArticle); // Fonction à définir pour ajouter un article via l'API
+
+            const addedArticle = await createArticle(newArticle); 
             if (addedArticle) {
                 Alert.alert(langDict.success, langDict.articleSuccess);
                 setArticles((prevArticles) => [addedArticle, ...prevArticles]);
-                setIsAdding(false); // Masquer le formulaire après ajout
+                setIsAdding(false); // cacher le formulaire après l'ajout 
             } else {
                 Alert.alert(langDict.error, langDict.impossibleToAddArticle);
             }
@@ -85,7 +85,6 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
 
     const handleDeleteArticle = async (articleId) => {
         try {
-            // Appel à la fonction pour supprimer un article via l'API
             await deleteArticle(articleId);
             setArticles((prevArticles) => prevArticles.filter((article) => article.id !== articleId));
             Alert.alert(langDict.success, '');
@@ -96,12 +95,13 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
     };
 
     const handleEditArticle = (article) => {
-        setSelectedArticle(article); // Sélectionner l'article pour la modification
+        setSelectedArticle(article); 
         setTitle(article.title);
         setDescription(article.description);
         setCost(article.cost.toString());
         setCondition(article.condition);
-        setIsEditing(true); // Afficher le formulaire de modification
+        // affiche le formulaire pour que l'user puisse edit
+        setIsEditing(true); 
     };
 
     const handleUpdateArticle = async () => {
@@ -118,7 +118,7 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
                 cost: parseFloat(cost),
                 condition,
             };
-            const response = await updateArticle(updatedArticle); // Fonction pour mettre à jour un article via l'API
+            const response = await updateArticle(updatedArticle); 
             if (response) {
                 setArticles((prevArticles) =>
                     prevArticles.map((article) =>
@@ -126,7 +126,7 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
                     )
                 );
                 Alert.alert(langDict.success, langDict.artDelSuc);
-                setIsEditing(false); // Masquer le formulaire après modification
+                setIsEditing(false);
             }
         } catch (error) {
             console.error(langDict.errWhEditArt, error);
@@ -134,8 +134,9 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
         }
     };
 
+    // annule les modifs
     const handleBack = () => {
-        setIsEditing(false); // Annuler l'ajout/modification et revenir à la liste des articles
+        setIsEditing(false); 
         setIsAdding(false);
     };
 
@@ -233,7 +234,6 @@ export default function Articles({ navigation }) { // Ajout de 'navigation' pour
                 </View>
             )}
 
-            {/* Bouton Retour */}
             <TouchableOpacity style={styles.button} onPress={handleBackNav}>
                 <Text style={styles.buttonText}>{langDict.back}</Text>
             </TouchableOpacity>
@@ -275,10 +275,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     editButton: {
-        backgroundColor: "#2196F3", // Couleur bleue pour le bouton de modification
+        backgroundColor: "#2196F3",
     },
     deleteButton: {
-        backgroundColor: "#F44336", // Couleur rouge pour le bouton de suppression
+        backgroundColor: "#F44336", 
     },
     buttonText: {
         fontSize: 18,

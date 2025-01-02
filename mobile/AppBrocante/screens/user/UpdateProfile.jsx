@@ -31,7 +31,7 @@ const UpdateProfile = ({ navigation }) => {
                 setProfilePhoto(photoUrl);
             }
         } catch (error) {
-            console.error("Erreur lors de la récupération de la photo de profil", error);
+            console.error(langDict.errWhGetProfilePic, error);
         } finally {
             setLoading(false);
         }
@@ -46,7 +46,7 @@ const UpdateProfile = ({ navigation }) => {
                 setDescription(dealerInfo.description || '');
             }
         } catch (error) {
-            console.error("Erreur lors de la récupération des informations Dealer", error);
+            console.error(langDict.errWhGetDealer, error);
         }
     };
 
@@ -61,7 +61,7 @@ const UpdateProfile = ({ navigation }) => {
 
     const handleUpdate = async () => {
         if (!firstName || !lastName || !email) {
-            Alert.alert('Erreur', 'Les champs prénom, nom et email sont obligatoires.');
+            Alert.alert(langDict.error, langDict.errSomeFieldsMustBe);
             return;
         }
         const values = { firstName, lastName, email, phoneNumber, address };
@@ -69,50 +69,50 @@ const UpdateProfile = ({ navigation }) => {
             const APIUpdate = await updatePerson(values);
             if (APIUpdate) {
                 dispatch(update(values));
-                Alert.alert('Succès', 'Votre profil a été mis à jour.');
+                Alert.alert(langDict.success, langDict.pWasUpd);
             } else {
-                Alert.alert('Erreur', 'Votre profil n\'a pas pu être mis à jour.');
+                Alert.alert(langDict.error, langDict.pWasNotUpd);
             }
         } catch (e) {
-            console.error(`Erreur lors de la modification du profil ${e.message}`);
+            console.error(`${langDict.errWhEditProfile} ${e.message}`);
         }
     };
 
     const handleDealerCreation = async () => {
         if (!type || !description) {
-            Alert.alert('Erreur', 'Les champs type et description sont obligatoires.');
+            Alert.alert(langDict.error, langDict.typeDescMust);
             return;
         }
         try {
             const dealerData = { personId, type, description, averageRating : 1, reviewCount: 1 };
             const created = await createDealer(dealerData);
             if (created) {
-                Alert.alert('Succès', 'Compte Dealer créé.');
+                Alert.alert(langDict.success, langDict.dealerAccountCreated);
                 fetchDealerInfo();
             } else {
-                Alert.alert('Erreur', 'Impossible de créer le compte Dealer.');
+                Alert.alert(langDict.error, langDict.couldntCreateDeaAcc);
             }
         } catch (error) {
-            console.error('Erreur lors de la création du compte Dealer', error);
+            console.error(langDict.errWhCreatDeaAcc, error);
         }
     };
 
     const handleDealerUpdate = async () => {
         if (!type || !description) {
-            Alert.alert('Erreur', 'Les champs type et description sont obligatoires.');
+            Alert.alert(langDict.error, langDict.typeDescMust);
             return;
         }
         try {
             const dealerData = { personId, type, description };
             const updated = await updateDealer(dealerData);
             if (updated) {
-                Alert.alert('Succès', 'Profil Dealer mis à jour.');
+                Alert.alert(langDict.success, langDict.dealerProfileUpd);
                 fetchDealerInfo();
             } else {
-                Alert.alert('Erreur', 'Impossible de mettre à jour le profil Dealer.');
+                Alert.alert(langDict.error, langDict.noDealProfileUpd);
             }
         } catch (error) {
-            console.error('Erreur lors de la mise à jour du profil Dealer', error);
+            console.error(langDict.errWhUpdDeaProfile, error);
         }
     };
 

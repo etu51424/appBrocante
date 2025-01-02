@@ -2,15 +2,15 @@ import React, { useState, useCallback } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, Alert } from "react-native";
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Button, TextInput } from "react-native-paper";
-import { useDispatch } from "react-redux"; // Hook pour dispatcher des actions
-import { login } from "../../store/slice/person"; // Import de l'action login
+import { useDispatch } from "react-redux";
+import { login } from "../../store/slice/person"; 
 import { login as loginAPI } from "../../fetchAPI/login";
-import {getPerson} from "../../fetchAPI/CRUD/person"; // API fictive pour login
+import {getPerson} from "../../fetchAPI/CRUD/person"; 
 import { useSelector } from "react-redux";
 
 export default function LogIn() {
     const navigation = useNavigation();
-    const dispatch = useDispatch(); // Hook Redux pour dispatcher des actions
+    const dispatch = useDispatch(); 
 
     const [form, setForm] = useState({
         username: '',
@@ -24,7 +24,7 @@ export default function LogIn() {
         });
     };
 
-    // Réinitialise le formulaire lorsque l'écran est focalisé
+    // reinit le formulaire quand l'écran est "en focus"
     useFocusEffect(
         useCallback(() => {
             resetForm();
@@ -56,7 +56,7 @@ export default function LogIn() {
                     throw new Error(langDict.invalidUsernameOrPassword);
                 }
 
-                // Afficher une alerte pour confirmer la connexion
+                // confirme juste la correction
                 Alert.alert(langDict.success, langDict.youAreNowLoggedIn, [
                     { text: "OK", onPress: () => navigation.navigate("UpdateProfile") }, // Navigue vers l'écran principal
                 ]);
@@ -99,7 +99,7 @@ export default function LogIn() {
 
                     <Button
                         style={styles.button}
-                        onPress={handleLogin} // Appelle la fonction handleLogin
+                        onPress={handleLogin} // clic est ici
                     >
                         <Text style={styles.textButton}>{langDict.logIn}</Text>
                     </Button>
@@ -113,7 +113,7 @@ export default function LogIn() {
 
                     <Button
                         style={styles.helpButton}
-                        onPress={() => navigation.navigate('Help')} // Redirige vers l'écran Help
+                        onPress={() => navigation.navigate('Help')} // va vers Help.jsx
                     >
                         <Text style={styles.textButton}>{langDict.cantLogin}</Text>
                     </Button>

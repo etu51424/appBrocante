@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { getArticlesByDealer } from "../fetchAPI/CRUD/articles.js"; // Assurez-vous que cette fonction existe
+import { getArticlesByDealer } from "../fetchAPI/CRUD/articles.js";
 import { useSelector } from 'react-redux';
 
 const DealerDetails = ({ route, navigation }) => {
-    const { personId } = route.params; // Récupère le personId
-    const [articles, setArticles] = useState([]); // État pour stocker les articles
+    const { personId } = route.params; 
+    const [articles, setArticles] = useState([]); 
     const langDict = useSelector((state) => state.language.langDict);
 
     useEffect(() => {
-        // Fonction pour récupérer les articles associés au dealer
         const fetchArticles = async () => {
             try {
-                const fetchedArticles = await getArticlesByDealer(personId); // Récupérer les articles via l'API
-                setArticles(fetchedArticles); // Stocker les articles dans l'état
+                const fetchedArticles = await getArticlesByDealer(personId); 
+                setArticles(fetchedArticles); 
             } catch (error) {
                 console.error(langDict.errWhLoadArts, error);
             }
         };
 
-        fetchArticles(); // Appel à l'API lors de l'arrivée sur l'écran
+        fetchArticles(); 
     }, [personId]);
 
     return (
@@ -27,7 +26,6 @@ const DealerDetails = ({ route, navigation }) => {
             <Text style={styles.title}>{langDict.dealerDetails}</Text>
             <Text style={styles.subtitle}>{langDict.personId}: {personId}</Text>
 
-            {/* Vérification si la liste d'articles est vide */}
             {articles.length === 0 ? (
                 <Text style={styles.noArticlesMessage}>{langDict.noRegisteredArticle}</Text>
             ) : (

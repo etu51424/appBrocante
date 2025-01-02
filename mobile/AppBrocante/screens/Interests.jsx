@@ -17,7 +17,6 @@ const InterestsScreen = ({ route, navigation }) => {
 
     const personId = useSelector(selectPersonId);
 
-    // Fonction pour charger les intérêts
     const loadInterests = async () => {
         try {
             const updatedInterests = await getinterestsByFleaMarket(fleaMarketId);
@@ -45,7 +44,7 @@ const InterestsScreen = ({ route, navigation }) => {
         }, [])
     );
 
-    // Fonction pour gérer l'envoi du formulaire
+    // gère la soumission de l'intérêt
     const handleSubmitInterest = async () => {
         if (!participation || parseInt(participation) <= 0) {
             Alert.alert(langDict.error, langDict.partMustBeInt);
@@ -54,7 +53,7 @@ const InterestsScreen = ({ route, navigation }) => {
 
         try {
             if (hasPlacedInterest) {
-                // Mettre à jour l'intérêt existant
+                // MAJ l'intéret : il existe
                 await updateInterest({
                     fleaMarketId,
                     personId,
@@ -63,7 +62,7 @@ const InterestsScreen = ({ route, navigation }) => {
                 });
                 Alert.alert(langDict.success, langDict.yourInterestWasEdited);
             } else {
-                // Créer un nouvel intérêt
+                // création d'un nvel interet
                 await createInterest({
                     fleaMarketId,
                     personId,
@@ -73,7 +72,7 @@ const InterestsScreen = ({ route, navigation }) => {
                 Alert.alert(langDict.success, langDict.intWasAdd);
             }
 
-            // Fermer le modal et recharger la liste des intérêts
+            // ferme ce Modal et ré affiche la liste des intérêts
             setHasPlacedInterest(true);
             setModalVisible(false);
             loadInterests();
@@ -83,7 +82,6 @@ const InterestsScreen = ({ route, navigation }) => {
         }
     };
 
-    // Fonction pour supprimer l'intérêt
     const handleDeleteInterest = async () => {
         try {
             await deleteInterestByFleaMarket(fleaMarketId);
@@ -125,7 +123,7 @@ const InterestsScreen = ({ route, navigation }) => {
                 ))}
             </ScrollView>
 
-            {/* Afficher le bouton "Update Interest" si un intérêt a été placé */}
+            {/* si l'user a déjà montré son intérêt, alors lui proposer de le MAJ */}
             {hasPlacedInterest ? (
                 <>
                     <TouchableOpacity
@@ -135,16 +133,15 @@ const InterestsScreen = ({ route, navigation }) => {
                         <Text style={styles.updateInterestButtonText}>{langDict.updateInterest}</Text>
                     </TouchableOpacity>
 
-                    {/* Bouton pour supprimer l'intérêt */}
                     <TouchableOpacity
-                        onPress={handleDeleteInterest}
+                        onPress={handleDeleteInterest} // cliqué => supprime interet
                         style={styles.deleteInterestButton}
                     >
                         <Text style={styles.deleteInterestButtonText}>{langDict.deleteInterest}</Text>
                     </TouchableOpacity>
                 </>
             ) : (
-                // Sinon, afficher le bouton "Place Interest"
+                // si pas, affiche juste le bouton "placer interet"
                 <TouchableOpacity
                     onPress={() => setModalVisible(true)}
                     style={styles.placeInterestButton}
@@ -269,7 +266,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     deleteInterestButton: {
-        backgroundColor: '#D9534F', // Rouge pour la suppression
+        backgroundColor: '#D9534F', 
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 8,

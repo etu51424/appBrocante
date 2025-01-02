@@ -4,10 +4,9 @@ import { View, Image, ActivityIndicator, StyleSheet } from 'react-native';
 const Wait = () => {
   return (
     <View style={styles.container}>
-      {/* Logo de l'application */}
       <Image source={require('../assets/icon.png')} style={styles.logo} />
 
-      {/* Logo de chargement qui tourne */}
+      {/* logo "Loading..." */}
       <ActivityIndicator size="large" color="#000" style={styles.loader} />
     </View>
   );

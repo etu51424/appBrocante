@@ -1,20 +1,20 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Importation pour la navigation
+import { useNavigation } from '@react-navigation/native'; 
 import { adaptedDateFormat } from "../utils/date";
 import { useSelector } from 'react-redux';
 
 const FleaMarketDetails = ({ route }) => {
-    const { market } = route.params; // Récupérer les données passées depuis l'écran précédent
-    const navigation = useNavigation(); // Accéder à la navigation
+    const { market } = route.params;
+    const navigation = useNavigation(); 
     const langDict = useSelector((state) => state.language.langDict);
 
     const handleNavigateToInterests = () => {
-        navigation.navigate('Interests', { fleaMarketId: market.id }); // Navigation avec paramètre
+        navigation.navigate('Interests', { fleaMarketId: market.id }); 
     };
 
     const handleNavigateToSlots = () => {
-        navigation.navigate('Slots', { fleaMarketId: market.id }); // Navigation avec paramètre
+        navigation.navigate('Slots', { fleaMarketId: market.id }); 
     };
 
     return (
