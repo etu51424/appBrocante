@@ -98,7 +98,7 @@ function MainTabs() {
         </Tab.Screen>
         <Tab.Screen
         name="Setting"
-        options={{ tabBarLabel: langDict.user }}>
+        options={{ tabBarLabel: langDict.settings }}>
           {(props) => <Setting {...props} navigateWithLoading={navigateWithLoading} />}
         </Tab.Screen>
       </Tab.Navigator>

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { getSlotsByFleaMarket } from "../fetchAPI/CRUD/slots";
+import { useSelector } from 'react-redux';
 
 const Slots = ({ route, navigation }) => {
     const { fleaMarketId } = route.params;
     const [slots, setSlots] = useState([]);
     const [loading, setLoading] = useState(true);
+    const langDict = useSelector((state) => state.language.langDict);
+
 
     useEffect(() => {
         const fetchSlots = async () => {
