@@ -4,10 +4,10 @@ npm init -y
 npm pkg set type=module
 npm i express
 npm i -D nodemon
-npm pkg set scripts.dev="nodemon server.js" // pour le npm run dev
+npm pkg set scripts.dev="nodemon server.js"
 npm i pg
 npm i dotenv
-
+npm pkg set scripts.initDB="node scripts/JS/initDB.js"
 npm i argon2
 npm i @vinejs/vine
 npm i jsonwebtoken
@@ -17,11 +17,18 @@ npm i uuid
 npm i sharp
 npm i fs-extra
 npm i emailjs
-
-ajouter "initDB": "node scripts/JS/initDB.js" dans package.json => scripts // pour le npm run initDB
+npm i --save-dev swagger-jsdoc
+npm i internal-ip@6.2.0
+npm pkg set scripts.genDoc="node ./swagger/swagger_jsdoc.js"
 
 Docker : 
 docker run --name AppBrocante -e POSTGRES_PASSWORD=LoveBrocante -e POSTGRES_USER=SA -e POSTGRES_DB=AppBrocante -p 5432:5432 --rm -d postgres
 
+npm run genDoc --> swagger
+npm run initDB --> initier la base de données
+npm run dev --> run API
 
-npm run dev
+Précision concernant le initDB :
+	les mots de passes sont affichés en clair dans le fichier sql mais sont hashé au moment au npm run initDB. 
+        Nous savons que les mots de passe ne doivent jamais être en clair dans la base de données, 
+        nous voulons juste pouvoir insérer des nouveaux utilisateurs plus vite sans avoir à copier / coller un mot de passe précédemment haché.
