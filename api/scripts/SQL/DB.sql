@@ -104,7 +104,14 @@ VALUES
 (1, FALSE, 15.0),
 (2, TRUE, 8.0),
 (3, TRUE, 12.0),
-(3, FALSE, 20.0);
+(4, TRUE, 12.0),
+(4, TRUE, 12.0),
+(5, TRUE, 12.0),
+(6, TRUE, 12.0),
+(7, TRUE, 12.0),
+(8, TRUE, 12.0),
+(9, TRUE, 12.0),
+(9, FALSE, 20.0);
 
 -- Insérer des personnes
 INSERT INTO person (username, first_name, last_name, address, phone_number, email, last_edit_date, password, profile_picture, is_admin)
@@ -148,6 +155,10 @@ VALUES
 (1, 2, TRUE, TRUE, 2),
 (3, 3, FALSE, TRUE, 0),
 (2, 4, TRUE, FALSE, 1),
+(4, 4, TRUE, FALSE, 1),
+(5, 4, TRUE, FALSE, 1),
+(6, 4, TRUE, FALSE, 1),
+(7, 4, TRUE, FALSE, 1),
 (2, 22, TRUE, FALSE, 1);
 
 -- Insérer des marchands
@@ -262,5 +273,3 @@ VALUES
 (21, 'Livre sur la botanique2', 'Guide illustré des plantes de Belgique.', '2024-12-23 12:30:00', 25.00, 'Très bon état'),
 (13, 'Set de verres à vin2', 'Lot de 6 verres en cristal.', '2024-12-25 11:15:00', 75.00, 'Neuf'),
 (14, 'Pochette en soie2', 'Pochette brodée à la main.', '2024-12-26 13:00:00', 40.00, 'Très bon état');
-
-
