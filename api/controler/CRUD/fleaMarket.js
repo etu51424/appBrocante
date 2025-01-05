@@ -47,7 +47,7 @@ export const getAllFleaMarkets = async (req, res) => {
 }
 
 export const getAllFleaMarketsWithinRange = async (req, res) =>{
-
+    console.log("AAAAAA");
     try {
         const fleaMarkets = await fleaMarketModel.readAllFleaMarketWithoutLimit(pool);
         const person = await readPerson(pool, req.val);
