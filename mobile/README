@@ -1,16 +1,24 @@
+Lien vers le .zip de l'API : 
+https://henallux-my.sharepoint.com/:u:/g/personal/etu51971_henallux_be/EdG4_yKW_GxOsfu0d7DgjncB5sK_zkCPpwdlF74oRCSF7Q?e=rpnqfh
 
-npm i react-redux
-npm i @reduxjs/toolkit
+les informations de démarrage sont données dans le readme de l'API.
 
-- a faire :
-    lier à l'api
-    photo utilisateur
-    multilangage
-    lightmode/darkmode
-    ajouté une bordure au filtre
-    add un bouton pour voir ou se trouve la brocante dnas la liste de recherche
-    ecran FleaMarket a faire avec le reste le comprenant (article, brocanteur, ...)
-    régler le problème de Marker dans la recherche
-    profil utilisateur déjà connecter
+Une précision pour le démarrage de l'API sur le réseau local :
 
-désolé j'ai oublié de mettre les bibliothèques que j'ai pris pour faire fonctionner l'app mobile
+Vous devrez peut être modifier l'adresse IP des requetes dans le fichier fetchAPI/login.js (API_BASE_URL). L'adresse IP à mettre sera donnée par l'API au moment d'un npm run dev.
+
+---------
+
+Pour lancer l'application :
+
+aller dans le chemin mobile/Appbrocante/
+
+npm i
+npm start
+
+le npm start lance la démarche pour une utilisation de expo go, étant donné que nous n'avons utilisé que cette méthode.
+
+---------
+
+La liste des login est dans le fichier login.txt
+
