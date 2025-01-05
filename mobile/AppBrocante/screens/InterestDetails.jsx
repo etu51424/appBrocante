@@ -12,7 +12,6 @@ const InterestDetails = ({ route, navigation }) => {
         const fetchProfilePicture = async () => {
             try {
                 const response = await getAvatar(person.id);
-                console.log(response)
                 setProfilePictureUrl(response);
             } catch (error) {
                 console.error("Error fetching profile picture:", error);

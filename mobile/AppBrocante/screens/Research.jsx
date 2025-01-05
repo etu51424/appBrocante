@@ -170,44 +170,7 @@ export default function Research() {
     const getFleaMarkets = async () => {
         try {
 
-            // const data = await getAllFleaMarketsInRange(100);
-            const data = [
-                {
-                    "id": 1,
-                    "address": "123 Rue de la Paix, Paris",
-                    "date_start": "2024-12-01T08:00:00.000Z",
-                    "date_end": "2024-12-01T17:00:00.000Z",
-                    "title": "Marché de Noël",
-                    "theme": "Artisanat",
-                    "is_charity": true,
-                    "average_rating": 4.8,
-                    "review_count": 50
-                },
-                {
-                    "id": 2,
-                    "address": "456 Avenue des Champs, Lyon",
-                    "date_start": "2024-12-15T09:00:00.000Z",
-                    "date_end": "2024-12-25T19:00:00.000Z",
-                    "title": "Marché Vintage",
-                    "theme": "Antiquités",
-                    "is_charity": false,
-                    "average_rating": 4.5,
-                    "review_count": 30
-                },
-                {
-                    "id": 3,
-                    "address": "456 Avenue des Champs, Lyon",
-                    "date_start": "2024-12-15T09:00:00.000Z",
-                    "date_end": "2024-12-25T19:00:00.000Z",
-                    "title": "Marché Vintage",
-                    "theme": "Antiquités",
-                    "is_charity": false,
-                    "average_rating": 4.5,
-                    "review_count": 30
-                },
-            ]
-
-
+            const data = await getAllFleaMarketsInRange(100);
             if (data){
                 setFleaMarkets(data);
                 const updatedLocations = await Promise.all(

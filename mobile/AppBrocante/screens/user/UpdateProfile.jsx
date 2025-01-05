@@ -291,14 +291,14 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     input: {
-        backgroundColor: '#F0E6B3',
+        backgroundColor: '#B0855A',
         padding: 10,
         borderRadius: 8,
         fontSize: 16,
         color: '#333',
     },
     updateButton: {
-        backgroundColor: '#FFC107',
+        backgroundColor: '#B0855A',
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
