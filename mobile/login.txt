@@ -1,0 +1,19 @@
+{
+"username" : "User",
+"password" : "bidondon"
+}
+--> Simple utilisateur
+
+{
+"username" : "UserDealer",
+"password" : "brocanteur"
+}
+--> Simple utilisateur et brocanteur
+
+{
+"username" : "Admin",
+"password" : "brocante"
+}
+--> Administrateur et brocanteur
+
+le grade administrateur n'a pas d'importance sur la partie mobile
