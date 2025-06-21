@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useAuth } from "../components/AuthProvider.jsx";
 
+
 import Page from "../components/Page.jsx";
 import * as IoIcons from 'react-icons/io';
 import frDict from "../translations/fr/fr.js";
@@ -12,7 +13,7 @@ function Slots() {
     const { token } = useAuth();
 
     const title = "Slots";
-    const elementClassNameSingular = "slot";
+    const elementClassNameSingular = "slot"; 
     const elementClassNamePlural = "slots";
 
     const [data, setData] = useState([]);

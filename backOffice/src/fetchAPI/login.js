@@ -1,9 +1,9 @@
 export const API_BASE_URL = "http://localhost:3001/api/v1";
 
-export async function login(username, password) {
+export async function loginFetch(username, password) {
     const loginBody = {
-        username: "Test",
-        password: "pw"
+        username: username,
+        password: password
     }
 
     const loginResponse = await fetch(`${API_BASE_URL}/client/person/login`, {
@@ -12,9 +12,8 @@ export async function login(username, password) {
         body: JSON.stringify(loginBody),
     });
 
-
     if (loginResponse.status !== 201) {
-        throw new Error(`Login raté: ${"Login raté"}`);
+        throw new Error(`Login a échoué`);
     }
 
     // Normalement, le token devrait être un json.

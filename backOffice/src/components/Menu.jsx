@@ -6,8 +6,11 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import languageDictProvider from "../utils/language.js";
+import { useAuth } from "./AuthProvider.jsx";
 
-function Menu() {
+//console.log("Menu ets atteint" + isAuthenticated);
+
+function Menu({ isMinimized }) {
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
     const changeLanguage = () => {
@@ -34,7 +37,7 @@ function Menu() {
     const SidebarData = [
     {
         title: langDict.home,
-        path: '/',
+        path: '/home',
         icon: <AiIcons.AiFillHome />,
         cName: 'nav-text'
     },

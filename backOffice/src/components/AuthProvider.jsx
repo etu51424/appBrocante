@@ -1,47 +1,42 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { useContext, createContext, useState } from "react";
+import { loginFetch } from "../fetchAPI/login";
 
 // créer le contexte sur lequel le token sera disponible
 const AuthContext = createContext();
 
+console.log("auth prov direct");
 // exporte un hook custom "useAuth" qui permet d'accéder au contexte
-export const useAuth = () => useContext(AuthContext);
+const useAuth = () => useContext(AuthContext);
+
 
 // le composant AuthProvider wrap l'appli et offre les méthodes de login/logut
-export const AuthProvider = ({ children }) => {
+const AuthProvider = (props) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false); //redondant mais utile
     const [token, setToken] = useState(null);
+    console.log("Auth prov appelé et reçu");
 
     const login = async (username, password) => {
 
-        const loginBody = {
-            username : username,
-            password : password
-        }
-
-        const response = await fetch(`http://localhost:3001/api/v1/client/person/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(loginBody),
-        });
-
-        if (response.status === 201) {
-            const token = await response.text();
-            setToken(token); // stocke le contexte globalement dans l'appli
-        } else {
-            throw new Error("Failed to log in");
-        }
+        const jwtToken = loginFetch(username, password);
+        console.log(`username: ${token}, token: ${password}`);
+        setToken(jwtToken);
     };
 
-    const logout = () => setToken(null); // au logout, le token est set à null (supprimé)
+    const logout = () => {
+        setIsLoggedIn(false);
+        setToken(null); // au logout, le token est set à null (supprimé)
+    };
 
-    // vérifie si le token existe pour verif si l'user est authentifié
-    //rappel : !! convertit un string/null en true/false
-    const isAuthenticated = () => { return !!token};
+    const value = {
+        isLoggedIn,
+        token,
+        login,
+        logout,
+    };
 
     return (
-        <AuthContext.Provider value={{ token, login, logout, isAuthenticated }}>
-            {children}
-        </AuthContext.Provider>
+        <AuthContext.Provider value={value} {...props} />
     );
 };
+
+export { AuthContext, useAuth, AuthProvider };

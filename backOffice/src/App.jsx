@@ -1,4 +1,4 @@
-import Navbar from './components/Navbar.jsx';
+  import Navbar from './components/Navbar.jsx';
 import './css/App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home.jsx';
@@ -13,26 +13,25 @@ import Menu from './components/Menu.jsx';
 
 import LoginForm from "./components/LoginForm";
 import PrivateRoute from "./components/PrivateRoute";
-import { AuthProvider } from "./components/AuthProvider.jsx";
+import { AuthProvider, useAuth } from "./components/AuthProvider.jsx";
 
 window.language = "fr";
 
 function App() {
   console.log("Arrive sur l'appli");
+  //const { isAuthenticated } = useAuth();
+
   return (
     <>
-      <AuthProvider>
         <Router>
           <div>
+            <AuthProvider>
             <Navbar/>
             <div className="main-body">
               <Menu/>
               <Routes>
-                <Route path='/login' element={<LoginForm />} />
-
-                {/* en fonction de la route privée, un different affichage */}
-                <Route path='/login' element={<LoginForm />} />
-                <Route path='/' element={<PrivateRoute element={<Home/>} />} />
+                <Route path='/' element={<Navigate to="/login" replace />} />
+                <Route path='/home' element={<PrivateRoute element={<Home/>} />} />
                 <Route path='/article' element={<PrivateRoute element={<Articles/>}/>} />
                 <Route path='/user' element={<PrivateRoute element={<Users/>}/>} />
                 <Route path='/dealer' element={<PrivateRoute element={<Dealers/>} />} />
@@ -40,14 +39,12 @@ function App() {
                 <Route path='/interest' element={<PrivateRoute element={<Interests/>} />} />
                 <Route path='/slot' element={<PrivateRoute element={<Slots/>} />} />
                 <Route path='/stats' element={<PrivateRoute element={<Stats/>} />} />
-
-                {/* route par défaut */}
-                <Route path='*' element={<Navigate to="/login" replace />} />
+                <Route path='/login' element={<LoginForm/>} />
               </Routes>
             </div>
-          </div>
+             </AuthProvider>
+            </div>
         </Router>
-      </AuthProvider>
     </>
   );
 }
