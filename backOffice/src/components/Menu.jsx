@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import "../css/Menu.css";
 import frDict from "../translations/fr/fr.js";
@@ -6,11 +6,13 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import languageDictProvider from "../utils/language.js";
-import { useAuth } from "./AuthProvider.jsx";
+import { AuthContext } from './AuthProvider.jsx';
 
 //console.log("Menu ets atteint" + isAuthenticated);
 
 function Menu({ isMinimized }) {
+    const { isLoggedIn } = useContext(AuthContext);
+    console.log("isLoggedIn existe t il ? : " + isLoggedIn);
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
 
     const changeLanguage = () => {
@@ -86,6 +88,7 @@ function Menu({ isMinimized }) {
     ];
 
     return (
+        isLoggedIn &&
         <>
         <div className='menu'>
             <ul className='menu-items' >

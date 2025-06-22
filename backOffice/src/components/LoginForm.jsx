@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
+import "../css/LoginForm.css";
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
@@ -25,9 +26,9 @@ const LoginForm = () => {
     };
 
     return (
-        <div>
-            <h2>Connexion</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="loginPage">
+            <h2 >Connexion</h2>
+            <form onSubmit={handleSubmit} class="centeredForm">
                 <input 
                 type="text" 
                 value={username} 

@@ -16,7 +16,6 @@ const AuthProvider = (props) => {
     console.log("Auth prov appelé");
 
     const login = async (username, password) => {
-        // The let-try-catch-log&set could be => to try-log&set-catch bc catch catches
         console.log(`username: ${username}, password: ${password}`);
         let jwtToken;
         try {

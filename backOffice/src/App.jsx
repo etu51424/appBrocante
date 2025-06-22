@@ -13,14 +13,12 @@ import Menu from './components/Menu.jsx';
 
 import LoginForm from "./components/LoginForm";
 import PrivateRoute from "./components/PrivateRoute";
-import { AuthProvider, useAuth } from "./components/AuthProvider.jsx";
+import { AuthProvider  } from "./components/AuthProvider.jsx";
 
 window.language = "fr";
 
 function App() {
   console.log("Arrive sur l'appli");
-  //const { isAuthenticated } = useAuth();
-
   return (
     <>
         <Router>

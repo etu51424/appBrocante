@@ -17,7 +17,7 @@ body {
   display:flex;
 }
 
-.home, .users, .fleaMarkets, .dealers, .interests, .slots, .articles {
+.home, .users, .fleaMarkets, .dealers, .interests, .slots, .articles, .loginPage {
   display: flex;
   height: 90vh;
   align-items: center; 
@@ -67,6 +67,11 @@ select {
     margin: 5px;
     background-color: #ffa347;
     border-color: #924700;
+}
+
+h2 {
+      padding: 5px;
+    margin: 5px;
 }
 
 /*
