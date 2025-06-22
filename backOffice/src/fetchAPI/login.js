@@ -12,12 +12,15 @@ export async function loginFetch(username, password) {
         body: JSON.stringify(loginBody),
     });
 
-    if (loginResponse.status !== 201) {
-        throw new Error(`Login a échoué`);
-    }
-
-    // Normalement, le token devrait être un json.
-    // Pour éviter de modifier le token pour qu'il soit renvoyé en json côté server, j'accepte de l'interpreter en texte
     const token = await loginResponse.text();
-    return token;
+
+    if (loginResponse.status === 201) {
+        console.log("Login côté server, voici le token : " + token);
+        // Normalement, le token devrait être un json.
+        // Pour éviter de modifier le token pour qu'il soit renvoyé en json côté server, j'accepte de l'interpreter en texte
+        
+        return token;
+    } else {
+        return "Failed login";
+    }
 }

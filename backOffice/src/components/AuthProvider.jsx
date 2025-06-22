@@ -13,13 +13,19 @@ const useAuth = () => useContext(AuthContext);
 const AuthProvider = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); //redondant mais utile
     const [token, setToken] = useState(null);
-    console.log("Auth prov appelé et reçu");
+    console.log("Auth prov appelé");
 
     const login = async (username, password) => {
-
-        const jwtToken = loginFetch(username, password);
-        console.log(`username: ${token}, token: ${password}`);
-        setToken(jwtToken);
+        console.log(`username: ${username}, password: ${password}`);
+        const jwtToken = await loginFetch(username, password);
+        
+        if (jwtToken === "Failed login") {
+            console.log("failed login");
+        } else {             
+            console.log(`jwtToken: ${jwtToken}`);
+            setIsLoggedIn(true);
+            setToken(jwtToken);
+        }
     };
 
     const logout = () => {

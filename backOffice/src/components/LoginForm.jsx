@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthProvider";
 const LoginForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const { login } = AuthContext;
+    const { login } = useContext(AuthContext);
     const [error, setError] = useState("");
 
     // hook pour aller vers une route
@@ -17,12 +17,12 @@ const LoginForm = () => {
         try {
           // appel  login / se login avec les username et password entrés
             await login(username, password);
-            console.log("passe par LoginForm");
-            navigate("/home"); 
+            console.log("le login a marché");
 
         } catch (err) {
             setError("Erreur lors de la connexion.");
         }
+        navigate("/home"); // atteint seulement si soit erreur pas caught soit pas d'erreur
     };
 
     return (
