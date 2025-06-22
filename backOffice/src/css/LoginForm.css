@@ -1,0 +1,15 @@
+
+.loginPage {
+    margin-left: 45vw;
+}
+
+.centeredForm {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    padding: 5px;
+    margin: 5px;
+}

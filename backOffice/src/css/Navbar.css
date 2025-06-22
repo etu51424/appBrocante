@@ -3,17 +3,25 @@
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     /*pas de justify content donc items vont au centre*/
 }
 
-.logoAndTitle {
+.logoAndTitle, .logOut {
     /*display: block;*/
     /*justify-content: center;*/
      /*aligne le log et le titre sur l'axe x*/
     display: flex;
     align-items: center;
     flex-direction: row; /*Le flex direction par defaut est row. Sauf qu'ici Le parent est DEJA en flex direction column. Donc set à row */
+}
+
+.logOut {
+    padding-right: 2%;
+}
+
+button { /*logout*/
+    font-size: larger;
 }
 
 .logoAndTitle h2 {

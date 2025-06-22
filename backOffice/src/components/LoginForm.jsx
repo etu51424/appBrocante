@@ -27,7 +27,7 @@ const LoginForm = () => {
 
     return (
         <div className="loginPage">
-            <h2 >Connexion</h2>
+            <h2 >Connect to admin dashboard</h2>
             <form onSubmit={handleSubmit} class="centeredForm">
                 <input 
                 type="text" 

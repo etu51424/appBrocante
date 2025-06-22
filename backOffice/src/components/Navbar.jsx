@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext } from 'react';
 import "../css/Navbar.css";
 import frDict from "../translations/fr/fr.js";
 import languageDictProvider from "../utils/language.js";
+import { AuthContext } from './AuthProvider.jsx';
 
 function Navbar() {
   const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
-  
+  const { logout } = useContext(AuthContext);
+
   const handleChangeLanguage = (lang) => { 
     window.language = lang;
 
@@ -16,6 +18,10 @@ function Navbar() {
     //changeant la langue sur toutes les pages
     const event = new Event("langchange");
     window.dispatchEvent(event);
+  }
+
+  const handleLogOut = () => {
+    logout();
   }
 
   return (
@@ -30,6 +36,9 @@ function Navbar() {
               <button onClick={() => handleChangeLanguage("en")}><img src="/en.png" alt="logo" width="46px"/></button>
               <button onClick={() => handleChangeLanguage("fr")}><img src="/fr.png" alt="logo" width="46px"/></button>
               <button onClick={() => handleChangeLanguage("nl")}><img src="/nl.png" alt="logo" width="46px"/></button>
+          </div>
+          <div className="logOut">
+              <button onClick={() => handleLogOut()}>Log out</button>
           </div>
         </div>
     </>
