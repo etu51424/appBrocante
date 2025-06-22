@@ -16,15 +16,17 @@ const AuthProvider = (props) => {
     console.log("Auth prov appelé");
 
     const login = async (username, password) => {
+        // The let-try-catch-log&set could be => to try-log&set-catch bc catch catches
         console.log(`username: ${username}, password: ${password}`);
-        const jwtToken = await loginFetch(username, password);
-        
-        if (jwtToken === "Failed login") {
-            console.log("failed login");
-        } else {             
-            console.log(`jwtToken: ${jwtToken}`);
+        let jwtToken;
+        try {
+            jwtToken = await loginFetch(username, password);
+            console.log("line executed IF NO ERROR");
+            console.log(`jwtToken in authprov: ${jwtToken}`);
             setIsLoggedIn(true);
             setToken(jwtToken);
+        } catch {
+            console.log("LOGIN ERROR HAPPENED");   
         }
     };
 

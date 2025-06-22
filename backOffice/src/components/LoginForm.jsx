@@ -17,7 +17,6 @@ const LoginForm = () => {
         try {
           // appel  login / se login avec les username et password entrés
             await login(username, password);
-            console.log("le login a marché");
 
         } catch (err) {
             setError("Erreur lors de la connexion.");
