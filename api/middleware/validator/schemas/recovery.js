@@ -3,7 +3,8 @@ import recovery from "../validation/recovery.js";
 
 const recoveryCodeSchema = vine.object({
     personId: vine.number(),
-    recoveryCode : vine.string().trim()
+    recoveryCode : vine.string().trim(),
+    password: vine.string().trim(),
 });
 
 export const

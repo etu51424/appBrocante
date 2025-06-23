@@ -1,3 +1,5 @@
+import {hash} from "../../utils/hash.js";
+
 export const createPerson = async (SQLClient, {username, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profile_picture, password}) => {
     let query = "INSERT INTO person ";
@@ -134,6 +136,7 @@ export const updatePerson = async (SQLClient, {personId, username, firstName, la
         querySet.push(`profile_picture=$${queryValues.length}`);
     }
     if (password !== undefined){
+        password = await hash(password);
         queryValues.push(password);
         querySet.push(`password=$${queryValues.length}`);
     }
