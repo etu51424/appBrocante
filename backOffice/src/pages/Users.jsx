@@ -111,25 +111,22 @@ function Users() {
     const renderTableBody = (user) => {
 
         // convertir les booléens en strings appropriés
-        user.is_admin = user.is_admin ? langDict.yes : langDict.no;
-        user.is_timed_out = user.is_timed_out ? langDict.yes : langDict.no;
+        let isUserAdminText = user.is_admin ? langDict.yes : langDict.no;
+        let isUserTimedOutText = user.is_timed_out ? langDict.yes : langDict.no;
 
         return (
             <tr key={user.id}>
                 <td>{user.id}</td>
-                <td>{user.name}</td>
+                <td>{user.username}</td>
                 <td>{user.first_name}</td>
                 <td>{user.last_name}</td>
                 <td>{user.address}</td>
                 <td>{user.phone_number}</td>
                 <td>{user.email}</td>
-                <td>
-                    <ConvertedDate longFormatDate={user.last_edit_date}/>
-                </td>
-                <td>{user.password}</td>
+                <td><ConvertedDate longFormatDate={user.last_edit_date}/></td>
                 <td>{user.profile_picture}</td>
-                <td>{user.is_admin}</td>
-                <td>{user.is_timed_out}</td>
+                <td>{isUserAdminText}</td>
+                <td>{isUserTimedOutText}</td>
                 <td>{user.recovery_code}</td>
             </tr>
         );

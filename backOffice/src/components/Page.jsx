@@ -20,18 +20,16 @@ function Page({
 
     //obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs
     // tableHeader et tableBody font le rendu de la table et du body
+
+    // La méthode va aller prendre les informations depuis le dictionnaire plutot que de le faire dynamiquement
     const renderTableHeader = () => {
-        return Object.keys(
-            elements[0]).map(
-                (keyName) => (
-                    <th key={`${keyName}`}>
-                        {
-                            langDict.tables[elementClassNameSingular].columns[keyName]
-                        }
-                    </th>
-            )
-        );
-    }
+        const columns = langDict.tables[elementClassNameSingular].columns;
+
+        return Object.entries(columns).map(([key, label]) => (
+            <th key={key}>{label}</th>
+        ));
+    };
+
 
     const changeLanguage = () => {
         setLangDict(languageDictProvider(window.language));
