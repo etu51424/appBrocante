@@ -1,4 +1,5 @@
 export const API_BASE_URL = "http://localhost:3001/api/v1";
+export let token;
 
 export async function loginFetch(username, password) {
     const loginBody = {
@@ -12,7 +13,7 @@ export async function loginFetch(username, password) {
         body: JSON.stringify(loginBody),
     });
 
-    const token = await loginResponse.text();
+    token = await loginResponse.text();
 
     if (loginResponse.status !== 201) {  //404 instead
         throw new Error({'NoTokenWasCreated':'no token was created'});

@@ -7,6 +7,8 @@ import frDict from "../translations/fr/fr.js";
 import { getUsersData } from "../fetchAPI/CRUD/users.js";
 import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import DeleteButton from "../components/DeleteButton.jsx";
+import {TableTypes} from "../utils/Defs.js";
 
 function Users() {
     const { token } = useAuth();
@@ -14,6 +16,7 @@ function Users() {
     const title = "Users";
     const elementClassNameSingular = "user";
     const elementClassNamePlural = "users";
+    const tableType = TableTypes.USERS;
 
 
     const [data, setData] = useState([]);
@@ -128,6 +131,7 @@ function Users() {
                 <td>{isUserAdminText}</td>
                 <td>{isUserTimedOutText}</td>
                 <td>{user.recovery_code}</td>
+                <td><DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers}></DeleteButton></td>
             </tr>
         );
     }

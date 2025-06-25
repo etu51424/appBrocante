@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./../login.js";
+import { API_BASE_URL, token } from "./../login.js";
 
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
 export const getFleaMarketsData = async (token, limit = 10, page = 1) => {

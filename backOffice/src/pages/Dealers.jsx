@@ -8,6 +8,8 @@ import frDict from "../translations/fr/fr.js";
 import { getDealersData } from "../fetchAPI/CRUD/dealers.js";
 import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import {TableTypes} from "../utils/Defs.js";
+import DeleteButton from "../components/DeleteButton.jsx";
 
 function Dealers() {
     const { token } = useAuth();
@@ -15,6 +17,7 @@ function Dealers() {
     const title = "Dealers";
     const elementClassNameSingular = "dealer";
     const elementClassNamePlural = "dealers";
+    const tableType = TableTypes.DEALERS;
     
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -114,11 +117,10 @@ function Dealers() {
                 <td>{dealer.person_id}</td>
                 <td>{dealer.type}</td>
                 <td>{dealer.description}</td>
-                <td>
-                    <ConvertedDate longFormatDate={dealer.signup_date}/>
-                </td>
+                <td><ConvertedDate longFormatDate={dealer.signup_date}/></td>
                 <td>{dealer.average_rating}</td>
                 <td>{dealer.review_count}</td>
+                <td><DeleteButton elementId={dealer.person_id} type={tableType} onSuccess={getDealers}></DeleteButton></td>
             </tr>
         );
     }

@@ -4,15 +4,15 @@ import "../css/Page.css";
 import languageDictProvider from "../utils/language.js";
 
 // reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
-function Page({ 
-        getElementsData, 
-        renderTableBody, 
-        title, 
-        elementClassNameSingular, 
+function Page({
+        getElementsData,
+        renderTableBody,
+        title,
+        elementClassNameSingular,
         elementClassNamePlural,
         paginationArrows,
     }) {
-            
+
     const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
     const [elements, setElements] = useState([]);
     const [error, setError] = useState(null);
@@ -23,7 +23,8 @@ function Page({
 
     // La méthode va aller prendre les informations depuis le dictionnaire plutot que de le faire dynamiquement
     const renderTableHeader = () => {
-        const columns = langDict.tables[elementClassNameSingular].columns;
+        let columns = langDict.tables[elementClassNameSingular].columns;
+        columns.delete = langDict.deleteButton;
 
         return Object.entries(columns).map(([key, label]) => (
             <th key={key}>{label}</th>

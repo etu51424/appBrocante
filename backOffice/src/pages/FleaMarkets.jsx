@@ -8,6 +8,8 @@ import * as IoIcons from 'react-icons/io';
 import frDict from "../translations/fr/fr.js";
 import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import {TableTypes} from "../utils/Defs.js";
+import DeleteButton from "../components/DeleteButton.jsx";
 
 function FleaMarkets() {
     const { token } = useAuth();
@@ -15,6 +17,7 @@ function FleaMarkets() {
     const title = "Flea Markets";
     const elementClassNameSingular = "flea_market";
     const elementClassNamePlural = "fleaMarkets";
+    const tableType = TableTypes.FLEA_MARKETS;
 
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -117,17 +120,14 @@ function FleaMarkets() {
             <tr key={fleaMarket.id}>
                 <td>{fleaMarket.id}</td>
                 <td>{fleaMarket.address}</td>
-                <td>
-                    <ConvertedDate longFormatDate={fleaMarket.date_start}/>
-                </td>
-                <td>
-                    <ConvertedDate longFormatDate={fleaMarket.date_end}/>
-                </td>
+                <td><ConvertedDate longFormatDate={fleaMarket.date_start}/></td>
+                <td><ConvertedDate longFormatDate={fleaMarket.date_end}/></td>
                 <td>{fleaMarket.title}</td>
                 <td>{fleaMarket.theme}</td>
                 <td>{fleaMarket.is_charity_word}</td>
                 <td>{fleaMarket.average_rating}</td>
                 <td>{fleaMarket.review_count}</td>
+                <td><DeleteButton elementId={fleaMarket.id} type={tableType} onSuccess={getFleaMarkets}></DeleteButton></td>
             </tr>
         );
     }

@@ -8,6 +8,8 @@ import frDict from "../translations/fr/fr.js";
 import { getArticlesData } from "../fetchAPI/CRUD/articles.js";
 import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import DeleteButton from "../components/DeleteButton.jsx";
+import {TableTypes} from "../utils/Defs.js";
 
 function Articles() {
     const { token } = useAuth();
@@ -15,6 +17,7 @@ function Articles() {
     const title = "Articles";
     const elementClassNameSingular = "article";
     const elementClassNamePlural = "articles";
+    const tableType = TableTypes.ARTICLE;
 
     
     const [data, setData] = useState([]);
@@ -120,6 +123,7 @@ function Articles() {
                 <td><ConvertedDate longFormatDate={article.entry_date}/></td>
                 <td>{article.cost+'€'}</td>
                 <td>{article.condition}</td>
+                <td><DeleteButton elementId={article.id} type={tableType} onSuccess={getArticles}></DeleteButton></td>
             </tr>
         );
     }

@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./../login.js";
+import { API_BASE_URL, token } from "./../login.js";
 
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
 export const getInterestsData = async (token, limit = 10, page = 1) => {
@@ -77,7 +77,7 @@ export const updateInterest = async (body) =>{
     }
 }
 
-export const deleteFleaMarket = async (personId, fleaMarketId) =>{
+export const deleteInterest = async ({personId, fleaMarketId}) =>{
     const response = await fetch(
         `${API_BASE_URL}/admin/interest/${fleaMarketId}/${personId}`,
         {

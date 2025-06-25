@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./../login.js";
+import { API_BASE_URL, token} from "./../login.js";
 
 const fetchFleaMarketsDataWithinDates = async (token, dateStart = '2024-01-01', dateEnd = '2026-01-01') => {
     console.log("reçoit dateStart" + dateStart +" et " + dateEnd + "et token " + token);

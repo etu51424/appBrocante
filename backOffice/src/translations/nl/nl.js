@@ -89,7 +89,9 @@ const nlDictionary = {
                 "condition": "Toestand"
             }
         }
-    }
+    },
+    "deleteButton" : "Verwijderen",
+    "deleteButtonConfirmText" : "Weet u zeker dat u dit item wilt verwijderen?"
 };
 
 export default nlDictionary;

@@ -8,6 +8,8 @@ import frDict from "../translations/fr/fr.js";
 import { getSlotsData } from "../fetchAPI/CRUD/slots.js";
 import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import {TableTypes} from "../utils/Defs.js";
+import DeleteButton from "../components/DeleteButton.jsx";
 
 function Slots() {
     const { token } = useAuth();
@@ -15,6 +17,7 @@ function Slots() {
     const title = "Slots";
     const elementClassNameSingular = "slot"; 
     const elementClassNamePlural = "slots";
+    const tableType = TableTypes.SLOTS;
 
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -115,6 +118,7 @@ function Slots() {
                 <td>{slot.flea_market_id}</td>
                 <td>{slot.is_available}</td>
                 <td>{slot.area}</td>
+                <td><DeleteButton elementId={slot.id} type={tableType} onSuccess={getSlots}></DeleteButton></td>
             </tr>
         );
     }

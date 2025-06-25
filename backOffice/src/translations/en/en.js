@@ -90,7 +90,9 @@ const enDictionary = {
                 "condition": "Condition"
             }
         }
-    }
+    },
+    "deleteButton" : "Delete",
+    "deleteButtonConfirmText" : "Are you sure you want to delete this element?",
 };
 
 export default enDictionary;

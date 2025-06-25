@@ -89,7 +89,9 @@ const frDictionary = {
                 "condition": "État"
             }
         }
-    }
+    },
+    "deleteButton" : "Supprimer",
+    "deleteButtonConfirmText" : "Êtes-vous sur de vouloir supprimer cet élément ?"
 };
 
 export default frDictionary;

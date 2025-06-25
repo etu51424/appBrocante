@@ -7,6 +7,8 @@ import frDict from "../translations/fr/fr.js";
 import { getInterestsData } from "../fetchAPI/CRUD/interests.js";
 import languageDictProvider from "../utils/language.js";
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import {TableTypes} from "../utils/Defs.js";
+import DeleteButton from "../components/DeleteButton.jsx";
 
 function Interests() {
     const { token } = useAuth();
@@ -14,6 +16,7 @@ function Interests() {
     const title = "Interests";
     const elementClassNameSingular = "interest";
     const elementClassNamePlural = "interests";
+    const tableType = TableTypes.INTERESTS;
 
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -119,6 +122,7 @@ function Interests() {
                 <td>{interest.is_interested_word}</td>
                 <td>{interest.is_dealer_word}</td>
                 <td>{interest.participation_word}</td>
+                <td><DeleteButton elementId={{personId : interest.person_id, fleaMarketId : interest.flea_market_id}} type={tableType} onSuccess={getInterests}></DeleteButton></td>
             </tr>
         );
     }
