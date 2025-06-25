@@ -7,9 +7,11 @@ import * as IoIcons from 'react-icons/io';
 import frDict from "../translations/fr/fr.js";
 import { getArticlesData } from "../fetchAPI/CRUD/articles.js";
 import languageDictProvider from "../utils/language.js";
-import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
-import {TableTypes} from "../utils/Defs.js";
+import { TableTypes } from "../utils/Defs.js";
+import PaginationInput from "../components/PaginationInput.jsx";
+import PaginationArrows from "../components/PaginationArrows.jsx";
 
 function Articles() {
     const { token } = useAuth();
@@ -19,15 +21,12 @@ function Articles() {
     const elementClassNamePlural = "articles";
     const tableType = TableTypes.ARTICLE;
 
-    
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(10); // Limite par défaut
-    //prévient si la dernière page de données existe ou non
-    const [noMoreData, setIsThereMoreData] = useState(false); 
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
+    const [limit, setLimit] = useState(10);
+    const [noMoreData, setIsThereMoreData] = useState(false);
+    const [langDict, setLangDict] = useState(frDict);
 
-    // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -36,10 +35,10 @@ function Articles() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() =>getArticlesData(token, limit, currentPage));
+            const { data, noMoreData } = await exponentialRetry(() => getArticlesData(token, limit, currentPage));
 
             setData(data);
-            setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
+            setIsThereMoreData(noMoreData);
         } catch (err) {
             setError(langDict.error);
         }
@@ -47,98 +46,73 @@ function Articles() {
         setIsLoading(false);
     };
 
-    // obligé de recoder une fonction asynchrone de ce nom car Page.jsx s'attend exactement à une fc à exec
-    // et en meme temps, je dois uniquement renvoyer les fleaMarkets qui seront updatés par le useState
     const getElementsData = async () => {
         return data;
-    }
-
-    // besoin d'un useEffect ici car ici c'est une interaction avec l'api
-    // Utilise getDonnées (càd récup et met à jour les données de la classe)
-    useEffect(
-        () => {
-            getArticles();
-        }, [currentPage, limit]
-    );
-
-    // reçu par Page.jsx.
-    const PaginationArrows = () => {
-        return (
-            <div className="pagination-arrows">
-                {/* cacher le bouton si page actuelle===1 */}
-                <button onClick={showPreviousPage} disabled={currentPage === 1}>
-                    <IoIcons.IoIosArrowBack /> 
-                </button>
-                page {currentPage}
-                <button onClick={showNextPage} disabled={noMoreData}>
-                    <IoIcons.IoIosArrowForward /> 
-                </button>
-            </div>
-        );
-    }
-
-    // une fonction est passée à setCurrentPage pour prendre en compte l'état précédent (plutot que juste passer le num de la page)
-    const showNextPage = () => {
-        setCurrentPage(
-            (previousPage) => previousPage + 1
-        );
     };
 
-    const showPreviousPage = () => {
-        setCurrentPage(
-            // retourne la page actuelle (pour le moment encore prevPage) -1, donc la page prec. Sauf si la page actuelle est 1
-             (previousPage) => (previousPage == 1 ? previousPage : previousPage - 1)
-        );
-    };
-
-    const changeLanguage = () => {
-        languageDictProvider(window.language);
-    }
-
-    // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
     useEffect(() => {
-        // listener
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
+        getArticles();
+    }, [currentPage, limit]);
 
-        window.addEventListener("langchange", handleLanguageChange);
+    // Nouveau callback pour récupérer le changement de page depuis PaginationArrows
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
 
-        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
-        // ...qui arrive bientôt, juste après la maj de la page
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []); // aucune dépendance utile ici
-
-// articles.map(article => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
     const renderTableBody = (article) => {
-
         return (
             <tr key={article.id}>
                 <td>{article.id}</td>
                 <td>{article.dealer_id}</td>
                 <td>{article.title}</td>
                 <td>{article.description}</td>
-                <td><ConvertedDate longFormatDate={article.entry_date}/></td>
-                <td>{article.cost+'€'}</td>
+                <td><ConvertedDate longFormatDate={article.entry_date} /></td>
+                <td>{article.cost + '€'}</td>
                 <td>{article.condition}</td>
-                <td><DeleteButton elementId={article.id} type={tableType} onSuccess={getArticles}></DeleteButton></td>
+                <td><DeleteButton elementId={article.id} type={tableType} onSuccess={getArticles} /></td>
             </tr>
         );
-    }
+    };
 
-    // renvoit le rendu d'une page auquel on passe les parties personnalisées via props (paramètres)
+    const changeLanguage = () => {
+        languageDictProvider(window.language);
+    };
+
+    useEffect(() => {
+        const handleLanguageChange = () => {
+            changeLanguage();
+        };
+
+        window.addEventListener("langchange", handleLanguageChange);
+
+        return () => {
+            window.removeEventListener("langchange", handleLanguageChange);
+        };
+    }, []);
+
     return (
         <div>
-            {/*getElementsData reçoit la data updaté par le setFleaMarkets */}
-            <Page 
-                getElementsData={getElementsData} 
+            <Page
+                getElementsData={getElementsData}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
                 elementClassNamePlural={elementClassNamePlural}
-                paginationArrows={<PaginationArrows/>}
+                paginationArrows={
+                    <>
+                        <PaginationArrows
+                            currentPage={currentPage}
+                            noMoreData={noMoreData}
+                            onPageChange={handlePageChange}
+                        />
+                        <PaginationInput
+                            currentPage={currentPage}
+                            noMoreData={noMoreData}
+                            onPageChange={handlePageChange}
+                            maxPage={100}  // ou autre max selon ton besoin
+                        />
+                    </>
+                }
             />
             {error && <p>{langDict.error} : {error}</p>}
             {isLoading && <p>{langDict.loading}</p>}

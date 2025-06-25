@@ -1,5 +1,6 @@
 // Fonction de retry exponentiel
 export const exponentialRetry = async (fn, retries = 5, delay = 1000) => {
+    /*
     for (let attempt = 1; attempt <= retries; attempt++) {
         try {
             return await fn(); // Tente l'opération
@@ -17,4 +18,7 @@ export const exponentialRetry = async (fn, retries = 5, delay = 1000) => {
             await new Promise(res => setTimeout(res, exponentialDelay));
         }
     }
+
+     */
+    return await fn();
 };

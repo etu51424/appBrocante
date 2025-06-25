@@ -91,7 +91,9 @@ const frDictionary = {
         }
     },
     "deleteButton" : "Supprimer",
-    "deleteButtonConfirmText" : "Êtes-vous sur de vouloir supprimer cet élément ?"
+    "deleteButtonConfirmText" : "Êtes-vous sur de vouloir supprimer cet élément ?",
+    "page" : "Page",
+    "GoToPage" : "Aller à la page ",
 };
 
 export default frDictionary;

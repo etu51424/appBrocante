@@ -93,6 +93,8 @@ const enDictionary = {
     },
     "deleteButton" : "Delete",
     "deleteButtonConfirmText" : "Are you sure you want to delete this element?",
+    "page" : "Page",
+    "GoToPage" : "Aller à la page ",
 };
 
 export default enDictionary;

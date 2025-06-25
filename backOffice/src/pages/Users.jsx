@@ -2,13 +2,16 @@ import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
 import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
-import * as IoIcons from 'react-icons/io';
 import frDict from "../translations/fr/fr.js";
 import { getUsersData } from "../fetchAPI/CRUD/users.js";
 import languageDictProvider from "../utils/language.js";
-import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
-import {TableTypes} from "../utils/Defs.js";
+import { TableTypes } from "../utils/Defs.js";
+
+// Import des composants pagination réutilisables
+import PaginationArrows from "../components/PaginationArrows.jsx";
+import PaginationInput from "../components/PaginationInput.jsx";
 
 function Users() {
     const { token } = useAuth();
@@ -18,15 +21,11 @@ function Users() {
     const elementClassNamePlural = "users";
     const tableType = TableTypes.USERS;
 
-
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(10); // Limite par défaut
-    //prévient si la dernière page de données existe ou non
-    const [noMoreData, setIsThereMoreData] = useState(false); 
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
-
-    // utile pour le debugging
+    const [limit, setLimit] = useState(10);
+    const [noMoreData, setIsThereMoreData] = useState(false);
+    const [langDict, setLangDict] = useState(frDict);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -35,10 +34,12 @@ function Users() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() => getUsersData(token, limit, currentPage)) ;
+            const { data, noMoreData } = await exponentialRetry(() =>
+                getUsersData(token, limit, currentPage)
+            );
 
             setData(data);
-            setIsThereMoreData(noMoreData); //pour etre détectable par la pagination
+            setIsThereMoreData(noMoreData);
         } catch (err) {
             setError(langDict.error);
         }
@@ -46,76 +47,37 @@ function Users() {
         setIsLoading(false);
     };
 
-    // obligé de recoder une fonction asynchrone de ce nom car Page.jsx s'attend exactement à une fc à exec
-    // et en meme temps, je dois uniquement renvoyer les fleaMarkets qui seront updatés par le useState
-    const getElementsData = async () => {
-        return data;
-    }
+    const getElementsData = async () => data;
 
-    // besoin d'un useEffect ici car ici c'est une interaction avec l'api
-    // Utilise getDonnées (càd récup et met à jour les données de la classe)
-    useEffect(
-        () => {
-            getUsers();
-        }, [currentPage, limit]
-    );
+    useEffect(() => {
+        getUsers();
+    }, [currentPage, limit]);
 
-    // reçu par Page.jsx.
-    const PaginationArrows = () => {
-        return (
-            <div className="pagination-arrows">
-                {/* cacher le bouton si page actuelle===1 */}
-                <button onClick={showPreviousPage} disabled={currentPage === 1}>
-                    <IoIcons.IoIosArrowBack /> 
-                </button>
-                page {currentPage}
-                <button onClick={showNextPage} disabled={noMoreData}>
-                    <IoIcons.IoIosArrowForward /> 
-                </button>
-            </div>
-        );
-    }
-
-    // une fonction est passée à setCurrentPage pour prendre en compte l'état précédent (plutot que juste passer le num de la page)
-    const showNextPage = () => {
-        setCurrentPage(
-            (previousPage) => previousPage + 1
-        );
-    };
-
-    const showPreviousPage = () => {
-        setCurrentPage(
-            // retourne la page actuelle (pour le moment encore prevPage) -1, donc la page prec. Sauf si la page actuelle est 1
-             (previousPage) => (previousPage == 1 ? previousPage : previousPage - 1)
-        );
+    // Gestion centralisée du changement de page
+    const handlePageChange = (newPage) => {
+        if (newPage < 1) return;
+        if (newPage === currentPage) return;
+        setCurrentPage(newPage);
     };
 
     const changeLanguage = () => {
         languageDictProvider(window.language);
-    }
+    };
 
-    // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
     useEffect(() => {
-        // listener
         const handleLanguageChange = () => {
             changeLanguage();
         };
 
         window.addEventListener("langchange", handleLanguageChange);
-
-        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
-        // ...qui arrive bientôt, juste après la maj de la page
         return () => {
             window.removeEventListener("langchange", handleLanguageChange);
         };
-    }, []); // aucune dépendance utile ici
+    }, []);
 
-// dataElem.map(dataElem => //react requiert une clé unique pour chaque enfant d'un appel à map() car ils sont dynamiquement générés
     const renderTableBody = (user) => {
-
-        // convertir les booléens en strings appropriés
-        let isUserAdminText = user.is_admin ? langDict.yes : langDict.no;
-        let isUserTimedOutText = user.is_timed_out ? langDict.yes : langDict.no;
+        const isUserAdminText = user.is_admin ? langDict.yes : langDict.no;
+        const isUserTimedOutText = user.is_timed_out ? langDict.yes : langDict.no;
 
         return (
             <tr key={user.id}>
@@ -126,27 +88,36 @@ function Users() {
                 <td>{user.address}</td>
                 <td>{user.phone_number}</td>
                 <td>{user.email}</td>
-                <td><ConvertedDate longFormatDate={user.last_edit_date}/></td>
+                <td><ConvertedDate longFormatDate={user.last_edit_date} /></td>
                 <td>{user.profile_picture}</td>
                 <td>{isUserAdminText}</td>
                 <td>{isUserTimedOutText}</td>
                 <td>{user.recovery_code}</td>
-                <td><DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers}></DeleteButton></td>
+                <td>
+                    <DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers} />
+                </td>
             </tr>
         );
-    }
+    };
 
-    // renvoit le rendu d'une page auquel on passe les parties personnalisées via props (paramètres)
     return (
         <div>
-            {/*getElementsData reçoit la data updaté par le setFleaMarkets */}
-            <Page 
-                getElementsData={getElementsData} 
+            <Page
+                getElementsData={getElementsData}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
                 elementClassNamePlural={elementClassNamePlural}
-                paginationArrows={<PaginationArrows/>}
+                paginationArrows={
+                    <div className="flex items-center gap-2">
+                        <PaginationArrows
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
+                            noMoreData={noMoreData}
+                        />
+                        <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
+                    </div>
+                }
             />
             {error && <p>{langDict.error} : {error}</p>}
             {isLoading && <p>{langDict.loading}</p>}
@@ -155,4 +126,3 @@ function Users() {
 }
 
 export default Users;
-

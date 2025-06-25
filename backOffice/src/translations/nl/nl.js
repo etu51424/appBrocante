@@ -91,7 +91,9 @@ const nlDictionary = {
         }
     },
     "deleteButton" : "Verwijderen",
-    "deleteButtonConfirmText" : "Weet u zeker dat u dit item wilt verwijderen?"
+    "deleteButtonConfirmText" : "Weet u zeker dat u dit item wilt verwijderen?",
+    "page" : "Pagina",
+    "GoToPage" : "Aller à la page ",
 };
 
 export default nlDictionary;
