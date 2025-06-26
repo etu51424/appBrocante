@@ -4,7 +4,7 @@ import { API_BASE_URL, token } from "./../login.js";
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
 export const getSlotsData = async (token, limit = 10, page = 1) => {
     const currentPageResponse = await fetch(
-        `${API_BASE_URL}/admin/slot/all?${limit}&page=${page}`, 
+        `${API_BASE_URL}/admin/slot/all?limit=${limit}&page=${page}`,
         {
             method: "GET",
             headers: {
@@ -17,7 +17,7 @@ export const getSlotsData = async (token, limit = 10, page = 1) => {
     //Verifier si la page d'après existe, pour déterminer si on doit proposer ou non à l'useur d'accéder à la page d'après
     //Moyen d'optimiser: ne pas fetch celle ci si nb données de la table précédente < limit
     const nextPageResponse = await fetch(
-        `${API_BASE_URL}/admin/slot/all?${limit}&page=${page+1}`, 
+        `${API_BASE_URL}/admin/slot/all?limit=${limit}&page=${page+1}`,
         {
             method: "GET",
             headers: {

@@ -12,6 +12,7 @@ import DeleteButton from "../components/DeleteButton.jsx";
 // Import des composants pagination réutilisables
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
+import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 
 function Interests() {
     const { token } = useAuth();
@@ -99,6 +100,7 @@ function Interests() {
 
     return (
         <div>
+            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
                 getElementsData={getElementsData}
                 renderTableBody={renderTableBody}

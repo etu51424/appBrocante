@@ -13,6 +13,7 @@ import DeleteButton from "../components/DeleteButton.jsx";
 // ✅ composants de pagination réutilisables
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
+import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 
 function Dealers() {
     const { token } = useAuth();
@@ -93,6 +94,7 @@ function Dealers() {
 
     return (
         <div>
+            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
                 getElementsData={getElementsData}
                 renderTableBody={renderTableBody}

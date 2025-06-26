@@ -12,6 +12,7 @@ import { TableTypes } from "../utils/Defs.js";
 // Import des composants pagination réutilisables
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
+import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 
 function Users() {
     const { token } = useAuth();
@@ -102,6 +103,7 @@ function Users() {
 
     return (
         <div>
+            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
                 getElementsData={getElementsData}
                 renderTableBody={renderTableBody}

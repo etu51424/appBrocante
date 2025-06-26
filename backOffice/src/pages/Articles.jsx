@@ -12,6 +12,8 @@ import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
 import PaginationInput from "../components/PaginationInput.jsx";
 import PaginationArrows from "../components/PaginationArrows.jsx";
+import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
+
 
 function Articles() {
     const { token } = useAuth();
@@ -92,6 +94,7 @@ function Articles() {
 
     return (
         <div>
+            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
                 getElementsData={getElementsData}
                 renderTableBody={renderTableBody}
@@ -109,7 +112,7 @@ function Articles() {
                             currentPage={currentPage}
                             noMoreData={noMoreData}
                             onPageChange={handlePageChange}
-                            maxPage={100}  // ou autre max selon ton besoin
+                            maxPage={100}
                         />
                     </>
                 }
