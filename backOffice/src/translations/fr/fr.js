@@ -94,6 +94,10 @@ const frDictionary = {
     "deleteButtonConfirmText" : "Êtes-vous sur de vouloir supprimer cet élément ?",
     "page" : "Page",
     "GoToPage" : "Aller à la page ",
+    "banButton" : "Bannir",
+    "unbanButton" : "débannir",
+    "banButtonConfirmText" : "Êtes-vous sur de vouloir bannir cet utilisateur ?",
+    "unbanButtonConfirmText" : "Êtes-vous sur de vouloir débannir cet utilisateur ?",
 };
 
 export default frDictionary;

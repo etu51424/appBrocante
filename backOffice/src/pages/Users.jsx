@@ -8,8 +8,7 @@ import languageDictProvider from "../utils/language.js";
 import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
-
-// Import des composants pagination réutilisables
+import BanUserButton from "../components/BanUserButton.jsx";
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
@@ -94,9 +93,8 @@ function Users() {
                 <td>{isUserAdminText}</td>
                 <td>{isUserTimedOutText}</td>
                 <td>{user.recovery_code}</td>
-                <td>
-                    <DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers} />
-                </td>
+                <td><DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers} /></td>
+                <td><BanUserButton elementId={user.id} isBlocked={user.is_timed_out} onSuccess={getUsers} /></td>
             </tr>
         );
     };

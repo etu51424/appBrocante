@@ -26,6 +26,11 @@ function Page({
         let columns = langDict.tables[elementClassNameSingular].columns;
         columns.delete = langDict.deleteButton;
 
+        // Ajouter les éléments spécifiques à la table user
+        if (elementClassNameSingular === "user") {
+            columns.ban = langDict.banButton;
+        }
+
         return Object.entries(columns).map(([key, label]) => (
             <th key={key}>{label}</th>
         ));

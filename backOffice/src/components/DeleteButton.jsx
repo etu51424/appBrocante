@@ -14,13 +14,13 @@ function DeleteButton({ elementId, type, onSuccess }) {
     const handleClick = async () => {
         // A CHANGER AVEC LE CHANGEMENT DE GESTION DE LANGUE !!
         const isConfirmed = window.confirm(languageDictProvider(window.language).deleteButtonConfirmText);
-        if (!isConfirmed) return;
-
-        try {
-            await onDelete(elementId, type);
-            if (onSuccess) onSuccess();
-        } catch (e) {
-            console.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${type} : ${e}`);
+        if (isConfirmed) {
+            try {
+                await onDelete(elementId, type);
+                if (onSuccess) onSuccess();
+            } catch (e) {
+                console.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${type} : ${e}`);
+            }
         }
     };
 

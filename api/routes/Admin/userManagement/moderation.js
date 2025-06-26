@@ -6,8 +6,8 @@ import {default as PVM} from '../../../middleware/validator/validation/person.js
 
 const router = Router();
 
-router.patch("/ban", jwtCheck, admin, notBanned, PVM.personId, banPerson);
-router.patch("/unban", jwtCheck, admin, notBanned, PVM.personId, unbanPerson);
+router.patch("/ban/:personId", jwtCheck, admin, notBanned, PVM.personId, banPerson);
+router.patch("/unban/:personId", jwtCheck, admin, notBanned, PVM.personId, unbanPerson);
 
 export default router;
 

@@ -1,8 +1,9 @@
-import { API_BASE_URL } from "../login.js";
+import { API_BASE_URL, token } from "../login.js";
+import {statusCodes} from "../utils/statusCode.js";
 
 export const banUser = async (id) =>{
     const response = await fetch(
-        `${API_BASE_URL}/admin/moderation/ban`,
+        `${API_BASE_URL}/admin/moderation/ban/${id}`,
         {
             method: "PATCH",
             headers: {
@@ -12,17 +13,12 @@ export const banUser = async (id) =>{
             body : JSON.stringify({id})
         }
     );
-
-    if (response.status !== 204) {
-        throw new Error(`Echec au banissement : ${response.statusText}`);
-    } else {
-        return await response.json();
-    }
+    return statusCodes(response);
 }
 
 export const unbanUser = async (id) =>{
     const response = await fetch(
-        `${API_BASE_URL}/admin/moderation/unban`,
+        `${API_BASE_URL}/admin/moderation/unban/${id}`,
         {
             method: "PATCH",
             headers: {
@@ -33,9 +29,5 @@ export const unbanUser = async (id) =>{
         }
     );
 
-    if (response.status !== 204) {
-        throw new Error(`Echec au débanissement : ${response.statusText}`);
-    } else {
-        return await response.json();
-    }
+    return statusCodes(response);
 }

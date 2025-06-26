@@ -94,6 +94,10 @@ const nlDictionary = {
     "deleteButtonConfirmText" : "Weet u zeker dat u dit item wilt verwijderen?",
     "page" : "Pagina",
     "GoToPage" : "Aller à la page ",
+    "banButton" : "Verbod",
+    "unbanButton" : "ongedaan maken",
+    "banButtonConfirmText" : "Weet u zeker dat u deze gebruiker wilt blokkeren?",
+    "unbanButtonConfirmText" : "Weet u zeker dat u deze gebruiker wilt deblokkeren?",
 };
 
 export default nlDictionary;

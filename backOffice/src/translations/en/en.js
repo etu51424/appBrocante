@@ -95,6 +95,10 @@ const enDictionary = {
     "deleteButtonConfirmText" : "Are you sure you want to delete this element?",
     "page" : "Page",
     "GoToPage" : "Aller à la page ",
+    "banButton" : "Ban",
+    "unbanButton" : "Unban",
+    "banButtonConfirmText" : "Are you sure you want to ban this user?",
+    "unbanButtonConfirmText" : "Are you sure you want to unban this user?",
 };
 
 export default enDictionary;
