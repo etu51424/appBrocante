@@ -2,9 +2,8 @@ import { React, useState, useEffect } from "react";
 import { useAuth } from "../components/AuthProvider.jsx";
 
 import Page from "../components/Page.jsx";
-import frDict from "../translations/fr/fr.js";
+import { useSelector } from 'react-redux';
 import { getSlotsData } from "../fetchAPI/CRUD/slots.js";
-import languageDictProvider from "../utils/language.js";
 import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
@@ -26,7 +25,7 @@ function Slots() {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [noMoreData, setIsThereMoreData] = useState(false);
-    const [langDict, setLangDict] = useState(frDict);
+    const langDict = useSelector(state => state.language.langDict);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -59,21 +58,6 @@ function Slots() {
         if (newPage === currentPage) return;
         setCurrentPage(newPage);
     };
-
-    const changeLanguage = () => {
-        languageDictProvider(window.language);
-    };
-
-    useEffect(() => {
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []);
 
     const renderTableBody = (slot) => (
         <tr key={slot.id}>

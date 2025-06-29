@@ -1,23 +1,19 @@
 import React, {useState, useContext } from 'react';
 import "../css/Navbar.css";
-import frDict from "../translations/fr/fr.js";
-import languageDictProvider from "../utils/language.js";
 import { AuthContext } from './AuthProvider.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeLanguage } from '../store/slices/languageSlice.js';
 
 function Navbar() {
-  const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
   const { logout } = useContext(AuthContext);
+  const langDict = useSelector(state => state.language.langDict);
 
-  const handleChangeLanguage = (lang) => { 
-    window.language = lang;
+  const dispatch = useDispatch();
 
-    //set la langue uniquement pour Navbar.jsx
-    setLangDict(languageDictProvider(window.language));
-
-    // dispatch un événement "langchange" à travers et dans l'objet window (donc toute la vue, ce qui inlcut tous les composants)
-    //changeant la langue sur toutes les pages
-    const event = new Event("langchange");
-    window.dispatchEvent(event);
+  const handleChangeLanguage = (langCode) => {
+    console.log("you clciked");
+    dispatch(changeLanguage({langCode:langCode}));
+    console.log("dispatch call done");
   }
 
   const handleLogOut = () => {
@@ -38,7 +34,7 @@ function Navbar() {
               <button onClick={() => handleChangeLanguage("nl")}><img src="/nl.png" alt="logo" width="46px"/></button>
           </div>
           <div className="logOut">
-              <button onClick={() => handleLogOut()}>Log out</button>
+              <button onClick={() => handleLogOut()}>{langDict.login.logout}</button>
           </div>
         </div>
     </>

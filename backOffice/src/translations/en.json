@@ -1,9 +1,16 @@
-const enDictionary = {
+{
     "date_format":"en-EN",
     "home":"Home",
     "welcome":"Welcome to the back-office",
     "loading":"Loading...",
     "app_brocante":"AppBrocante - Admin Dashboard",
+    "login": {
+        "loginError":"Login error",
+        "username":"Username",
+        "password":"Password",
+        "login":"Login",
+        "logout":"Log out"
+    },
     "stats": {
         "title":"Monthly count of Flea Markets",
         "simple_title":"Stats",
@@ -44,13 +51,14 @@ const enDictionary = {
             "title":"User",
             "columns": {
                 "id":"Person ID",
-                "username":"Username",
+                "name":"Name",
                 "first_name":"First Name",
                 "last_name":"Last Name",
                 "address":"Address",
                 "phone_number": "Phone Number",
                 "email": "Email",
                 "last_edit_date": "Last Edit Date",
+                "password": "Password",
                 "profile_picture": "Profile Picture",
                 "is_admin": "Is Admin",
                 "is_timed_out": "Is Timed Out",
@@ -98,7 +106,5 @@ const enDictionary = {
     "banButton" : "Ban",
     "unbanButton" : "Unban",
     "banButtonConfirmText" : "Are you sure you want to ban this user?",
-    "unbanButtonConfirmText" : "Are you sure you want to unban this user?",
-};
-
-export default enDictionary;
+    "unbanButtonConfirmText" : "Are you sure you want to unban this user?"
+}

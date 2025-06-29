@@ -1,10 +1,11 @@
 import React from "react";
 import * as IoIcons from "react-icons/io";
-import languageDictProvider from "../utils/language.js";
+import { useSelector } from "react-redux";
 
-let lang = languageDictProvider(window.language);
 
 function PaginationArrows({ currentPage, noMoreData, onPageChange }) {
+    const langDict = useSelector(state => state.language.langDict);
+
     const handleNext = () => {
         if (!noMoreData) {
             onPageChange(currentPage + 1);
@@ -21,7 +22,7 @@ function PaginationArrows({ currentPage, noMoreData, onPageChange }) {
             <button onClick={handlePrevious} disabled={currentPage === 1}>
                 <IoIcons.IoIosArrowBack />
             </button>
-            {lang?.page} {currentPage}
+            {langDict?.page} {currentPage}
             <button onClick={handleNext} disabled={noMoreData}>
                 <IoIcons.IoIosArrowForward />
             </button>

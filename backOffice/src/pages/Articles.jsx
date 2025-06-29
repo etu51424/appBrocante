@@ -4,9 +4,8 @@ import { useAuth } from "../components/AuthProvider.jsx";
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
-import frDict from "../translations/fr/fr.js";
+import { useSelector } from 'react-redux';
 import { getArticlesData } from "../fetchAPI/CRUD/articles.js";
-import languageDictProvider from "../utils/language.js";
 import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
@@ -27,7 +26,7 @@ function Articles() {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [noMoreData, setIsThereMoreData] = useState(false);
-    const [langDict, setLangDict] = useState(frDict);
+    const langDict = useSelector(state => state.language.langDict);
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -75,22 +74,6 @@ function Articles() {
             </tr>
         );
     };
-
-    const changeLanguage = () => {
-        languageDictProvider(window.language);
-    };
-
-    useEffect(() => {
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []);
 
     return (
         <div>

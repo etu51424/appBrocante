@@ -1,40 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import "../css/Menu.css";
-import frDict from "../translations/fr/fr.js";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
-import languageDictProvider from "../utils/language.js";
 import { AuthContext } from './AuthProvider.jsx';
+import { useSelector } from 'react-redux';
 
 //console.log("Menu ets atteint" + isAuthenticated);
 
 function Menu({ isMinimized }) {
     const { isLoggedIn } = useContext(AuthContext);
     console.log("isLoggedIn existe t il ? : " + isLoggedIn);
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
-
-    const changeLanguage = () => {
-        const newDict = languageDictProvider(window.language);
-        setLangDict(newDict);
-    }
-
-// j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
-    useEffect(() => {
-        // listener
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-
-        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
-        // ...qui arrive bientôt, juste après la maj de la page
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []); // aucune dépendance utile ici
+    const langDict = useSelector(state => state.language.langDict);
 
     const SidebarData = [
     {

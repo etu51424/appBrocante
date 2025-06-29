@@ -4,8 +4,7 @@ import { useAuth } from "../components/AuthProvider.jsx";
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { getFleaMarketsData } from "../fetchAPI/CRUD/fleaMarkets.js";
-import frDict from "../translations/fr/fr.js";
-import languageDictProvider from "../utils/language.js";
+import { useSelector } from 'react-redux';
 import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
@@ -27,8 +26,7 @@ function FleaMarkets() {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [noMoreData, setIsThereMoreData] = useState(false);
-    const [langDict, setLangDict] = useState(frDict);
-    const [isLoading, setIsLoading] = useState(false);
+    const langDict = useSelector(state => state.language.langDict);    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const getFleaMarkets = async () => {
@@ -60,21 +58,6 @@ function FleaMarkets() {
         if (newPage === currentPage) return;
         setCurrentPage(newPage);
     };
-
-    const changeLanguage = () => {
-        languageDictProvider(window.language);
-    };
-
-    useEffect(() => {
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []);
 
     const renderTableBody = (fleaMarket) => {
         fleaMarket.is_charity_word = fleaMarket.is_charity ? langDict.yes : langDict.no;

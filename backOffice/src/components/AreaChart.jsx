@@ -12,9 +12,8 @@ import {
 } from 'recharts';
 import "../css/AreaChart.css";
 import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js";
-import frDict from "../translations/fr/fr.js";
 import { useAuth } from "./AuthProvider.jsx";
-import languageDictProvider from "../utils/language.js";
+import { useSelector } from 'react-redux';
 import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
 
 
@@ -32,31 +31,12 @@ const AreaChartComponent = ({
     // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
+    const langDict = useSelector(state => state.language.langDict);
     
     //const [dateStart, setDateStart] = useState();
     //const [dateEnd, setDateEnd] = useState();
 
-    // on utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
-    useEffect(() => {
-        // listener
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-
-        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
-        // ...qui arrive bientôt, juste après la maj de la page
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []); // aucune dépendance utile ici 
-
-    const changeLanguage = () => {
-        languageDictProvider(window.language);
-    }
-
+    
     useEffect(() => {
 
         // valeurs par défaut si l'utilisateur n'a pas encore choisi une date

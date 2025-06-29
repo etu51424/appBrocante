@@ -1,5 +1,6 @@
 import React from "react";
-import binImage from "../../public/supprimer.png";
+//import binImage from "../../public/supprimer.png";
+import * as IoIcons from 'react-icons/io';
 import "../css/DeleteButton.css";
 import { TableTypes as tableType, TableTypes } from "../utils/Defs.js";
 import { deleteUser } from "../fetchAPI/CRUD/users.js";
@@ -8,12 +9,14 @@ import { deleteFleaMarket } from "../fetchAPI/CRUD/fleaMarkets.js";
 import { deleteSlot } from "../fetchAPI/CRUD/slots.js";
 import { deleteDealer } from "../fetchAPI/CRUD/dealers.js";
 import { deleteInterest } from "../fetchAPI/CRUD/interests.js";
-import languageDictProvider from "../utils/language.js";
+import { useSelector } from 'react-redux';
 
 function DeleteButton({ elementId, type, onSuccess }) {
+    const langDict = useSelector(state => state.language.langDict);
+
     const handleClick = async () => {
         // A CHANGER AVEC LE CHANGEMENT DE GESTION DE LANGUE !!
-        const isConfirmed = window.confirm(languageDictProvider(window.language).deleteButtonConfirmText);
+        const isConfirmed = window.confirm(langDict.deleteButtonConfirmText);
         if (isConfirmed) {
             try {
                 await onDelete(elementId, type);
@@ -26,7 +29,7 @@ function DeleteButton({ elementId, type, onSuccess }) {
 
     return (
         <button className="delete-button" onClick={handleClick}>
-            <img src={binImage} className="delete-button-icon" alt="Supprimer" />
+            <img src={<IoIcons.IoIosTrash/>} className="delete-button-icon" alt="Supprimer" />
         </button>
     );
 }

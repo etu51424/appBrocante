@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import languageDictProvider from "../utils/language.js";
-
-let lang = languageDictProvider(window.language);
+import { useSelector } from 'react-redux';
 
 function PaginationInput({ currentPage, onPageChange }) {
     const [inputValue, setInputValue] = useState(currentPage);
+    const langDict = useSelector(state => state.language.langDict);
 
     useEffect(() => {
         setInputValue(currentPage); // Réinitialise si Articles force une autre page
@@ -28,7 +27,7 @@ function PaginationInput({ currentPage, onPageChange }) {
     return (
         <div className="pagination-input">
             <label>
-                {lang?.GoToPage} :
+                {langDict?.GoToPage} :
                 <input
                     type="number"
                     min="1"

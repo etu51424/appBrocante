@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import {banUser, unbanUser} from "../fetchAPI/userManagement/moderation.js";
 import {token} from "../fetchAPI/login.js";
-import languageDictProvider from "../utils/language.js";
+import { useSelector } from 'react-redux';
 
 function BanUserButton({ elementId, isBlocked, onSuccess }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const langDict = useSelector(state => state.language.langDict);
 
     const handleBan = async () => {
         setIsLoading(true);
         setError(null);
 
-        const isConfirmed = window.confirm(languageDictProvider(window.language).banButtonConfirmText);
+        const isConfirmed = window.confirm(langDict.ban.banButtonConfirmText);
         if (isConfirmed) {
 
             try {
@@ -31,7 +32,7 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
         setIsLoading(true);
         setError(null);
 
-        const isConfirmed = window.confirm(languageDictProvider(window.language).unbanButtonConfirmText);
+        const isConfirmed = window.confirm(langDict.ban.unbanButtonConfirmText);
         if (isConfirmed) {
             try {
                 let result = await unbanUser(elementId);

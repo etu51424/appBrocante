@@ -1,36 +1,15 @@
 import React, {useState, useEffect} from 'react';
 
-import frDict from "../translations/fr/fr.js";
+import { useSelector } from 'react-redux';
 import AreaChart from '../components/AreaChart.jsx';
 import DateSelector from '../components/DateSelector.jsx';
 import "../css/Stats.css";
-import languageDictProvider from "../utils/language.js";
 
 function Stats() {
     
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
+    const langDict = useSelector(state => state.language.langDict);
     const [dateStart, setDateStart] = useState();
     const [dateEnd, setDateEnd] = useState();
-
-    const changeLanguage = () => {
-        languageDictProvider(window.language);
-    }
-
-    // on utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
-    useEffect(() => {
-        // listener
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-
-        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
-        // ...qui arrive bientôt, juste après la maj de la page
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []); // aucune dépendance utile ici 
 
     // changeDateStart et changeDateEnd détectent un changement et update le prop passé au sous-composant AreaCharts
     const changeDateStart = (date) => {

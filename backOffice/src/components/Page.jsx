@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import frDict from "../translations/fr/fr.js";
+import { useSelector } from 'react-redux';
 import "../css/Page.css";
-import languageDictProvider from "../utils/language.js";
 
 // reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
 function Page({
@@ -13,7 +12,8 @@ function Page({
         paginationArrows,
     }) {
 
-    const [langDict, setLangDict] = useState(frDict); //frDict est le dictionnaire par défaut
+    const storeLangDict = useSelector(state => state.language.langDict);
+    const langDict = JSON.parse(JSON.stringify(storeLangDict));
     const [elements, setElements] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // affiche à l'useur un "écran" de chargement
@@ -23,7 +23,12 @@ function Page({
 
     // La méthode va aller prendre les informations depuis le dictionnaire plutot que de le faire dynamiquement
     const renderTableHeader = () => {
+        console.log("elementClassNameSingular :" + elementClassNameSingular);
+        console.log("langDict.tables[elementClassNameSingular] :" + JSON.stringify(langDict.tables[elementClassNameSingular]));
         let columns = langDict.tables[elementClassNameSingular].columns;
+
+        console.log("langDict en Page.jsx" + JSON.stringify(langDict));
+        //console.log(langDict.tables[elementClassNameSingular].columns.ban);
         columns.delete = langDict.deleteButton;
 
         // Ajouter les éléments spécifiques à la table user
@@ -35,27 +40,6 @@ function Page({
             <th key={key}>{label}</th>
         ));
     };
-
-
-    const changeLanguage = () => {
-        setLangDict(languageDictProvider(window.language));
-    }
-
-    // j'utilise un useEffect pour écouter (via un listener) un changement potentiel de window.language
-    useEffect(() => {
-        // listener
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-
-        // une fois déclenché, l'écouteur se ferme jusqu'au prochain passage du code ici
-        // ...qui arrive bientôt, juste après la maj de la page
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []); // aucune dépendance utile ici
 
     useEffect(() => {
 

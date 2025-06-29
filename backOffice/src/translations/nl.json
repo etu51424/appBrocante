@@ -1,9 +1,16 @@
-const nlDictionary = {
+{
     "date_format":"nl-NL",
     "home":"Home",
     "welcome":"Welkom bij de backoffice",
     "loading":"Laden...",
     "app_brocante":"AppBrocante - Beheermenu",
+    "login": {
+        "loginError": "Fout bij inloggen",
+        "username": "Gebruikersnaam",
+        "password": "Wachtwoord",
+        "login": "Inloggen",
+        "logout": "Uitloggen"
+    },
     "stats": {
         "title":"Aantal rommelmarkten per maand",
         "simple_title":"Statistieken",
@@ -43,13 +50,14 @@ const nlDictionary = {
             "title": "Gebruiker",
             "columns": {
                 "id":"Gebruikers-ID",
-                "username":"Username",
+                "name": "Naam",
                 "first_name": "Voornaam",
                 "last_name": "Achternaam",
                 "address": "Adres",
                 "phone_number": "Telefoonnummer",
                 "email": "E-mail",
                 "last_edit_date": "Laatste wijzigingsdatum",
+                "password": "Wachtwoord",
                 "profile_picture": "Profielfoto",
                 "is_admin": "Is beheerder",
                 "is_timed_out": "Is geblokkeerd",
@@ -97,7 +105,5 @@ const nlDictionary = {
     "banButton" : "Verbod",
     "unbanButton" : "ongedaan maken",
     "banButtonConfirmText" : "Weet u zeker dat u deze gebruiker wilt blokkeren?",
-    "unbanButtonConfirmText" : "Weet u zeker dat u deze gebruiker wilt deblokkeren?",
-};
-
-export default nlDictionary;
+    "unbanButtonConfirmText" : "Weet u zeker dat u deze gebruiker wilt deblokkeren?"
+}
