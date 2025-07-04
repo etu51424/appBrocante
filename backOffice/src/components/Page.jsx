@@ -34,6 +34,7 @@ function Page({
         // Ajouter les éléments spécifiques à la table user
         if (elementClassNameSingular === "user") {
             columns.ban = langDict.banButton;
+            columns.promote = langDict.promoteButton;
         }
 
         return Object.entries(columns).map(([key, label]) => (

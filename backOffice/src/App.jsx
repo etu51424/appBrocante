@@ -11,8 +11,6 @@ import Interests from './pages/Interests.jsx';
 import Stats from './pages/Stats.jsx';
 import Menu from './components/Menu.jsx';
 
-import App from './App'
-
 import LoginForm from "./components/LoginForm";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider  } from "./components/AuthProvider.jsx";

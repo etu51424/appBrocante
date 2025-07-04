@@ -58,7 +58,6 @@
                 "phone_number": "Numéro de téléphone",
                 "email": "Email",
                 "last_edit_date": "Date de dernière modification",
-                "password": "Mot de passe",
                 "profile_picture": "Photo de profil",
                 "is_admin": "Est administrateur",
                 "is_timed_out": "Est bloqué",
@@ -106,5 +105,9 @@
     "banButton" : "Bannir",
     "unbanButton" : "débannir",
     "banButtonConfirmText" : "Êtes-vous sur de vouloir bannir cet utilisateur ?",
-    "unbanButtonConfirmText" : "Êtes-vous sur de vouloir débannir cet utilisateur ?"
+    "unbanButtonConfirmText" : "Êtes-vous sur de vouloir débannir cet utilisateur ?",
+    "promoteButton" : "Promouvoir",
+    "demoteButton" : "Rétrograder",
+    "demoteButtonConfirmText" : "Êtes-vous sur de vouloir rétrograder cet utilisateur ?",
+    "promoteButtonConfirmText" : "Êtes-vous sur de vouloir promouvoir cet utilisateur ?"
 }

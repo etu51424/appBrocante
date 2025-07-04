@@ -1,6 +1,5 @@
 import React from "react";
-//import binImage from "../../public/supprimer.png";
-import * as IoIcons from 'react-icons/io';
+import { IoTrashBin } from "react-icons/io5";
 import "../css/DeleteButton.css";
 import { TableTypes as tableType, TableTypes } from "../utils/Defs.js";
 import { deleteUser } from "../fetchAPI/CRUD/users.js";
@@ -29,7 +28,7 @@ function DeleteButton({ elementId, type, onSuccess }) {
 
     return (
         <button className="delete-button" onClick={handleClick}>
-            <img src={<IoIcons.IoIosTrash/>} className="delete-button-icon" alt="Supprimer" />
+            <IoTrashBin />
         </button>
     );
 }

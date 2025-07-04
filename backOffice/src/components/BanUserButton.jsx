@@ -12,7 +12,7 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
         setIsLoading(true);
         setError(null);
 
-        const isConfirmed = window.confirm(langDict.ban.banButtonConfirmText);
+        const isConfirmed = window.confirm(langDict.banButtonConfirmText);
         if (isConfirmed) {
 
             try {
@@ -32,7 +32,7 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
         setIsLoading(true);
         setError(null);
 
-        const isConfirmed = window.confirm(langDict.ban.unbanButtonConfirmText);
+        const isConfirmed = window.confirm(langDict.unbanButtonConfirmText);
         if (isConfirmed) {
             try {
                 let result = await unbanUser(elementId);
@@ -54,7 +54,7 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
                 onClick={() => { isBlocked ? handleUnban() : handleBan()}}
                 disabled={isLoading}
             >
-                {isLoading ? "..." : isBlocked ? "Débannir" : "Bannir"}
+                {isLoading ? "..." : isBlocked ? langDict.unbanButton : langDict.banButton}
             </button>
             {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
         </div>

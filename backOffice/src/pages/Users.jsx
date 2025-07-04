@@ -11,6 +11,7 @@ import BanUserButton from "../components/BanUserButton.jsx";
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
+import PromoteUserButton from "../components/PromoteUserButton.jsx";
 
 function Users() {
     const { token } = useAuth();
@@ -72,13 +73,14 @@ function Users() {
                 <td>{user.address}</td>
                 <td>{user.phone_number}</td>
                 <td>{user.email}</td>
-                <td><ConvertedDate longFormatDate={user.last_edit_date} /></td>
+                <td><ConvertedDate longFormatDate={user.last_edit_date}/></td>
                 <td>{user.profile_picture}</td>
                 <td>{isUserAdminText}</td>
                 <td>{isUserTimedOutText}</td>
                 <td>{user.recovery_code}</td>
-                <td><DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers} /></td>
-                <td><BanUserButton elementId={user.id} isBlocked={user.is_timed_out} onSuccess={getUsers} /></td>
+                <td><DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers}/></td>
+                <td><BanUserButton elementId={user.id} isBlocked={user.is_timed_out} onSuccess={getUsers}/></td>
+                <td><PromoteUserButton userId={user.id} isAdmin={user.is_admin} onSuccess={getUsers}/></td>
             </tr>
         );
     };
