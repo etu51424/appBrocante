@@ -14,7 +14,7 @@ import "../css/AreaChart.css";
 import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js";
 import { useAuth } from "./AuthProvider.jsx";
 import { useSelector } from 'react-redux';
-import {exponentialRetry} from "../fetchAPI/exponentialRetry.js";
+import {exponentialRetry} from "../fetchAPI/utils/exponentialRetry.js";
 
 
 const AreaChartComponent = ({ 

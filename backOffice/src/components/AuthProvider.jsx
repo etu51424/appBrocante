@@ -24,8 +24,8 @@ const AuthProvider = (props) => {
             console.log(`jwtToken in authprov: ${jwtToken}`);
             setIsLoggedIn(true);
             setToken(jwtToken);
-        } catch {
-            console.log("LOGIN ERROR HAPPENED");   
+        } catch (e) {
+            console.log(`LOGIN ERROR HAPPENED : ${e}`);
         }
     };
 

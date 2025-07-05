@@ -26,6 +26,7 @@ const LoginForm = () => {
             navigate("/home");
         } catch (err) {
             setError(`Erreur lors de la connexion : ${err}`);
+            console.error(`Erreur lors de la connexion : ${err}`);
         }
     };
 

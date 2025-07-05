@@ -6,7 +6,7 @@ import ConvertedDate from "../components/ConvertedDate.jsx";
 import * as IoIcons from 'react-icons/io';
 import { useSelector } from 'react-redux';
 import { getArticlesData } from "../fetchAPI/CRUD/articles.js";
-import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
+import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
 import PaginationInput from "../components/PaginationInput.jsx";

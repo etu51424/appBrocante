@@ -4,7 +4,7 @@ import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { useSelector } from 'react-redux';
 import { getUsersData } from "../fetchAPI/CRUD/users.js";
-import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
+import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
 import BanUserButton from "../components/BanUserButton.jsx";

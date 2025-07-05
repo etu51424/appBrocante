@@ -4,7 +4,7 @@ import { useAuth } from "../components/AuthProvider.jsx";
 import Page from "../components/Page.jsx";
 import { getInterestsData } from "../fetchAPI/CRUD/interests.js";
 import { useSelector } from 'react-redux';
-import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
+import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 

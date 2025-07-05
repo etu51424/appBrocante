@@ -5,7 +5,7 @@ import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { getFleaMarketsData } from "../fetchAPI/CRUD/fleaMarkets.js";
 import { useSelector } from 'react-redux';
-import { exponentialRetry } from "../fetchAPI/exponentialRetry.js";
+import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 
