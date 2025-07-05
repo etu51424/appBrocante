@@ -14,6 +14,7 @@ export const exponentialRetry = async (fn, maxRetries = 5, initialDelay = 1000, 
             }
 
             attempt++;
+            console.log(attempt + " " + maxRetries);
             if (attempt >= maxRetries) {
                 throw new Error(`Échec après ${maxRetries} tentatives : ${err.message}`);
             }
