@@ -35,7 +35,7 @@ function Interests() {
 
         try {
             const { data, noMoreData } = await exponentialRetry(() =>
-                getInterestsData(token, limit, currentPage)
+                getInterestsData(limit, currentPage)
             );
 
             setData(data);

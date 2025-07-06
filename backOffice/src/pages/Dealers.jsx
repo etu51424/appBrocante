@@ -35,7 +35,7 @@ function Dealers() {
 
         try {
             const { data, noMoreData } = await exponentialRetry(() =>
-                getDealersData(token, limit, currentPage)
+                getDealersData(limit, currentPage)
             );
 
             setData(data);

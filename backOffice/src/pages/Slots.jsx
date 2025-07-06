@@ -35,7 +35,7 @@ function Slots() {
 
         try {
             const { data, noMoreData } = await exponentialRetry(() =>
-                getSlotsData(token, limit, currentPage)
+                getSlotsData(limit, currentPage)
             );
 
             setData(data);

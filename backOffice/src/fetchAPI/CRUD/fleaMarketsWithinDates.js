@@ -1,25 +1,26 @@
 import { API_BASE_URL, token} from "./../login.js";
+import {exponentialRetry} from "../utils/exponentialRetry.js";
+import {statusCodesError} from "../utils/statusCode.js";
 
-const fetchFleaMarketsDataWithinDates = async (token, dateStart = '2024-01-01', dateEnd = '2026-01-01') => {
-    console.log("reçoit dateStart" + dateStart +" et " + dateEnd + "et token " + token);
+const fetchFleaMarketsDataWithinDates = async (dateStart = '2024-01-01', dateEnd = '2026-01-01') => {
+    const expectedCode = 200;
+    return await exponentialRetry(async () =>{
+        const response = await fetch(
+            `${API_BASE_URL}/client/fleaMarket/inDates?dateStart=${dateStart}&dateEnd=${dateEnd}`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        statusCodesError(response, expectedCode);
 
-    const response = await fetch(
-        `${API_BASE_URL}/client/fleaMarket/inDates?dateStart=${dateStart}&dateEnd=${dateEnd}`,
-        {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
+        if (response.status === expectedCode){
+            return await response.json();
         }
-    );
-
-    if (response.status !== 200) {
-        throw new Error(`Echec à fetch les objets : ${response.statusText}`);
-    } else {
-        const data = await response.json();
-        return data;
-    }
+    });
 }
 
 export const getFMDataWithinDates = fetchFleaMarketsDataWithinDates;

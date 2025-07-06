@@ -35,7 +35,7 @@ function FleaMarkets() {
 
         try {
             const { data, noMoreData } = await exponentialRetry(() =>
-                getFleaMarketsData(token, limit, currentPage)
+                getFleaMarketsData(limit, currentPage)
             );
 
             setData(data);

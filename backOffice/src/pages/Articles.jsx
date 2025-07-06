@@ -36,7 +36,7 @@ function Articles() {
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() => getArticlesData(token, limit, currentPage));
+            const { data, noMoreData } = await exponentialRetry(() => getArticlesData(limit, currentPage));
 
             setData(data);
             setIsThereMoreData(noMoreData);

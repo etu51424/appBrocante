@@ -1,7 +1,9 @@
 import { API_BASE_URL, token } from "../login.js";
 import {exponentialRetry} from "../utils/exponentialRetry.js";
+import {statusCodesError} from "../utils/statusCode.js";
 
 export const promoteUser = async (id) =>{
+    const expectedCode = 204;
     return await exponentialRetry(async () => {
         const response = await fetch(
             `${API_BASE_URL}/admin/promotion/promote/${id}`,
@@ -13,19 +15,14 @@ export const promoteUser = async (id) =>{
                 },
             }
         );
+        statusCodesError(response, expectedCode);
 
-        if (response.status !== 204) {
-            let error = new Error(`Mauvais status code : ${response.status}`);
-            error.status = response.status;
-            error.response = response;
-            throw error;
-        }
-
-        return response.status === 204;
+        return response.status === expectedCode;
     })
 }
 
 export const demoteUser = async (id) =>{
+    const expectedCode = 204;
     return await exponentialRetry(async () => {
         const response = await fetch(
             `${API_BASE_URL}/admin/promotion/demote/${id}`,
@@ -38,14 +35,9 @@ export const demoteUser = async (id) =>{
             }
         );
 
-        if (response.status !== 204) {
-            let error = new Error(`Mauvais status code : ${response.status}`);
-            error.status = response.status;
-            error.response = response;
-            throw error;
-        }
+        statusCodesError(response, expectedCode);
 
-        return response.status === 204;
+        return response.status === expectedCode;
     })
 
 }

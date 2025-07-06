@@ -1,8 +1,10 @@
 import { API_BASE_URL } from "../login.js";
-import {statusCodes} from "../utils/statusCode.js";
+import {statusCodesError} from "../utils/statusCode.js";
+import {exponentialRetry} from "../utils/exponentialRetry.js";
 
 export const getRecoveryEmail = async (personId) => {
-    try {
+    let expectedCode = 201;
+    return await exponentialRetry(async () => {
         const response = await fetch(
             `${API_BASE_URL}/client/security/${personId}`,
             {
@@ -12,16 +14,16 @@ export const getRecoveryEmail = async (personId) => {
                 method: "GET",
             }
         );
-        return await statusCodes(response);
-    }
-    catch (e) {
-        throw new Error(`Erreur lors de la réception d'un code de récupération : ${e.message}`);
-    }
+        statusCodesError(response, expectedCode);
+
+        return response.status === expectedCode;
+    });
 }
 
 // ne recoit rien
 export const validateRecoveryCode = async (body) => {
-    try {
+    const expectedCode = 200;
+    return await exponentialRetry(async () => {
         const response = await fetch(
             `${API_BASE_URL}/client/security`,
             {
@@ -32,9 +34,9 @@ export const validateRecoveryCode = async (body) => {
                 body: JSON.stringify(body),
             }
         );
-        return await statusCodes(response);
-    }
-    catch (e) {
-        console.error(`Erreur lors de la vérification d'un code de récupération : ${e.message}`);
-    }
+        statusCodesError(response, expectedCode);
+
+        return response.status === expectedCode;
+    })
+
 }

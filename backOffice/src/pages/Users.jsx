@@ -35,7 +35,7 @@ function Users() {
 
         try {
             const { data, noMoreData } = await exponentialRetry(() =>
-                getUsersData(token, limit, currentPage)
+                getUsersData(limit, currentPage)
             );
 
             setData(data);

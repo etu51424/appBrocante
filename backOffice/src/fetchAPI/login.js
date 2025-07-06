@@ -1,4 +1,5 @@
 import {exponentialRetry} from "./utils/exponentialRetry.js";
+import {statusCodesError} from "./utils/statusCode.js";
 
 export const API_BASE_URL = "http://localhost:3001/api/v1";
 export let token;
@@ -16,12 +17,8 @@ export async function loginFetch(username, password) {
             body: JSON.stringify(loginBody),
         });
 
-        if (loginResponse.status !== 201) {
-            let error = new Error('No token was created');
-            error.status = loginResponse.status;
-            error.response = loginResponse;
-            throw error;
-        }
+        statusCodesError(loginResponse, 201);
+
         token = await loginResponse.text();
         return token;
     });
