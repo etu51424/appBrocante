@@ -18,7 +18,6 @@ import { AuthProvider  } from "./components/AuthProvider.jsx";
 window.language = "fr";
 
 function App() {
-  console.log("Arrive sur l'appli");
   return (
     <>
         <Router>

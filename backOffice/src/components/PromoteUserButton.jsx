@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useAuth } from "./AuthProvider.jsx";
 import {demoteUser, promoteUser} from "../fetchAPI/userManagement/promotion.js";
 
 function PromoteUserButton({ userId, isAdmin, onSuccess }) {

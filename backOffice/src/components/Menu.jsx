@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 
 function Menu({ isMinimized }) {
     const { isLoggedIn } = useContext(AuthContext);
-    console.log("isLoggedIn existe t il ? : " + isLoggedIn);
     const langDict = useSelector(state => state.language.langDict);
 
     const SidebarData = [

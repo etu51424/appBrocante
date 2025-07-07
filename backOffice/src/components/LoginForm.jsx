@@ -20,10 +20,12 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await login(username, password);
-            setUsername("");
-            setPassword("");
-            navigate("/home");
+            const success = await login(username, password);
+            if (success){
+                setUsername("");
+                setPassword("");
+                navigate("/home");
+            }
         } catch (err) {
             setError(`Erreur lors de la connexion : ${err}`);
             console.error(`Erreur lors de la connexion : ${err}`);
@@ -64,8 +66,7 @@ const LoginForm = () => {
                 password: newPassword
             });
 
-            if (result === true) {
-                console.log("Mot de passe changé avec succès");
+            if (result) {
                 resetAll();
             } else {
                 setError(`Erreur lors de la réinitialisation du mot de passe : ${result}`);

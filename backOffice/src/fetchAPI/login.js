@@ -9,7 +9,7 @@ export async function loginFetch(username, password) {
         password: password
     }
 
-    return exponentialRetry(async () => {
+    return await exponentialRetry(async () => {
         const loginResponse = await fetch(`${API_BASE_URL}/client/person/login`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -24,6 +24,7 @@ export async function loginFetch(username, password) {
         // Calculer l'expiration (ici : 8 heures)
         const expiration = new Date().getTime() + 8 * 60 * 60 * 1000;
         localStorage.setItem("authTokenExpiration", expiration.toString())
-        return token;
+        console.log(!!token);
+        return !!token;
     });
 }
