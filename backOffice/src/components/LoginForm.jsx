@@ -34,7 +34,6 @@ const LoginForm = () => {
         event.preventDefault();
         try {
             await getRecoveryEmail(identifier);
-            console.log("Mail envoyé à :", identifier);
             setMailSent(true);
         } catch (err) {
             setError(`Une erreur est survenue lors de l'envoi de l'e-mail : ${err}`);

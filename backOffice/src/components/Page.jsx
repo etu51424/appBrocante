@@ -23,11 +23,8 @@ function Page({
 
     // La méthode va aller prendre les informations depuis le dictionnaire plutot que de le faire dynamiquement
     const renderTableHeader = () => {
-        console.log("elementClassNameSingular :" + elementClassNameSingular);
-        console.log("langDict.tables[elementClassNameSingular] :" + JSON.stringify(langDict.tables[elementClassNameSingular]));
         let columns = langDict.tables[elementClassNameSingular].columns;
 
-        console.log("langDict en Page.jsx" + JSON.stringify(langDict));
         //console.log(langDict.tables[elementClassNameSingular].columns.ban);
         columns.delete = langDict.deleteButton;
 

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {banUser, unbanUser} from "../fetchAPI/userManagement/moderation.js";
-import {token} from "../fetchAPI/login.js";
 import { useSelector } from 'react-redux';
 
 function BanUserButton({ elementId, isBlocked, onSuccess }) {

@@ -21,20 +21,12 @@ const AreaChartComponent = ({
         dateStartProp,
         dateEndProp
     }) => {
-
-    //console.log("useAuth das areacharts :" + useAuth);
-
-    const { token } = useAuth();
-    
-    //console.log("token dans areaharts: " + token);
     const [data, setData] = useState([]);
+
     // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const langDict = useSelector(state => state.language.langDict);
-    
-    //const [dateStart, setDateStart] = useState();
-    //const [dateEnd, setDateEnd] = useState();
 
     
     useEffect(() => {
@@ -49,7 +41,6 @@ const AreaChartComponent = ({
 
         const getFleaMarketsWithinDates = async (dateStartProp, dateEndProp) => {
             setIsLoading(true);
-            //console.log("dateStartProp + dateEndProp + token :" + token);
 
             try {
                 const data = await exponentialRetry(() => getFMDataWithinDates(dateStartProp, dateEndProp));

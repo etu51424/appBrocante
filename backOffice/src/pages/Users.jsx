@@ -14,7 +14,6 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import PromoteUserButton from "../components/PromoteUserButton.jsx";
 
 function Users() {
-    const { token } = useAuth();
 
     const title = "Users";
     const elementClassNameSingular = "user";

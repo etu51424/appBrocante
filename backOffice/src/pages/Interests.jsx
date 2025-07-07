@@ -14,7 +14,6 @@ import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 
 function Interests() {
-    const { token } = useAuth();
 
     const title = "Interests";
     const elementClassNameSingular = "interest";

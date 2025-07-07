@@ -2,7 +2,6 @@ import {exponentialRetry} from "./utils/exponentialRetry.js";
 import {statusCodesError} from "./utils/statusCode.js";
 
 export const API_BASE_URL = "http://localhost:3001/api/v1";
-export let token;
 
 export async function loginFetch(username, password) {
     const loginBody = {
@@ -19,7 +18,12 @@ export async function loginFetch(username, password) {
 
         statusCodesError(loginResponse, 201);
 
-        token = await loginResponse.text();
+        const token = await loginResponse.text();
+        localStorage.setItem("authToken", token);
+
+        // Calculer l'expiration (ici : 8 heures)
+        const expiration = new Date().getTime() + 8 * 60 * 60 * 1000;
+        localStorage.setItem("authTokenExpiration", expiration.toString())
         return token;
     });
 }

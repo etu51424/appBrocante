@@ -1,10 +1,9 @@
-import React, { useContext, createContext, useState } from "react";
+import React, {useContext, createContext, useState, useEffect} from "react";
 import { loginFetch } from "../fetchAPI/login";
 
 // créer le contexte sur lequel le token sera disponible
 const AuthContext = createContext();
 
-console.log("auth prov direct");
 // exporte un hook custom "useAuth" qui permet d'accéder au contexte
 const useAuth = () => useContext(AuthContext);
 
@@ -13,19 +12,15 @@ const useAuth = () => useContext(AuthContext);
 const AuthProvider = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); //redondant mais utile
     const [token, setToken] = useState(null);
-    console.log("Auth prov appelé");
 
     const login = async (username, password) => {
-        console.log(`username: ${username}, password: ${password}`);
         let jwtToken;
         try {
             jwtToken = await loginFetch(username, password);
-            console.log("line executed IF NO ERROR");
-            console.log(`jwtToken in authprov: ${jwtToken}`);
             setIsLoggedIn(true);
             setToken(jwtToken);
         } catch (e) {
-            console.log(`LOGIN ERROR HAPPENED : ${e}`);
+            console.error(`LOGIN ERROR HAPPENED : ${e}`);
         }
     };
 

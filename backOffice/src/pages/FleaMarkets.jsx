@@ -15,7 +15,6 @@ import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 
 function FleaMarkets() {
-    const { token } = useAuth();
 
     const title = "Flea Markets";
     const elementClassNameSingular = "flea_market";

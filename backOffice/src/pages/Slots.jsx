@@ -14,7 +14,6 @@ import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 
 function Slots() {
-    const { token } = useAuth();
 
     const title = "Slots";
     const elementClassNameSingular = "slot";

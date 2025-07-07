@@ -15,7 +15,6 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 
 
 function Articles() {
-    const { token } = useAuth();
 
     const title = "Articles";
     const elementClassNameSingular = "article";
