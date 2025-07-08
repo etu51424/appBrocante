@@ -12,6 +12,7 @@ import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import PromoteUserButton from "../components/PromoteUserButton.jsx";
+import toast from "react-hot-toast";
 
 function Users() {
 
@@ -41,6 +42,7 @@ function Users() {
             setIsThereMoreData(noMoreData);
         } catch (err) {
             setError(langDict.error);
+            toast.error(err);
         }
 
         setIsLoading(false);

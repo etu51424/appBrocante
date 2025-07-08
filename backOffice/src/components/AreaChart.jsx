@@ -15,6 +15,7 @@ import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js
 import { useAuth } from "./AuthProvider.jsx";
 import { useSelector } from 'react-redux';
 import {exponentialRetry} from "../fetchAPI/utils/exponentialRetry.js";
+import toast from "react-hot-toast";
 
 
 const AreaChartComponent = ({ 
@@ -49,6 +50,7 @@ const AreaChartComponent = ({
                 setData(monthCountDatapoints);
             } catch (err) {
                 setError("error");
+                toast.error(`Erreur : ${err}`);
             }
             setIsLoading(false);
         };

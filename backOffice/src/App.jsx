@@ -1,4 +1,4 @@
-  import Navbar from './components/Navbar.jsx';
+import Navbar from './components/Navbar.jsx';
 import './css/App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home.jsx';
@@ -10,7 +10,7 @@ import Dealers from './pages/Dealers.jsx';
 import Interests from './pages/Interests.jsx';
 import Stats from './pages/Stats.jsx';
 import Menu from './components/Menu.jsx';
-
+import { Toaster } from 'react-hot-toast';
 import LoginForm from "./components/LoginForm";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider  } from "./components/AuthProvider.jsx";
@@ -42,6 +42,7 @@ function App() {
              </AuthProvider>
             </div>
         </Router>
+        <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 }

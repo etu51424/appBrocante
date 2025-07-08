@@ -1,5 +1,6 @@
 import {useContext, createContext, useState} from "react";
 import { loginFetch } from "../fetchAPI/login";
+import toast from "react-hot-toast";
 
 // créer le contexte sur lequel le token sera disponible
 export const AuthContext = createContext();
@@ -19,6 +20,7 @@ export const AuthProvider = (props) => {
             return success;
         } catch (e) {
             console.error(`LOGIN ERROR HAPPENED : ${e}`);
+            toast.error(`LOGIN ERROR HAPPENED : ${e}`);
         }
     };
 

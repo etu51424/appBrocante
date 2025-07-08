@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {banUser, unbanUser} from "../fetchAPI/userManagement/moderation.js";
 import { useSelector } from 'react-redux';
+import toast from "react-hot-toast";
 
 function BanUserButton({ elementId, isBlocked, onSuccess }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,10 +18,12 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
             try {
                 let result = await banUser(elementId);
                 if (onSuccess && result) {
+                    toast.success("L'utilisateur a été banni !");
                     onSuccess();
                 }
             } catch (err) {
                 setError(`Erreur lors du bannissement : ${err}`);
+                toast.error(`Erreur lors du bannissement : ${err}`);
             } finally {
                 setIsLoading(false);
             }
@@ -36,10 +39,12 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
             try {
                 let result = await unbanUser(elementId);
                 if (onSuccess && result) {
+                    toast.success("L'utilisateur a été débanni !");
                     onSuccess();
                 }
             } catch (err) {
                 setError(`Erreur lors du débannissement : ${err}`);
+                toast.error(`Erreur lors du bannissement : ${err}`);
             } finally {
                 setIsLoading(false);
             }

@@ -9,6 +9,7 @@ import { deleteSlot } from "../fetchAPI/CRUD/slots.js";
 import { deleteDealer } from "../fetchAPI/CRUD/dealers.js";
 import { deleteInterest } from "../fetchAPI/CRUD/interests.js";
 import { useSelector } from 'react-redux';
+import toast from "react-hot-toast";
 
 function DeleteButton({ elementId, type, onSuccess }) {
     const langDict = useSelector(state => state.language.langDict);
@@ -22,6 +23,7 @@ function DeleteButton({ elementId, type, onSuccess }) {
                 if (onSuccess) onSuccess();
             } catch (e) {
                 console.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${type} : ${e}`);
+                toast.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${type} : ${e}`);
             }
         }
     };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {demoteUser, promoteUser} from "../fetchAPI/userManagement/promotion.js";
+import toast from "react-hot-toast";
 
 function PromoteUserButton({ userId, isAdmin, onSuccess }) {
     const langDict = useSelector(state => state.language.langDict);
@@ -17,10 +18,12 @@ function PromoteUserButton({ userId, isAdmin, onSuccess }) {
                 let result = await promoteUser(userId);
 
                 if (onSuccess && result) {
+                    toast.success("L'utilisateur a été promu !");
                     onSuccess();
                 }
             } catch (err) {
                 setError(`Erreur lors de la promotion : ${err}`);
+                toast.error(`Erreur lors de la promotion : ${err}`);
             } finally {
                 setIsLoading(false);
             }
@@ -39,10 +42,12 @@ function PromoteUserButton({ userId, isAdmin, onSuccess }) {
                 let result = await demoteUser(userId);
 
                 if (onSuccess && result){
+                    toast.success("L'utilisateur a été rétrogradé !");
                     onSuccess();
                 }
             } catch (err) {
                 setError(`Erreur lors de la rétrogradation : ${err}`);
+                toast.error(`Erreur lors de la promotion : ${err}`);
             } finally {
                 setIsLoading(false);
             }

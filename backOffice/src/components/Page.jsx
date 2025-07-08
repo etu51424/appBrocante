@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import "../css/Page.css";
+import toast from "react-hot-toast";
 
 // reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
 function Page({
@@ -48,6 +49,7 @@ function Page({
             } catch (err) {
                 console.error(err);
                 setError(err.message);
+                toast.error(err);
             } finally {
                 setIsLoading(false);
             }

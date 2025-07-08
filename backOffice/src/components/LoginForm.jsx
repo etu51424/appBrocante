@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 import "../css/LoginForm.css";
 import { getRecoveryEmail, validateRecoveryCode } from "../fetchAPI/userManagement/passwordRecovery.js";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
@@ -29,6 +30,7 @@ const LoginForm = () => {
         } catch (err) {
             setError(`Erreur lors de la connexion : ${err}`);
             console.error(`Erreur lors de la connexion : ${err}`);
+            toast.error(`Erreur lors de la connexion : ${err}`);
         }
     };
 
@@ -39,6 +41,7 @@ const LoginForm = () => {
             setMailSent(true);
         } catch (err) {
             setError(`Une erreur est survenue lors de l'envoi de l'e-mail : ${err}`);
+            toast.error(`Une erreur est survenue lors de l'envoi de l'e-mail : ${err}`);
         }
     };
 
@@ -73,6 +76,7 @@ const LoginForm = () => {
             }
         } catch (err) {
             setError(`Erreur lors de la réinitialisation du mot de passe : ${err}`);
+            toast.error(`Erreur lors de la réinitialisation du mot de passe : ${err}`);
         }
     };
 
