@@ -11,6 +11,7 @@
         "login": "Se connecter",
         "logout": "Se déconnecter"
     },
+    "loginError" : "Erreur lors de la connexion",
     "stats": {
         "title":"Nombre de brocantes par mois",
         "simple_title":"Statistiques",
@@ -106,8 +107,12 @@
     "unbanButton" : "débannir",
     "banButtonConfirmText" : "Êtes-vous sur de vouloir bannir cet utilisateur ?",
     "unbanButtonConfirmText" : "Êtes-vous sur de vouloir débannir cet utilisateur ?",
+    "userBanned" : "L'utilisateur est banni",
     "promoteButton" : "Promouvoir",
     "demoteButton" : "Rétrograder",
     "demoteButtonConfirmText" : "Êtes-vous sur de vouloir rétrograder cet utilisateur ?",
-    "promoteButtonConfirmText" : "Êtes-vous sur de vouloir promouvoir cet utilisateur ?"
+    "promoteButtonConfirmText" : "Êtes-vous sur de vouloir promouvoir cet utilisateur ?",
+    "sortMenuAsc": "Tri croissant",
+    "sortMenuDesc": "Tri décroissant",
+    "sortButtonTooltip": "Trier"
 }

@@ -18,7 +18,7 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
             try {
                 let result = await banUser(elementId);
                 if (onSuccess && result) {
-                    toast.success("L'utilisateur a été banni !");
+                    toast.success(langDict.userBanned);
                     onSuccess();
                 }
             } catch (err) {

@@ -12,7 +12,6 @@ import {
 } from 'recharts';
 import "../css/AreaChart.css";
 import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js";
-import { useAuth } from "./AuthProvider.jsx";
 import { useSelector } from 'react-redux';
 import {exponentialRetry} from "../fetchAPI/utils/exponentialRetry.js";
 import toast from "react-hot-toast";
@@ -49,8 +48,8 @@ const AreaChartComponent = ({
                 const monthCountDatapoints = createMarketsPerMonthDict(data);
                 setData(monthCountDatapoints);
             } catch (err) {
-                setError("error");
-                toast.error(`Erreur : ${err}`);
+                setError(langDict.error);
+                toast.error(`${langDict.error} : ${err}`);
             }
             setIsLoading(false);
         };
@@ -148,7 +147,7 @@ const AreaChartComponent = ({
     }
 
     if (isLoading) {
-        return <p>{"loading"}</p>;
+        return <p>{langDict.loading}</p>;
     }
 
     if (error) {

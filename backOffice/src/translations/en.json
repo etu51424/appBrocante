@@ -11,6 +11,7 @@
         "login":"Login",
         "logout":"Log out"
     },
+    "loginError" : "Error while loggin in",
     "stats": {
         "title":"Monthly count of Flea Markets",
         "simple_title":"Stats",
@@ -105,9 +106,13 @@
     "banButton" : "Ban",
     "unbanButton" : "Unban",
     "banButtonConfirmText" : "Are you sure you want to ban this user?",
+    "userBanned" : "User was banned",
     "unbanButtonConfirmText" : "Are you sure you want to unban this user?",
     "promoteButton" : "Promote",
     "demoteButton" : "Unrank",
     "demoteButtonConfirmText" : "Are you sure you want to unrank this user?",
-    "promoteButtonConfirmText" : "Are you sure you want to promote this user?"
+    "promoteButtonConfirmText" : "Are you sure you want to promote this user?",
+    "sortMenuAsc": "Sort ascending",
+    "sortMenuDesc": "Sort descending",
+    "sortButtonTooltip": "Sort"
 }

@@ -11,6 +11,7 @@
         "login": "Inloggen",
         "logout": "Uitloggen"
     },
+    "loginError" : "Fout tijdens het verbinden",
     "stats": {
         "title":"Aantal rommelmarkten per maand",
         "simple_title":"Statistieken",
@@ -105,8 +106,12 @@
     "unbanButton" : "ongedaan maken",
     "banButtonConfirmText" : "Weet u zeker dat u deze gebruiker wilt blokkeren?",
     "unbanButtonConfirmText" : "Weet u zeker dat u deze gebruiker wilt deblokkeren?",
+    "userBanned" : "De gebruiker is verbannen",
     "promoteButton": "Promoveren",
     "demoteButton": "Degraderen",
     "demoteButtonConfirmText": "Weet je zeker dat je deze gebruiker wilt degraderen?",
-    "promoteButtonConfirmText": "Weet je zeker dat je deze gebruiker wilt promoveren?"
+    "promoteButtonConfirmText": "Weet je zeker dat je deze gebruiker wilt promoveren?",
+    "sortMenuAsc": "Oplopend sorteren",
+    "sortMenuDesc": "Aflopend sorteren",
+    "sortButtonTooltip": "Sorteren"
 }

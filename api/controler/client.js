@@ -6,7 +6,7 @@ import {sendMail} from "../utils/mail.js";
 
 export const login = async (req, res) => {
     try {
-        console.log(req.val)
+
         const rep = await clientModel.readPersonWithPassword(pool, req.val);
         if(rep.personId) {
             if(!rep.isBanned) {

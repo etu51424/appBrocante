@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import "../css/Page.css";
 import toast from "react-hot-toast";
+import SortMenu from "./SortMenu"; // Assure-toi que le fichier est à la bonne place
+
 
 // reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
 function Page({
@@ -22,21 +24,45 @@ function Page({
     //obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs
     // tableHeader et tableBody font le rendu de la table et du body
 
-    // La méthode va aller prendre les informations depuis le dictionnaire plutot que de le faire dynamiquement
-    const renderTableHeader = () => {
-        let columns = langDict.tables[elementClassNameSingular].columns;
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
-        //console.log(langDict.tables[elementClassNameSingular].columns.ban);
+    const handleSort = (key, direction) => {
+        setSortConfig({ key, direction });
+        const sorted = [...elements].sort((a, b) => {
+            if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
+            if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
+            return 0;
+        });
+        setElements(sorted);
+    };
+
+    const renderTableHeader = () => {
+        let columns = { ...langDict.tables[elementClassNameSingular].columns };
         columns.delete = langDict.deleteButton;
 
-        // Ajouter les éléments spécifiques à la table user
         if (elementClassNameSingular === "user") {
             columns.ban = langDict.banButton;
             columns.promote = langDict.promoteButton;
         }
 
+        const unsortableLabels = [
+            langDict.deleteButton,
+            langDict.banButton,
+            langDict.promoteButton
+        ];
+
         return Object.entries(columns).map(([key, label]) => (
-            <th key={key}>{label}</th>
+            <th key={key}>
+                <div className="header-with-sort">
+                    {label}
+                    {!unsortableLabels.includes(label) && (
+                        <SortMenu
+                            onSortAsc={() => handleSort(key, "asc")}
+                            onSortDesc={() => handleSort(key, "desc")}
+                        />
+                    )}
+                </div>
+            </th>
         ));
     };
 
