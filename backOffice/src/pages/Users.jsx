@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
-import { useAuth } from "../components/AuthProvider.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { useSelector } from 'react-redux';
 import { getUsersData } from "../fetchAPI/CRUD/users.js";
@@ -13,6 +12,8 @@ import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import PromoteUserButton from "../components/PromoteUserButton.jsx";
 import toast from "react-hot-toast";
+import ProfilePicturePreview from "../components/ProfilePicturePreview.jsx";
+
 
 function Users() {
 
@@ -75,7 +76,7 @@ function Users() {
                 <td>{user.phone_number}</td>
                 <td>{user.email}</td>
                 <td><ConvertedDate longFormatDate={user.last_edit_date}/></td>
-                <td>{user.profile_picture}</td>
+                <td><ProfilePicturePreview userId={user.id}/></td>
                 <td>{isUserAdminText}</td>
                 <td>{isUserTimedOutText}</td>
                 <td>{user.recovery_code}</td>

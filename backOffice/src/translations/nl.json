@@ -113,5 +113,8 @@
     "promoteButtonConfirmText": "Weet je zeker dat je deze gebruiker wilt promoveren?",
     "sortMenuAsc": "Oplopend sorteren",
     "sortMenuDesc": "Aflopend sorteren",
-    "sortButtonTooltip": "Sorteren"
+    "sortButtonTooltip": "Sorteren",
+    "profilePicturePreviewOpenError": "Fout bij het ophalen van de afbeelding",
+    "profilePicturePreviewUrlUnavailable": "Afbeeldings-URL niet beschikbaar",
+    "profilePicturePreviewButtonText": "Bekijk"
 }

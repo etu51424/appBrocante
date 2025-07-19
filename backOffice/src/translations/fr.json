@@ -114,5 +114,8 @@
     "promoteButtonConfirmText" : "Êtes-vous sur de vouloir promouvoir cet utilisateur ?",
     "sortMenuAsc": "Tri croissant",
     "sortMenuDesc": "Tri décroissant",
-    "sortButtonTooltip": "Trier"
+    "sortButtonTooltip": "Trier",
+    "profilePicturePreviewOpenError": "Erreur lors de la récupération de l'image",
+    "profilePicturePreviewUrlUnavailable": "URL de l'image non disponible",
+    "profilePicturePreviewButtonText": "Voir"
 }
