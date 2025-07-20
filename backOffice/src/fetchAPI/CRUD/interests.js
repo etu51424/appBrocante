@@ -2,6 +2,7 @@ import { API_BASE_URL } from "./../login.js";
 import {exponentialRetry} from "../utils/exponentialRetry.js";
 import {statusCodesError} from "../utils/statusCode.js";
 import {getTokenFromStorage} from "../utils/tokenManagement.js";
+import toast from "react-hot-toast";
 
 // la limite est 10 et la page 1 si pas précisé, pour rester cohérent avec l'api
 export const getInterestsData = async (limit = 10, page = 1) => {
@@ -40,6 +41,42 @@ export const getInterestsData = async (limit = 10, page = 1) => {
                 const noMoreData = nextPageResponse.status === 404;
 
                 return {data, noMoreData};
+            }
+        });
+    }
+}
+
+// Cette méthode est spéciale et se cale sur la logique coté serveur
+export const getAllInterestsWithArgs = async (limit = 10, page = 1, {fleaMarketId, personId}) =>{
+    const token = getTokenFromStorage();
+    if (token){
+        const expectedCode = 200;
+        let arg;
+
+        // En cas de présence des deux arguments, le fleaMarket prend les devants. En utilisant l'interface, ce cas ne devrait pas arriver mais on ne sait jamais
+        if (fleaMarketId) {
+            arg = `&fleaMarketId=${fleaMarketId}`;
+        } else if (personId) {
+            arg = `&personId=${personId}`;
+        } else {
+            console.error("La présence d'un argument de recherche est nécessaire : fleaMarketId ou personId");
+            toast.error("La présence d'un argument de recherche est nécessaire : fleaMarketId ou personId");
+        }
+
+        return await exponentialRetry(async () => {
+            const response = await fetch(
+                `${API_BASE_URL}/admin/interest/search?limit=${limit}&page=${page}${arg}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    }
+                }
+            );
+            statusCodesError(response, expectedCode);
+            if (response.status === expectedCode) {
+                return await response.json();
             }
         });
     }

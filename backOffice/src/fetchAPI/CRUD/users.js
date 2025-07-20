@@ -45,6 +45,29 @@ export const getUsersData = async (limit = 10, page = 1) => {
     }
 }
 
+export const getAllUsersByUsername = async (limit = 10, page = 1, username) =>{
+    const token = getTokenFromStorage();
+    if (token){
+        const expectedCode = 200;
+        return await exponentialRetry(async () => {
+            const response = await fetch(
+                `${API_BASE_URL}/admin/person/search?limit=${limit}&page=${page}&username=${username}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    }
+                }
+            );
+            statusCodesError(response, expectedCode);
+            if (response.status === expectedCode) {
+                return await response.json();
+            }
+        });
+    }
+}
+
 export const createUser = async (body) =>{
     const token = getTokenFromStorage();
     if (token) {

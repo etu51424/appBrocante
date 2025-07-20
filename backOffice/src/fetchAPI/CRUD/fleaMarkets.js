@@ -45,6 +45,29 @@ export const getFleaMarketsData = async (limit = 10, page = 1) => {
     }
 }
 
+export const getAllFleaMarketsByTitle = async (limit = 10, page = 1, title) =>{
+    const token = getTokenFromStorage();
+    if (token){
+        const expectedCode = 200;
+        return await exponentialRetry(async () => {
+            const response = await fetch(
+                `${API_BASE_URL}/admin/fleamarket/search?limit=${limit}&page=${page}&title=${title}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    }
+                }
+            );
+            statusCodesError(response, expectedCode);
+            if (response.status === expectedCode) {
+                return await response.json();
+            }
+        });
+    }
+}
+
 export const createFleaMarketData = async (body) =>{
     const token = getTokenFromStorage();
     if (token) {

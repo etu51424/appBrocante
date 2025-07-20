@@ -46,6 +46,29 @@ export const getDealersData = async (limit = 10, page = 1) => {
     }
 }
 
+export const getAllDealersByType = async (limit = 10, page = 1, type) =>{
+    const token = getTokenFromStorage();
+    if (token){
+        const expectedCode = 200;
+        return await exponentialRetry(async () => {
+            const response = await fetch(
+                `${API_BASE_URL}/admin/dealer/search?limit=${limit}&page=${page}&type=${type}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    }
+                }
+            );
+            statusCodesError(response, expectedCode);
+            if (response.status === expectedCode) {
+                return await response.json();
+            }
+        });
+    }
+}
+
 export const createDealerData = async (body) =>{
     const token = getTokenFromStorage();
     if (token) {
