@@ -4,6 +4,10 @@ const personIdSchema = vine.object({
     personId : vine.number()
 });
 
+const personToSearchSchema = vine.object({
+    username: vine.string().trim(),
+})
+
 const personToAddSchema = vine.object({
     username : vine.string().trim(),
     firstName : vine.string().trim().optional(),
@@ -36,6 +40,7 @@ const loginSchema = vine.object({
 
 export const
     personId = vine.compile(personIdSchema),
+    personToSearch = vine.compile(personToSearchSchema),
     personToAdd = vine.compile(personToAddSchema),
     personToUpdate = vine.compile(personToUpdateSchema),
     login = vine.compile(loginSchema);

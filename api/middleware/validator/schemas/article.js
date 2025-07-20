@@ -5,7 +5,11 @@ import vine from '@vinejs/vine';
 
 const articleIDSchema = vine.object({
     id: vine.number(),
-})
+});
+
+const articleToSearchSchema = vine.object({
+   title: vine.string().trim(),
+});
 
 // champs à valider lors de l'ajout: tous
 // sauf l'id qui est généré automatiquement à l'aide du name+password je pense
@@ -33,5 +37,6 @@ const articleToUpdateSchema = vine.object({
 // précompiler les schémas
 export const
     articleId = vine.compile(articleIDSchema),
+    articleToSearch = vine.compile(articleToSearchSchema),
     articleToAdd = vine.compile(articleToAddSchema),
     articleToUpdate = vine.compile(articleToUpdateSchema);

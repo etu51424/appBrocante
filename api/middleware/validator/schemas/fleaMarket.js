@@ -4,6 +4,10 @@ const fleaMarketIDSchema = vine.object({
     fleaMarketId: vine.number()
 });
 
+const fleaMarketToSearchSchema = vine.object({
+   title: vine.string().trim(),
+});
+
 const fleaMarketToAddSchema = vine.object({
     address: vine.string().trim(),
     dateStart: vine.date(),
@@ -29,5 +33,6 @@ const fleaMarketToUpdateSchema = vine.object({
 
 export const
     fleaMarketId = vine.compile(fleaMarketIDSchema),
+    fleaMarketToSearch = vine.compile(fleaMarketToSearchSchema),
     fleaMarketToAdd = vine.compile(fleaMarketToAddSchema),
     fleaMarketToUpdate = vine.compile(fleaMarketToUpdateSchema);

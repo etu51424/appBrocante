@@ -43,6 +43,44 @@ export const getAllInterests = async (req, res) => {
     }
 }
 
+export const getAllInterestsByFleaMarketIdWithLimits = async (req, res) => {
+    try {
+        const interests = await interestModel.readAllInterestByFleaMarketIdWithLimits(pool, req.val);
+        if (interests.length > 0) {
+            res.status(200).json(interests);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all interests by fleaMarketId with limits : ${err.message}`);
+    }
+}
+
+export const interestDispatchSearch = async (req, res) => {
+    if (req.val.fleaMarketId){
+        await getAllInterestsByFleaMarketIdWithLimits(req, res);
+    } else if (req.val.personId){
+        await getAllInterestsByPersonIdWithLimits(req, res);
+    } else{
+        res.status(500).send(`Dispatch method for interest could not found any way : fleaMarketId = ${req.val.fleaMarketId}, personId = ${req.val.personId}`);
+    }
+}
+
+export const getAllInterestsByPersonIdWithLimits = async (req, res) => {
+    try {
+        const interests = await interestModel.readAllInterestByPersonIdWithLimits(pool, req.val);
+        if (interests.length > 0) {
+            res.status(200).json(interests);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all interests by personId with limits : ${err.message}`);
+    }
+}
+
 export const getAllInterestsByFleaMarketId = async (req, res) => {
     try {
         const interests = await interestModel.readAllInterestByFleaMarketId(pool, req.val);

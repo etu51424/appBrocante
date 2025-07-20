@@ -4,6 +4,10 @@ const slotIdSchema = vine.object({
     id : vine.number(),
 })
 
+const slotToSearchSchema = vine.object({
+    fleaMarketId: vine.number(),
+})
+
 const slotToAddSchema = vine.object({
     fleaMarketId : vine.number(),
     isAvailable : vine.boolean(),
@@ -19,5 +23,6 @@ const slotToUpdateSchema = vine.object({
 
 export const
     slotId = vine.compile(slotIdSchema),
+    slotToSearch = vine.compile(slotToSearchSchema),
     slotToAdd = vine.compile(slotToAddSchema),
     slotToUpdate = vine.compile(slotToUpdateSchema);

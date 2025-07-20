@@ -75,6 +75,15 @@ export const readAllDealers = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllDealersByType = async (SQLClient, {limit, offset, type}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM dealer WHERE type ILIKE $1 LIMIT $2 OFFSET $3", [`${type}%`, limit, offset]);
+        return rows;
+    } catch (err){
+        throw new Error(`Error while reading all dealers by type : ${err.message}`);
+    }
+}
+
 export const updateDealer = async (SQLClient, {personId, type, description, signupDate, averageRating, reviewCount}) => {
     let query = "UPDATE dealer SET ";
     const querySet = [];

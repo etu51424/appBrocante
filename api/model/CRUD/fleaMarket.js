@@ -76,6 +76,15 @@ export const readAllFleaMarket = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllFleaMarketByTitle = async (SQLClient, {limit, offset, title}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM flea_market WHERE title ILIKE $1 LIMIT $2 OFFSET $3", [`${title}%`,limit, offset]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all flea markets by title : ${err.message}`)
+    }
+}
+
 export const readAllFleaMarketWithoutLimit = async (SQLClient) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM flea_market");

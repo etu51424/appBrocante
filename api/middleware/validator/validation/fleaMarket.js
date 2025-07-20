@@ -9,6 +9,17 @@ export const fleaMarketMiddlewares = {
             res.status(400).send(e.messages);
         }
     },
+
+    fleaMarketToSearch: async (req, res, next) => {
+      try{
+          const args = await fleaMarketValidator.fleaMarketToSearch.validate(req.query);
+          req.val.title = args.title;
+          next();
+      } catch (e) {
+          res.status(400).send(e.messages);
+      }
+    },
+
     fleaMarketToAdd : async (req, res, next) => {
         try{
             req.val = await fleaMarketValidator.fleaMarketToAdd.validate(req.body);

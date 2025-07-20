@@ -46,6 +46,20 @@ export const getAllFleaMarkets = async (req, res) => {
     }
 }
 
+export const getAllFleaMarketsByTitle = async (req, res) => {
+    try {
+        const fleaMarkets = await fleaMarketModel.readAllFleaMarketByTitle(pool, req.val);
+        if (fleaMarkets.length > 0) {
+            res.status(200).json(fleaMarkets);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all flea markets by title : ${err.message}`);
+    }
+}
+
 export const getAllFleaMarketsWithinRange = async (req, res) =>{
     console.log("AAAAAA");
     try {

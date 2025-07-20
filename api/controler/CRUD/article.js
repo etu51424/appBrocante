@@ -107,6 +107,20 @@ export const getAllArticles = async (req, res) => {
     }
 }
 
+export const getAllArticlesByTitle = async (req, res) => {
+    try {
+        const articles = await articleModel.readAllArticlesByTitle(pool, req.val);
+        if (articles.length > 0) {
+            res.status(200).json(articles);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all articles by title : ${err.message}`);
+    }
+}
+
 export const getAllArticlesByPersonId = async (req, res) => {
     console.log("articles")
     try {

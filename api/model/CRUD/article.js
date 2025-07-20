@@ -67,6 +67,15 @@ export const readAllArticles = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllArticlesByTitle = async (SQLClient, {limit, offset, title}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM article WHERE title ILIKE $1 LIMIT $2 OFFSET $3", [`${title}%`,limit, offset]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all article by title : ${err.message}`);
+    }
+}
+
 export const readAllArticlesByPersonId = async (SQLClient, {personId}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM article WHERE dealer_id = $1", [personId]);

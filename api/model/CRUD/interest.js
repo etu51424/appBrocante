@@ -61,6 +61,24 @@ export const readAllInterest = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllInterestByFleaMarketIdWithLimits = async (SQLClient, {limit, offset, fleaMarketId}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM interest WHERE flea_market_id = $1 LIMIT $2 OFFSET $3", [fleaMarketId,limit, offset]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all interest by fleaMarketId with limits : ${err.message}`);
+    }
+}
+
+export const readAllInterestByPersonIdWithLimits = async (SQLClient, {limit, offset, personId}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM interest WHERE person_id = $1 LIMIT $2 OFFSET $3", [personId, limit, offset]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all interest by personId with limits : ${err.message}`);
+    }
+}
+
 export const readAllInterestByFleaMarketId = async (SQLClient, {fleaMarketId}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM interest WHERE flea_market_id = $1", [fleaMarketId]);

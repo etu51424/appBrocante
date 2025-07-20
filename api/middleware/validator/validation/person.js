@@ -9,6 +9,17 @@ const personValidatorMiddleware = {
             res.status(400).send(e.messages);
         }
     },
+
+    personToSearch: async (req, res, next) => {
+        try{
+            const args = await personValidator.personToSearch.validate(req.query);
+            req.val.username = args.username;
+            next();
+        } catch(e) {
+            res.status(400).send(e.messages);
+        }
+    },
+
     personToAdd : async (req, res, next) => {
         try{
             req.val = await personValidator.personToAdd.validate(req.body);

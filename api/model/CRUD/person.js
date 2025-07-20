@@ -97,6 +97,15 @@ export const readAllPerson = async (SQLClient, {limit, offset}) => {
     }
 }
 
+export const readAllPersonByUsername = async (SQLClient, {limit, offset, username}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM person WHERE username ILIKE $1 LIMIT $2 OFFSET $3", [`${username}%`,limit, offset]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all persons by usermane : ${err.message}`);
+    }
+}
+
 export const updatePerson = async (SQLClient, {personId, username, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profilePicture, password}) => {
 

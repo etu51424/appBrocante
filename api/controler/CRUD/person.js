@@ -51,6 +51,20 @@ export const getAllPersons = async (req, res) => {
     }
 }
 
+export const getAllPersonsByUsername = async (req, res) => {
+    try {
+        const persons = await personModel.readAllPersonByUsername(pool, req.val);
+        if (persons.length > 0) {
+            res.status(200).json(persons);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all persons by username : ${err.message}`);
+    }
+}
+
 export const updatePerson = async (req, res) => {
     try{
         await personModel.updatePerson(pool, req.val);

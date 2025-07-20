@@ -1,8 +1,12 @@
 import vine from '@vinejs/vine';
 
 const dealerIdSchema = vine.object({
-    personId : vine.number()
+    personId : vine.number(),
 });
+
+const dealerToSearchSchema = vine.object({
+    type: vine.string().trim(),
+})
 
 const dealerToAddSchema = vine.object({
     personId : vine.number().optional(),
@@ -24,5 +28,6 @@ const dealerToUpdateSchema= vine.object({
 
 export const
     dealerId = vine.compile(dealerIdSchema),
+    dealerToSearch = vine.compile(dealerToSearchSchema),
     dealerToAdd = vine.compile(dealerToAddSchema),
     dealerToUpdate = vine.compile(dealerToUpdateSchema);

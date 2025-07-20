@@ -3,7 +3,14 @@ import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {admin, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {default as AVM} from '../../../middleware/validator/validation/article.js';
 import {default as LVM} from '../../../middleware/validator/validation/limits.js';
-import {createArticle, updateArticle, deleteArticle, getAllArticles, getArticle} from "../../../controler/CRUD/article.js";
+import {
+    createArticle,
+    updateArticle,
+    deleteArticle,
+    getAllArticles,
+    getArticle,
+    getAllArticlesByTitle
+} from "../../../controler/CRUD/article.js";
 
 const router = Router();
 
@@ -259,6 +266,7 @@ const router = Router();
 
 router.post("/", jwtCheck, admin, notBanned, AVM.articleToAdd, createArticle);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllArticles);
+router.get("/search", jwtCheck, admin, notBanned, LVM.paginationLimits, AVM.articleToSearch, getAllArticlesByTitle);
 router.get("/:id", jwtCheck, admin, notBanned, AVM.articleId, getArticle);
 router.patch("/", jwtCheck, admin, notBanned, AVM.articleToUpdate, updateArticle);
 router.delete("/:id", jwtCheck, admin, notBanned, AVM.articleId, deleteArticle);

@@ -5,6 +5,11 @@ const interestIDSchema = vine.object({
     personId : vine.number().optional(),
 });
 
+const interestToSearchSchema = vine.object({
+    fleaMarketId: vine.number().optional(),
+    personId : vine.number().optional(),
+});
+
 const interestToAddSchema = vine.object({
     fleaMarketId: vine.number(),
     personId : vine.number().optional(),
@@ -22,6 +27,7 @@ const interestToUpdateSchema = vine.object({
 });
 
 export const
-    interestId = vine.compile(interestIDSchema), //searchedInterest
+    interestId = vine.compile(interestIDSchema),
+    interestToSearch = vine.compile(interestToSearchSchema),
     interestToAdd = vine.compile(interestToAddSchema),
     interestToUpdate = vine.compile(interestToUpdateSchema);

@@ -1,4 +1,6 @@
 import * as dealerValidator from '../schemas/dealer.js'
+import * as limitsValidator from "../schemas/limits.js";
+import {dealerToSearch} from "../schemas/dealer.js";
 
 export const dealerValidatorMiddlewares = {
     dealerId : async (req, res, next) => {
@@ -35,6 +37,16 @@ export const dealerValidatorMiddlewares = {
      *              - averageRating
      *              - reviewCount
      */
+
+    dealerToSearch: async (req, res, next) => {
+        try{
+            const args = await dealerValidator.dealerToSearch.validate(req.query);
+            req.val.type = args.type;
+            next();
+        } catch(e) {
+            res.status(400).send(e.messages);
+        }
+    },
 
     dealerToAdd : async (req, res, next) => {
         try {
@@ -75,7 +87,7 @@ export const dealerValidatorMiddlewares = {
         } catch (e) {
             res.status(400).send(e.messages);
         }
-    },
+    }
 };
 
 export default dealerValidatorMiddlewares;

@@ -106,6 +106,20 @@ export const getAllDealers = async (req, res) => {
     }
 }
 
+export const getAllDealersByType = async (req, res) => {
+    try {
+        const dealers = await dealerModel.readAllDealersByType(pool, req.val);
+        if (dealers.length > 0) {
+            res.status(200).json(dealers);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err){
+        res.sendStatus(500);
+        console.error(`Error while getting all dealers by type : ${err.message}`);
+    }
+}
+
 export const updateDealer = async (req, res) => {
     try{
         await dealerModel.updateDealer(pool, req.val);

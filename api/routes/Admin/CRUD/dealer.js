@@ -3,7 +3,14 @@ import {jwtCheck} from "../../../middleware/identification/jwt.js";
 import {admin, notBanned} from "../../../middleware/authorization/mustBe.js";
 import {default as DVM} from '../../../middleware/validator/validation/dealer.js';
 import {default as LVM} from '../../../middleware/validator/validation/limits.js';
-import {createDealer, updateDealer, deleteDealer, getDealer, getAllDealers} from "../../../controler/CRUD/dealer.js";
+import {
+    createDealer,
+    updateDealer,
+    deleteDealer,
+    getDealer,
+    getAllDealers,
+    getAllDealersByType
+} from "../../../controler/CRUD/dealer.js";
 
 
 const router = Router();
@@ -259,6 +266,7 @@ const router = Router();
 
 router.post("/", jwtCheck, admin, notBanned, DVM.dealerToAdd, createDealer);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllDealers);
+router.get("/search", jwtCheck, admin, notBanned, LVM.paginationLimits, DVM.dealerToSearch, getAllDealersByType);
 router.get("/:personId", jwtCheck, admin, notBanned, DVM.dealerId, getDealer);
 router.patch("/", jwtCheck, admin, notBanned, DVM.dealerToUpdate, updateDealer);
 router.delete("/:personId", jwtCheck, admin, notBanned, DVM.dealerId, deleteDealer);

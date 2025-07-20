@@ -52,12 +52,22 @@ export const readAllSlot = async (SQLClient, {limit, offset}) => {
     }
 }
 
+// méthode pourrie mais est utilisée par le projet d'appli mobile ==> Pas très grave comme l'API est déjà réussi #chillguy
 export const readAllSlotByFleaMarketId = async (SQLClient, {fleaMarketId}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM slot WHERE flea_market_id = $1", [fleaMarketId]);
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all slots by fleaMarketId : ${err.message}`);
+    }
+}
+
+export const readAllSlotByFleaMarketIdWithLimits = async (SQLClient, {limit, offset, fleaMarketId}) => {
+    try {
+        const {rows} = await SQLClient.query("SELECT * FROM slot WHERE flea_market_id = $1 LIMIT $2 OFFSET $3", [fleaMarketId, limit, offset]);
+        return rows;
+    } catch (err) {
+        throw new Error(`Error while reading all slot by fleaMarketId with limits : ${err.message}`);
     }
 }
 

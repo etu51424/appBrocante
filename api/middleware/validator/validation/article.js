@@ -9,6 +9,17 @@ const articleValidatorMiddleware = {
             res.status(400).send(e.messages);
         }
     },
+
+    articleToSearch : async (req, res, next) => {
+        try{
+            const args = await articleValidator.articleToSearch.validate(req.query);
+            req.val.title = args.title;
+            next();
+        } catch(e) {
+            res.status(400).send(e.messages);
+        }
+    },
+
     /**
      * @swagger
      * components:
