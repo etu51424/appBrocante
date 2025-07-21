@@ -11,7 +11,7 @@ function Navbar() {
   const dispatch = useDispatch();
 
   const handleChangeLanguage = (langCode) => {
-    console.log("you clciked");
+    console.log("you clicked");
     dispatch(changeLanguage({langCode:langCode}));
     console.log("dispatch call done");
   }

@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { useSelector } from 'react-redux';
-import { getUsersData } from "../fetchAPI/CRUD/users.js";
+import {getAllUsersByUsername, getUsersData} from "../fetchAPI/CRUD/users.js";
 import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
@@ -13,6 +13,7 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import PromoteUserButton from "../components/PromoteUserButton.jsx";
 import toast from "react-hot-toast";
 import ProfilePicturePreview from "../components/ProfilePicturePreview.jsx";
+import SearchBar from "../components/SearchBar.jsx";
 
 
 function Users() {
@@ -29,31 +30,58 @@ function Users() {
     const langDict = useSelector(state => state.language.langDict);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const getUsers = async () => {
         setIsLoading(true);
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() =>
-                getUsersData(limit, currentPage)
-            );
-
+            const { data, noMoreData } = await getUsersData(limit, currentPage);
             setData(data);
             setIsThereMoreData(noMoreData);
         } catch (err) {
             setError(langDict.error);
             toast.error(err);
         }
-
         setIsLoading(false);
     };
 
-    const getElementsData = async () => data;
+    const searchUsersByUsername = async (username) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const data = await getAllUsersByUsername(limit, currentPage, username);
+            if (data) {
+                setData(data);
+            } else {
+                setData([]);
+                toast.error("No data received");
+            }
+        } catch (err) {
+            setError(langDict.error + ": " + (err.message || String(err)));
+            toast.error(err.message || String(err));
+        }
+        setIsLoading(false);
+    }
 
+    const handleSearch = async (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
+
+    // Charge les données à chaque changement de page, limite ou recherche
     useEffect(() => {
-        getUsers();
-    }, [currentPage, limit]);
+        const fetchData = async () => {
+            if (searchQuery) {
+                await searchUsersByUsername(searchQuery);
+            } else {
+                await getUsers();
+            }
+        };
+
+        fetchData();
+    }, [currentPage, limit, searchQuery]);
 
     // Gestion centralisée du changement de page
     const handlePageChange = (newPage) => {
@@ -91,7 +119,7 @@ function Users() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
-                getElementsData={getElementsData}
+                getElementsData={() => data}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
@@ -104,6 +132,7 @@ function Users() {
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
+                        <SearchBar onSearch={handleSearch} />
                     </div>
                 }
             />

@@ -1,9 +1,7 @@
 import { React, useState, useEffect } from "react";
-import { useAuth } from "../components/AuthProvider.jsx";
-
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
-import { getFleaMarketsData } from "../fetchAPI/CRUD/fleaMarkets.js";
+import {getAllFleaMarketsByTitle, getFleaMarketsData} from "../fetchAPI/CRUD/fleaMarkets.js";
 import { useSelector } from 'react-redux';
 import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
@@ -14,6 +12,7 @@ import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
+import SearchBar from "../components/SearchBar.jsx";
 
 function FleaMarkets() {
 
@@ -26,8 +25,10 @@ function FleaMarkets() {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [noMoreData, setIsThereMoreData] = useState(false);
-    const langDict = useSelector(state => state.language.langDict);    const [isLoading, setIsLoading] = useState(false);
+    const langDict = useSelector(state => state.language.langDict);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const getFleaMarkets = async () => {
         setIsLoading(true);
@@ -48,11 +49,41 @@ function FleaMarkets() {
         setIsLoading(false);
     };
 
-    const getElementsData = async () => data;
+    const seatchFleaMarketsByTitle = async (title) => {
+        setIsLoading(true);
+        setError(null);
+        try{
+            const data = await getAllFleaMarketsByTitle(limit, currentPage, title)
+            if (data) {
+                setData(data);
+            } else {
+                setData([]);
+                toast.error("No data received");
+            }
+        } catch (err) {
+            setError(langDict.error + ": " + (err.message || String(err)));
+            toast.error(err.message || String(err));
+        }
+        setIsLoading(false);
+    }
 
+    const handleSearch = async (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
+
+    // Charge les données à chaque changement de page, limite ou recherche
     useEffect(() => {
-        getFleaMarkets();
-    }, [currentPage, limit]);
+        const fetchData = async () => {
+            if (searchQuery) {
+                await seatchFleaMarketsByTitle(searchQuery);
+            } else {
+                await getFleaMarkets();
+            }
+        };
+
+        fetchData();
+    }, [currentPage, limit, searchQuery]);
 
     const handlePageChange = (newPage) => {
         if (newPage < 1) return;
@@ -85,7 +116,7 @@ function FleaMarkets() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
-                getElementsData={getElementsData}
+                getElementsData={() => data}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
@@ -101,6 +132,7 @@ function FleaMarkets() {
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                         />
+                        <SearchBar onSearch={handleSearch} />
                     </div>
                 }
             />

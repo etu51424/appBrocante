@@ -4,7 +4,7 @@ import { useAuth } from "../components/AuthProvider.jsx";
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { useSelector } from 'react-redux';
-import { getDealersData } from "../fetchAPI/CRUD/dealers.js";
+import {getAllDealersByType, getDealersData} from "../fetchAPI/CRUD/dealers.js";
 import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
@@ -14,6 +14,7 @@ import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
+import SearchBar from "../components/SearchBar.jsx";
 
 function Dealers() {
 
@@ -26,8 +27,10 @@ function Dealers() {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [noMoreData, setIsThereMoreData] = useState(false);
-    const langDict = useSelector(state => state.language.langDict);    const [isLoading, setIsLoading] = useState(false);
+    const langDict = useSelector(state => state.language.langDict);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState(''); // Recherche courante
 
     const getDealers = async () => {
         setIsLoading(true);
@@ -48,32 +51,47 @@ function Dealers() {
         setIsLoading(false);
     };
 
-    const getElementsData = async () => data;
+    const searchDealersByTitle = async (type) => {
+        setIsLoading(true);
+        setError(null);
+        try{
+            const data = await getAllDealersByType(limit, currentPage, type);
+            if (data) {
+                setData(data);
+            } else {
+                setData([]);
+                toast.error("No data received");
+            }
+        } catch (err) {
+            setError(langDict.error + ": " + (err.message || String(err)));
+            toast.error(err.message || String(err));
+        }
+        setIsLoading(false);
+    }
 
+    const handleSearch = async (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
+
+    // Charge les données à chaque changement de page, limite ou recherche
     useEffect(() => {
-        getDealers();
-    }, [currentPage, limit]);
+        const fetchData = async () => {
+            if (searchQuery) {
+                await searchDealersByTitle(searchQuery);
+            } else {
+                await getDealers();
+            }
+        };
+
+        fetchData();
+    }, [currentPage, limit, searchQuery]);
 
     const handlePageChange = (newPage) => {
         if (newPage < 1) return;
         if (newPage === currentPage) return;
         setCurrentPage(newPage);
     };
-
-    const changeLanguage = () => {
-        languageDictProvider(window.language);
-    };
-
-    useEffect(() => {
-        const handleLanguageChange = () => {
-            changeLanguage();
-        };
-
-        window.addEventListener("langchange", handleLanguageChange);
-        return () => {
-            window.removeEventListener("langchange", handleLanguageChange);
-        };
-    }, []);
 
     const renderTableBody = (dealer) => {
         return (
@@ -95,7 +113,7 @@ function Dealers() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
-                getElementsData={getElementsData}
+                getElementsData={() => data}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
@@ -111,6 +129,7 @@ function Dealers() {
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                         />
+                        <SearchBar onSearch={handleSearch} />
                     </div>
                 }
             />

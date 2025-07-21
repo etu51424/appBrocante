@@ -1,19 +1,15 @@
 import { React, useState, useEffect } from "react";
-import { useAuth } from "../components/AuthProvider.jsx";
-
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
-import * as IoIcons from 'react-icons/io';
 import { useSelector } from 'react-redux';
-import { getArticlesData } from "../fetchAPI/CRUD/articles.js";
-import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
+import { getAllArticlesByTitle, getArticlesData } from "../fetchAPI/CRUD/articles.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
 import PaginationInput from "../components/PaginationInput.jsx";
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
-
+import SearchBar from "../components/SearchBar.jsx";
 
 function Articles() {
 
@@ -27,60 +23,89 @@ function Articles() {
     const [limit, setLimit] = useState(10);
     const [noMoreData, setIsThereMoreData] = useState(false);
     const langDict = useSelector(state => state.language.langDict);
-
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState(''); // Recherche courante
 
     const getArticles = async () => {
         setIsLoading(true);
-        setError(false);
-
+        setError(null);
         try {
-            const { data, noMoreData } = await exponentialRetry(() => getArticlesData(limit, currentPage));
-
+            const { data, noMoreData } = await getArticlesData(limit, currentPage);
             setData(data);
             setIsThereMoreData(noMoreData);
         } catch (err) {
-            setError(langDict.error);
-            toast.error(err);
+            setError(langDict.error + ": " + (err.message || String(err)));
+            toast.error(err.message || String(err));
         }
-
         setIsLoading(false);
     };
 
-    const getElementsData = async () => {
-        return data;
+    const searchAllArticlesByTitle = async (title) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const data = await getAllArticlesByTitle(limit, currentPage, title);
+            if (data) {
+                setData(data);
+            } else {
+                setData([]);
+                toast.error("No data received");
+            }
+        } catch (err) {
+            setError(langDict.error + ": " + (err.message || String(err)));
+            toast.error(err.message || String(err));
+        }
+        setIsLoading(false);
     };
 
-    useEffect(() => {
-        getArticles();
-    }, [currentPage, limit]);
+    // Met à jour la recherche et reset la page
+    const handleSearch = async (query) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
 
-    // Nouveau callback pour récupérer le changement de page depuis PaginationArrows
+    // Charge les données à chaque changement de page, limite ou recherche
+    useEffect(() => {
+        const fetchData = async () => {
+            if (searchQuery) {
+                await searchAllArticlesByTitle(searchQuery);
+            } else {
+                await getArticles();
+            }
+        };
+
+        fetchData();
+    }, [currentPage, limit, searchQuery]);
+
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
 
-    const renderTableBody = (article) => {
-        return (
-            <tr key={article.id}>
-                <td>{article.id}</td>
-                <td>{article.dealer_id}</td>
-                <td>{article.title}</td>
-                <td>{article.description}</td>
-                <td><ConvertedDate longFormatDate={article.entry_date} /></td>
-                <td>{article.cost + '€'}</td>
-                <td>{article.condition}</td>
-                <td><DeleteButton elementId={article.id} type={tableType} onSuccess={getArticles} /></td>
-            </tr>
-        );
-    };
+    const renderTableBody = (article) => (
+        <tr key={article.id}>
+            <td>{article.id}</td>
+            <td>{article.dealer_id}</td>
+            <td>{article.title}</td>
+            <td>{article.description}</td>
+            <td><ConvertedDate longFormatDate={article.entry_date} /></td>
+            <td>{article.cost + '€'}</td>
+            <td>{article.condition}</td>
+            <td>
+                <DeleteButton
+                    elementId={article.id}
+                    type={tableType}
+                    onSuccess={getArticles}
+                />
+            </td>
+        </tr>
+    );
 
     return (
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
-                getElementsData={getElementsData}
+                getElementsData={() => data}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
@@ -98,6 +123,7 @@ function Articles() {
                             onPageChange={handlePageChange}
                             maxPage={100}
                         />
+                        <SearchBar onSearch={handleSearch} />
                     </>
                 }
             />

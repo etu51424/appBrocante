@@ -1,10 +1,7 @@
 import { React, useState, useEffect } from "react";
-import { useAuth } from "../components/AuthProvider.jsx";
-
 import Page from "../components/Page.jsx";
 import { useSelector } from 'react-redux';
-import { getSlotsData } from "../fetchAPI/CRUD/slots.js";
-import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
+import {getAllSlotsByFleaMarket, getSlotsData} from "../fetchAPI/CRUD/slots.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 
@@ -13,6 +10,8 @@ import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
+import {getAllFleaMarketsByTitle} from "../fetchAPI/CRUD/fleaMarkets.js";
+import SearchBar from "../components/SearchBar.jsx";
 
 function Slots() {
 
@@ -28,31 +27,64 @@ function Slots() {
     const langDict = useSelector(state => state.language.langDict);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const getSlots = async () => {
         setIsLoading(true);
         setError(false);
-
         try {
-            const { data, noMoreData } = await exponentialRetry(() =>
-                getSlotsData(limit, currentPage)
-            );
-
+            const { data, noMoreData } = await getSlotsData(limit, currentPage);
             setData(data);
             setIsThereMoreData(noMoreData);
         } catch (err) {
             setError(langDict.error);
             toast.error(err);
         }
-
         setIsLoading(false);
     };
 
-    const getElementsData = async () => data;
+    const searchAllSlotsByFleaMarketId = async (fleaMarketId) =>{
+        setIsLoading(true);
+        setError(null);
+        try {
+            const data = await getAllSlotsByFleaMarket(limit, currentPage, fleaMarketId);
+            if (data) {
+                setData(data);
+            } else {
+                setData([]);
+                toast.error("No data received");
+            }
+        } catch (err) {
+            setError(langDict.error + ": " + (err.message || String(err)));
+            toast.error(err.message || String(err));
+        }
+        setIsLoading(false);
+    }
 
+    const handleSearch = async (query) => {
+        let fleaMarketId;
+        try {
+            fleaMarketId = parseInt(query);
+        } catch (e) {
+            console.error(`Error while casting research type : ${query} , ${e.message}`);
+            toast.error(`Error while casting research type : ${query} , ${e.message}`);
+        }
+        setSearchQuery(fleaMarketId);
+        setCurrentPage(1);
+    };
+
+    // Charge les données à chaque changement de page, limite ou recherche
     useEffect(() => {
-        getSlots();
-    }, [currentPage, limit]);
+        const fetchData = async () => {
+            if (searchQuery) {
+                await searchAllSlotsByFleaMarketId(searchQuery);
+            } else {
+                await getSlots();
+            }
+        };
+
+        fetchData();
+    }, [currentPage, limit, searchQuery]);
 
     const handlePageChange = (newPage) => {
         if (newPage < 1) return;
@@ -76,7 +108,7 @@ function Slots() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
-                getElementsData={getElementsData}
+                getElementsData={() => data}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
@@ -89,6 +121,7 @@ function Slots() {
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
+                        <SearchBar onSearch={handleSearch} />
                     </div>
                 }
             />

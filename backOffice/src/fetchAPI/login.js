@@ -24,7 +24,6 @@ export async function loginFetch(username, password) {
         // Calculer l'expiration (ici : 8 heures)
         const expiration = new Date().getTime() + 8 * 60 * 60 * 1000;
         localStorage.setItem("authTokenExpiration", expiration.toString())
-        console.log(!!token);
         return !!token;
     });
 }

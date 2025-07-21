@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useAuth } from "../components/AuthProvider.jsx";
 
 import Page from "../components/Page.jsx";
-import { getInterestsData } from "../fetchAPI/CRUD/interests.js";
+import {getAllInterestsWithArgs, getInterestsData} from "../fetchAPI/CRUD/interests.js";
 import { useSelector } from 'react-redux';
 import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
@@ -13,6 +13,7 @@ import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
+import SearchBar from "../components/SearchBar.jsx";
 
 function Interests() {
 
@@ -28,31 +29,73 @@ function Interests() {
     const langDict = useSelector(state => state.language.langDict);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [searchQuery, setSearchQuery] = useState({});
 
     const getInterests = async () => {
         setIsLoading(true);
         setError(false);
 
         try {
-            const { data, noMoreData } = await exponentialRetry(() =>
-                getInterestsData(limit, currentPage)
-            );
-
+            const { data, noMoreData } = await getInterestsData(limit, currentPage);
             setData(data);
             setIsThereMoreData(noMoreData);
         } catch (err) {
             setError(langDict.error);
             toast.error(err);
         }
-
         setIsLoading(false);
     };
 
-    const getElementsData = async () => data;
+    const searchAllInterestsWithArgs = async (args) =>{
+        setIsLoading(true);
+        setError(null);
+        try {
+            const data = await getAllInterestsWithArgs(limit, currentPage, args);
+            if (data) {
+                setData(data);
+            } else {
+                setData([]);
+                toast.error("No data received");
+            }
+        } catch (err) {
+            setError(langDict.error + ": " + (err.message || String(err)));
+            toast.error(err.message || String(err));
+        }
+        setIsLoading(false);
+    }
 
+    const handleSearch = async (query) => {
+        if (query) {
+            let fleaMarketId;
+            let personId;
+            try {
+                if (query.fleaMarketId)
+                    fleaMarketId = parseInt(query.fleaMarketId);
+                if (query.personId)
+                    personId = parseInt(query.personId);
+            } catch (e) {
+                console.error(`Error while casting research type : ${query} , ${e.message}`);
+                toast.error(`Error while casting research type : ${query} , ${e.message}`);
+            }
+            setSearchQuery({fleaMarketId, personId});
+        } else {
+            setSearchQuery(null);
+        }
+        setCurrentPage(1);
+    };
+
+    // Charge les données à chaque changement de page, limite ou recherche
     useEffect(() => {
-        getInterests();
-    }, [currentPage, limit]);
+        const fetchData = async () => {
+            if (searchQuery) {
+                await searchAllInterestsWithArgs(searchQuery);
+            } else {
+                await getInterests();
+            }
+        };
+
+        fetchData();
+    }, [currentPage, limit, searchQuery]);
 
     const handlePageChange = (newPage) => {
         if (newPage < 1) return;
@@ -87,7 +130,7 @@ function Interests() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <Page
-                getElementsData={getElementsData}
+                getElementsData={() => data}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
@@ -100,6 +143,7 @@ function Interests() {
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
+                        <SearchBar onSearch={handleSearch} tableType={TableTypes.INTERESTS}/>
                     </div>
                 }
             />
