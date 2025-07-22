@@ -98,6 +98,17 @@
             }
         }
     },
+    "searchTexts": {
+        "research" : "Zoeken",
+        "by" : "op",
+        "articles" : "Titel",
+        "dealers" : "Type",
+        "users" : "Gebruikersnaam",
+        "fleaMarkets" : "Titel",
+        "interests" : "Rommelmarkt-ID",
+        "interestsAlt" : "Persoons-ID",
+        "slots" : "Rommelmarkt-ID"
+    },
     "deleteButton" : "Verwijderen",
     "deleteButtonConfirmText" : "Weet u zeker dat u dit item wilt verwijderen?",
     "page" : "Pagina",

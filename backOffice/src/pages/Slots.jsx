@@ -121,7 +121,7 @@ function Slots() {
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
-                        <SearchBar onSearch={handleSearch} />
+                        <SearchBar onSearch={handleSearch} tableType={TableTypes.SLOTS}/>
                     </div>
                 }
             />

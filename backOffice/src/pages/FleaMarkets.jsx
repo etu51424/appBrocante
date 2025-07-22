@@ -132,7 +132,7 @@ function FleaMarkets() {
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                         />
-                        <SearchBar onSearch={handleSearch} />
+                        <SearchBar onSearch={handleSearch} tableType={TableTypes.FLEA_MARKETS}/>
                     </div>
                 }
             />

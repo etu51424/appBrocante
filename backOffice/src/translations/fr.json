@@ -99,6 +99,17 @@
             }
         }
     },
+    "searchTexts": {
+        "research" : "Rechercher",
+        "by" : "par",
+        "articles" : "Titre",
+        "dealers" : "Type",
+        "users" : "Username",
+        "fleaMarkets" : "Titre",
+        "interests" : "Identifiant de brocante",
+        "interestsAlt" : "Identifiant de personne",
+        "slots" : "Identifiant de brocante"
+    },
     "deleteButton" : "Supprimer",
     "deleteButtonConfirmText" : "Êtes-vous sur de vouloir supprimer cet élément ?",
     "page" : "Page",

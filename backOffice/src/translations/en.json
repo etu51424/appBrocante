@@ -99,6 +99,17 @@
             }
         }
     },
+    "searchTexts": {
+        "research" : "Search",
+        "by" : "by",
+        "articles" : "Title",
+        "dealers" : "Type",
+        "users" : "Username",
+        "fleaMarkets" : "Title",
+        "interests" : "Flea market ID",
+        "interestsAlt" : "Person ID",
+        "slots" : "Flea market ID"
+    },
     "deleteButton" : "Delete",
     "deleteButtonConfirmText" : "Are you sure you want to delete this element?",
     "page" : "Page",

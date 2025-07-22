@@ -1,8 +1,10 @@
 // components/SearchBar.jsx
 import React, { useState } from 'react';
 import {TableTypes} from "../utils/Defs.js";
+import {useSelector} from "react-redux";
 
 function SearchBar({ onSearch, tableType }) {
+    const langDict = useSelector(state => state.language.langDict);
     const [query, setQuery] = useState('');
     const [queryFleaMarketId, setQueryFleaMarketId] = useState('');
     const [queryPersonId, setQueryPersonId] = useState('');
@@ -45,12 +47,41 @@ function SearchBar({ onSearch, tableType }) {
         if (e.key === 'Enter') handleSearch();
     };
 
+    const getTableText = () =>{
+        let text;
+        switch (tableType) {
+            case TableTypes.ARTICLE:
+                text = langDict['searchTexts'].articles;
+                break;
+            case TableTypes.DEALERS:
+                text = langDict['searchTexts'].dealers;
+                break;
+            case TableTypes.USERS:
+                text = langDict['searchTexts'].users;
+                break;
+            case TableTypes.FLEA_MARKETS:
+                text = langDict['searchTexts'].fleaMarkets;
+                break;
+            case TableTypes.INTERESTS:
+                text = langDict['searchTexts'].interests;
+                break;
+            case TableTypes.SLOTS:
+                text = langDict['searchTexts'].slots;
+                break;
+            default:
+                console.error(`No text could be found for table ${tableType}`);
+                text = '///';
+        }
+
+        return `${langDict['searchTexts'].research} ${langDict['searchTexts'].by} ${text}`;
+    }
+
     return (
         <>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
             <input
                 type="text"
-                placeholder="Rechercher..."
+                placeholder={getTableText()}
                 value={tableType === TableTypes.INTERESTS ? queryFleaMarketId : query}
                 onChange={(e) => {
                     if (tableType === TableTypes.INTERESTS) {
@@ -61,18 +92,22 @@ function SearchBar({ onSearch, tableType }) {
                 }}
                 onKeyDown={handleKeyDown}
             />
-            <button onClick={handleSearch}>Rechercher</button>
+            <button onClick={handleSearch}>
+                {langDict['searchTexts'].research}
+            </button>
         </div>
         {tableType === TableTypes.INTERESTS && (
             <div style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
                 <input
                     type="text"
-                    placeholder="Rechercher..."
+                    placeholder={`${langDict['searchTexts'].research} ${langDict['searchTexts'].by} ${langDict['searchTexts'].interestsAlt}`}
                     value={queryPersonId}
                     onChange={(e) => setQueryPersonId(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
-                <button onClick={handleSearch}>Rechercher</button>
+                <button onClick={handleSearch}>
+                    {langDict['searchTexts'].research}
+                </button>
             </div>
         )}
         </>

@@ -111,7 +111,7 @@ function Articles() {
                 elementClassNameSingular={elementClassNameSingular}
                 elementClassNamePlural={elementClassNamePlural}
                 paginationArrows={
-                    <>
+                    <div className="flex items-center gap-2">
                         <PaginationArrows
                             currentPage={currentPage}
                             noMoreData={noMoreData}
@@ -123,8 +123,8 @@ function Articles() {
                             onPageChange={handlePageChange}
                             maxPage={100}
                         />
-                        <SearchBar onSearch={handleSearch} />
-                    </>
+                        <SearchBar onSearch={handleSearch} tableType={TableTypes.ARTICLE}/>
+                    </div>
                 }
             />
             {error && <p>{langDict.error} : {error}</p>}

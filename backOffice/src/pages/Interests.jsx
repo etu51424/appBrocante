@@ -1,10 +1,7 @@
 import { React, useState, useEffect } from "react";
-import { useAuth } from "../components/AuthProvider.jsx";
-
 import Page from "../components/Page.jsx";
 import {getAllInterestsWithArgs, getInterestsData} from "../fetchAPI/CRUD/interests.js";
 import { useSelector } from 'react-redux';
-import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 
@@ -87,7 +84,7 @@ function Interests() {
     // Charge les données à chaque changement de page, limite ou recherche
     useEffect(() => {
         const fetchData = async () => {
-            if (searchQuery) {
+            if (searchQuery && Object.keys(searchQuery).length > 0) {
                 await searchAllInterestsWithArgs(searchQuery);
             } else {
                 await getInterests();

@@ -129,7 +129,7 @@ function Dealers() {
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                         />
-                        <SearchBar onSearch={handleSearch} />
+                        <SearchBar onSearch={handleSearch} tableType={TableTypes.DEALERS}/>
                     </div>
                 }
             />
