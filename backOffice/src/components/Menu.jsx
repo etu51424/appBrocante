@@ -6,6 +6,7 @@ import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import { AuthContext } from './AuthProvider.jsx';
 import { useSelector } from 'react-redux';
+import PropTypes from "prop-types";
 
 //console.log("Menu ets atteint" + isAuthenticated);
 
@@ -84,6 +85,10 @@ function Menu({ isMinimized }) {
         </div>
         </>
     )
+}
+
+Menu.propTypes = {
+    isMinimized: PropTypes.bool,
 }
 
 export default Menu

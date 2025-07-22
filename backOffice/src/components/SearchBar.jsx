@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import {TableTypes} from "../utils/Defs.js";
 import {useSelector} from "react-redux";
+import PropTypes from "prop-types";
 
 function SearchBar({ onSearch, tableType }) {
     const langDict = useSelector(state => state.language.langDict);
@@ -113,5 +114,10 @@ function SearchBar({ onSearch, tableType }) {
         </>
     );
 }
+
+SearchBar.propTypes = {
+    onSearch: PropTypes.func.isRequired,
+    tableType: PropTypes.oneOf(Object.values(TableTypes)).isRequired,
+};
 
 export default SearchBar;

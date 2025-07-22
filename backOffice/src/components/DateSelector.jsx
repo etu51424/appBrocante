@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from "prop-types";
 
 function DateSelector({changeDateElem}) {
     const [year, setYear] = useState("2020");
@@ -57,6 +58,10 @@ function DateSelector({changeDateElem}) {
             </select>
         </div>
     );
+}
+
+DateSelector.propTypes = {
+    changeDateElem: PropTypes.func.isRequired,
 }
 
 export default DateSelector;

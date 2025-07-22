@@ -15,6 +15,7 @@ import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js
 import { useSelector } from 'react-redux';
 import {exponentialRetry} from "../fetchAPI/utils/exponentialRetry.js";
 import toast from "react-hot-toast";
+import PropTypes from "prop-types";
 
 
 const AreaChartComponent = ({ 
@@ -183,6 +184,11 @@ const AreaChartComponent = ({
         </div>
     );
 };
+
+AreaChartComponent.propTypes = {
+    dateStartProp: PropTypes.string,
+    dateEndProp: PropTypes.string,
+}
 
 export default AreaChartComponent;
 

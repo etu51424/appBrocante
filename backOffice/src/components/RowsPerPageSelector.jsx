@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function RowsPerPageSelector({ limit, setLimit }) {
     const options = [5, 10, 20];
@@ -24,6 +25,11 @@ function RowsPerPageSelector({ limit, setLimit }) {
             </select>
         </div>
     );
+}
+
+RowsPerPageSelector.propTypes = {
+    limit: PropTypes.number.isRequired,
+    setLimit: PropTypes.func.isRequired,
 }
 
 export default RowsPerPageSelector;

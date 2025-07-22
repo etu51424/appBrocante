@@ -10,6 +10,7 @@ import { deleteDealer } from "../fetchAPI/CRUD/dealers.js";
 import { deleteInterest } from "../fetchAPI/CRUD/interests.js";
 import { useSelector } from 'react-redux';
 import toast from "react-hot-toast";
+import PropTypes from "prop-types";
 
 function DeleteButton({ elementId, type, onSuccess }) {
     const langDict = useSelector(state => state.language.langDict);
@@ -58,6 +59,18 @@ const onDelete = async (elementId, type) => {
         default:
             throw new Error("Type de table non reconnu : '" + type + "'");
     }
+};
+
+DeleteButton.propTypes = {
+    elementId: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.shape({
+            personId: PropTypes.number.isRequired,
+            fleaMarketId: PropTypes.number.isRequired,
+        }),
+    ]).isRequired,
+    type: PropTypes.string.isRequired,
+    onSuccess: PropTypes.func.isRequired,
 };
 
 export default DeleteButton;

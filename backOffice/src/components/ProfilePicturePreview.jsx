@@ -2,6 +2,7 @@ import React from "react";
 import { getAvatar } from "../fetchAPI/userManagement/avatar.js";
 import toast from "react-hot-toast";
 import {useSelector} from "react-redux";
+import PropTypes from "prop-types";
 
 function ProfilePicturePreview({ userId }) {
     const langDict = useSelector(state => state.language.langDict);
@@ -29,6 +30,10 @@ function ProfilePicturePreview({ userId }) {
             {langDict.profilePicturePreviewButtonText}
         </button>
     );
+}
+
+ProfilePicturePreview.propTypes = {
+    userId: PropTypes.number.isRequired,
 }
 
 export default ProfilePicturePreview;

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useSelector } from 'react-redux';
+import PropTypes from "prop-types";
 
 function ConvertedDate({ longFormatDate }) {
     const langDict = useSelector(state => state.language.langDict);
@@ -18,6 +19,10 @@ function ConvertedDate({ longFormatDate }) {
             {convertToFrDate(longFormatDate)}
         </>
     );
+}
+
+ConvertedDate.propTypes = {
+    longFormatDate: PropTypes.string,
 }
 
 export default ConvertedDate;

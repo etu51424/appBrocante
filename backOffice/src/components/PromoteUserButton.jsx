@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {demoteUser, promoteUser} from "../fetchAPI/userManagement/promotion.js";
 import toast from "react-hot-toast";
+import PropTypes from "prop-types";
 
 function PromoteUserButton({ userId, isAdmin, onSuccess }) {
     const langDict = useSelector(state => state.language.langDict);
@@ -68,6 +69,12 @@ function PromoteUserButton({ userId, isAdmin, onSuccess }) {
             {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
         </div>
     );
+}
+
+PromoteUserButton.propTypes = {
+    userId: PropTypes.number.isRequired,
+    isAdmin: PropTypes.bool.isRequired,
+    onSuccess: PropTypes.func.isRequired,
 }
 
 export default PromoteUserButton;

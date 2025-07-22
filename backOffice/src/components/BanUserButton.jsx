@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {banUser, unbanUser} from "../fetchAPI/userManagement/moderation.js";
 import { useSelector } from 'react-redux';
 import toast from "react-hot-toast";
+import PropTypes from "prop-types";
 
 function BanUserButton({ elementId, isBlocked, onSuccess }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -63,6 +64,12 @@ function BanUserButton({ elementId, isBlocked, onSuccess }) {
             {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
         </div>
     );
+}
+
+BanUserButton.propTypes = {
+    elementId: PropTypes.number.isRequired,
+    isBlocked: PropTypes.bool.isRequired,
+    onSuccess: PropTypes.func.isRequired,
 }
 
 export default BanUserButton;

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import "../css/Page.css";
 import toast from "react-hot-toast";
-import SortMenu from "./SortMenu"; // Assure-toi que le fichier est à la bonne place
+import SortMenu from "./SortMenu";
+import PropTypes from "prop-types"; // Assure-toi que le fichier est à la bonne place
 
 
 // reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
@@ -84,6 +85,14 @@ function Page({
         getAllElements();
     }, [getElementsData]);
 
+    // UseEffect optionnel pour changer le titre de la page web
+    useEffect(() => {
+        if (title) {
+            document.title = title;
+        }
+    }, [title]);
+
+
     if (isLoading) {
         return <p>{langDict.loading}</p>;
     }
@@ -123,6 +132,16 @@ function Page({
         </>
     );
 }
+
+Page.propTypes = {
+    getElementsData: PropTypes.func.isRequired,
+    renderTableBody: PropTypes.func.isRequired,
+    title: PropTypes.string,
+    elementClassNameSingular: PropTypes.string.isRequired,
+    elementClassNamePlural: PropTypes.string.isRequired,
+    paginationArrows: PropTypes.node,
+};
+
 
 export default Page;
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
+import PropTypes from "prop-types";
 
 function PaginationInput({ currentPage, onPageChange }) {
     const [inputValue, setInputValue] = useState(currentPage);
@@ -40,6 +41,11 @@ function PaginationInput({ currentPage, onPageChange }) {
             <button onClick={handleGo}>Go</button>
         </div>
     );
+}
+
+PaginationInput.propTypes = {
+    currentPage: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired,
 }
 
 export default PaginationInput;

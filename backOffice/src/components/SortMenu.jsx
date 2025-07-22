@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import {useSelector} from "react-redux";
+import PropTypes from "prop-types";
 
 function SortMenu({ onSortAsc, onSortDesc }) {
     const [open, setOpen] = useState(false);
@@ -33,6 +34,11 @@ function SortMenu({ onSortAsc, onSortDesc }) {
             )}
         </div>
     );
+}
+
+SortMenu.propTypes = {
+    onSortAsc: PropTypes.func.isRequired,
+    onSortDesc: PropTypes.func.isRequired,
 }
 
 export default SortMenu;

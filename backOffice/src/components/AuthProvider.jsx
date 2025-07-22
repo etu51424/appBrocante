@@ -2,6 +2,7 @@ import {useContext, createContext, useState} from "react";
 import { loginFetch } from "../fetchAPI/login";
 import toast from "react-hot-toast";
 import {useSelector} from "react-redux";
+import PropTypes from "prop-types";
 
 // créer le contexte sur lequel le token sera disponible
 export const AuthContext = createContext();
@@ -39,4 +40,8 @@ export const AuthProvider = (props) => {
     return (
         <AuthContext.Provider value={value} {...props} />
     );
+};
+
+AuthProvider.propTypes = {
+    children: PropTypes.node.isRequired,
 };

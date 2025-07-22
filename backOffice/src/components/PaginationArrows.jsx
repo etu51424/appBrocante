@@ -1,6 +1,7 @@
 import React from "react";
 import * as IoIcons from "react-icons/io";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 
 function PaginationArrows({ currentPage, noMoreData, onPageChange }) {
@@ -28,6 +29,12 @@ function PaginationArrows({ currentPage, noMoreData, onPageChange }) {
             </button>
         </div>
     );
+}
+
+PaginationArrows.propTypes = {
+    currentPage: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired,
+    noMoreData: PropTypes.bool.isRequired,
 }
 
 export default PaginationArrows;
