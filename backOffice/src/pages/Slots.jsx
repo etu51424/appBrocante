@@ -12,6 +12,7 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import {getAllFleaMarketsByTitle} from "../fetchAPI/CRUD/fleaMarkets.js";
 import SearchBar from "../components/SearchBar.jsx";
+import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
 
 function Slots() {
 
@@ -107,6 +108,10 @@ function Slots() {
     return (
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <AddElementButtonForm
+                tableType={TableTypes.SLOTS}
+                onSuccess={getSlots}
+            />
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}

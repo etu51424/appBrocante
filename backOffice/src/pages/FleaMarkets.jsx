@@ -13,6 +13,7 @@ import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import SearchBar from "../components/SearchBar.jsx";
+import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
 
 function FleaMarkets() {
 
@@ -115,6 +116,10 @@ function FleaMarkets() {
     return (
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <AddElementButtonForm
+                tableType={TableTypes.FLEA_MARKETS}
+                onSuccess={getFleaMarkets}
+            />
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}

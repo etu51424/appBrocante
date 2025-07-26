@@ -14,6 +14,7 @@ import PromoteUserButton from "../components/PromoteUserButton.jsx";
 import toast from "react-hot-toast";
 import ProfilePicturePreview from "../components/ProfilePicturePreview.jsx";
 import SearchBar from "../components/SearchBar.jsx";
+import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
 
 
 function Users() {
@@ -118,6 +119,10 @@ function Users() {
     return (
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <AddElementButtonForm
+                tableType={TableTypes.USERS}
+                onSuccess={getUsers}
+            />
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}

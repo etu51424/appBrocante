@@ -10,6 +10,7 @@ import PaginationArrows from "../components/PaginationArrows.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import SearchBar from "../components/SearchBar.jsx";
+import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
 
 function Articles() {
 
@@ -89,7 +90,7 @@ function Articles() {
             <td>{article.title}</td>
             <td>{article.description}</td>
             <td><ConvertedDate longFormatDate={article.entry_date} /></td>
-            <td>{article.cost + '€'}</td>
+            <td>{article.cost ? article.cost + '€' : ''}</td>
             <td>{article.condition}</td>
             <td>
                 <DeleteButton
@@ -104,6 +105,10 @@ function Articles() {
     return (
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <AddElementButtonForm
+                tableType={TableTypes.ARTICLE}
+                onSuccess={getArticles}
+            />
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}
