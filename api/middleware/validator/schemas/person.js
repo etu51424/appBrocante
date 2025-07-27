@@ -21,7 +21,7 @@ const personToAddSchema = vine.object({
 });
 
 const personToUpdateSchema= vine.object({
-    personId : vine.number().optional(),
+    id : vine.number().optional(),
     username : vine.string().trim().optional(),
     firstName : vine.string().trim().optional(),
     lastName : vine.string().trim().optional(),

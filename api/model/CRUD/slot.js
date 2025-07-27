@@ -46,6 +46,12 @@ export const readSlot = async (SQLClient, {id}) => {
 export const readAllSlot = async (SQLClient, {limit, offset}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM slot LIMIT $1 OFFSET $2", [limit, offset]);
+
+        rows.map( (row) =>{
+            row.fleaMarketId = row.flea_market_id;
+            row.isAvailable = row.is_available;
+        } )
+
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all slot : ${err.message}`);

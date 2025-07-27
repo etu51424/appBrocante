@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import {getAllFleaMarketsByTitle} from "../fetchAPI/CRUD/fleaMarkets.js";
 import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
+import EditElementButtonForm from "../components/EditElementButtonForm.jsx";
 
 function Slots() {
 
@@ -100,14 +101,21 @@ function Slots() {
             <td>{slot.is_available.toString()}</td>
             <td>{slot.area}</td>
             <td>
-                <DeleteButton elementId={slot.id} type={tableType} onSuccess={getSlots} />
+                <EditElementButtonForm
+                    tableType={TableTypes.SLOTS}
+                    initialData={slot}
+                    onSuccess={getSlots}
+                />
+            </td>
+            <td>
+                <DeleteButton elementId={slot.id} type={tableType} onSuccess={getSlots}/>
             </td>
         </tr>
     );
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
                 tableType={TableTypes.SLOTS}
                 onSuccess={getSlots}

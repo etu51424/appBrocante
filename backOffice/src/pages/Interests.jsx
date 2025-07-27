@@ -12,6 +12,7 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
+import EditElementButtonForm from "../components/EditElementButtonForm.jsx";
 
 function Interests() {
 
@@ -114,8 +115,15 @@ function Interests() {
                 <td>{interest.is_dealer_word}</td>
                 <td>{interest.participation_word}</td>
                 <td>
+                    <EditElementButtonForm
+                        tableType={TableTypes.INTERESTS}
+                        initialData={interest}
+                        onSuccess={getInterests}
+                    />
+                </td>
+                <td>
                     <DeleteButton
-                        elementId={{ personId: interest.person_id, fleaMarketId: interest.flea_market_id }}
+                        elementId={{personId: interest.person_id, fleaMarketId: interest.flea_market_id}}
                         type={tableType}
                         onSuccess={getInterests}
                     />
@@ -126,7 +134,7 @@ function Interests() {
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
                 tableType={TableTypes.INTERESTS}
                 onSuccess={getInterests}

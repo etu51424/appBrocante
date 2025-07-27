@@ -16,6 +16,7 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
+import EditElementButtonForm from "../components/EditElementButtonForm.jsx";
 
 function Dealers() {
 
@@ -100,11 +101,18 @@ function Dealers() {
                 <td>{dealer.person_id}</td>
                 <td>{dealer.type}</td>
                 <td>{dealer.description}</td>
-                <td><ConvertedDate longFormatDate={dealer.signup_date} /></td>
+                <td><ConvertedDate longFormatDate={dealer.signup_date}/></td>
                 <td>{dealer.average_rating}</td>
                 <td>{dealer.review_count}</td>
                 <td>
-                    <DeleteButton elementId={dealer.person_id} type={tableType} onSuccess={getDealers} />
+                    <EditElementButtonForm
+                        tableType={TableTypes.DEALERS}
+                        initialData={dealer}
+                        onSuccess={getDealers}
+                    />
+                </td>
+                <td>
+                    <DeleteButton elementId={dealer.person_id} type={tableType} onSuccess={getDealers}/>
                 </td>
             </tr>
         );
@@ -112,7 +120,7 @@ function Dealers() {
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
                 tableType={TableTypes.DEALERS}
                 onSuccess={getDealers}

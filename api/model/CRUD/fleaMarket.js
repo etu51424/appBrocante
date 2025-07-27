@@ -70,6 +70,15 @@ export const readFleaMarket = async (SQLClient, {fleaMarketId}) => {
 export const readAllFleaMarket = async (SQLClient, {limit, offset}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM flea_market LIMIT $1 OFFSET $2", [limit, offset]);
+
+        rows.map( (row) =>{
+           row.dateStart = row.date_start;
+           row.dateEnd = row.date_end;
+           row.isCharity = row.is_charity;
+           row.averageRating = row.average_rating;
+           row.reviewCount = row.review_count;
+        });
+
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all flea markets : ${err.message}`)

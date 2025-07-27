@@ -61,6 +61,12 @@ export const readAllArticles = async (SQLClient, {limit, offset}) => {
     //n'obtenir que la propriété rows, les contenant
     try {
         const {rows} = await SQLClient.query("SELECT * FROM article LIMIT $1 OFFSET $2", [limit, offset]);
+
+        // Truc nul pour corriger les défauts de personId/dealer_id
+        rows.map((row) =>{
+            row.personId = row.dealer_id;
+        } )
+
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all article : ${err.message}`);

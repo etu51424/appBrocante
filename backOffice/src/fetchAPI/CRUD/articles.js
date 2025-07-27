@@ -38,7 +38,6 @@ export const getArticlesData = async (limit = 10, page = 1) => {
             if (currentPageResponse.status === expectedCode) {
                 const data = await currentPageResponse.json();
                 const noMoreData = nextPageResponse.status === 404;
-
                 return {data, noMoreData};
             }
         });
@@ -65,7 +64,6 @@ export const getAllArticlesByTitle = async (limit = 10, page = 1, title) =>{
             statusCodesError(response, expectedCode);
             if (response.status === expectedCode) {
                 const data = await response.json();
-                console.log(data);
                 return data;
             }
         });

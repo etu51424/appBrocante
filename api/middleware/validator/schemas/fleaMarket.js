@@ -20,7 +20,7 @@ const fleaMarketToAddSchema = vine.object({
 });
 
 const fleaMarketToUpdateSchema = vine.object({
-    fleaMarketId: vine.number(),
+    id: vine.number(),
     address: vine.string().trim().optional(),
     dateStart: vine.date().optional(),
     dateEnd: vine.date().afterField('dateStart').optional(),

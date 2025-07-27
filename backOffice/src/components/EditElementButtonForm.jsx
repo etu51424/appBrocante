@@ -3,29 +3,43 @@ import { TableTypes } from "../utils/Defs.js";
 import toast from "react-hot-toast";
 
 import "../css/AddElementButtonForm.css";
-import {createArticleData} from "../fetchAPI/CRUD/articles.js";
-import {createDealerData} from "../fetchAPI/CRUD/dealers.js";
-import {createUser} from "../fetchAPI/CRUD/users.js";
-import {createFleaMarketData} from "../fetchAPI/CRUD/fleaMarkets.js";
-import {createSlot} from "../fetchAPI/CRUD/slots.js";
-import {createInterest} from "../fetchAPI/CRUD/interests.js"; // Fichier CSS natif
+import {updateArticleData} from "../fetchAPI/CRUD/articles.js";
+import {updateDealerData} from "../fetchAPI/CRUD/dealers.js";
+import {updateUser} from "../fetchAPI/CRUD/users.js";
+import {updateSlot} from "../fetchAPI/CRUD/slots.js";
+import {updateInterest} from "../fetchAPI/CRUD/interests.js";
+import {updateFleaMarket} from "../fetchAPI/CRUD/fleaMarkets.js";
 
-function AddElementButtonForm({ tableType, onSuccess }) {
+function EditElementButtonForm({ tableType, initialData, onSuccess }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({ ...initialData });
     const [isLoading, setIsLoading] = useState(false);
 
-    const openModal = () => setIsOpen(true);
+    const openModal = () => {
+        setFormData({ ...initialData });
+        setIsOpen(true);
+    };
+
     const closeModal = () => {
         setIsOpen(false);
-        setFormData({});
+        setFormData({ ...initialData });
     };
 
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
+        let finalValue;
+
+        if (type === "checkbox") {
+            finalValue = checked;
+        } else if (type === "number") {
+            finalValue = value === "" ? "" : Number(value);
+        } else {
+            finalValue = value;
+        }
+
         setFormData((prev) => ({
             ...prev,
-            [name]: type === "checkbox" ? checked : value,
+            [name]: finalValue,
         }));
     };
 
@@ -40,43 +54,56 @@ function AddElementButtonForm({ tableType, onSuccess }) {
             }
         }
         return true;
-    }
+    };
+
+    const formatDateForInput = (dateValue) => {
+        if (dateValue) {
+            const d = new Date(dateValue);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        else{
+            return "";
+        }
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log(formData);
 
         if (verifyDates()) {
+            console.log(formData);
             try {
-                let returnedId;
                 switch (tableType) {
                     case TableTypes.ARTICLE:
-                        returnedId = await createArticleData(formData);
+                        await updateArticleData(formData);
                         break;
                     case TableTypes.DEALERS:
-                        returnedId = await createDealerData(formData);
+                        await updateDealerData(formData);
                         break;
                     case TableTypes.USERS:
-                        returnedId = await createUser(formData);
+                        await updateUser(formData);
                         break;
                     case TableTypes.FLEA_MARKETS:
-                        returnedId = await createFleaMarketData(formData);
+                        await updateFleaMarket(formData);
                         break;
                     case TableTypes.SLOTS:
                         formData.isAvailable = formData.isAvailable || false;
-                        returnedId = await createSlot(formData);
+                        await updateSlot(formData);
                         break;
                     case TableTypes.INTERESTS:
                         formData.isInterested = formData.isInterested || false;
                         formData.isDealer = formData.isDealer || false;
-                        returnedId = await createInterest(formData);
+                        await updateInterest(formData);
                         break;
                     default:
                         throw new Error("Type non pris en charge");
                 }
-                console.log(returnedId)
-                toast.success(`Identifiant de la nouvelle donnée : ${returnedId?.id}`);
+
+                toast.success("Données mises à jour avec succès !");
                 closeModal();
                 if (onSuccess) onSuccess();
             } catch (err) {
@@ -86,10 +113,14 @@ function AddElementButtonForm({ tableType, onSuccess }) {
         setIsLoading(false);
     };
 
+    // Réutilisation de ta fonction existante
     const getFieldsByTableType = () => {
+        // Copié tel quel de ton composant original
+        // Tu peux le factoriser dans un fichier à part pour éviter la duplication
         switch (tableType) {
             case TableTypes.ARTICLE:
                 return [
+                    { name: "id", label: "id", type: "number", required: true },
                     { name: "personId", label: "personId", type: "number", required: true },
                     { name: "title", label: "Titre", type: "text", required: false },
                     { name: "description", label: "Description", type: "textarea", required: false },
@@ -98,7 +129,7 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                 ];
             case TableTypes.DEALERS:
                 return [
-                    { name: "personId", label: "personId", type: "number", required: true },
+                    { name: "personId", label: "personId", type: "number", required: true, isId: true },
                     { name: "type", label: "type", type: "text", required: false },
                     { name: "description", label: "description", type: "textarea", required: false },
                     { name: "averageRating", label: "averageRating", type: "number", required: true, max: 5.0, isDecimal: true },
@@ -106,6 +137,7 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                 ];
             case TableTypes.USERS:
                 return [
+                    { name: "id", label: "id", type: "number", required: true },
                     { name: "username", label: "username", type: "text", required: true },
                     { name: "firstName", label: "firstName", type: "text", required: false },
                     { name: "lastName", label: "lastName", type: "text", required: false },
@@ -113,9 +145,11 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                     { name: "phoneNumber", label: "phoneNumber", type: "tel", pattern: "^\\+?[0-9\\s\\-\\.]{7,20}$" ,required: false },
                     { name: "email", label: "Email", type: "email", required: true },
                     { name: "password", label: "password", type: "password", required: true },
+                    { name: "recoveryCode", label: "recoveryCode", type: "text", required: false },
                 ];
             case TableTypes.FLEA_MARKETS:
                 return [
+                    { name: "id", label: "id", type: "number", required: true },
                     { name: "address", label: "address", type: "text", required: true },
                     { name: "dateStart", label: "dateStart", type: "date", required: true },
                     { name: "dateEnd", label: "dateEnd", type: "date", required: true },
@@ -127,14 +161,15 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                 ];
             case TableTypes.SLOTS:
                 return [
+                    { name: "id", label: "id", type: "number", required: true },
                     { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true },
                     { name: "isAvailable", label: "isAvailable", type: "checkbox", required: false },
                     { name: "area", label: "area", type: "number", required: false},
                 ];
             case TableTypes.INTERESTS:
                 return [
-                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true },
-                    { name: "personId", label: "personId", type: "number", required: true },
+                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true, isId: true },
+                    { name: "personId", label: "personId", type: "number", required: true, isId: true },
                     { name: "isInterested", label: "isInterested", type: "checkbox", required: false },
                     { name: "isDealer", label: "isDealer", type: "checkbox", required: false },
                     { name: "participation", label: "participation", type: "number", required: false },
@@ -148,12 +183,12 @@ function AddElementButtonForm({ tableType, onSuccess }) {
 
     return (
         <div>
-            <button className="add-button" onClick={openModal}>Ajouter</button>
+            <button className="edit-button" onClick={openModal}>Modifier</button>
 
             {isOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2>Ajouter un élément</h2>
+                        <h2>Modifier l'élément</h2>
                         <form onSubmit={handleSubmit}>
                             {fields.map((field) => (
                                 <div className="form-group" key={field.name}>
@@ -171,14 +206,25 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                                         <input
                                             type={field.type}
                                             name={field.name}
-                                            value={formData[field.name] || ""}
+                                            value={
+                                                field.type === "checkbox"
+                                                    ? undefined
+                                                    : field.type === "date"
+                                                        ? formatDateForInput(formData[field.name])
+                                                        : formData[field.name] || ""
+                                            }
+                                            checked={
+                                                field.type === "checkbox"
+                                                    ? formData[field.name] || false
+                                                    : undefined
+                                            }
                                             onChange={handleChange}
                                             required={field.required}
                                             {...(field.type === "number" ? { min: 0 } : {})}
+                                            {...(field.name === "id" || field.isId ? { disabled: true } : {})}
                                             {...(field.isDecimal ? { step: "0.01" } : {})}
-                                            {...(field.max ? { max: field.max} : {})}
-                                            {...(field.pattern && field.type === "tel" ? { pattern: field.pattern} : {})}
-
+                                            {...(field.max ? { max: field.max } : {})}
+                                            {...(field.pattern && field.type === "tel" ? { pattern: field.pattern } : {})}
                                         />
                                     )}
                                 </div>
@@ -187,7 +233,7 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                             <div className="form-actions">
                                 <button type="button" onClick={closeModal}>Annuler</button>
                                 <button type="submit" disabled={isLoading}>
-                                    {isLoading ? "En cours..." : "Enregistrer"}
+                                    {isLoading ? "En cours..." : "Mettre à jour"}
                                 </button>
                             </div>
                         </form>
@@ -198,4 +244,4 @@ function AddElementButtonForm({ tableType, onSuccess }) {
     );
 }
 
-export default AddElementButtonForm;
+export default EditElementButtonForm;

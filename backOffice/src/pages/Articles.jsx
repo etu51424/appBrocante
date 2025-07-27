@@ -11,6 +11,7 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
+import EditElementButtonForm from "../components/EditElementButtonForm.jsx";
 
 function Articles() {
 
@@ -92,6 +93,13 @@ function Articles() {
             <td><ConvertedDate longFormatDate={article.entry_date} /></td>
             <td>{article.cost ? article.cost + '€' : ''}</td>
             <td>{article.condition}</td>
+            <td>
+                <EditElementButtonForm
+                    tableType={TableTypes.ARTICLE}
+                    initialData={article}
+                    onSuccess={getArticles}
+                />
+            </td>
             <td>
                 <DeleteButton
                     elementId={article.id}

@@ -55,6 +55,14 @@ export const readInterest = async (SQLClient, {fleaMarketId, personId}) => {
 export const readAllInterest = async (SQLClient, {limit, offset}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM interest LIMIT $1 OFFSET $2", [limit, offset]);
+
+        rows.map( (row) =>{
+           row.personId = row.person_id;
+           row.fleaMarketId = row.flea_market_id;
+           row.isInterested = row.is_interested;
+           row.isDealer = row.is_dealer;
+        });
+
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all interest : ${err.message}`);

@@ -91,6 +91,14 @@ export const readPersonByUsername = async (SQLClient, {username}) => {
 export const readAllPerson = async (SQLClient, {limit, offset}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM person LIMIT $1 OFFSET $2", [limit, offset]);
+
+        rows.map( (row) => {
+            row.firstName = row.first_name;
+            row.lastName = row.last_name;
+            row.phoneNumber = row.phone_number;
+            row.recoveryCode = row.recovery_code;
+        })
+
         return rows;
     } catch (err) {
         throw new Error(`Error while reading all persons : ${err.message}`);
@@ -106,7 +114,7 @@ export const readAllPersonByUsername = async (SQLClient, {limit, offset, usernam
     }
 }
 
-export const updatePerson = async (SQLClient, {personId, username, firstName, lastName, address,
+export const updatePerson = async (SQLClient, {id, username, firstName, lastName, address,
         phoneNumber, email, lastEditDate, profilePicture, password}) => {
 
     let query = "UPDATE person SET ";
@@ -114,7 +122,7 @@ export const updatePerson = async (SQLClient, {personId, username, firstName, la
     const queryValues = [];
     if (username !== undefined){
         queryValues.push(username);
-        querySet.push(`name=$${queryValues.length}`);
+        querySet.push(`username=$${queryValues.length}`);
     }
     if (firstName !== undefined){
         queryValues.push(firstName);
@@ -150,7 +158,7 @@ export const updatePerson = async (SQLClient, {personId, username, firstName, la
         querySet.push(`password=$${queryValues.length}`);
     }
     if (queryValues.length > 0) {
-        queryValues.push(personId);
+        queryValues.push(id);
         query += `${querySet.join(", ")} WHERE id = $${queryValues.length}`;
         try {
             return await SQLClient.query(query, queryValues);

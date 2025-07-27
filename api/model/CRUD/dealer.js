@@ -69,6 +69,14 @@ export const readDealerByUsername = async (SQLClient, {username}) => {
 export const readAllDealers = async (SQLClient, {limit, offset}) => {
     try {
         const {rows} = await SQLClient.query("SELECT * FROM dealer LIMIT $1 OFFSET $2", [limit, offset]);
+
+        // Truc nul pour corriger les défauts de personId/dealer_id
+        rows.map((row) =>{
+            row.personId = row.person_id;
+            row.averageRating = row.average_rating;
+            row.reviewCount = row.review_count;
+        } )
+
         return rows;
     } catch (err){
         throw new Error(`Error while reading all dealers : ${err.message}`);

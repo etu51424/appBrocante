@@ -18,7 +18,7 @@ router.post("/", jwtCheck, admin, notBanned, SVM.slotToAdd, createSlot);
 router.get("/all", jwtCheck, admin, notBanned, LVM.paginationLimits, getAllSlots);
 router.get("/search", jwtCheck, admin, notBanned, LVM.paginationLimits, SVM.slotToSearch, getAllSlotsByFleaMarketIdWithLimits);
 router.get("/:id", jwtCheck, admin, notBanned, SVM.slotId, getSlot);
-router.patch("/", jwtCheck, admin, notBanned, SVM.slotId, updateSlot);
+router.patch("/", jwtCheck, admin, notBanned, SVM.slotToUpdate, updateSlot);
 router.delete("/:id", jwtCheck, admin, notBanned, SVM.slotId, deleteSlot);
 
 export default router;

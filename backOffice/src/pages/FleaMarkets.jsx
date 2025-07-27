@@ -14,6 +14,7 @@ import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
+import EditElementButtonForm from "../components/EditElementButtonForm.jsx";
 
 function FleaMarkets() {
 
@@ -99,15 +100,22 @@ function FleaMarkets() {
             <tr key={fleaMarket.id}>
                 <td>{fleaMarket.id}</td>
                 <td>{fleaMarket.address}</td>
-                <td><ConvertedDate longFormatDate={fleaMarket.date_start} /></td>
-                <td><ConvertedDate longFormatDate={fleaMarket.date_end} /></td>
+                <td><ConvertedDate longFormatDate={fleaMarket.date_start}/></td>
+                <td><ConvertedDate longFormatDate={fleaMarket.date_end}/></td>
                 <td>{fleaMarket.title}</td>
                 <td>{fleaMarket.theme}</td>
                 <td>{fleaMarket.is_charity_word}</td>
                 <td>{fleaMarket.average_rating}</td>
                 <td>{fleaMarket.review_count}</td>
                 <td>
-                    <DeleteButton elementId={fleaMarket.id} type={tableType} onSuccess={getFleaMarkets} />
+                    <EditElementButtonForm
+                        tableType={TableTypes.FLEA_MARKETS}
+                        initialData={fleaMarket}
+                        onSuccess={getFleaMarkets}
+                    />
+                </td>
+                <td>
+                    <DeleteButton elementId={fleaMarket.id} type={tableType} onSuccess={getFleaMarkets}/>
                 </td>
             </tr>
         );
@@ -115,7 +123,7 @@ function FleaMarkets() {
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+            <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
                 tableType={TableTypes.FLEA_MARKETS}
                 onSuccess={getFleaMarkets}

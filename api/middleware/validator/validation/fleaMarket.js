@@ -33,6 +33,7 @@ export const fleaMarketMiddlewares = {
             req.val = await fleaMarketValidator.fleaMarketToUpdate.validate(req.body);
             next();
         } catch (e) {
+            console.error(e)
             res.status(400).send(e.messages);
         }
     },
