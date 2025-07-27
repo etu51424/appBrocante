@@ -102,13 +102,13 @@ function Slots() {
             <td>{slot.area}</td>
             <td>
                 <EditElementButtonForm
-                    tableType={TableTypes.SLOTS}
+                    tableType={tableType}
                     initialData={slot}
                     onSuccess={getSlots}
                 />
             </td>
             <td>
-                <DeleteButton elementId={slot.id} type={tableType} onSuccess={getSlots}/>
+                <DeleteButton elementId={slot.id} tableType={tableType} onSuccess={getSlots}/>
             </td>
         </tr>
     );
@@ -117,7 +117,7 @@ function Slots() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
-                tableType={TableTypes.SLOTS}
+                tableType={tableType}
                 onSuccess={getSlots}
             />
             <Page
@@ -134,7 +134,7 @@ function Slots() {
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
-                        <SearchBar onSearch={handleSearch} tableType={TableTypes.SLOTS}/>
+                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
                     </div>
                 }
             />

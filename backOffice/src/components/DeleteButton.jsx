@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 
-function DeleteButton({ elementId, type, onSuccess }) {
+function DeleteButton({ elementId, tableType, onSuccess }) {
     const langDict = useSelector(state => state.language.langDict);
 
     const handleClick = async () => {
@@ -20,11 +20,11 @@ function DeleteButton({ elementId, type, onSuccess }) {
         const isConfirmed = window.confirm(langDict.deleteButtonConfirmText);
         if (isConfirmed) {
             try {
-                await onDelete(elementId, type);
+                await onDelete();
                 if (onSuccess) onSuccess();
             } catch (e) {
-                console.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${type} : ${e}`);
-                toast.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${type} : ${e}`);
+                console.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${tableType} : ${e}`);
+                toast.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${tableType} : ${e}`);
             }
         }
     };
@@ -69,7 +69,7 @@ DeleteButton.propTypes = {
             fleaMarketId: PropTypes.number.isRequired,
         }),
     ]).isRequired,
-    type: PropTypes.string.isRequired,
+    tableType: PropTypes.oneOf(Object.values(TableTypes)).isRequired,
     onSuccess: PropTypes.func.isRequired,
 };
 

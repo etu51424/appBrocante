@@ -109,13 +109,13 @@ function FleaMarkets() {
                 <td>{fleaMarket.review_count}</td>
                 <td>
                     <EditElementButtonForm
-                        tableType={TableTypes.FLEA_MARKETS}
+                        tableType={tableType}
                         initialData={fleaMarket}
                         onSuccess={getFleaMarkets}
                     />
                 </td>
                 <td>
-                    <DeleteButton elementId={fleaMarket.id} type={tableType} onSuccess={getFleaMarkets}/>
+                    <DeleteButton elementId={fleaMarket.id} tableType={tableType} onSuccess={getFleaMarkets}/>
                 </td>
             </tr>
         );
@@ -125,7 +125,7 @@ function FleaMarkets() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
-                tableType={TableTypes.FLEA_MARKETS}
+                tableType={tableType}
                 onSuccess={getFleaMarkets}
             />
             <Page
@@ -145,7 +145,7 @@ function FleaMarkets() {
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                         />
-                        <SearchBar onSearch={handleSearch} tableType={TableTypes.FLEA_MARKETS}/>
+                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
                     </div>
                 }
             />

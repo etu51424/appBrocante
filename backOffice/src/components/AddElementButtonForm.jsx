@@ -8,12 +8,16 @@ import {createDealerData} from "../fetchAPI/CRUD/dealers.js";
 import {createUser} from "../fetchAPI/CRUD/users.js";
 import {createFleaMarketData} from "../fetchAPI/CRUD/fleaMarkets.js";
 import {createSlot} from "../fetchAPI/CRUD/slots.js";
-import {createInterest} from "../fetchAPI/CRUD/interests.js"; // Fichier CSS natif
+import {createInterest} from "../fetchAPI/CRUD/interests.js";
+import PropTypes from "prop-types";
+import EditElementButtonForm from "./EditElementButtonForm.jsx";
+import {useSelector} from "react-redux"; // Fichier CSS natif
 
 function AddElementButtonForm({ tableType, onSuccess }) {
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const langDict = useSelector(state => state.language.langDict);
 
     const openModal = () => setIsOpen(true);
     const closeModal = () => {
@@ -34,7 +38,8 @@ function AddElementButtonForm({ tableType, onSuccess }) {
             const start = new Date(formData.dateStart);
             const end = new Date(formData.dateEnd);
             if (start >= end) {
-                toast.error("La date de fin doit être postérieure à la date de début.");
+                toast.error(langDict.dateError);
+                console.error(langDict.dateError);
                 setIsLoading(false);
                 return false;
             }
@@ -73,14 +78,14 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                         returnedId = await createInterest(formData);
                         break;
                     default:
-                        throw new Error("Type non pris en charge");
+                        throw new Error(langDict.TableTypeError);
                 }
                 console.log(returnedId)
-                toast.success(`Identifiant de la nouvelle donnée : ${returnedId?.id}`);
+                toast.success(`${langDict.insertSuccess} : ${returnedId?.id}`);
                 closeModal();
                 if (onSuccess) onSuccess();
             } catch (err) {
-                toast.error("Erreur : " + (err.message || String(err)));
+                toast.error(`${langDict.error} : ${err.message || String(err)}`);
             }
         }
         setIsLoading(false);
@@ -148,12 +153,12 @@ function AddElementButtonForm({ tableType, onSuccess }) {
 
     return (
         <div>
-            <button className="add-button" onClick={openModal}>Ajouter</button>
+            <button className="add-button" onClick={openModal}>{langDict.addButton}</button>
 
             {isOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2>Ajouter un élément</h2>
+                        <h2>{langDict.insertMenuTitle}</h2>
                         <form onSubmit={handleSubmit}>
                             {fields.map((field) => (
                                 <div className="form-group" key={field.name}>
@@ -187,7 +192,7 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                             <div className="form-actions">
                                 <button type="button" onClick={closeModal}>Annuler</button>
                                 <button type="submit" disabled={isLoading}>
-                                    {isLoading ? "En cours..." : "Enregistrer"}
+                                    {isLoading ? langDict.loading : langDict.saveButton}
                                 </button>
                             </div>
                         </form>
@@ -197,5 +202,10 @@ function AddElementButtonForm({ tableType, onSuccess }) {
         </div>
     );
 }
+
+EditElementButtonForm.propTypes = {
+    tableType: PropTypes.oneOf(Object.values(TableTypes)).isRequired,
+    onSuccess: PropTypes.func.isRequired,
+};
 
 export default AddElementButtonForm;

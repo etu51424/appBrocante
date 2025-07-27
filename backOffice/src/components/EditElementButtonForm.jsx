@@ -9,11 +9,14 @@ import {updateUser} from "../fetchAPI/CRUD/users.js";
 import {updateSlot} from "../fetchAPI/CRUD/slots.js";
 import {updateInterest} from "../fetchAPI/CRUD/interests.js";
 import {updateFleaMarket} from "../fetchAPI/CRUD/fleaMarkets.js";
+import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 
 function EditElementButtonForm({ tableType, initialData, onSuccess }) {
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({ ...initialData });
     const [isLoading, setIsLoading] = useState(false);
+    const langDict = useSelector(state => state.language.langDict);
 
     const openModal = () => {
         setFormData({ ...initialData });
@@ -48,7 +51,8 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
             const start = new Date(formData.dateStart);
             const end = new Date(formData.dateEnd);
             if (start >= end) {
-                toast.error("La date de fin doit être postérieure à la date de début.");
+                toast.error(langDict.dateError);
+                console.error(langDict.dateError);
                 setIsLoading(false);
                 return false;
             }
@@ -75,7 +79,6 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
         setIsLoading(true);
 
         if (verifyDates()) {
-            console.log(formData);
             try {
                 switch (tableType) {
                     case TableTypes.ARTICLE:
@@ -100,23 +103,20 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
                         await updateInterest(formData);
                         break;
                     default:
-                        throw new Error("Type non pris en charge");
+                        throw new Error(langDict.TableTypeError);
                 }
 
-                toast.success("Données mises à jour avec succès !");
+                toast.success(langDict.updateSuccess);
                 closeModal();
                 if (onSuccess) onSuccess();
             } catch (err) {
-                toast.error("Erreur : " + (err.message || String(err)));
+                toast.error(`${langDict.error} : ${err.message || String(err)}`);
             }
         }
         setIsLoading(false);
     };
 
-    // Réutilisation de ta fonction existante
     const getFieldsByTableType = () => {
-        // Copié tel quel de ton composant original
-        // Tu peux le factoriser dans un fichier à part pour éviter la duplication
         switch (tableType) {
             case TableTypes.ARTICLE:
                 return [
@@ -183,12 +183,12 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
 
     return (
         <div>
-            <button className="edit-button" onClick={openModal}>Modifier</button>
+            <button className="edit-button" onClick={openModal}>{langDict.updateButton}</button>
 
             {isOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2>Modifier l'élément</h2>
+                        <h2>{langDict.updateMenuTitle}</h2>
                         <form onSubmit={handleSubmit}>
                             {fields.map((field) => (
                                 <div className="form-group" key={field.name}>
@@ -233,7 +233,7 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
                             <div className="form-actions">
                                 <button type="button" onClick={closeModal}>Annuler</button>
                                 <button type="submit" disabled={isLoading}>
-                                    {isLoading ? "En cours..." : "Mettre à jour"}
+                                    {isLoading ? langDict.loading : langDict.saveButton}
                                 </button>
                             </div>
                         </form>
@@ -243,5 +243,11 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
         </div>
     );
 }
+
+EditElementButtonForm.propTypes = {
+    initialData: PropTypes.object.isRequired,
+    tableType: PropTypes.oneOf(Object.values(TableTypes)).isRequired,
+    onSuccess: PropTypes.func.isRequired,
+};
 
 export default EditElementButtonForm;

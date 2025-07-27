@@ -95,7 +95,7 @@ function Articles() {
             <td>{article.condition}</td>
             <td>
                 <EditElementButtonForm
-                    tableType={TableTypes.ARTICLE}
+                    tableType={tableType}
                     initialData={article}
                     onSuccess={getArticles}
                 />
@@ -103,7 +103,7 @@ function Articles() {
             <td>
                 <DeleteButton
                     elementId={article.id}
-                    type={tableType}
+                    tableType={tableType}
                     onSuccess={getArticles}
                 />
             </td>
@@ -114,7 +114,7 @@ function Articles() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit} />
             <AddElementButtonForm
-                tableType={TableTypes.ARTICLE}
+                tableType={tableType}
                 onSuccess={getArticles}
             />
             <Page
@@ -136,7 +136,7 @@ function Articles() {
                             onPageChange={handlePageChange}
                             maxPage={100}
                         />
-                        <SearchBar onSearch={handleSearch} tableType={TableTypes.ARTICLE}/>
+                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
                     </div>
                 }
             />

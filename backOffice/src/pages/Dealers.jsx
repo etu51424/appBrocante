@@ -106,13 +106,13 @@ function Dealers() {
                 <td>{dealer.review_count}</td>
                 <td>
                     <EditElementButtonForm
-                        tableType={TableTypes.DEALERS}
+                        tableType={tableType}
                         initialData={dealer}
                         onSuccess={getDealers}
                     />
                 </td>
                 <td>
-                    <DeleteButton elementId={dealer.person_id} type={tableType} onSuccess={getDealers}/>
+                    <DeleteButton elementId={dealer.person_id} tableType={tableType} onSuccess={getDealers}/>
                 </td>
             </tr>
         );
@@ -122,7 +122,7 @@ function Dealers() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
-                tableType={TableTypes.DEALERS}
+                tableType={tableType}
                 onSuccess={getDealers}
             />
             <Page
@@ -142,7 +142,7 @@ function Dealers() {
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                         />
-                        <SearchBar onSearch={handleSearch} tableType={TableTypes.DEALERS}/>
+                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
                     </div>
                 }
             />

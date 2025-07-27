@@ -110,8 +110,8 @@ function Users() {
                 <td>{isUserAdminText}</td>
                 <td>{isUserTimedOutText}</td>
                 <td>{user.recovery_code}</td>
-                <td><EditElementButtonForm tableType={TableTypes.USERS} initialData={user} onSuccess={getUsers}/></td>
-                <td><DeleteButton elementId={user.id} type={tableType} onSuccess={getUsers}/></td>
+                <td><EditElementButtonForm tableType={tableType} initialData={user} onSuccess={getUsers}/></td>
+                <td><DeleteButton elementId={user.id} tableType={tableType} onSuccess={getUsers}/></td>
                 <td><BanUserButton elementId={user.id} isBlocked={user.is_timed_out} onSuccess={getUsers}/></td>
                 <td><PromoteUserButton userId={user.id} isAdmin={user.is_admin} onSuccess={getUsers}/></td>
             </tr>
@@ -122,7 +122,7 @@ function Users() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
-                tableType={TableTypes.USERS}
+                tableType={tableType}
                 onSuccess={getUsers}
             />
             <Page
@@ -139,7 +139,7 @@ function Users() {
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
-                        <SearchBar onSearch={handleSearch} tableType={TableTypes.USERS}/>
+                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
                     </div>
                 }
             />

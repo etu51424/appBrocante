@@ -116,7 +116,7 @@ function Interests() {
                 <td>{interest.participation_word}</td>
                 <td>
                     <EditElementButtonForm
-                        tableType={TableTypes.INTERESTS}
+                        tableType={tableType}
                         initialData={interest}
                         onSuccess={getInterests}
                     />
@@ -124,7 +124,7 @@ function Interests() {
                 <td>
                     <DeleteButton
                         elementId={{personId: interest.person_id, fleaMarketId: interest.flea_market_id}}
-                        type={tableType}
+                        tableType={tableType}
                         onSuccess={getInterests}
                     />
                 </td>
@@ -136,7 +136,7 @@ function Interests() {
         <div>
             <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
             <AddElementButtonForm
-                tableType={TableTypes.INTERESTS}
+                tableType={tableType}
                 onSuccess={getInterests}
             />
             <Page
@@ -153,7 +153,7 @@ function Interests() {
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
-                        <SearchBar onSearch={handleSearch} tableType={TableTypes.INTERESTS}/>
+                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
                     </div>
                 }
             />
