@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { TableTypes } from "../utils/Defs.js";
+import { TableTypes } from "../../utils/Defs.js";
 import toast from "react-hot-toast";
 
-import "../css/AddElementButtonForm.css";
-import {updateArticleData} from "../fetchAPI/CRUD/articles.js";
-import {updateDealerData} from "../fetchAPI/CRUD/dealers.js";
-import {updateUser} from "../fetchAPI/CRUD/users.js";
-import {updateSlot} from "../fetchAPI/CRUD/slots.js";
-import {updateInterest} from "../fetchAPI/CRUD/interests.js";
-import {updateFleaMarket} from "../fetchAPI/CRUD/fleaMarkets.js";
+import "../../css/AddElementButtonForm.css";
+import {updateArticleData} from "../../fetchAPI/CRUD/articles.js";
+import {updateDealerData} from "../../fetchAPI/CRUD/dealers.js";
+import {updateUser} from "../../fetchAPI/CRUD/users.js";
+import {updateSlot} from "../../fetchAPI/CRUD/slots.js";
+import {updateInterest} from "../../fetchAPI/CRUD/interests.js";
+import {updateFleaMarket} from "../../fetchAPI/CRUD/fleaMarkets.js";
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
+import { CiEdit } from "react-icons/ci";
+import {verifyDates} from "./formsCommon.js";
 
 function EditElementButtonForm({ tableType, initialData, onSuccess }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -46,20 +48,6 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
         }));
     };
 
-    const verifyDates = () => {
-        if (tableType === TableTypes.FLEA_MARKETS) {
-            const start = new Date(formData.dateStart);
-            const end = new Date(formData.dateEnd);
-            if (start >= end) {
-                toast.error(langDict.dateError);
-                console.error(langDict.dateError);
-                setIsLoading(false);
-                return false;
-            }
-        }
-        return true;
-    };
-
     const formatDateForInput = (dateValue) => {
         if (dateValue) {
             const d = new Date(dateValue);
@@ -78,7 +66,7 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
         e.preventDefault();
         setIsLoading(true);
 
-        if (verifyDates()) {
+        if (verifyDates(tableType, formData, langDict)) {
             try {
                 switch (tableType) {
                     case TableTypes.ARTICLE:
@@ -183,7 +171,7 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
 
     return (
         <div>
-            <button className="edit-button" onClick={openModal}>{langDict.updateButton}</button>
+            <button className="edit-button" onClick={openModal}><CiEdit /></button>
 
             {isOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
@@ -231,7 +219,7 @@ function EditElementButtonForm({ tableType, initialData, onSuccess }) {
                             ))}
 
                             <div className="form-actions">
-                                <button type="button" onClick={closeModal}>Annuler</button>
+                                <button type="button" onClick={closeModal}>{langDict.cancelButton}</button>
                                 <button type="submit" disabled={isLoading}>
                                     {isLoading ? langDict.loading : langDict.saveButton}
                                 </button>

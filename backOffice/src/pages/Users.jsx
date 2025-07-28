@@ -14,8 +14,8 @@ import PromoteUserButton from "../components/PromoteUserButton.jsx";
 import toast from "react-hot-toast";
 import ProfilePicturePreview from "../components/ProfilePicturePreview.jsx";
 import SearchBar from "../components/SearchBar.jsx";
-import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
-import EditElementButtonForm from "../components/EditElementButtonForm.jsx";
+import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
+import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
 
 function Users() {

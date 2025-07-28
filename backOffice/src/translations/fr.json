@@ -114,6 +114,7 @@
     "insertMenuTitle" : "Ajouter un élément",
     "updateButton" : "Modifier",
     "updateMenuTitle" : "Ajouter un élément",
+    "cancelButton" : "Annuler",
     "dateError" : "La date de fin doit être postérieure à la date de début.",
     "TableTypeError" : "Type de table non pris en charge",
     "insertSuccess" : "Identifiant de la nouvelle donnée",

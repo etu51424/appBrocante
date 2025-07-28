@@ -114,6 +114,7 @@
     "insertMenuTitle": "Add an item",
     "updateButton": "Edit",
     "updateMenuTitle": "Add an item",
+    "cancelButton": "Cancel",
     "dateError": "The end date must be later than the start date.",
     "TableTypeError": "Unsupported table type",
     "insertSuccess": "New data ID",

@@ -113,6 +113,7 @@
     "insertMenuTitle": "Item toevoegen",
     "updateButton": "Bewerken",
     "updateMenuTitle": "Item toevoegen",
+    "cancelButton": "Annuleren",
     "dateError": "De einddatum moet later zijn dan de startdatum.",
     "TableTypeError": "Tabeltype niet ondersteund",
     "insertSuccess": "Nieuwe gegevens-ID",

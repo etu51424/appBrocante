@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { TableTypes } from "../utils/Defs.js";
+import { TableTypes } from "../../utils/Defs.js";
 import toast from "react-hot-toast";
 
-import "../css/AddElementButtonForm.css";
-import {createArticleData} from "../fetchAPI/CRUD/articles.js";
-import {createDealerData} from "../fetchAPI/CRUD/dealers.js";
-import {createUser} from "../fetchAPI/CRUD/users.js";
-import {createFleaMarketData} from "../fetchAPI/CRUD/fleaMarkets.js";
-import {createSlot} from "../fetchAPI/CRUD/slots.js";
-import {createInterest} from "../fetchAPI/CRUD/interests.js";
+import "../../css/AddElementButtonForm.css";
+import {createArticleData} from "../../fetchAPI/CRUD/articles.js";
+import {createDealerData} from "../../fetchAPI/CRUD/dealers.js";
+import {createUser} from "../../fetchAPI/CRUD/users.js";
+import {createFleaMarketData} from "../../fetchAPI/CRUD/fleaMarkets.js";
+import {createSlot} from "../../fetchAPI/CRUD/slots.js";
+import {createInterest} from "../../fetchAPI/CRUD/interests.js";
 import PropTypes from "prop-types";
 import EditElementButtonForm from "./EditElementButtonForm.jsx";
-import {useSelector} from "react-redux"; // Fichier CSS natif
+import {useSelector} from "react-redux";
+import { IoMdAdd } from "react-icons/io";
+import {verifyDates} from "./formsCommon.js";
+
 
 function AddElementButtonForm({ tableType, onSuccess }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -33,26 +36,11 @@ function AddElementButtonForm({ tableType, onSuccess }) {
         }));
     };
 
-    const verifyDates = () => {
-        if (tableType === TableTypes.FLEA_MARKETS) {
-            const start = new Date(formData.dateStart);
-            const end = new Date(formData.dateEnd);
-            if (start >= end) {
-                toast.error(langDict.dateError);
-                console.error(langDict.dateError);
-                setIsLoading(false);
-                return false;
-            }
-        }
-        return true;
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log(formData);
 
-        if (verifyDates()) {
+        if (verifyDates(tableType, formData, langDict)) {
             try {
                 let returnedId;
                 switch (tableType) {
@@ -80,11 +68,11 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                     default:
                         throw new Error(langDict.TableTypeError);
                 }
-                console.log(returnedId)
                 toast.success(`${langDict.insertSuccess} : ${returnedId?.id}`);
                 closeModal();
                 if (onSuccess) onSuccess();
             } catch (err) {
+                console.error(`${langDict.error} : ${err.message || String(err)}`)
                 toast.error(`${langDict.error} : ${err.message || String(err)}`);
             }
         }
@@ -96,10 +84,10 @@ function AddElementButtonForm({ tableType, onSuccess }) {
             case TableTypes.ARTICLE:
                 return [
                     { name: "personId", label: "personId", type: "number", required: true },
-                    { name: "title", label: "Titre", type: "text", required: false },
-                    { name: "description", label: "Description", type: "textarea", required: false },
-                    { name: "cost", label: "Coût (€)", type: "number", required: false },
-                    { name: "condition", label: "État", type: "text", required: false },
+                    { name: "title", label: "title", type: "text", required: false },
+                    { name: "description", label: "description", type: "textarea", required: false },
+                    { name: "cost", label: "cost", type: "number", required: false },
+                    { name: "condition", label: "condition", type: "text", required: false },
                 ];
             case TableTypes.DEALERS:
                 return [
@@ -153,7 +141,7 @@ function AddElementButtonForm({ tableType, onSuccess }) {
 
     return (
         <div>
-            <button className="add-button" onClick={openModal}>{langDict.addButton}</button>
+            <button className="add-button" onClick={openModal}><IoMdAdd /></button>
 
             {isOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
@@ -190,7 +178,7 @@ function AddElementButtonForm({ tableType, onSuccess }) {
                             ))}
 
                             <div className="form-actions">
-                                <button type="button" onClick={closeModal}>Annuler</button>
+                                <button type="button" onClick={closeModal}>{langDict.cancelButton}</button>
                                 <button type="submit" disabled={isLoading}>
                                     {isLoading ? langDict.loading : langDict.saveButton}
                                 </button>

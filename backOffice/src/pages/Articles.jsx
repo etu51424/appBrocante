@@ -10,8 +10,8 @@ import PaginationArrows from "../components/PaginationArrows.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
 import toast from "react-hot-toast";
 import SearchBar from "../components/SearchBar.jsx";
-import AddElementButtonForm from "../components/AddElementButtonForm.jsx";
-import EditElementButtonForm from "../components/EditElementButtonForm.jsx";
+import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
+import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
 function Articles() {
 

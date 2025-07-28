@@ -39,6 +39,7 @@ function Page({
 
     const renderTableHeader = () => {
         let columns = { ...langDict.tables[elementClassNameSingular].columns };
+        columns.update = langDict.updateButton
         columns.delete = langDict.deleteButton;
 
         if (elementClassNameSingular === "user") {
@@ -49,7 +50,8 @@ function Page({
         const unsortableLabels = [
             langDict.deleteButton,
             langDict.banButton,
-            langDict.promoteButton
+            langDict.promoteButton,
+            langDict.updateButton
         ];
 
         return Object.entries(columns).map(([key, label]) => (
@@ -121,8 +123,6 @@ function Page({
                                 <tr>{renderTableHeader()}</tr>
                             </thead>
                             <tbody>
-                                {/*obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs*/}
-                                {/*tableHeader et tableBody font le rendu de la table et du body*/}
                                 {elements.map(renderTableBody)}
                             </tbody>
                         </table>
