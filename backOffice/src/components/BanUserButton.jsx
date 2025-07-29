@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 
-function BanUserButton({ elementId, isBlocked, onSuccess }) {
+const BanUserButton = ({ elementId, isBlocked, onSuccess }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const langDict = useSelector(state => state.language.langDict);

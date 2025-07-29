@@ -12,11 +12,10 @@ import { useSelector } from 'react-redux';
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 
-function DeleteButton({ elementId, tableType, onSuccess }) {
+const DeleteButton = ({ elementId, tableType, onSuccess }) => {
     const langDict = useSelector(state => state.language.langDict);
 
     const handleClick = async () => {
-        // A CHANGER AVEC LE CHANGEMENT DE GESTION DE LANGUE !!
         const isConfirmed = window.confirm(langDict.deleteButtonConfirmText);
         if (isConfirmed) {
             try {

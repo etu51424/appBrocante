@@ -1,0 +1,5 @@
+.searchbar-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+}

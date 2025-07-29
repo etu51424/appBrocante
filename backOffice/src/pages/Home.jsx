@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
-function Home() {
+const Home = () => {
     const langDict = useSelector(state => state.language.langDict);
 
     return (

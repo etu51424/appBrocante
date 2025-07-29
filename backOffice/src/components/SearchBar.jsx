@@ -1,10 +1,11 @@
-// components/SearchBar.jsx
 import React, { useState } from 'react';
 import {TableTypes} from "../utils/Defs.js";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
+import '../css/SearchBar.css';
 
-function SearchBar({ onSearch, tableType }) {
+
+const SearchBar = ({ onSearch, tableType }) => {
     const langDict = useSelector(state => state.language.langDict);
     const [query, setQuery] = useState('');
     const [queryFleaMarketId, setQueryFleaMarketId] = useState('');
@@ -79,38 +80,38 @@ function SearchBar({ onSearch, tableType }) {
 
     return (
         <>
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
-            <input
-                type="text"
-                placeholder={getTableText()}
-                value={tableType === TableTypes.INTERESTS ? queryFleaMarketId : query}
-                onChange={(e) => {
-                    if (tableType === TableTypes.INTERESTS) {
-                        setQueryFleaMarketId(e.target.value);
-                    } else {
-                        setQuery(e.target.value)
-                    }
-                }}
-                onKeyDown={handleKeyDown}
-            />
-            <button onClick={handleSearch}>
-                {langDict['searchTexts'].research}
-            </button>
-        </div>
-        {tableType === TableTypes.INTERESTS && (
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
+            <div className="searchbar-row">
                 <input
                     type="text"
-                    placeholder={`${langDict['searchTexts'].research} ${langDict['searchTexts'].by} ${langDict['searchTexts'].interestsAlt}`}
-                    value={queryPersonId}
-                    onChange={(e) => setQueryPersonId(e.target.value)}
+                    placeholder={getTableText()}
+                    value={tableType === TableTypes.INTERESTS ? queryFleaMarketId : query}
+                    onChange={(e) => {
+                        if (tableType === TableTypes.INTERESTS) {
+                            setQueryFleaMarketId(e.target.value);
+                        } else {
+                            setQuery(e.target.value)
+                        }
+                    }}
                     onKeyDown={handleKeyDown}
                 />
                 <button onClick={handleSearch}>
                     {langDict['searchTexts'].research}
                 </button>
             </div>
-        )}
+            {tableType === TableTypes.INTERESTS && (
+                <div className="searchbar-row">
+                    <input
+                        type="text"
+                        placeholder={`${langDict['searchTexts'].research} ${langDict['searchTexts'].by} ${langDict['searchTexts'].interestsAlt}`}
+                        value={queryPersonId}
+                        onChange={(e) => setQueryPersonId(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <button onClick={handleSearch}>
+                        {langDict['searchTexts'].research}
+                    </button>
+                </div>
+            )}
         </>
     );
 }

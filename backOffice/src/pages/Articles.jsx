@@ -13,7 +13,7 @@ import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
-function Articles() {
+const Articles = () => {
 
     const title = "Articles";
     const elementClassNameSingular = "article";

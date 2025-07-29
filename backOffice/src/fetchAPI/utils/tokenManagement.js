@@ -8,7 +8,7 @@ export const getTokenFromStorage = () => {
         alert("Session expirée. Veuillez vous reconnecter.");
         localStorage.removeItem("authToken");
         localStorage.removeItem("authTokenExpiration");
-        window.location.href = "/login"; // À adapter selon ta route de login
+        window.location.href = "/login";
     } else{
         return token;
     }

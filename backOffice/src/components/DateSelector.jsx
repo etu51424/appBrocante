@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
 
-function DateSelector({changeDateElem}) {
+const DateSelector = ({changeDateElem}) => {
     const [year, setYear] = useState("2020");
     const [month, setMonth] = useState("01");
 

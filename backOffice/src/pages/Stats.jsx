@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
-
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import AreaChart from '../components/AreaChart.jsx';
 import DateSelector from '../components/DateSelector.jsx';
 import "../css/Stats.css";
+import PropTypes from "prop-types";
 
-function Stats() {
+const Stats = () => {
     
     const langDict = useSelector(state => state.language.langDict);
     const [dateStart, setDateStart] = useState();
@@ -43,7 +43,8 @@ function Stats() {
     );
 }
 
-function GridItem({title, children}) {
+// Mini composant
+const GridItem = ({title, children}) => {
     return (
         <div className="statsGrid">
             <h3 className="gridTitle">{title}</h3>
@@ -51,5 +52,10 @@ function GridItem({title, children}) {
         </div>
     );
 }
+
+GridItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    children: PropTypes.node,
+};
 
 export default Stats;

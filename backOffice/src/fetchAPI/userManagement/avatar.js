@@ -2,7 +2,6 @@ import {exponentialRetry} from "../utils/exponentialRetry.js";
 import {API_BASE_URL} from "../login.js";
 import {statusCodesError} from "../utils/statusCode.js";
 import {getTokenFromStorage} from "../utils/tokenManagement.js";
-import toast from "react-hot-toast";
 
 export const getAvatar = async (personId) => {
     const token = getTokenFromStorage();

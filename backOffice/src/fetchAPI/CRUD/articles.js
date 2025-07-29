@@ -45,7 +45,6 @@ export const getArticlesData = async (limit = 10, page = 1) => {
 }
 
 export const getAllArticlesByTitle = async (limit = 10, page = 1, title) =>{
-    console.log("aaa")
     const token = getTokenFromStorage();
     if (token) {
         const expectedCode = 200;
@@ -63,8 +62,7 @@ export const getAllArticlesByTitle = async (limit = 10, page = 1, title) =>{
             );
             statusCodesError(response, expectedCode);
             if (response.status === expectedCode) {
-                const data = await response.json();
-                return data;
+                return await response.json();
             }
         });
     }

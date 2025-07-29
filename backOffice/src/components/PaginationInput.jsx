@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 
-function PaginationInput({ currentPage, onPageChange }) {
+const PaginationInput = ({ currentPage, onPageChange }) => {
     const [inputValue, setInputValue] = useState(currentPage);
     const langDict = useSelector(state => state.language.langDict);
 

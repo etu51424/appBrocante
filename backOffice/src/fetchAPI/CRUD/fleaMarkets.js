@@ -1,4 +1,4 @@
-import { API_BASE_URL} from "./../login.js";
+import {API_BASE_URL} from "./../login.js";
 import {exponentialRetry} from "../utils/exponentialRetry.js";
 import {statusCodesError} from "../utils/statusCode.js";
 import {getTokenFromStorage} from "../utils/tokenManagement.js";

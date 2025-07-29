@@ -1,4 +1,3 @@
-'use client'
 import React, {useState, useEffect} from "react";
 import { 
     AreaChart, 
@@ -18,13 +17,9 @@ import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 
 
-const AreaChartComponent = ({ 
-        dateStartProp,
-        dateEndProp
-    }) => {
+const AreaChartComponent = ({dateStartProp, dateEndProp}) => {
     const [data, setData] = useState([]);
 
-    // utile pour le debugging
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const langDict = useSelector(state => state.language.langDict);
@@ -81,7 +76,7 @@ const AreaChartComponent = ({
 
         //étape 1: compter le nombre de mois entre dateStart et dateEnd
         function countMonthsWithinDates(dateStart, dateEnd) {
-            var months;
+            let months;
             months = (dateEnd.getFullYear() - dateStart.getFullYear()) * 12;
             months -= dateStart.getMonth();
             months += dateEnd.getMonth();
@@ -139,12 +134,10 @@ const AreaChartComponent = ({
             }
         });
 
-        const monthCountDatapoints = Object.values(marketsPerMonthCount).map((entry) => ({
+        return Object.values(marketsPerMonthCount).map((entry) => ({
             month: entry.monthOfYear, // axe x
             count: entry.marketCount, // axe y
         }));
-
-        return monthCountDatapoints;
     }
 
     if (isLoading) {

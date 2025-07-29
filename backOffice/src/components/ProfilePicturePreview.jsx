@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 
-function ProfilePicturePreview({ userId }) {
+const ProfilePicturePreview = ({ userId }) => {
     const langDict = useSelector(state => state.language.langDict);
 
     const handleClick = async () => {

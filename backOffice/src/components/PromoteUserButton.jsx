@@ -4,7 +4,7 @@ import {demoteUser, promoteUser} from "../fetchAPI/userManagement/promotion.js";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 
-function PromoteUserButton({ userId, isAdmin, onSuccess }) {
+const PromoteUserButton = ({ userId, isAdmin, onSuccess }) => {
     const langDict = useSelector(state => state.language.langDict);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);

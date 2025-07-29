@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function RowsPerPageSelector({ limit, setLimit }) {
+const RowsPerPageSelector = ({ limit, setLimit }) => {
     const options = [5, 10, 20];
 
     const handleChange = (e) => {

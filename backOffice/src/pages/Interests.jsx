@@ -4,8 +4,6 @@ import {getAllInterestsWithArgs, getInterestsData} from "../fetchAPI/CRUD/intere
 import { useSelector } from 'react-redux';
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
-
-// Import des composants pagination réutilisables
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
@@ -14,7 +12,7 @@ import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
-function Interests() {
+const Interests = () => {
 
     const title = "Interests";
     const elementClassNameSingular = "interest";

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 
-function SortMenu({ onSortAsc, onSortDesc }) {
+const SortMenu = ({ onSortAsc, onSortDesc }) => {
     const [open, setOpen] = useState(false);
     const menuRef = useRef();
     const langDict = useSelector(state => state.language.langDict);

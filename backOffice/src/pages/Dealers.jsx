@@ -1,6 +1,4 @@
 import { React, useState, useEffect } from "react";
-import { useAuth } from "../components/AuthProvider.jsx";
-
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { useSelector } from 'react-redux';
@@ -8,8 +6,6 @@ import {getAllDealersByType, getDealersData} from "../fetchAPI/CRUD/dealers.js";
 import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
-
-// ✅ composants de pagination réutilisables
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
@@ -18,7 +14,7 @@ import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
-function Dealers() {
+const Dealers = () => {
 
     const title = "Dealers";
     const elementClassNameSingular = "dealer";

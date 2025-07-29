@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 
-function PaginationArrows({ currentPage, noMoreData, onPageChange }) {
+const PaginationArrows = ({ currentPage, noMoreData, onPageChange }) => {
     const langDict = useSelector(state => state.language.langDict);
 
     const handleNext = () => {

@@ -3,7 +3,7 @@ import {statusCodesError} from "../utils/statusCode.js";
 import {exponentialRetry} from "../utils/exponentialRetry.js";
 
 export const getRecoveryEmail = async (personId) => {
-    let expectedCode = 201;
+    const expectedCode = 201;
     return await exponentialRetry(async () => {
         const response = await fetch(
             `${API_BASE_URL}/client/security/${personId}`,

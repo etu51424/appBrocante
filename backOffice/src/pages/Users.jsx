@@ -1,9 +1,8 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Page from "../components/Page.jsx";
 import ConvertedDate from "../components/ConvertedDate.jsx";
 import { useSelector } from 'react-redux';
 import {getAllUsersByUsername, getUsersData} from "../fetchAPI/CRUD/users.js";
-import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import DeleteButton from "../components/DeleteButton.jsx";
 import { TableTypes } from "../utils/Defs.js";
 import BanUserButton from "../components/BanUserButton.jsx";
@@ -18,7 +17,7 @@ import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
 
-function Users() {
+const Users = () => {
 
     const title = "Users";
     const elementClassNameSingular = "user";

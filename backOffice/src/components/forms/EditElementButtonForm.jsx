@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TableTypes } from "../../utils/Defs.js";
 import toast from "react-hot-toast";
-
 import "../../css/AddElementButtonForm.css";
 import {updateArticleData} from "../../fetchAPI/CRUD/articles.js";
 import {updateDealerData} from "../../fetchAPI/CRUD/dealers.js";
@@ -14,7 +13,7 @@ import {useSelector} from "react-redux";
 import { CiEdit } from "react-icons/ci";
 import {verifyDates} from "./formsCommon.js";
 
-function EditElementButtonForm({ tableType, initialData, onSuccess }) {
+const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({ ...initialData });
     const [isLoading, setIsLoading] = useState(false);

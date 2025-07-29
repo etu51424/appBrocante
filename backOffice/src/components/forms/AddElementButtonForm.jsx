@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TableTypes } from "../../utils/Defs.js";
 import toast from "react-hot-toast";
-
 import "../../css/AddElementButtonForm.css";
 import {createArticleData} from "../../fetchAPI/CRUD/articles.js";
 import {createDealerData} from "../../fetchAPI/CRUD/dealers.js";
@@ -16,7 +15,7 @@ import { IoMdAdd } from "react-icons/io";
 import {verifyDates} from "./formsCommon.js";
 
 
-function AddElementButtonForm({ tableType, onSuccess }) {
+const AddElementButtonForm = ({ tableType, onSuccess }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({});
     const [isLoading, setIsLoading] = useState(false);

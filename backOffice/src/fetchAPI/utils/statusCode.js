@@ -6,7 +6,3 @@ export const statusCodesError = (response, expectedStatus) => {
         throw error;
     }
 }
-
-export const statusCodes = () => {
-// a supprimer
-}

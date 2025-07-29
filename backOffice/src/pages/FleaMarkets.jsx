@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 import { exponentialRetry } from "../fetchAPI/utils/exponentialRetry.js";
 import { TableTypes } from "../utils/Defs.js";
 import DeleteButton from "../components/DeleteButton.jsx";
-
-// Import des composants pagination réutilisables
 import PaginationArrows from "../components/PaginationArrows.jsx";
 import PaginationInput from "../components/PaginationInput.jsx";
 import RowsPerPageSelector from "../components/RowsPerPageSelector.jsx";
@@ -16,7 +14,7 @@ import SearchBar from "../components/SearchBar.jsx";
 import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
-function FleaMarkets() {
+const FleaMarkets = () => {
 
     const title = "Flea Markets";
     const elementClassNameSingular = "flea_market";
@@ -51,7 +49,7 @@ function FleaMarkets() {
         setIsLoading(false);
     };
 
-    const seatchFleaMarketsByTitle = async (title) => {
+    const searchFleaMarketsByTitle = async (title) => {
         setIsLoading(true);
         setError(null);
         try{
@@ -78,7 +76,7 @@ function FleaMarkets() {
     useEffect(() => {
         const fetchData = async () => {
             if (searchQuery) {
-                await seatchFleaMarketsByTitle(searchQuery);
+                await searchFleaMarketsByTitle(searchQuery);
             } else {
                 await getFleaMarkets();
             }

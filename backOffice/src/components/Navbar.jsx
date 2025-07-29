@@ -1,10 +1,10 @@
-import React, {useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import "../css/Navbar.css";
 import { AuthContext } from './AuthProvider.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeLanguage } from '../store/slices/languageSlice.js';
 
-function Navbar() {
+const Navbar = () => {
   const { logout } = useContext(AuthContext);
   const langDict = useSelector(state => state.language.langDict);
 

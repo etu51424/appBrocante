@@ -3,32 +3,15 @@ import { useSelector } from 'react-redux';
 import "../css/Page.css";
 import toast from "react-hot-toast";
 import SortMenu from "./SortMenu";
-import PropTypes from "prop-types"; // Assure-toi que le fichier est à la bonne place
+import PropTypes from "prop-types";
 
-
-// reçoit en arguments les élements (et fonctions) qui vont changer en fonction des pages
-function Page({
-        getElementsData,
-        renderTableBody,
-        title,
-        elementClassNameSingular,
-        elementClassNamePlural,
-        paginationArrows,
-    }) {
-
-    const storeLangDict = useSelector(state => state.language.langDict);
-    const langDict = JSON.parse(JSON.stringify(storeLangDict));
+const Page = ({getElementsData, renderTableBody, title, elementClassNameSingular, elementClassNamePlural, paginationArrows,}) => {
+    const langDict = useSelector(state => state.language.langDict);
     const [elements, setElements] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true); // affiche à l'useur un "écran" de chargement
 
-    //obtenir les noms des propriétés d'1 article random rpzant tous les articles plutot que les valeurs
-    // tableHeader et tableBody font le rendu de la table et du body
-
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
-
     const handleSort = (key, direction) => {
-        setSortConfig({ key, direction });
         const sorted = [...elements].sort((a, b) => {
             if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
             if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
