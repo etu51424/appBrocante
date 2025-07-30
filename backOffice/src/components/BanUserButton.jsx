@@ -23,8 +23,8 @@ const BanUserButton = ({ elementId, isBlocked, onSuccess }) => {
                     onSuccess();
                 }
             } catch (err) {
-                setError(`Erreur lors du bannissement : ${err}`);
-                toast.error(`Erreur lors du bannissement : ${err}`);
+                setError(`${langDict.banError} : ${err}`);
+                toast.error(`${langDict.banError} : ${err}`);
             } finally {
                 setIsLoading(false);
             }
@@ -40,12 +40,12 @@ const BanUserButton = ({ elementId, isBlocked, onSuccess }) => {
             try {
                 let result = await unbanUser(elementId);
                 if (onSuccess && result) {
-                    toast.success("L'utilisateur a été débanni !");
+                    toast.success(langDict.userBanned);
                     onSuccess();
                 }
             } catch (err) {
-                setError(`Erreur lors du débannissement : ${err}`);
-                toast.error(`Erreur lors du bannissement : ${err}`);
+                setError(`${langDict.unbanError} : ${err}`);
+                toast.error(`${langDict.unbanError} : ${err}`);
             } finally {
                 setIsLoading(false);
             }

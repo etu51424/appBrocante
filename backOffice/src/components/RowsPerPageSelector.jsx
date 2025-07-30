@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 
 const RowsPerPageSelector = ({ limit, setLimit }) => {
     const options = [5, 10, 20];
+    const langDict = useSelector(state => state.language.langDict);
 
     const handleChange = (e) => {
         setLimit(Number(e.target.value));
@@ -10,7 +12,7 @@ const RowsPerPageSelector = ({ limit, setLimit }) => {
 
     return (
         <div className="mb-4 flex items-center gap-2">
-            <label htmlFor="rows-per-page" className="text-sm font-medium">Lignes par page :</label>
+            <label htmlFor="rows-per-page" className="text-sm font-medium">{langDict.rowPerPage} :</label>
             <select
                 id="rows-per-page"
                 value={limit}

@@ -58,7 +58,7 @@ const FleaMarkets = () => {
                 setData(data);
             } else {
                 setData([]);
-                toast.error("No data received");
+                toast.error(langDict.noDataReceived);
             }
         } catch (err) {
             setError(langDict.error + ": " + (err.message || String(err)));

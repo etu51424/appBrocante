@@ -19,12 +19,12 @@ const PromoteUserButton = ({ userId, isAdmin, onSuccess }) => {
                 let result = await promoteUser(userId);
 
                 if (onSuccess && result) {
-                    toast.success("L'utilisateur a été promu !");
+                    toast.success(langDict.userPromoted);
                     onSuccess();
                 }
             } catch (err) {
-                setError(`Erreur lors de la promotion : ${err}`);
-                toast.error(`Erreur lors de la promotion : ${err}`);
+                setError(`${langDict.promoteError} : ${err}`);
+                toast.error(`${langDict.promoteError} : ${err}`);
             } finally {
                 setIsLoading(false);
             }
@@ -43,12 +43,12 @@ const PromoteUserButton = ({ userId, isAdmin, onSuccess }) => {
                 let result = await demoteUser(userId);
 
                 if (onSuccess && result){
-                    toast.success("L'utilisateur a été rétrogradé !");
+                    toast.success(langDict.userDemoted);
                     onSuccess();
                 }
             } catch (err) {
-                setError(`Erreur lors de la rétrogradation : ${err}`);
-                toast.error(`Erreur lors de la promotion : ${err}`);
+                setError(`${langDict.demoteError} : ${err}`);
+                toast.error(`${langDict.demoteError} : ${err}`);
             } finally {
                 setIsLoading(false);
             }

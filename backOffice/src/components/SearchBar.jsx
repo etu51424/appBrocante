@@ -71,7 +71,7 @@ const SearchBar = ({ onSearch, tableType }) => {
                 text = langDict['searchTexts'].slots;
                 break;
             default:
-                console.error(`No text could be found for table ${tableType}`);
+                console.error(`${langDict.noTextFound} : ${tableType}`);
                 text = '///';
         }
 

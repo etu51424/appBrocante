@@ -43,7 +43,7 @@ const Stats = () => {
     );
 }
 
-// Mini composant
+// Mini composant spécifique à cette page
 const GridItem = ({title, children}) => {
     return (
         <div className="statsGrid">

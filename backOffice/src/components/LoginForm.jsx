@@ -4,6 +4,7 @@ import { AuthContext } from "./AuthProvider";
 import "../css/LoginForm.css";
 import { getRecoveryEmail, validateRecoveryCode } from "../fetchAPI/userManagement/passwordRecovery.js";
 import toast from "react-hot-toast";
+import {useSelector} from "react-redux";
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
@@ -17,6 +18,7 @@ const LoginForm = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
+    const langDict = useSelector(state => state.language.langDict);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -28,9 +30,9 @@ const LoginForm = () => {
                 navigate("/home");
             }
         } catch (err) {
-            setError(`Erreur lors de la connexion : ${err}`);
-            console.error(`Erreur lors de la connexion : ${err}`);
-            toast.error(`Erreur lors de la connexion : ${err}`);
+            setError(`${langDict.loginError} : ${err}`);
+            console.error(`${langDict.loginError} : ${err}`);
+            toast.error(`${langDict.loginError} : ${err}`);
         }
     };
 
@@ -40,8 +42,8 @@ const LoginForm = () => {
             await getRecoveryEmail(identifier);
             setMailSent(true);
         } catch (err) {
-            setError(`Une erreur est survenue lors de l'envoi de l'e-mail : ${err}`);
-            toast.error(`Une erreur est survenue lors de l'envoi de l'e-mail : ${err}`);
+            setError(`${langDict.emailError} : ${err}`);
+            toast.error(`${langDict.emailError} : ${err}`);
         }
     };
 
@@ -52,13 +54,13 @@ const LoginForm = () => {
 
         if (!passwordRequirements.test(newPassword)) {
             setError(
-                "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial."
+                langDict.passwordError
             );
             return;
         }
 
         if (newPassword !== confirmPassword) {
-            setError("Les mots de passe ne correspondent pas.");
+            setError(langDict.passwordMatchError);
             return;
         }
 
@@ -72,11 +74,11 @@ const LoginForm = () => {
             if (result) {
                 resetAll();
             } else {
-                setError(`Erreur lors de la réinitialisation du mot de passe : ${result}`);
+                setError(`${langDict.passwordResetError} : ${result}`);
             }
         } catch (err) {
-            setError(`Erreur lors de la réinitialisation du mot de passe : ${err}`);
-            toast.error(`Erreur lors de la réinitialisation du mot de passe : ${err}`);
+            setError(`${langDict.passwordResetError} : ${err}`);
+            toast.error(`${langDict.passwordResetError} : ${err}`);
         }
     };
 
@@ -92,7 +94,7 @@ const LoginForm = () => {
 
     return (
         <div className="loginPage">
-            <h2>Connect to admin dashboard</h2>
+            <h2>{langDict.adminDashboardConnect}</h2>
 
             {!forgotMode ? (
                 <form onSubmit={handleSubmit} className="centeredForm">
@@ -100,15 +102,15 @@ const LoginForm = () => {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Nom d'utilisateur"
+                        placeholder={langDict.username}
                     />
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Mot de passe"
+                        placeholder={langDict.password}
                     />
-                    <button type="submit">Se connecter</button>
+                    <button type="submit">{langDict.connect}</button>
                     <button
                         type="button"
                         onClick={() => {
@@ -118,7 +120,7 @@ const LoginForm = () => {
                             setError("");
                         }}
                     >
-                        J'ai oublié mon mot de passe
+                        {langDict.forgotPassword}
                     </button>
                 </form>
             ) : (
@@ -129,11 +131,11 @@ const LoginForm = () => {
                                 type="text"
                                 value={identifier}
                                 onChange={(e) => setIdentifier(e.target.value)}
-                                placeholder="Numéro identifiant"
+                                placeholder={langDict.id}
                             />
-                            <button onClick={handleForgotPassword}>Envoyez un mail</button>
+                            <button onClick={handleForgotPassword}>{langDict.sendEmail}</button>
                             <button type="button" onClick={resetAll}>
-                                Retour à la connexion
+                                {langDict.returnToLogin}
                             </button>
                         </>
                     ) : (
@@ -142,25 +144,25 @@ const LoginForm = () => {
                                 type="text"
                                 value={verificationCode}
                                 onChange={(e) => setVerificationCode(e.target.value)}
-                                placeholder="Code de vérification"
+                                placeholder={langDict.recoveryCode}
                             />
                             <input
                                 type="password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
-                                placeholder="Nouveau mot de passe"
+                                placeholder={langDict.newPassword}
                             />
                             <input
                                 type="password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="Confirmer le mot de passe"
+                                placeholder={langDict.confirmPassword}
                             />
                             <button onClick={handlePasswordResetConfirmation}>
-                                Confirmer le changement
+                                {langDict.confirmChange}
                             </button>
                             <button type="button" onClick={resetAll}>
-                                Retour à la connexion
+                                {langDict.returnToLogin}
                             </button>
                         </>
                     )}

@@ -15,6 +15,31 @@ import PropTypes from "prop-types";
 const DeleteButton = ({ elementId, tableType, onSuccess }) => {
     const langDict = useSelector(state => state.language.langDict);
 
+    const onDelete = async () => {
+        switch (tableType) {
+            case TableTypes.USERS:
+                await deleteUser(elementId);
+                break;
+            case TableTypes.ARTICLE:
+                await deleteArticle(elementId);
+                break;
+            case TableTypes.FLEA_MARKETS:
+                await deleteFleaMarket(elementId);
+                break;
+            case TableTypes.SLOTS:
+                await deleteSlot(elementId);
+                break;
+            case TableTypes.DEALERS:
+                await deleteDealer(elementId);
+                break;
+            case TableTypes.INTERESTS:
+                await deleteInterest(elementId);
+                break;
+            default:
+                throw new Error(`${langDict.TableTypeError} : ${tableType}`);
+        }
+    };
+
     const handleClick = async () => {
         const isConfirmed = window.confirm(langDict.deleteButtonConfirmText);
         if (isConfirmed) {
@@ -22,8 +47,8 @@ const DeleteButton = ({ elementId, tableType, onSuccess }) => {
                 await onDelete();
                 if (onSuccess) onSuccess();
             } catch (e) {
-                console.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${tableType} : ${e}`);
-                toast.error(`Erreur lors de la tentative de suppression de l'élément ${elementId} sur la table ${tableType} : ${e}`);
+                console.error(`${langDict.deleteError} ${elementId} : ${e}`);
+                toast.error(`${langDict.deleteError} ${elementId} : ${e}`);
             }
         }
     };
@@ -35,30 +60,7 @@ const DeleteButton = ({ elementId, tableType, onSuccess }) => {
     );
 }
 
-const onDelete = async (elementId, type) => {
-    switch (type) {
-        case TableTypes.USERS:
-            await deleteUser(elementId);
-            break;
-        case TableTypes.ARTICLE:
-            await deleteArticle(elementId);
-            break;
-        case TableTypes.FLEA_MARKETS:
-            await deleteFleaMarket(elementId);
-            break;
-        case tableType.SLOTS:
-            await deleteSlot(elementId);
-            break;
-        case tableType.DEALERS:
-            await deleteDealer(elementId);
-            break;
-        case tableType.INTERESTS:
-            await deleteInterest(elementId);
-            break;
-        default:
-            throw new Error("Type de table non reconnu : '" + type + "'");
-    }
-};
+
 
 DeleteButton.propTypes = {
     elementId: PropTypes.oneOfType([
