@@ -19,9 +19,11 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [fieldErrors, setFieldErrors] = useState({});
     const langDict = useSelector(state => state.language.langDict);
+    const [isFormLocked, setIsFormLocked] = useState(false);
 
     const openModal = () => {
         setFormData({ ...initialData });
+        setIsFormLocked(false);
         setFieldErrors({});
         setIsOpen(true);
     };
@@ -29,6 +31,7 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
     const closeModal = () => {
         setIsOpen(false);
         setFormData({ ...initialData });
+        setIsFormLocked(false);
         setFieldErrors({});
     };
 
@@ -64,14 +67,16 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
             if (!result.exists) {
                 setFieldErrors(prev => ({
                     ...prev,
-                    [name]: langDict.foreignKeyNotFound || "Identifiant inexistant",
+                    [name]: langDict.foreignKeyNotFound,
                 }));
+                setIsFormLocked(true);
             } else {
                 setFieldErrors(prev => {
                     const updated = { ...prev };
                     delete updated[name];
                     return updated;
                 });
+                setIsFormLocked(false);
             }
         }
 
@@ -95,51 +100,56 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
+        if (!isFormLocked) {
+            setIsLoading(true);
 
-        if (Object.keys(fieldErrors).length > 0) {
-            toast.error(langDict.foreignKeyValidationError);
-            setIsLoading(false);
-            return;
-        }
+            if (Object.keys(fieldErrors).length > 0) {
+                toast.error(langDict.foreignKeyValidationError);
+                setIsLoading(false);
+                return;
+            }
 
-        if (verifyDates(tableType, formData, langDict)) {
-            try {
-                switch (tableType) {
-                    case TableTypes.ARTICLE:
-                        await updateArticleData(formData);
-                        break;
-                    case TableTypes.DEALERS:
-                        await updateDealerData(formData);
-                        break;
-                    case TableTypes.USERS:
-                        await updateUser(formData);
-                        break;
-                    case TableTypes.FLEA_MARKETS:
-                        await updateFleaMarket(formData);
-                        break;
-                    case TableTypes.SLOTS:
-                        formData.isAvailable = formData.isAvailable || false;
-                        await updateSlot(formData);
-                        break;
-                    case TableTypes.INTERESTS:
-                        formData.isInterested = formData.isInterested || false;
-                        formData.isDealer = formData.isDealer || false;
-                        await updateInterest(formData);
-                        break;
-                    default:
-                        throw new Error(langDict.TableTypeError);
+            if (verifyDates(tableType, formData, langDict)) {
+                try {
+                    switch (tableType) {
+                        case TableTypes.ARTICLE:
+                            await updateArticleData(formData);
+                            break;
+                        case TableTypes.DEALERS:
+                            await updateDealerData(formData);
+                            break;
+                        case TableTypes.USERS:
+                            await updateUser(formData);
+                            break;
+                        case TableTypes.FLEA_MARKETS:
+                            await updateFleaMarket(formData);
+                            break;
+                        case TableTypes.SLOTS:
+                            formData.isAvailable = formData.isAvailable || false;
+                            await updateSlot(formData);
+                            break;
+                        case TableTypes.INTERESTS:
+                            formData.isInterested = formData.isInterested || false;
+                            formData.isDealer = formData.isDealer || false;
+                            await updateInterest(formData);
+                            break;
+                        default:
+                            throw new Error(langDict.TableTypeError);
+                    }
+
+                    toast.success(langDict.updateSuccess);
+                    closeModal();
+                    if (onSuccess) onSuccess();
+                } catch (err) {
+                    toast.error(`${langDict.error} : ${err.message || String(err)}`);
                 }
 
-                toast.success(langDict.updateSuccess);
-                closeModal();
-                if (onSuccess) onSuccess();
-            } catch (err) {
-                toast.error(`${langDict.error} : ${err.message || String(err)}`);
             }
-        }
-
         setIsLoading(false);
+        } else {
+            console.error("Certains critères ne correspondent pas");
+            toast.error("Certains critères ne correspondent pas");
+        }
     };
 
     const getFieldsByTableType = () => {

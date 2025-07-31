@@ -165,5 +165,6 @@
     "rowPerPage" : "Rows per page",
     "noTextFound" : "No text found for the table",
     "noDataReceived" : "No data received",
-    "foreignKeyValidationError": "Identifier does not exist"
+    "foreignKeyValidationError": "Identifier does not exist",
+    "criteriaError": "Some criteria are not met"
 }

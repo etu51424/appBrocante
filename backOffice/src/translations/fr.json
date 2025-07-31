@@ -165,5 +165,6 @@
     "rowPerPage" : "Lignes par page",
     "noTextFound" : "Aucun texte trouvé pour la table",
     "noDataReceived" : "Aucune donnée reçue",
-    "foreignKeyValidationError" : "Identifiant non existant"
+    "foreignKeyNotFound" : "Identifiant non existant",
+    "criteriaError" : "Certains critères ne correspondent pas"
 }

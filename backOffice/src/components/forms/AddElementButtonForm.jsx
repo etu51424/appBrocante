@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 import EditElementButtonForm from "./EditElementButtonForm.jsx";
 import {useSelector} from "react-redux";
 import { IoMdAdd } from "react-icons/io";
-import {verifyDates} from "./formsCommon.js";
+import {verifyDates, verifyForeignKey} from "./formsCommon.js";
 
 
 const AddElementButtonForm = ({ tableType, onSuccess }) => {
@@ -20,15 +20,69 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
     const [formData, setFormData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const langDict = useSelector(state => state.language.langDict);
+    const [isFormLocked, setIsFormLocked] = useState(false);
+    const [fieldErrors, setFieldErrors] = useState({});
 
-    const openModal = () => setIsOpen(true);
+    const openModal = () => {
+        setIsOpen(true);
+        setFieldErrors({});
+        setIsFormLocked(false);
+    }
     const closeModal = () => {
         setIsOpen(false);
+        setFieldErrors({});
         setFormData({});
+        setIsFormLocked(false);
     };
 
-    const handleChange = (e) => {
-        const { name, type, checked, value } = e.target;
+    const handleChange = async (e) => {
+        const {name, type, checked, value, dataset} = e.target;
+        const foreignKeyTable = dataset.foreignKeyTable;
+
+        let castedValue
+        if (type === "number") {
+            castedValue = value === "" ? "" : Number(value);
+        }
+
+        if (foreignKeyTable && castedValue) {
+            let idName = undefined;
+
+            if (foreignKeyTable === TableTypes.DEALERS) {
+                idName = 'person_id';
+            }
+            if (foreignKeyTable === TableTypes.INTERESTS) {
+                idName = name;
+            }
+
+            const result = await verifyForeignKey({
+                idValue: castedValue,
+                idName: idName,
+                tableType: foreignKeyTable
+            });
+
+            if (!result.exists) {
+                setFieldErrors(prev => ({
+                    ...prev,
+                    [name]: langDict.foreignKeyNotFound,
+                }));
+                setIsFormLocked(true);
+            } else {
+                setFieldErrors(prev => {
+                    const updated = {...prev};
+                    delete updated[name];
+                    return updated;
+                });
+
+                if (tableType === TableTypes.INTERESTS) {
+                    setIsFormLocked(
+                  Object.keys(fieldErrors).includes('fleaMarketId') ||
+                        Object.keys(fieldErrors).includes('personId')
+                    );
+                } else{
+                    setIsFormLocked(false);
+                }
+            }
+        }
         setFormData((prev) => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value,
@@ -37,52 +91,58 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
 
-        if (verifyDates(tableType, formData, langDict)) {
-            try {
-                let returnedId;
-                switch (tableType) {
-                    case TableTypes.ARTICLE:
-                        returnedId = await createArticleData(formData);
-                        break;
-                    case TableTypes.DEALERS:
-                        returnedId = await createDealerData(formData);
-                        break;
-                    case TableTypes.USERS:
-                        returnedId = await createUser(formData);
-                        break;
-                    case TableTypes.FLEA_MARKETS:
-                        returnedId = await createFleaMarketData(formData);
-                        break;
-                    case TableTypes.SLOTS:
-                        formData.isAvailable = formData.isAvailable || false;
-                        returnedId = await createSlot(formData);
-                        break;
-                    case TableTypes.INTERESTS:
-                        formData.isInterested = formData.isInterested || false;
-                        formData.isDealer = formData.isDealer || false;
-                        returnedId = await createInterest(formData);
-                        break;
-                    default:
-                        throw new Error(langDict.TableTypeError);
+        if (!isFormLocked) {
+            setIsLoading(true);
+
+            if (verifyDates(tableType, formData, langDict)) {
+                try {
+                    let returnedId;
+                    switch (tableType) {
+                        case TableTypes.ARTICLE:
+                            returnedId = await createArticleData(formData);
+                            break;
+                        case TableTypes.DEALERS:
+                            returnedId = await createDealerData(formData);
+                            break;
+                        case TableTypes.USERS:
+                            returnedId = await createUser(formData);
+                            break;
+                        case TableTypes.FLEA_MARKETS:
+                            returnedId = await createFleaMarketData(formData);
+                            break;
+                        case TableTypes.SLOTS:
+                            formData.isAvailable = formData.isAvailable || false;
+                            returnedId = await createSlot(formData);
+                            break;
+                        case TableTypes.INTERESTS:
+                            formData.isInterested = formData.isInterested || false;
+                            formData.isDealer = formData.isDealer || false;
+                            returnedId = await createInterest(formData);
+                            break;
+                        default:
+                            throw new Error(langDict.TableTypeError);
+                    }
+                    toast.success(`${langDict.insertSuccess} : ${returnedId?.id}`);
+                    closeModal();
+                    if (onSuccess) onSuccess();
+                } catch (err) {
+                    console.error(`${langDict.error} : ${err.message || String(err)}`)
+                    toast.error(`${langDict.error} : ${err.message || String(err)}`);
                 }
-                toast.success(`${langDict.insertSuccess} : ${returnedId?.id}`);
-                closeModal();
-                if (onSuccess) onSuccess();
-            } catch (err) {
-                console.error(`${langDict.error} : ${err.message || String(err)}`)
-                toast.error(`${langDict.error} : ${err.message || String(err)}`);
             }
+            setIsLoading(false);
+        } else {
+            console.error(langDict.criteriaError);
+            toast.error(langDict.criteriaError);
         }
-        setIsLoading(false);
     };
 
     const getFieldsByTableType = () => {
         switch (tableType) {
             case TableTypes.ARTICLE:
                 return [
-                    { name: "personId", label: "personId", type: "number", required: true },
+                    { name: "personId", label: "personId", type: "number", required: true, foreignKeyTable: TableTypes.DEALERS },
                     { name: "title", label: "title", type: "text", required: false },
                     { name: "description", label: "description", type: "textarea", required: false },
                     { name: "cost", label: "cost", type: "number", required: false },
@@ -90,7 +150,7 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
                 ];
             case TableTypes.DEALERS:
                 return [
-                    { name: "personId", label: "personId", type: "number", required: true },
+                    { name: "personId", label: "personId", type: "number", required: true, foreignKeyTable: TableTypes.USERS },
                     { name: "type", label: "type", type: "text", required: false },
                     { name: "description", label: "description", type: "textarea", required: false },
                     { name: "averageRating", label: "averageRating", type: "number", required: true, max: 5.0, isDecimal: true },
@@ -119,14 +179,14 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
                 ];
             case TableTypes.SLOTS:
                 return [
-                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true },
+                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true, foreignKeyTable: TableTypes.FLEA_MARKETS },
                     { name: "isAvailable", label: "isAvailable", type: "checkbox", required: false },
                     { name: "area", label: "area", type: "number", required: false},
                 ];
             case TableTypes.INTERESTS:
                 return [
-                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true },
-                    { name: "personId", label: "personId", type: "number", required: true },
+                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true, foreignKeyTable: TableTypes.FLEA_MARKETS },
+                    { name: "personId", label: "personId", type: "number", required: true, foreignKeyTable: TableTypes.USERS },
                     { name: "isInterested", label: "isInterested", type: "checkbox", required: false },
                     { name: "isDealer", label: "isDealer", type: "checkbox", required: false },
                     { name: "participation", label: "participation", type: "number", required: false },
@@ -160,6 +220,7 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
                                             required={field.required}
                                         />
                                     ) : (
+                                        <>
                                         <input
                                             type={field.type}
                                             name={field.name}
@@ -170,8 +231,12 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
                                             {...(field.isDecimal ? { step: "0.01" } : {})}
                                             {...(field.max ? { max: field.max} : {})}
                                             {...(field.pattern && field.type === "tel" ? { pattern: field.pattern} : {})}
-
+                                            {...(field.foreignKeyTable ? { 'data-foreign-key-table': field.foreignKeyTable } : {})}
                                         />
+                                            {fieldErrors[field.name] && (
+                                                <p className="field-error">{fieldErrors[field.name]}</p>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             ))}
