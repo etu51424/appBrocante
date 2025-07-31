@@ -164,5 +164,6 @@
     "demoteError" : "Erreur lors de la rétrogradation",
     "rowPerPage" : "Lignes par page",
     "noTextFound" : "Aucun texte trouvé pour la table",
-    "noDataReceived" : "Aucune donnée reçue"
+    "noDataReceived" : "Aucune donnée reçue",
+    "foreignKeyValidationError" : "Identifiant non existant"
 }

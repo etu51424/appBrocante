@@ -163,5 +163,6 @@
     "demoteError" : "Fout bij degradatie",
     "rowPerPage" : "Rijen per pagina",
     "noTextFound" : "Geen tekst gevonden voor de tabel",
-    "noDataReceived" : "Geen gegevens ontvangen"
+    "noDataReceived" : "Geen gegevens ontvangen",
+    "foreignKeyValidationError": "Identificatie bestaat niet"
 }

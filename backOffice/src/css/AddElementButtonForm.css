@@ -101,3 +101,7 @@
     background-color: #f0f0f0;
     border-color: #ccc;
 }
+
+.field-error{
+    color: red;
+}

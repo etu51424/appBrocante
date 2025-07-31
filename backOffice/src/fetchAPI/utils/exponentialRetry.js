@@ -7,7 +7,7 @@ export const exponentialRetry = async (fn, maxRetries = 5, initialDelay = 1000, 
 
     while (attempt < maxRetries) {
         try{
-            return await fn()
+            return await fn();
         } catch(err) {
             const status = err?.response?.status || err.status || null;
 

@@ -2,35 +2,39 @@ import React, { useState } from "react";
 import { TableTypes } from "../../utils/Defs.js";
 import toast from "react-hot-toast";
 import "../../css/AddElementButtonForm.css";
-import {updateArticleData} from "../../fetchAPI/CRUD/articles.js";
-import {updateDealerData} from "../../fetchAPI/CRUD/dealers.js";
-import {updateUser} from "../../fetchAPI/CRUD/users.js";
-import {updateSlot} from "../../fetchAPI/CRUD/slots.js";
-import {updateInterest} from "../../fetchAPI/CRUD/interests.js";
-import {updateFleaMarket} from "../../fetchAPI/CRUD/fleaMarkets.js";
+import { updateArticleData } from "../../fetchAPI/CRUD/articles.js";
+import { updateDealerData } from "../../fetchAPI/CRUD/dealers.js";
+import { updateUser } from "../../fetchAPI/CRUD/users.js";
+import { updateSlot } from "../../fetchAPI/CRUD/slots.js";
+import { updateInterest } from "../../fetchAPI/CRUD/interests.js";
+import { updateFleaMarket } from "../../fetchAPI/CRUD/fleaMarkets.js";
 import PropTypes from "prop-types";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { CiEdit } from "react-icons/ci";
-import {verifyDates} from "./formsCommon.js";
+import { verifyDates, verifyForeignKey } from "./formsCommon.js";
 
 const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState({ ...initialData });
     const [isLoading, setIsLoading] = useState(false);
+    const [fieldErrors, setFieldErrors] = useState({});
     const langDict = useSelector(state => state.language.langDict);
 
     const openModal = () => {
         setFormData({ ...initialData });
+        setFieldErrors({});
         setIsOpen(true);
     };
 
     const closeModal = () => {
         setIsOpen(false);
         setFormData({ ...initialData });
+        setFieldErrors({});
     };
 
-    const handleChange = (e) => {
-        const { name, type, checked, value } = e.target;
+    const handleChange = async (e) => {
+        const { name, type, checked, value, dataset } = e.target;
+        const foreignKeyTable = dataset.foreignKeyTable;
         let finalValue;
 
         if (type === "checkbox") {
@@ -39,6 +43,36 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
             finalValue = value === "" ? "" : Number(value);
         } else {
             finalValue = value;
+        }
+
+        if (foreignKeyTable && finalValue) {
+            let idName = undefined;
+
+            if (foreignKeyTable === TableTypes.DEALERS) {
+                idName = 'person_id';
+            }
+            if (foreignKeyTable === TableTypes.INTERESTS) {
+                idName = name;
+            }
+
+            const result = await verifyForeignKey({
+                idValue: finalValue,
+                idName: idName,
+                tableType: foreignKeyTable
+            });
+
+            if (!result.exists) {
+                setFieldErrors(prev => ({
+                    ...prev,
+                    [name]: langDict.foreignKeyNotFound || "Identifiant inexistant",
+                }));
+            } else {
+                setFieldErrors(prev => {
+                    const updated = { ...prev };
+                    delete updated[name];
+                    return updated;
+                });
+            }
         }
 
         setFormData((prev) => ({
@@ -54,16 +88,20 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
             const month = String(d.getMonth() + 1).padStart(2, '0');
             const day = String(d.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
-        }
-        else{
+        } else {
             return "";
         }
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+
+        if (Object.keys(fieldErrors).length > 0) {
+            toast.error(langDict.foreignKeyValidationError);
+            setIsLoading(false);
+            return;
+        }
 
         if (verifyDates(tableType, formData, langDict)) {
             try {
@@ -100,6 +138,7 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
                 toast.error(`${langDict.error} : ${err.message || String(err)}`);
             }
         }
+
         setIsLoading(false);
     };
 
@@ -108,7 +147,7 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
             case TableTypes.ARTICLE:
                 return [
                     { name: "id", label: "id", type: "number", required: true },
-                    { name: "personId", label: "personId", type: "number", required: true },
+                    { name: "personId", label: "personId", type: "number", required: true, foreignKeyTable: TableTypes.DEALERS },
                     { name: "title", label: "Titre", type: "text", required: false },
                     { name: "description", label: "Description", type: "textarea", required: false },
                     { name: "cost", label: "Coût (€)", type: "number", required: false },
@@ -116,11 +155,11 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
                 ];
             case TableTypes.DEALERS:
                 return [
-                    { name: "personId", label: "personId", type: "number", required: true, isId: true },
+                    { name: "personId", label: "personId", type: "number", required: true, isId: true, foreignKeyTable: TableTypes.USERS },
                     { name: "type", label: "type", type: "text", required: false },
                     { name: "description", label: "description", type: "textarea", required: false },
                     { name: "averageRating", label: "averageRating", type: "number", required: true, max: 5.0, isDecimal: true },
-                    { name: "reviewCount", label: "reviewCount", type: "number", required: true},
+                    { name: "reviewCount", label: "reviewCount", type: "number", required: true },
                 ];
             case TableTypes.USERS:
                 return [
@@ -129,7 +168,7 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
                     { name: "firstName", label: "firstName", type: "text", required: false },
                     { name: "lastName", label: "lastName", type: "text", required: false },
                     { name: "address", label: "address", type: "text", required: false },
-                    { name: "phoneNumber", label: "phoneNumber", type: "tel", pattern: "^\\+?[0-9\\s\\-\\.]{7,20}$" ,required: false },
+                    { name: "phoneNumber", label: "phoneNumber", type: "tel", pattern: "^\\+?[0-9\\s\\-\\.]{7,20}$", required: false },
                     { name: "email", label: "Email", type: "email", required: true },
                     { name: "password", label: "password", type: "password", required: true },
                     { name: "recoveryCode", label: "recoveryCode", type: "text", required: false },
@@ -144,14 +183,14 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
                     { name: "theme", label: "theme", type: "text", required: false },
                     { name: "isCharity", label: "isCharity", type: "checkbox", required: false },
                     { name: "averageRating", label: "averageRating", type: "number", required: true, max: 5.0, isDecimal: true },
-                    { name: "reviewCount", label: "reviewCount", type: "number", required: true},
+                    { name: "reviewCount", label: "reviewCount", type: "number", required: true },
                 ];
             case TableTypes.SLOTS:
                 return [
                     { name: "id", label: "id", type: "number", required: true },
-                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true },
+                    { name: "fleaMarketId", label: "fleaMarketId", type: "number", required: true, foreignKeyTable: TableTypes.FLEA_MARKETS },
                     { name: "isAvailable", label: "isAvailable", type: "checkbox", required: false },
-                    { name: "area", label: "area", type: "number", required: false},
+                    { name: "area", label: "area", type: "number", required: false },
                 ];
             case TableTypes.INTERESTS:
                 return [
@@ -180,7 +219,7 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
                             {fields.map((field) => (
                                 <div className="form-group" key={field.name}>
                                     <label>
-                                        {field.label}{field.required && <span style={{color: 'red'}}> *</span>}
+                                        {field.label}{field.required && <span style={{ color: 'red' }}> *</span>}
                                     </label>
                                     {field.type === "textarea" ? (
                                         <textarea
@@ -190,29 +229,36 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
                                             required={field.required}
                                         />
                                     ) : (
-                                        <input
-                                            type={field.type}
-                                            name={field.name}
-                                            value={
-                                                field.type === "checkbox"
-                                                    ? undefined
-                                                    : field.type === "date"
-                                                        ? formatDateForInput(formData[field.name])
-                                                        : formData[field.name] || ""
-                                            }
-                                            checked={
-                                                field.type === "checkbox"
-                                                    ? formData[field.name] || false
-                                                    : undefined
-                                            }
-                                            onChange={handleChange}
-                                            required={field.required}
-                                            {...(field.type === "number" ? { min: 0 } : {})}
-                                            {...(field.name === "id" || field.isId ? { disabled: true } : {})}
-                                            {...(field.isDecimal ? { step: "0.01" } : {})}
-                                            {...(field.max ? { max: field.max } : {})}
-                                            {...(field.pattern && field.type === "tel" ? { pattern: field.pattern } : {})}
-                                        />
+                                        <>
+                                            <input
+                                                type={field.type}
+                                                name={field.name}
+                                                value={
+                                                    field.type === "checkbox"
+                                                        ? undefined
+                                                        : field.type === "date"
+                                                            ? formatDateForInput(formData[field.name])
+                                                            : formData[field.name] || ""
+                                                }
+                                                checked={
+                                                    field.type === "checkbox"
+                                                        ? formData[field.name] || false
+                                                        : undefined
+                                                }
+                                                onChange={handleChange}
+                                                required={field.required}
+                                                className={fieldErrors[field.name] ? 'input-error' : ''}
+                                                {...(field.type === "number" ? { min: 0 } : {})}
+                                                {...(field.name === "id" || field.isId ? { disabled: true } : {})}
+                                                {...(field.isDecimal ? { step: "0.01" } : {})}
+                                                {...(field.max ? { max: field.max } : {})}
+                                                {...(field.pattern && field.type === "tel" ? { pattern: field.pattern } : {})}
+                                                {...(field.foreignKeyTable ? { 'data-foreign-key-table': field.foreignKeyTable } : {})}
+                                            />
+                                            {fieldErrors[field.name] && (
+                                                <p className="field-error">{fieldErrors[field.name]}</p>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             ))}
@@ -229,7 +275,7 @@ const EditElementButtonForm = ({ tableType, initialData, onSuccess }) => {
             )}
         </div>
     );
-}
+};
 
 EditElementButtonForm.propTypes = {
     initialData: PropTypes.object.isRequired,

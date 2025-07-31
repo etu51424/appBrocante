@@ -164,5 +164,6 @@
     "demoteError" : "Error during demotion",
     "rowPerPage" : "Rows per page",
     "noTextFound" : "No text found for the table",
-    "noDataReceived" : "No data received"
+    "noDataReceived" : "No data received",
+    "foreignKeyValidationError": "Identifier does not exist"
 }
