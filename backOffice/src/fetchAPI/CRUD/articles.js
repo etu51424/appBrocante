@@ -8,7 +8,6 @@ export const getArticlesData = async (limit = 10, page = 1) => {
     const token = getTokenFromStorage();
     if (token) {
         const expectedCode = 200;
-
         return await exponentialRetry(async () => {
             const currentPageResponse = await fetch(
                 `${API_BASE_URL}/admin/article/all?limit=${limit}&page=${page}`,
