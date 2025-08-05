@@ -112,33 +112,40 @@ const Articles = () => {
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit} />
-            <AddElementButtonForm
-                tableType={tableType}
-                onSuccess={getArticles}
-            />
+
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}
                 title={title}
                 elementClassNameSingular={elementClassNameSingular}
                 elementClassNamePlural={elementClassNamePlural}
-                paginationArrows={
-                    <div className="flex items-center gap-2">
-                        <PaginationArrows
-                            currentPage={currentPage}
-                            noMoreData={noMoreData}
-                            onPageChange={handlePageChange}
-                        />
-                        <PaginationInput
-                            currentPage={currentPage}
-                            noMoreData={noMoreData}
-                            onPageChange={handlePageChange}
-                            maxPage={100}
-                        />
-                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
-                    </div>
+                paginationArrows= {
+                <>
+                    <PaginationArrows
+                        currentPage={currentPage}
+                        noMoreData={noMoreData}
+                        onPageChange={handlePageChange}
+                    />
+                    <PaginationInput
+                        currentPage={currentPage}
+                        noMoreData={noMoreData}
+                        onPageChange={handlePageChange}
+                        maxPage={100}
+                    />
+                </>
                 }
+                rowPerPageSelector={
+                    <RowsPerPageSelector limit={limit} setLimit={setLimit} />
+                }
+                insertButton={
+                    <AddElementButtonForm
+                        tableType={tableType}
+                        onSuccess={getArticles}
+                    />
+                }
+                otherElements = {
+                <SearchBar onSearch={handleSearch} tableType={tableType}/>
+            }
             />
             {error && <p>{langDict.error} : {error}</p>}
             {isLoading && <p>{langDict.loading}</p>}

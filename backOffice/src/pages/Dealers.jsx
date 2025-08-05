@@ -116,11 +116,6 @@ const Dealers = () => {
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
-            <AddElementButtonForm
-                tableType={tableType}
-                onSuccess={getDealers}
-            />
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}
@@ -128,7 +123,7 @@ const Dealers = () => {
                 elementClassNameSingular={elementClassNameSingular}
                 elementClassNamePlural={elementClassNamePlural}
                 paginationArrows={
-                    <div className="flex items-center gap-2">
+                    <>
                         <PaginationArrows
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
@@ -138,8 +133,19 @@ const Dealers = () => {
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                         />
-                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
-                    </div>
+                    </>
+                }
+                rowPerPageSelector={
+                    <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
+                }
+                insertButton={
+                    <AddElementButtonForm
+                        tableType={tableType}
+                        onSuccess={getDealers}
+                    />
+                }
+                otherElements={
+                    <SearchBar onSearch={handleSearch} tableType={tableType}/>
                 }
             />
             {error && <p>{langDict.error} : {error}</p>}

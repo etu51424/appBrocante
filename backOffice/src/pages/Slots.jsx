@@ -112,11 +112,6 @@ const Slots = () => {
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
-            <AddElementButtonForm
-                tableType={tableType}
-                onSuccess={getSlots}
-            />
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}
@@ -124,15 +119,27 @@ const Slots = () => {
                 elementClassNameSingular={elementClassNameSingular}
                 elementClassNamePlural={elementClassNamePlural}
                 paginationArrows={
-                    <div className="flex items-center gap-2">
+                    <>
                         <PaginationArrows
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
-                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
-                    </div>
+
+                    </>
+                }
+                rowPerPageSelector={
+                    <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
+                }
+                insertButton={
+                    <AddElementButtonForm
+                        tableType={tableType}
+                        onSuccess={getSlots}
+                    />
+                }
+                otherElements={
+                    <SearchBar onSearch={handleSearch} tableType={tableType}/>
                 }
             />
             {error && <p>{langDict.error} : {error}</p>}

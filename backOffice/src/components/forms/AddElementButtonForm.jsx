@@ -199,7 +199,7 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
     const fields = getFieldsByTableType();
 
     return (
-        <div>
+        <>
             <button className="add-button" onClick={openModal}><IoMdAdd /></button>
 
             {isOpen && (
@@ -251,7 +251,7 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }
 

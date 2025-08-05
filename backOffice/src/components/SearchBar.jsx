@@ -75,7 +75,7 @@ const SearchBar = ({ onSearch, tableType }) => {
                 text = '///';
         }
 
-        return `${langDict['searchTexts'].research} ${langDict['searchTexts'].by} ${text}`;
+        return text;
     }
 
     return (
@@ -102,7 +102,7 @@ const SearchBar = ({ onSearch, tableType }) => {
                 <div className="searchbar-row">
                     <input
                         type="text"
-                        placeholder={`${langDict['searchTexts'].research} ${langDict['searchTexts'].by} ${langDict['searchTexts'].interestsAlt}`}
+                        placeholder={langDict['searchTexts'].interestsAlt}
                         value={queryPersonId}
                         onChange={(e) => setQueryPersonId(e.target.value)}
                         onKeyDown={handleKeyDown}

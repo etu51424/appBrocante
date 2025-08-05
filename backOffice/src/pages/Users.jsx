@@ -119,11 +119,6 @@ const Users = () => {
 
     return (
         <div>
-            <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
-            <AddElementButtonForm
-                tableType={tableType}
-                onSuccess={getUsers}
-            />
             <Page
                 getElementsData={() => data}
                 renderTableBody={renderTableBody}
@@ -131,15 +126,26 @@ const Users = () => {
                 elementClassNameSingular={elementClassNameSingular}
                 elementClassNamePlural={elementClassNamePlural}
                 paginationArrows={
-                    <div className="flex items-center gap-2">
+                    <>
                         <PaginationArrows
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
                             noMoreData={noMoreData}
                         />
                         <PaginationInput currentPage={currentPage} onPageChange={handlePageChange} />
-                        <SearchBar onSearch={handleSearch} tableType={tableType}/>
-                    </div>
+                    </>
+                }
+                rowPerPageSelector={
+                    <RowsPerPageSelector limit={limit} setLimit={setLimit}/>
+                }
+                insertButton={
+                    <AddElementButtonForm
+                        tableType={tableType}
+                        onSuccess={getUsers}
+                    />
+                }
+                otherElements={
+                    <SearchBar onSearch={handleSearch} tableType={tableType}/>
                 }
             />
             {error && <p>{langDict.error} : {error}</p>}

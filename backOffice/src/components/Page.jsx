@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import SortMenu from "./SortMenu";
 import PropTypes from "prop-types";
 
-const Page = ({getElementsData, renderTableBody, title, elementClassNameSingular, elementClassNamePlural, paginationArrows,}) => {
+const Page = ({getElementsData, renderTableBody, title, elementClassNameSingular, elementClassNamePlural, insertButton, paginationArrows, rowPerPageSelector, otherElements}) => {
     const langDict = useSelector(state => state.language.langDict);
     const [elements, setElements] = useState([]);
     const [error, setError] = useState(null);
@@ -96,9 +96,9 @@ const Page = ({getElementsData, renderTableBody, title, elementClassNameSingular
             <div className="page">
                 <div className={elementClassNamePlural}>
                     <div className="page-header">
-                    {paginationArrows}
-                    <h1>{langDict.tables[elementClassNameSingular].title + 's'}</h1>
-                    <div></div>
+                        <h1 className="header-line">{langDict.tables[elementClassNameSingular].title + 's'} {insertButton}</h1>
+                        <p className="header-line"> {paginationArrows}</p>
+                        <p className="header-line"> {rowPerPageSelector} {otherElements}</p>
                     </div>
                     <div className="rows-table">
                         <table>
@@ -116,14 +116,14 @@ const Page = ({getElementsData, renderTableBody, title, elementClassNameSingular
     );
 }
 
-Page.propTypes = {
-    getElementsData: PropTypes.func.isRequired,
-    renderTableBody: PropTypes.func.isRequired,
-    title: PropTypes.string,
-    elementClassNameSingular: PropTypes.string.isRequired,
-    elementClassNamePlural: PropTypes.string.isRequired,
-    paginationArrows: PropTypes.node,
-};
+//Page.propTypes = {
+//    getElementsData: PropTypes.func.isRequired,
+//    renderTableBody: PropTypes.func.isRequired,
+//    title: PropTypes.string,
+//    elementClassNameSingular: PropTypes.string.isRequired,
+//    elementClassNamePlural: PropTypes.string.isRequired,
+//    paginationArrows: PropTypes.node,
+//};
 
 
 export default Page;

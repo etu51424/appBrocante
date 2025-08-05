@@ -8,9 +8,6 @@
 }
 
 .logoAndTitle, .logOut {
-    /*display: block;*/
-    /*justify-content: center;*/
-     /*aligne le log et le titre sur l'axe x*/
     display: flex;
     align-items: center;
     flex-direction: row; /*Le flex direction par defaut est row. Sauf qu'ici Le parent est DEJA en flex direction column. Donc set à row */
