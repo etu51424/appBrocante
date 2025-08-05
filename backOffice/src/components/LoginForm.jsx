@@ -23,11 +23,13 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const success = await login(username, password);
-            if (success){
-                setUsername("");
-                setPassword("");
-                navigate("/home");
+            if (username !== "" && password !== "") {
+                const success = await login(username, password);
+                if (success) {
+                    setUsername("");
+                    setPassword("");
+                    navigate("/home");
+                }
             }
         } catch (err) {
             setError(`${langDict.loginError} : ${err}`);
