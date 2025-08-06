@@ -166,5 +166,7 @@
     "noTextFound" : "No text found for the table",
     "noDataReceived" : "No data received",
     "foreignKeyValidationError": "Identifier does not exist",
-    "criteriaError": "Some criteria are not met"
+    "criteriaError": "Some criteria are not met",
+    "loginRefused": "You are not allowed to log in here",
+    "loginNotFound": "This username or password is not recognized"
 }

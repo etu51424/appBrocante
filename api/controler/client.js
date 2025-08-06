@@ -13,7 +13,10 @@ export const login = async (req, res) => {
                 const jwt = sign(rep, {
                     expiresIn: '8h'
                 });
-                res.status(201).send(jwt);
+                res.status(201).json({
+                    token : jwt,
+                    isAdmin : rep.isAdmin
+                });
             } else{
                 res.sendStatus(401);
             }

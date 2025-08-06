@@ -166,5 +166,7 @@
     "noTextFound" : "Aucun texte trouvé pour la table",
     "noDataReceived" : "Aucune donnée reçue",
     "foreignKeyNotFound" : "Identifiant non existant",
-    "criteriaError" : "Certains critères ne correspondent pas"
+    "criteriaError" : "Certains critères ne correspondent pas",
+    "loginRefused" : "Vous n'êtes pas autorisé à vous connecter ici",
+    "loginNotFound" : "Cet identifiant ou ce mot de passe n'est pas reconnu"
 }

@@ -18,8 +18,15 @@ export const AuthProvider = (props) => {
 
     const login = async (username, password) => {
         try {
-            const success = await loginFetch(username, password);
-            setIsLoggedIn(true);
+            const {loginNotFound, tokenExists, isAdmin} = await loginFetch(username, password);
+            const success = !loginNotFound && tokenExists && isAdmin;
+
+            if (loginNotFound) {
+                toast.error(langDict.loginNotFound)
+            } else if (!isAdmin) {
+                toast.error(langDict.loginRefused);
+            }
+            setIsLoggedIn(success);
             return success;
         } catch (e) {
             console.error(`${langDict.logginError} : ${e}`);

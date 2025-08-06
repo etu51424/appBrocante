@@ -121,7 +121,7 @@ VALUES
 ('Martin', 'Sophie', 'Martin', '45 Rue de Lyon, Lyon', '0623456789', 'sophie.martin@example.com', '2024-11-12 15:45:00', 'pizza', null, TRUE),
 ('Durand', 'Paul', 'Durand', '78 Boulevard Haussmann, Marseille', '0634567890', 'paul.durand@example.com', '2024-11-15 09:00:00', 'hashed_password_3', null, FALSE),
 ('Admin', null, null, 'Namur', null, 'xavier.dujardin1@gmail.com', null, 'brocante', 'shrek-5.jpg', TRUE),
-('User', null, null, null, null, 'xavier.dujardin1@gmail.com', null, 'bidondon', null, TRUE),
+('User', null, null, null, null, 'xavier.dujardin1@gmail.com', null, 'bidondon', null, FALSE),
 ('UserDealer', null, null, null, null, 'xavier.dujardin1@gmail.com', null, 'brocanteur', null, TRUE),
 ('CalmentJo', 'Joanna', 'Calment', '1 Rue Silence, Gembloux', '0619045651', 'joanna.calment@example.com', '2024-10-09 12:30:00', 'lutecia', null, FALSE),
 ('Leclercq', 'Marie', 'Leclercq', '12 Avenue Louise, Bruxelles', '0468123456', 'marie.leclercq@example.be', '2024-12-01 10:00:00', 'hashed_password_4', null, FALSE),

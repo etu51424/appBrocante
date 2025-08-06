@@ -165,5 +165,7 @@
     "noTextFound" : "Geen tekst gevonden voor de tabel",
     "noDataReceived" : "Geen gegevens ontvangen",
     "foreignKeyValidationError": "Identificatie bestaat niet",
-    "criteriaError": "Sommige criteria zijn niet vervuld"
+    "criteriaError": "Sommige criteria zijn niet vervuld",
+    "loginRefused": "Je bent niet gemachtigd om hier in te loggen",
+    "loginNotFound": "Deze gebruikersnaam of dit wachtwoord wordt niet herkend"
 }
