@@ -1,0 +1,4 @@
+Login administrateur
+
+nom d'utilisateur : Admin
+mot de passe : brocante
