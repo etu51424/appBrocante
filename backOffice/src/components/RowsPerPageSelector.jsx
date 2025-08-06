@@ -11,7 +11,7 @@ const RowsPerPageSelector = ({ limit, setLimit }) => {
     };
 
     return (
-        <div className="mb-4 flex items-center gap-2">
+        <>
             <label htmlFor="rows-per-page" className="text-sm font-medium">{langDict.rowPerPage} :</label>
             <select
                 id="rows-per-page"
@@ -25,7 +25,7 @@ const RowsPerPageSelector = ({ limit, setLimit }) => {
                     </option>
                 ))}
             </select>
-        </div>
+        </>
     );
 }
 

@@ -26,7 +26,7 @@ const PaginationInput = ({ currentPage, onPageChange }) => {
     };
 
     return (
-        <div className="pagination-input">
+        <>
             <label>
                 {langDict?.GoToPage} :
                 <input
@@ -39,7 +39,7 @@ const PaginationInput = ({ currentPage, onPageChange }) => {
                 />
             </label>
             <button onClick={handleGo}>Go</button>
-        </div>
+        </>
     );
 }
 

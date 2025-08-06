@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {TableTypes} from "../utils/Defs.js";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import '../css/SearchBar.css';
 
 
 const SearchBar = ({ onSearch, tableType }) => {
@@ -80,26 +79,24 @@ const SearchBar = ({ onSearch, tableType }) => {
 
     return (
         <>
-            <div className="searchbar-row">
-                <input
-                    type="text"
-                    placeholder={getTableText()}
-                    value={tableType === TableTypes.INTERESTS ? queryFleaMarketId : query}
-                    onChange={(e) => {
-                        if (tableType === TableTypes.INTERESTS) {
-                            setQueryFleaMarketId(e.target.value);
-                        } else {
-                            setQuery(e.target.value)
-                        }
-                    }}
-                    onKeyDown={handleKeyDown}
-                />
-                <button onClick={handleSearch}>
-                    {langDict['searchTexts'].research}
-                </button>
-            </div>
+            <input
+                type="text"
+                placeholder={getTableText()}
+                value={tableType === TableTypes.INTERESTS ? queryFleaMarketId : query}
+                onChange={(e) => {
+                    if (tableType === TableTypes.INTERESTS) {
+                        setQueryFleaMarketId(e.target.value);
+                    } else {
+                        setQuery(e.target.value)
+                    }
+                }}
+                onKeyDown={handleKeyDown}
+            />
+            <button onClick={handleSearch}>
+                {langDict['searchTexts'].research}
+            </button>
             {tableType === TableTypes.INTERESTS && (
-                <div className="searchbar-row">
+                <>
                     <input
                         type="text"
                         placeholder={langDict['searchTexts'].interestsAlt}
@@ -110,7 +107,7 @@ const SearchBar = ({ onSearch, tableType }) => {
                     <button onClick={handleSearch}>
                         {langDict['searchTexts'].research}
                     </button>
-                </div>
+                </>
             )}
         </>
     );

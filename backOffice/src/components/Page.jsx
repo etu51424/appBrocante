@@ -116,14 +116,18 @@ const Page = ({getElementsData, renderTableBody, title, elementClassNameSingular
     );
 }
 
-//Page.propTypes = {
-//    getElementsData: PropTypes.func.isRequired,
-//    renderTableBody: PropTypes.func.isRequired,
-//    title: PropTypes.string,
-//    elementClassNameSingular: PropTypes.string.isRequired,
-//    elementClassNamePlural: PropTypes.string.isRequired,
-//    paginationArrows: PropTypes.node,
-//};
+Page.propTypes = {
+    getElementsData: PropTypes.func.isRequired,
+    renderTableBody: PropTypes.func.isRequired,
+    title: PropTypes.string,
+    elementClassNameSingular: PropTypes.string.isRequired,
+    elementClassNamePlural: PropTypes.string.isRequired,
+    insertButton: PropTypes.node.isRequired,
+    paginationArrows: PropTypes.node.isRequired,
+    rowPerPageSelector: PropTypes.node.isRequired,
+    otherElements: PropTypes.node
+};
+
 
 
 export default Page;

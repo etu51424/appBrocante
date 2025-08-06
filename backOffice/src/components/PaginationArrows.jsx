@@ -19,7 +19,7 @@ const PaginationArrows = ({ currentPage, noMoreData, onPageChange }) => {
         }
     };
     return (
-        <div className="pagination-arrows">
+        <>
             <button onClick={handlePrevious} disabled={currentPage === 1}>
                 <IoIcons.IoIosArrowBack />
             </button>
@@ -27,7 +27,7 @@ const PaginationArrows = ({ currentPage, noMoreData, onPageChange }) => {
             <button onClick={handleNext} disabled={noMoreData}>
                 <IoIcons.IoIosArrowForward />
             </button>
-        </div>
+        </>
     );
 }
 
