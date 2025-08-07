@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "./AuthProvider";
+import { AuthContext } from "../context/AuthContext.js";
 import "../css/LoginForm.css";
 import { getRecoveryEmail, validateRecoveryCode } from "../fetchAPI/userManagement/passwordRecovery.js";
 import toast from "react-hot-toast";

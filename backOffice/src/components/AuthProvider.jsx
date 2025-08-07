@@ -1,14 +1,9 @@
-import {useContext, createContext, useState} from "react";
+import {useState} from "react";
 import { loginFetch } from "../fetchAPI/login";
 import toast from "react-hot-toast";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-
-// créer le contexte sur lequel le token sera disponible
-export const AuthContext = createContext();
-
-// exporte un hook custom "useAuth" qui permet d'accéder au contexte
-export const useAuth = () => useContext(AuthContext);
+import { AuthContext } from "../context/AuthContext.js";
 
 // le composant AuthProvider wrap l'appli et offre les méthodes de login/logout
 export const AuthProvider = (props) => {

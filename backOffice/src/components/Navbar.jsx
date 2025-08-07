@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import "../css/Navbar.css";
-import { AuthContext } from './AuthProvider.jsx';
+import { AuthContext } from '../context/AuthContext.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeLanguage } from '../store/slices/languageSlice.js';
 

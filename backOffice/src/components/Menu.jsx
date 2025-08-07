@@ -4,7 +4,7 @@ import "../css/Menu.css";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
-import { AuthContext } from './AuthProvider.jsx';
+import { AuthContext } from '../context/AuthContext.js';
 import { useSelector } from 'react-redux';
 
 const Menu = () => {

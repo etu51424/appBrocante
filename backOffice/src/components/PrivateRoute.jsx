@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "../context/AuthContext.js";
 import PropTypes from "prop-types";
 
 const PrivateRoute = ({ element }) => {
