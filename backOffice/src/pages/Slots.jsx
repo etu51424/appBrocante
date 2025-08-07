@@ -13,12 +13,10 @@ import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
 const Slots = () => {
-
     const title = "Slots";
     const elementClassNameSingular = "slot";
     const elementClassNamePlural = "slots";
     const tableType = TableTypes.SLOTS;
-
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);

@@ -18,12 +18,10 @@ import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx
 
 
 const Users = () => {
-
     const title = "Users";
     const elementClassNameSingular = "user";
     const elementClassNamePlural = "users";
     const tableType = TableTypes.USERS;
-
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);

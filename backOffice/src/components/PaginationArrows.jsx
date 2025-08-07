@@ -3,7 +3,6 @@ import * as IoIcons from "react-icons/io";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-
 const PaginationArrows = ({ currentPage, noMoreData, onPageChange }) => {
     const langDict = useSelector(state => state.language.langDict);
 

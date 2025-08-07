@@ -170,7 +170,6 @@ const LoginForm = () => {
                     )}
                 </form>
             )}
-
             {error && <p className="error-message">{error}</p>}
         </div>
     );

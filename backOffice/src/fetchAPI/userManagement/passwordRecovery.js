@@ -38,5 +38,4 @@ export const validateRecoveryCode = async (body) => {
 
         return response.status === expectedCode;
     })
-
 }

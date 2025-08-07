@@ -1,21 +1,11 @@
 import React, {useState, useEffect} from "react";
-import { 
-    AreaChart, 
-    Area, 
-    ResponsiveContainer, 
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-} from 'recharts';
+import {AreaChart, Area, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 import "../css/AreaChart.css";
 import { getFMDataWithinDates } from "../fetchAPI/CRUD/fleaMarketsWithinDates.js";
 import { useSelector } from 'react-redux';
 import {exponentialRetry} from "../fetchAPI/utils/exponentialRetry.js";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
-
 
 const AreaChartComponent = ({dateStartProp, dateEndProp}) => {
     const [data, setData] = useState([]);
@@ -24,7 +14,6 @@ const AreaChartComponent = ({dateStartProp, dateEndProp}) => {
     const [error, setError] = useState(null);
     const langDict = useSelector(state => state.language.langDict);
 
-    
     useEffect(() => {
 
         // valeurs par défaut si l'utilisateur n'a pas encore choisi une date
@@ -53,7 +42,6 @@ const AreaChartComponent = ({dateStartProp, dateEndProp}) => {
         getFleaMarketsWithinDates();
         // 2 dépendances : les deux props
     }, [dateStartProp, dateEndProp]);
-
 
     const createMarketsPerMonthDict = (data) => {
 

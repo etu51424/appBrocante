@@ -128,7 +128,5 @@ Page.propTypes = {
     otherElements: PropTypes.node
 };
 
-
-
 export default Page;
 

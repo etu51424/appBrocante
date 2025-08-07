@@ -15,12 +15,10 @@ import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
 const Dealers = () => {
-
     const title = "Dealers";
     const elementClassNameSingular = "dealer";
     const elementClassNamePlural = "dealers";
     const tableType = TableTypes.DEALERS;
-
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);

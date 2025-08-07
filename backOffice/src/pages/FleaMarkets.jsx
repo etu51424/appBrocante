@@ -15,12 +15,10 @@ import AddElementButtonForm from "../components/forms/AddElementButtonForm.jsx";
 import EditElementButtonForm from "../components/forms/EditElementButtonForm.jsx";
 
 const FleaMarkets = () => {
-
     const title = "Flea Markets";
     const elementClassNameSingular = "flea_market";
     const elementClassNamePlural = "fleaMarkets";
     const tableType = TableTypes.FLEA_MARKETS;
-
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(10);

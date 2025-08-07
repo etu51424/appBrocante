@@ -3,7 +3,6 @@ import {TableTypes} from "../utils/Defs.js";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 
-
 const SearchBar = ({ onSearch, tableType }) => {
     const langDict = useSelector(state => state.language.langDict);
     const [query, setQuery] = useState('');
@@ -73,7 +72,6 @@ const SearchBar = ({ onSearch, tableType }) => {
                 console.error(`${langDict.noTextFound} : ${tableType}`);
                 text = '///';
         }
-
         return text;
     }
 

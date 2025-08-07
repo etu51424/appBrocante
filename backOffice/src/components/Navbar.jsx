@@ -11,6 +11,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const handleChangeLanguage = (langCode) => {
+    // Je sais pas trop d'où vient ce warning pour langcode mais il n'y a pas vraiment de problème
     dispatch(changeLanguage({langCode:langCode}));
   }
 

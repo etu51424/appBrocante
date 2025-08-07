@@ -121,7 +121,7 @@ const AddElementButtonForm = ({ tableType, onSuccess }) => {
                             returnedId = await createInterest(formData);
                             break;
                         default:
-                            throw new Error(langDict.TableTypeError);
+                            console.error(langDict.TableTypeError);
                     }
                     toast.success(`${langDict.insertSuccess} : ${returnedId?.id}`);
                     closeModal();

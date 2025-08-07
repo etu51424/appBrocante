@@ -3,7 +3,6 @@ import {exponentialRetry} from "../utils/exponentialRetry.js";
 import {statusCodesError} from "../utils/statusCode.js";
 import {getTokenFromStorage} from "../utils/tokenManagement.js";
 
-
 export const promoteUser = async (id) =>{
     const token = getTokenFromStorage();
     if (token) {

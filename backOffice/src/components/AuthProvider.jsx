@@ -10,7 +10,6 @@ export const AuthContext = createContext();
 // exporte un hook custom "useAuth" qui permet d'accéder au contexte
 export const useAuth = () => useContext(AuthContext);
 
-
 // le composant AuthProvider wrap l'appli et offre les méthodes de login/logout
 export const AuthProvider = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); //redondant mais utile

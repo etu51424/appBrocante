@@ -27,11 +27,9 @@
     text-align: center;
 }
 
-
 .page-header {
     margin-right: auto;
 }
-
 
 .pagination-arrows {
     display: flex;
@@ -39,12 +37,10 @@
     align-items: center;
 }
 
-
 .pagination-arrows button {
     margin: 10px;
     padding: 5px 20px;
 }
-
 
 .header-with-sort {
     display: flex;

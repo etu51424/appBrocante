@@ -1,7 +1,7 @@
 import React from "react";
 import { IoTrashBin } from "react-icons/io5";
 import "../css/DeleteButton.css";
-import { TableTypes as tableType, TableTypes } from "../utils/Defs.js";
+import { TableTypes } from "../utils/Defs.js";
 import { deleteUser } from "../fetchAPI/CRUD/users.js";
 import { deleteArticle } from "../fetchAPI/CRUD/articles.js";
 import { deleteFleaMarket } from "../fetchAPI/CRUD/fleaMarkets.js";
@@ -59,8 +59,6 @@ const DeleteButton = ({ elementId, tableType, onSuccess }) => {
         </button>
     );
 }
-
-
 
 DeleteButton.propTypes = {
     elementId: PropTypes.oneOfType([

@@ -6,7 +6,6 @@ import "../css/Stats.css";
 import PropTypes from "prop-types";
 
 const Stats = () => {
-    
     const langDict = useSelector(state => state.language.langDict);
     const [dateStart, setDateStart] = useState();
     const [dateEnd, setDateEnd] = useState();
