@@ -1,0 +1,36 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "initDB": "node scripts/JS/initDB.js",
+    "genDoc": "node ./swagger/swagger_jsdoc.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "@vinejs/vine": "^3.0.1",
+    "argon2": "^0.43.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "emailjs": "^4.0.3",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.0",
+    "internal-ip": "^6.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "pg": "^8.16.2",
+    "sharp": "^0.34.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "swagger-jsdoc": "^6.2.8"
+  }
+}
