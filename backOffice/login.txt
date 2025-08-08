@@ -1,4 +1,9 @@
-Login administrateur
+Login administrateur :
 
 nom d'utilisateur : Admin
 mot de passe : brocante
+
+Login utilisateur lambda (pour tester la sécurité):
+
+nom d'utilisateur : User
+mot de passe : bidondon
