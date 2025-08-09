@@ -6,6 +6,7 @@ cd api
 npm pkg set scripts.dev="nodemon server.js"
 npm pkg set scripts.initDB="node scripts/JS/initDB.js"
 npm pkg set scripts.genDoc="node ./swagger/swagger_jsdoc.js"
+npm install
 
 ## Docker :
 docker run --name AppBrocante -e POSTGRES_PASSWORD=LoveBrocante -e POSTGRES_USER=SA -e POSTGRES_DB=AppBrocante -p 5432:5432 --rm -d postgres
